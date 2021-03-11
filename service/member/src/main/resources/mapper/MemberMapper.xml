@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tiki.member.mapper.MemberMapper">
+
+    <resultMap id="MbrResultMap" type="MemberDTO">
+        <result column="mbr_id" property="mbrId" jdbcType="VARCHAR"/>
+        <result column="mbr_pwd" property="mbrPwd" jdbcType="VARCHAR"/>
+        <result column="mbr_nm" property="mbrNm" jdbcType="VARCHAR"/>
+        <result column="mbr_bday" property="mbrBday" jdbcType="VARCHAR"/>
+        <result column="mbr_addr" property="mbrAddr" jdbcType="VARCHAR"/>
+        <result column="mbr_role" property="mbrRole" jdbcType="BOOLEAN"/>
+        <result column="mbr_points" property="mbrPoints" jdbcType="INTEGER"/>
+        <result column="mbr_grade" property="mbrGrade" jdbcType="VARCHAR"/>
+        <result column="mbr_email" property="mbrEmail" jdbcType="VARCHAR"/>
+        <result column="mbr_phone" property="mbrPhone" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectMemberDetail" resultMap="MbrResultMap" parameterType="String">
+        select *
+        from mbr
+        where mbr_id = #{id,jdbcType=VARCHAR}
+    </select>
+
+
+    <insert id="insertMember" parameterType="MemberDTO">
+        insert
+        mbr (mbr_id, mbr_pwd, mbr_nm, mbr_bday, mbr_addr, mbr_email, mbr_phone) values(
+        #{mbrId, jdbcType=VARCHAR},
+        #{mbrPwd, jdbcType=VARCHAR},
+        #{mbrNm, jdbcType=VARCHAR},
+        #{mbrBday, jdbcType=VARCHAR},
+        #{mbrAddr, jdbcType=VARCHAR},
+        #{mbrEmail, jdbcType=VARCHAR},
+        #{mbrPhone, jdbcType=VARCHAR}
+        );
+    </insert>
+
+    <delete id="deleteMember" parameterType="String">
+        delete
+        from
+        mbr
+        where
+            mbr_id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+</mapper>
