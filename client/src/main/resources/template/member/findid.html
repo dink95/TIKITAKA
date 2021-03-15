@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head >
+    <title>TIKITAKA &ndash; 아이디찾기 </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/aos.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="site-wrap">
+    <header class="site-navbar" role="banner">
+        <!--replace 헤더-->
+        <div class="site-navbar-top" th:replace="common::header(findid)">
+        </div>
+        <!------------->
+        <!--replace-signin---------------------------------->
+        <nav class="site-navigation text-right text-md-center" role="navigation" th:replace="common::menu(findid)">
+        </nav>
+        <!---------------------------------------------------------->
+    </header>
+    <!--replace logo-아이디찾기-->
+    <div class="bg-light py-3" th:replace="common::logo(findid)">
+    </div>
+    <!-------------------------->
+
+    <div class="site-section margin-top-2" >
+        <div class="container" >
+            <div class="row justify-content-center"><!--justify-content-center 추가-->
+
+                <div class="col-md-7"  >
+                    <div class="col-md-12 " >
+                        <h2 class="h3 mb-3 text-black  ">아이디 찾기</h2> <!--login logo 위치 수정-->
+                    </div>
+                    <form action="#" method="post">
+
+                        <div class="p-3 p-lg-5 border">
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_name" class="text-black">이름<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="c_name" name="c_name" placeholder="">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_pnum" class="text-black">전화번호 <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="c_pnum" name="c_pnum" placeholder="">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <div class="col-lg-12">
+                                    <input type="submit" class="btn btn-primary btn-lg btn-block" value="아이디 찾기">
+                                </div>
+                            </div>
+
+                            <div class="site-navbar row justify-content-end " role="banner">
+                                <!-- row, justify-content-end class 추가-->
+
+                                    <div class="site-top-icons ">
+                                        <ul >
+                                            <li><a href="findpwd"><span class="sign in">비밀번호 찾기</span></a></li>
+                                            <!--비밀번호찾기-->
+                                            /&nbsp&nbsp
+                                            <li><a href="login"><span class="sign in">로그인</span></a></li>
+                                            <!--로그인-->
+                                        </ul>
+                                    </div>
+
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/aos.js"></script>
+
+<script src="js/main.js"></script>
+
+</body>
+</html>

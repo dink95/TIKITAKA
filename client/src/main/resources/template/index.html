@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head >
+  <title>TIKITAKA &ndash; 홈 </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/magnific-popup.css">
+  <link rel="stylesheet" href="css/jquery-ui.css">
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="css/aos.css">
+  <link rel="stylesheet" href="css/style.css">
+
+
+
+
+</head>
+
+  <body>
+
+  <div class="site-wrap">
+    <header class="site-navbar" role="banner">
+      <div class="site-navbar-top" th:replace="common::header(home)"></div>
+      <!--replace menu-home------------------------------------------------>
+      <nav class="site-navigation text-right text-md-center" role="navigation" th:replace="common::menu(home)">
+      </nav>
+      <!-------------------------------------------------------------------->
+    </header>
+
+    <!--검색바 중간 삽입-->
+    <div class="search-bar-container">
+
+      <div class="category-box " > <!--카테고리 div-->
+        <div class="category" >
+          <select name="category" class="form-control border-0 select-category font-14" required>
+            <option class="form-control border-0 font-14" value="" disabled selected>Category</option>
+            <option class="form-control border-0 font-14" value="all">전체</option>
+            <option class="form-control border-0 font-14" value="2">2</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="select-search-box ">
+
+        <div class="select-box"> <!--셀렉트 박스 div-->
+          <select name="" class="form-control border-0 select-infor font-14">
+            <option class="form-control border-0 font-14" value="">전체</option>
+            <option class="form-control border-0 font-14" value="">제목</option>
+            <option class="form-control border-0 font-14" value="">ID</option>
+            <option class="form-control border-0 font-14" value="">상품코드</option>
+          </select>
+        </div>
+
+        <div class="search-box"> <!--search box div-->
+          <form action="shop.html" class="site-block-top-search input-search">
+            <span class="icon icon-search2"></span>
+            <input type="text" class="form-control border-0 input-search" placeholder="Search">
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+  <!------------------------------------------------------------------------------->
+
+    <!--상품 사진 top5-->
+    <div class="site-section block-3 site-blocks-2 bg-light">
+      <!--상품사진-->
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-7 site-section-heading text-center pt-4">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12" style="display: flex; justify-content: center;">
+
+            <div class="nonloop-block-3 owl-carousel" style="width:80%;">
+              <div class="item">
+                <div class="block-4 text-center">
+                  <figure class="block-4-image">
+                    <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="#">Tank Top</a></h3>
+                    <p class="mb-0">Finding perfect t-shirt</p>
+                    <p class="text-primary font-weight-bold">$50</p>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="block-4 text-center">
+                  <figure class="block-4-image">
+                    <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="#">Corater</a></h3>
+                    <p class="mb-0">Finding perfect products</p>
+                    <p class="text-primary font-weight-bold">$50</p>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="block-4 text-center">
+                  <figure class="block-4-image">
+                    <img src="images/cloth_2.jpg" alt="Image placeholder" class="img-fluid">
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="#">Polo Shirt</a></h3>
+                    <p class="mb-0">Finding perfect products</p>
+                    <p class="text-primary font-weight-bold">$50</p>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="block-4 text-center">
+                  <figure class="block-4-image">
+                    <img src="images/cloth_3.jpg" alt="Image placeholder" class="img-fluid">
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="#">T-Shirt Mockup</a></h3>
+                    <p class="mb-0">Finding perfect products</p>
+                    <p class="text-primary font-weight-bold">$50</p>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="block-4 text-center">
+                  <figure class="block-4-image">
+                    <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="#">Corater</a></h3>
+                    <p class="mb-0">Finding perfect products</p>
+                    <p class="text-primary font-weight-bold">$50</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!----------------------------------------->
+
+            <!--top-5-box------------------------------->
+            <div id="top-5" >
+              <h2>top5</h2>
+              <ol id="top-5-list" >
+
+                <li>mkmkmk11</li>
+                <li>kims19</li>
+                <li>tikitiki12</li>
+                <li>hahaha10</li>
+                <li>101010101</li>
+
+              </ol>
+
+            </div>
+            <!--------------------------------------------->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/aos.js"></script>
+
+  <script src="js/main.js"></script>
+
+
+  </body>
+</html>
