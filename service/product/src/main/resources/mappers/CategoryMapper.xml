@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tiki.product.mapper.CategoryMapper">
+
+    <sql id="categoryColumns">
+        cat_no
+        , cat_nm
+    </sql>
+
+    <insert id="insertCategory" parameterType="CategoryDTO">
+        INSERT INTO cat (
+        <include refid="categoryColumns" />
+        ) VALUES (
+        #{catNo}
+        , #{catNm}
+        )
+    </insert>
+
+    <update id="deleteCategory" parameterType="CategoryDTO">
+        DELETE
+            cat
+        WHERE
+            cat_no = #{catNo}
+    </update>
+
+    <select id="selectCategoryDetail" parameterType="int" resultType="CategoryDTO">
+        SELECT
+            <include refid="categoryColumns" />
+        FROM
+            cat
+        WHERE
+            cat_no = #{catNo}
+    </select>
+
+
+    <select id="selectCategoryList" parameterType="CategoryDTO" resultType="CategoryDTO">
+        SELECT
+            <include refid="categoryColumns" />
+        FROM
+            cat
+        ORDER BY
+            cat_nm ASC
+    </select>
+
+    <select id="selectCategoryTotalCount" parameterType="CategoryDTO" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            cat
+    </select>
+
+</mapper>

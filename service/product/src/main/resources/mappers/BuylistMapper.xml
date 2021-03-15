@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tiki.product.mapper.BuylistMapper">
+
+    <sql id="buylistColumns">
+        prod_no
+        , buyer_id
+    </sql>
+
+    <insert id="insertBuylist" parameterType="BuylistDTO">
+        INSERT INTO buylist (
+        <include refid="buylistColumns" />
+        ) VALUES (
+        #{prodNo}
+        , #{buyerId}
+        )
+    </insert>
+
+    <update id="deleteBuylist" parameterType="BuylistDTO">
+        DELETE
+            buylist
+        WHERE
+            buyer_id = #{buyerId}
+        AND
+            byprod_no = #{prodNo}
+    </update>
+
+    <select id="selectBuylistDetail" parameterType="string" resultType="BuylistDTO">
+        SELECT
+            <include refid="buylistColumns" />
+        FROM
+            buylist
+        WHERE
+            buyer_id = #{buyerId}
+    </select>
+
+
+    <select id="selectBuylistList" parameterType="BuylistDTO" resultType="BuylistDTO">
+        SELECT
+            <include refid="buylistColumns" />
+        FROM
+            buylist
+        ORDER BY
+            buyerId ASC
+    </select>
+
+    <select id="selectBuylistTotalCount" parameterType="BuylistDTO" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            buylist
+    </select>
+
+</mapper>
