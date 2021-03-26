@@ -199,3 +199,57 @@ jQuery(document).ready(function($) {
 
 
 });
+
+ /**********************스크립트 추가*************************/
+
+
+ document.querySelectorAll("input").forEach(input => {
+	 input.addEventListener("invalid", () => {
+		 document.forms[0].classList.add("was-validated")
+	 })
+ })
+
+ function categoryChange(e){
+	 var detail_all=["전체"];
+	 var detail_passion=["전체","남성의류","여성의류","아동의류","가방","모자",
+		 "신발", "엑세서리","화장품","기타"];
+	 var detail_digital=["전체","pc/노트북","휴대폰/태블릿", "카메라", "게임", "기타"];
+	 var detail_interior=["전체","침실","주방", "DIY", "서재/사무용", "기타"];
+	 var detail_leisure=["전체","등산","캠핑", "골프", "헬스", "공연/티켓","여행","기타"];
+	 var detail_else=["전체","반려동물용품","차량용품","출산/유아용품"];
+	 var detail_buy=["삽니다"];
+	 var target=document.getElementById("detail");
+
+	 if(e.value=="all") var d =detail_all;
+	 if(e.value=="passion") var d =detail_passion;
+	 if(e.value=="digital") var d =detail_digital;
+	 if(e.value=="interior") var d =detail_interior;
+	 if(e.value=="leisure") var d =detail_leisure;
+	 if(e.value=="else") var d =detail_else;
+	 else if(e.value=="buy") var d =detail_buy;
+
+	 target.options.length=0;
+
+	 for(x in d){
+		 var opt = document.createElement("option");
+		 opt.value=d[x];
+		 opt.innerHTML=d[x];
+		 target.appendChild(opt);
+
+		 console.log(opt.value);
+		 console.log(d);
+	 }
+
+	 function sweetAlert(title, text, icon){
+		 swal({
+			 title:title,
+			 text:text,
+			 icon:icon,
+			 buttons: '확인'
+		 }).then((value) => {
+			 if(value){
+				 location.href = '/schedule?date=' + $('#datepicker').val();
+			 }
+		 });
+	 }
+ }

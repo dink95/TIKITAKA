@@ -32,7 +32,7 @@ option[value=""][disabled]{
   display:flex; justify-content: center;
 }
 .category-box>.category{
-  width:40%;
+  width:20%;
   border: 1px solid  #eee8e8;
   border-radius: 5px;
 }
