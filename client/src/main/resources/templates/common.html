@@ -23,6 +23,8 @@
                         <li><a href="signup" > <span class="sign up"  th:text="${header}=='home'? '회원가입' : '' "></span></a></li><!--회원가입-->
                         <li><a th:text="${header}=='home' ? '/&nbsp' : '' "></a></li>
                         <li><a href="login" ><span class="sign in"  th:text="${header}=='home'? '로그인' : '' "></span></a></li> <!--로그인-->
+                        <li><a th:text="${header}=='home' ? '/&nbsp' : '' "></a></li>
+                        <li><a href="#" ><span class="sign in"  th:text="${header}=='home'? '관리자로그인' : '' "></span></a></li> <!--관리자로그인-->
                         <!--로그인 했을 때
                         <li><a href="#"><span class="icon icon-person"></span></a></li>
                       <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
