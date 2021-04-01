@@ -21,7 +21,7 @@ public class MemberController {
         return "index";
     }
 
-
+    /*****************************로그인*********************************/
     @GetMapping(value = "/login")
     public ModelAndView login() {
         ModelAndView view = new ModelAndView();
@@ -36,19 +36,18 @@ public class MemberController {
                                             @RequestParam(value = "userPw") String userPw,
                                             HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
-        Map<String, Object> param = new HashMap<>();
+        MemberDTO memberDTO = new MemberDTO();
 
         Map<String, Object> resultMap = new HashMap<>();
 
-        param.put("userId", userId);
-        param.put("userPw", userPw);
+        memberDTO.setMbrId(userId);
+        memberDTO.setMbrPwd(userPw);
 
-        MemberDTO member = null;
-        //MemberDTO member  =  memberService.getUserInfo(param);
+        String mbrId = memberService.login(memberDTO);
 
         try {
-            if (member != null) {
-                request.getSession().setAttribute("userInfo", member);
+            if (mbrId != null) {
+                request.getSession().setAttribute("mbrId", mbrId);
                 resultMap.put("resultCode", 200);
                 resultMap.put("resultMsg", "OK");
             } else {
@@ -63,12 +62,89 @@ public class MemberController {
         return resultMap;
     }
 
+    @GetMapping(value="/logout")
+    public ModelAndView logout(HttpServletRequest request) {
+        ModelAndView view = new ModelAndView();
+
+        if (request.getSession().getAttribute("mbrId") != null) {
+            request.getSession().removeAttribute("mbrId");
+        }
+        view.setViewName("redirect:/");
+        return view;
+    }
+
+    /********************************************************************************/
+
+    /*****************************회원가입, 아이디 중복*********************************/
+
     @GetMapping(value = "/signup")
     public ModelAndView signup() {
         ModelAndView view = new ModelAndView();
         view.setViewName("member/signup");
         return view;
     }
+
+    @RequestMapping("signup/idcheck")
+    @ResponseBody
+    public Map<String, Object> loginAccess(@RequestParam(value = "userId") String userId,
+                                           HttpServletRequest request) {
+        ModelAndView view = new ModelAndView();
+        Map<String, Object> param = new HashMap<>();
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        param.put("userId", userId);
+
+        MemberDTO member = null;
+        //MemberDTO member  =  memberService.idCheck(param);
+
+        try {
+            if (member == null) {
+                request.getSession().setAttribute("userInfo", member);
+                resultMap.put("resultCode", 200);
+                resultMap.put("resultMsg", "OK");
+            } else {
+                resultMap.put("resultCode", 400);
+                resultMap.put("resultMsg", "이미 사용중인 아이디입니다.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("resultCode", 500);
+            resultMap.put("resultMsg", e.getMessage());
+        }
+        return resultMap;
+    }
+
+    @PostMapping("/login/join")
+    @ResponseBody
+    public  Map<String, Object> joinMember(@RequestBody MemberDTO memberDTO){
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        int result = 0;
+
+        try{
+            result = memberService.createMember(memberDTO);
+
+            if(result > 0) {
+                resultMap.put("resultCode", 200);
+                resultMap.put("resultMsg", "회원가입을 완료하였습니다.");
+            }else {
+                resultMap.put("resultCode", 500);
+                resultMap.put("resultMsg", "회원가입이 실패하였습니다.");
+            }
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("resultCode", 500);
+            resultMap.put("resultMsg", "회원가입이 실패하였습니다.");
+        }
+
+
+        return resultMap;
+    }
+
+    /*********************************************************************************/
 
     @GetMapping(value = "/findid")
     public ModelAndView findid() {

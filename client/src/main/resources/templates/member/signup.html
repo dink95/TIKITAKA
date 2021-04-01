@@ -50,16 +50,23 @@
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <label for="c_name" class="text-black">이름<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="c_name" name="c_name" required >
+                                    <input type="text" class="form-control" id="c_name" name="c_name" required onkeyup="onKeyUp('#valid_name');" >
                                     <span id="valid_name" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label for="c_id" class="text-black">Id <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="c_id" name="c_id"   required >
+                                    <input type="text" class="form-control" id="c_id" name="c_id"   required onkeyup="onKeyUp('#valid_id');">
                                     <span id="valid_id" style="color: #ff0000;font-size: 10px;"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="id_check" class="text-black"><span class="text-danger" style="opacity: 0">*</span></label>
+                                    <input type="button" class="form-control btn btn-primary btn-lg btn-block" id="id_check" name="id_check"
+                                           value="중복 확인&nbsp;"
+                                           required onclick="idCheck();"
+                                    ><br/>
                                 </div>
                             </div>
 
@@ -68,15 +75,26 @@
                                     <label for="c_phone" class="text-black">전화번호 <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="c_phone" name="c_phone" value="010-"
                                            required pattern="[0-1]{2,3}-[0-9]{3,4}-[0-9]{3,4}"
-                                           maxlength="13">
+                                           maxlength="13" onkeyup="onKeyUp('#valid_phone');">
                                     <span id="valid_phone" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <div class="col-md-12">
+                                    <label for="c_bday" class="text-black">생년월일 <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="c_bday" name="c_bday"
+                                           required pattern="[0-9]{6}" placeholder="ex) 901225"
+                                           maxlength="6" onkeyup="onKeyUp('#valid_bday');">
+                                    <span id="valid_bday" style="color: #ff0000;font-size: 10px;"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
                                     <label for="c_email" class="text-black">Email <span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control" id="c_email" name="c_email" required>
+                                    <input type="text" class="form-control" id="c_email" name="c_email" required placeholder="ex) abc@naver.com"
+                                           onkeyup="onKeyUp('#valid_email');">
                                     <span id="valid_email" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
                             </div>
@@ -84,26 +102,30 @@
 
                             <div class="form-group row">
                                 <div class="col-md-6">
-                                    <label for="addr1" class="text-black">거주지<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="addr1" name="addr1" placeholder="우편번호"
-                                           required readonly />&nbsp;&nbsp;&nbsp;
+                                    <label for="c_post" class="text-black">주소<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="c_post" name="c_post" placeholder="우편번호"
+                                           required readonly >&nbsp;&nbsp;&nbsp;
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="addr1" class="text-black"><span class="text-danger" style="opacity: 0">*</span></label>
+                                    <label  class="text-black"><span class="text-danger" style="opacity: 0">*</span></label>
                                     <input type="button" class="form-control btn btn-primary btn-lg btn-block" value="우편번호 찾기&nbsp;"
-                                           required onClick="execPostCode();"><br/>
+                                           required onclick="sample2_execDaumPostcode()"><br/>
                                 </div>
+                            </div>
+                            <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch; border-radius: 5px;">
+                                <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="border-radius:5px;
+                                cursor:pointer;position:absolute;right:0px;top:0px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
                             </div>
                             <div class="form-group row">
                                 <div  class="col-md-12">
-                                    <input type="text" class="form-control" id="c_addr" name="c_addr" required placeholder="주소" readonly >
+                                    <input type="text" class="form-control" id="c_addr" name="c_addr" required placeholder="주소" readonly onkeyup="onKeyUp('#valid_addr');">
                                     <span id="valid_addr" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <label for="c_password" class="text-black">비밀번호<span class="text-danger">*</span></label>
-                                    <input type="password" class="form-control" id="c_password" name="c_password" required >
+                                    <input type="password" class="form-control" id="c_password" name="c_password" required onkeyup="onKeyUp('#valid_password');">
                                     <span id="valid_password" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
                             </div>
@@ -111,14 +133,14 @@
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <label for="c_pwd_re" class="text-black">비밀번호 확인<span class="text-danger">*</span></label>
-                                    <input type="password" class="form-control" id="c_pwd_re" name="c_pwd_re" required >
-                                    <span id="valid_pwd_r" style="color: #ff0000;font-size: 10px;"></span>
+                                    <input type="password" class="form-control" id="c_pwd_re" name="c_pwd_re" required onkeyup="onKeyUp('#valid_password_c');">
+                                    <span id="valid_password_c" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <div class="col-lg-12">
-                                    <input id="loginConfirm" type="buttom" class="btn btn-primary btn-lg btn-block" value="가입하기" onclick="goSignup()">
+                                    <input id="loginConfirm" type="button" class="btn btn-primary btn-lg btn-block" value="가입하기" onclick="goSignup()">
                                 </div>
                             </div>
                             <div class="site-navbar row justify-content-end " role="banner">
@@ -133,7 +155,6 @@
 
                             </div>
                         </div>
-
                     </form>
                 </div>
 
@@ -154,145 +175,218 @@
 <script src="js/aos.js"></script>
 
 <script src="js/main.js"></script>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 
-    function autoHypenPhone(str){
-        str = str.replace(/[^0-9]/g, '');
-        var tmp = '';
-        if( str.length < 4){
-            return str;
-        }else if(str.length < 7){
-            tmp += str.substr(0, 3);
-            tmp += '-';
-            tmp += str.substr(3);
-            return tmp;
-        }else if(str.length < 11){
-            tmp += str.substr(0, 3);
-            tmp += '-';
-            tmp += str.substr(3, 3);
-            tmp += '-';
-            tmp += str.substr(6);
-            return tmp;
-        }else{
-            tmp += str.substr(0, 3);
-            tmp += '-';
-            tmp += str.substr(3, 4);
-            tmp += '-';
-            tmp += str.substr(7);
-            return tmp;
-        }
-        return str;
 
-    }
-
-    function initEvent() {
-
+    function initEvent() { /*하이픈 자동*/
         $('#c_phone').on('keyup', function (event) {
             this.value = autoHypenPhone(this.value);
         });
-
     }
-
     $(document).ready(function(){
         initEvent();
     });
 
-    /*********************************************************/
-    function execPostCode() {
+    /*우편번호조회 api*/
+    var element_layer = document.getElementById('layer');
+
+    function closeDaumPostcode() {
+        // iframe을 넣은 element를 안보이게 한다.
+        element_layer.style.display = 'none';
+    }
+
+    function sample2_execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                var addr = ''; // 주소 변수
 
-                // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
-                var extraRoadAddr = ''; // 도로명 조합형 주소 변수
-
-                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                    extraRoadAddr += data.bname;
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
                 }
-                // 건물명이 있고, 공동주택일 경우 추가한다.
-                if(data.buildingName !== '' && data.apartment === 'Y'){
-                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                }
-                // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                if(extraRoadAddr !== ''){
-                    extraRoadAddr = ' (' + extraRoadAddr + ')';
-                }
-                // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
-                if(fullRoadAddr !== ''){
-                    fullRoadAddr += extraRoadAddr;
-                }
-
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                console.log(data.zonecode);
-                console.log(fullRoadAddr);
+                document.getElementById('c_post').value = data.zonecode;
+                document.getElementById("c_addr").value = addr;
 
-
-                $("[name=addr1]").val(data.zonecode);
-                $("[name=c_addr]").val(fullRoadAddr);
-
-
-            }
-        }).open();
+                element_layer.style.display = 'none';
+            },
+            width : '100%',
+            height : '100%',
+            maxSuggestItems : 5
+        }).embed(element_layer);
+        element_layer.style.display = 'block';
+        initLayerPosition();
     }
 
+    // 브라우저의 크기 변경에 따라 레이어를 가운데로 이동하려면
+    // resize이벤트나, orientationchange이벤트를 이용하여 값이 변경될때마다 아래 함수를 실행, 아니면 직접 element_layer의 top,left값을 수정
+    function initLayerPosition(){
+        var width = 500;
+        var height = 600;
+        var borderWidth = 1;
+        element_layer.style.width = width + 'px';
+        element_layer.style.height = height + 'px';
+        element_layer.style.border = borderWidth + 'px solid #ced4da ';
+        element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
+        element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
+    }
+
+    function idCheck() { //중복확인
+        var param ={
+            userId : document.querySelector('#c_id').value,
+        }
+
+        $.ajax({
+            url: '/signup/idcheck',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function(data){
+            var result;
+            if(!CheckId($('#c_id').val())) {
+
+                $('#valid_id').text('* ID는 4~12자의 영문 대소문자와 숫자로 입력해주세요.');
+                 result= false;
+            }else if(data.resultCode == 200) {
+                $('#valid_id').text('* 사용 가능한 아이디입니다.');
+                    result= true;
+            }else if(data.resultCode == 400) {
+                $('#valid_id').text('* 이미 사용중인 아이디입니다.');
+              result= false;
+            }
+            return result;
+        }).fail(function (error){
+            console.log(error);
+        })
 
 
+    }
 
-    function goSignup(){
-        if(validation()) {
-            //goSignup
+    function goSignup() {
+        console.log(idCheck());
+        if(!idCheck()){
+            $('#valid_id').text('* ID 중복 확인은 필수입니다.');
+        }
+
+        if (validation()) {
+            //회원가입
+
+            var param = {
+                mbrId:  $('#c_id').val(),
+                mbrPwd: $('#c_password').val(),
+                mbrNm : $('#c_name').val(),
+                mbrBday: $('#c_bday').val(),
+                mbrPost: $('#c_post').val(),
+                mbrAddr: $('#c_addr').val(),
+                mbrRole: 0,
+                mbrPoints : 0,
+                mbrGrade : 0,
+                mbrEmail: $('#c_email').val(),
+                mbrPhone: $('#c_phone').val()
+            };
+
+
+            $.ajax({
+                url: '/login/join',
+                data: JSON.stringify(param),
+                type: 'post',
+                contentType:"application/json;charset=UTF-8",
+                dataType : 'json'
+            }).done(function(data){
+                if(data.resultCode == 200) {
+                    alert(data.resultMsg);
+                    location.href = '/';
+                }else {
+                    alert(data.resultMsg +'관리자에게 문의하십시오.');
+                    return false;
+                }
+
+            }).fail(function (data, textStatus, errorThrown){
+                console.log(textStatus);
+            });
         }
     }
+
+
+    function onKeyUp(props){
+        $(props).text('');
+    } /*키 입력시 valid 메세지 삭제*/
+
 
     function validation() {
         var result = true;
 
-        $('#valid_id').text('');
+
+        $('#valid_name').text('');
+        $('#valid_Id').text('');
         $('#valid_pw').text('');
         $('#valid_phone').text('');
+        $('#valid_bday').text('');
         $('#valid_email').text('');
         $('#valid_addr').text('');
         $('#valid_password').text('');
-        $('#valid_pwd_r').text('');
-        document.querySelectorAll("input").forEach(input => {
+
+
+        document.querySelectorAll("input[type='text']").forEach(input => {
             var inValue = input.value;
 
-
-            if(inValue == '' || $.trim(inValue).length != 13) {
+            if (inValue == '' || $.trim(inValue).length == 0) {
                 document.forms[0].classList.add("was-validated");
-             if(input.id =='c_phone') {
-                    $('#valid_phone').text('* 전화번호를 정확히 입력해주세요');
-                }
-            }
-
-                if(inValue == '' || $.trim(inValue).length == 0) {
-                document.forms[0].classList.add("was-validated");
-
-                if(input.id =='c_name') {
-                    $('#valid_name').text('* 이름를 입력해주세요');
-                }else if(input.id =='c_id') {
-                    $('#valid_id').text('* 아이디를 입력해주세요');
-                }else if(input.id =='c_phone') {
-                    $('#valid_phone').text('* 전화번호를 정확히 입력해주세요');
-                }else if(input.id =='c_email') {
-                    $('#valid_email').text('* 이메일을 입력해주세요');
-                }else if(input.id =='c_addr') {
+                if (input.id == 'c_addr') {
                     $('#valid_addr').text('* 주소를 입력해주세요');
-                }else if(input.id =='c_password') {
-                    $('#valid_password').text('* 패스워드를 입력해주세요');
-                }
-                else {
-                    $('#valid_pwd_r').text('* 패스워드 확인을 입력해주세요');
                 }
                 result = false;
             }
+
+            if (input.id == 'c_phone') {
+                if (inValue == '' || $.trim(inValue).length != 13) {
+                    document.forms[0].classList.add("was-validated");
+                    $('#valid_phone').text('* 전화번호를 정확히 입력해주세요');
+                    result = false;
+                }
+            }
+
+            if (input.id == 'c_bday') {
+                if (inValue == '' || $.trim(inValue).length != 6) {
+                    document.forms[0].classList.add("was-validated");
+                    $('#valid_bday').text('* 생년월일 6자리를 입력해주세요');
+                    result = false;
+                }
+            }
+
+            if (input.id == 'c_email') {
+                if (!CheckEmail(inValue)) {
+                    document.forms[0].classList.add("was-validated");
+                    $('#valid_email').text('* 이메일을 정확히 입력해주세요');
+
+                    result = false;
+                }
+
+            }
+
+            if (input.id == 'c_name') {
+                if (!CheckName(inValue)) {
+                    document.forms[0].classList.add("was-validated");
+                    $('#valid_name').text('* 이름를 정확히 입력해주세요');
+                    result = false;
+                }
+            }
+
+            if ($('#c_password').val() == "") {
+                $('#valid_password').text('* 비밀번호를 입력해주세요');
+            } else if ($('#c_password').val() != $('#c_pwd_re').val()) {
+                document.forms[0].classList.add("was-validated");
+                $('#valid_password_c').text('* 비밀번호 확인이 일치하지 않습니다.');
+                result = false;
+            }
+
         });
+
         return result;
+
     }
 
 
@@ -300,3 +394,5 @@
 
 </body>
 </html>
+
+
