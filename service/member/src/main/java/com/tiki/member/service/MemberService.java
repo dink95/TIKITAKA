@@ -10,5 +10,11 @@ public interface MemberService {
 
     public int deleteMember(String id);
 
+    public String findMemberId(MemberDTO dto);
+
+    public String existPwd(MemberDTO dto);
+
+    public int updateMember(MemberDTO dto);
+
 
 }
