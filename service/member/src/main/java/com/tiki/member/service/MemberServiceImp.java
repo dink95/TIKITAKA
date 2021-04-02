@@ -26,4 +26,19 @@ public class MemberServiceImp implements MemberService{
     public int deleteMember(String id) {
         return mapper.deleteMember(id);
     }
+
+    @Override
+    public String findMemberId(MemberDTO dto) {
+        return mapper.findMemberId(dto);
+    }
+
+    @Override
+    public String existPwd(MemberDTO dto) {
+        return mapper.existPwd(dto);
+    }
+
+    @Override
+    public int updateMember(MemberDTO dto) {
+        return mapper.updateMember(dto);
+    }
 }

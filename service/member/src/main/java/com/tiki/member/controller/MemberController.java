@@ -43,4 +43,31 @@ public class MemberController {
             return null;
         }
     }
+
+    @GetMapping("/mbr/{id}/{name}/{phone}")
+    public Boolean memberPasswordChecking(@PathVariable("id") String id,
+                                          @PathVariable("name") String name,
+                                          @PathVariable("phone") String phone){
+        MemberDTO dto = new MemberDTO(name, id, phone);
+        String exists = memberService.existPwd(dto);
+        if(exists==null){
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    }
+
+    @PostMapping("/mbr/id")
+    public String findMemberId(@RequestBody MemberDTO memberDTO){
+        return  memberService.findMemberId(memberDTO);
+    }
+
+    @PostMapping("/mbr/password")
+    public int updatePassword(@RequestBody MemberDTO memberDTO){
+        memberDTO.setMbrPwd(passwordEncoder.encode(memberDTO.getMbrPwd()));
+        return memberService.updateMember(memberDTO);
+    }
+
 }

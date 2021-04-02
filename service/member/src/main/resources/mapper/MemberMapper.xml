@@ -43,4 +43,35 @@
             mbr_id = #{id,jdbcType=VARCHAR}
     </delete>
 
+    <select id="findMemberId" parameterType="MemberDTO" resultType="String">
+    SELECT mbr_id
+    FROM
+    mbr
+    WHERE
+    mbr_nm = #{mbrNm,jdbcType=VARCHAR}
+    AND
+    mbr_phone = #{mbrPhone,jdbcType=VARCHAR}
+    </select>
+
+    <select id="existPwd" parameterType="MemberDTO" resultType="String">
+        SELECT mbr_pwd
+        FROM
+            mbr
+        WHERE
+            mbr_nm = #{mbrNm,jdbcType=VARCHAR}
+          AND
+            mbr_phone = #{mbrPhone,jdbcType=VARCHAR}
+            AND
+            mbr_id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateMember" parameterType="MemberDTO">
+        UPDATE
+            mbr
+        SET
+            mbr_pwd = #{mbrPwd,jdbcType=VARCHAR}
+        WHERE
+            mbr_id = #{id,jdbcType=VARCHAR}
+    </update>
+
 </mapper>
