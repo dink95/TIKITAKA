@@ -52,7 +52,7 @@
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <label for="c_name" class="text-black">이름<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="c_name" name="c_name" placeholder="" required>
+                                    <input type="text" class="form-control" id="c_name" name="c_name" placeholder="" required onkeyup="onKeyUp('#valid_name');">
                                     <span id="valid_name" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
                             </div>
@@ -61,7 +61,7 @@
                                 <div class="col-md-12">
                                     <label for="c_id" class="text-black">id<span
                                             class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="c_id" name="c_id" placeholder="" required>
+                                    <input type="text" class="form-control" id="c_id" name="c_id" placeholder="" required onkeyup="onKeyUp('#valid_id');">
                                     <span id="valid_id" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
                             </div>
@@ -69,7 +69,9 @@
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <label for="c_phone" class="text-black">전화번호 <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="c_phone" name="c_phone" placeholder="" required>
+                                    <input type="text" class="form-control" id="c_phone" name="c_phone" value="010-"
+                                           required pattern="[0-1]{2,3}-[0-9]{3,4}-[0-9]{3,4}"
+                                           maxlength="13" onkeyup="onKeyUp('#valid_phone');">
                                     <span id="valid_phone" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
                             </div>
@@ -84,13 +86,13 @@
                             <div class="site-navbar row justify-content-end " role="banner">
                                 <!-- row, justify-content-end class 추가-->
 
-                                    <div class="site-top-icons ">
-                                        <ul >
+                                <div class="site-top-icons ">
+                                    <ul >
 
-                                            <li><a href="login"><span class="sign in">로그인페이지</span></a></li>
-                                            <!--로그인-->
-                                        </ul>
-                                    </div>
+                                        <li><a href="login"><span class="sign in">로그인페이지</span></a></li>
+                                        <!--로그인-->
+                                    </ul>
+                                </div>
 
                             </div>
                         </div>
@@ -126,6 +128,23 @@
         }
     }
 
+    function initEvent() {
+
+        $('#c_phone').on('keyup', function (event) {
+            this.value = autoHypenPhone(this.value);
+        });
+
+    }
+
+    $(document).ready(function(){
+        initEvent();
+    });
+
+    function onKeyUp(props){
+        $(props).text('');
+    } /*키 입력시 valid 메세지 삭제*/
+
+
     function validation() {
         var result = true;
 
@@ -137,14 +156,25 @@
             if(inValue == '' || $.trim(inValue).length == 0) {
                 document.forms[0].classList.add("was-validated");
 
-                if(input.id =='c_name') {
-                    $('#valid_name').text('* 이름를 입력해주세요');
-                }else if(input.id =='c_id') {
+                if(input.id =='c_id') {
                     $('#valid_id').text('* 아이디를 입력해주세요');
-                }else  {
-                    $('#valid_phone').text('* 전화번호를 입력해주세요');
                 }
                 result = false;
+            }
+            if(inValue == '' || $.trim(inValue).length != 13) {
+                document.forms[0].classList.add("was-validated");
+                if(input.id =='c_phone') {
+                    $('#valid_phone').text('* 전화번호를 정확히 입력해주세요');
+                }
+                result = false;
+            }
+
+            if(!CheckName(inValue)) {
+                document.forms[0].classList.add("was-validated");
+                if (input.id == 'c_name') {
+                    $('#valid_name').text('* 이름를 정확히 입력해주세요');
+                }
+                result= false;
             }
         });
         return result;

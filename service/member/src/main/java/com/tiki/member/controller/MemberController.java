@@ -35,19 +35,12 @@ public class MemberController {
     }
 
     @PostMapping("/mbr/login")
-    public String loginChecking(@RequestBody MemberDTO memberDTO){
+    public String loginChecking(@RequestBody MemberDTO memberDTO) {
         MemberDTO dto = memberService.selectMemberDetail(memberDTO.getMbrId());
-        if(dto==null || passwordEncoder.matches(dto.getMbrPwd(),memberDTO.getMbrPwd()))
-        {
+        if (dto != null || passwordEncoder.matches( memberDTO.getMbrPwd(),dto.getMbrPwd())) {
             return dto.getMbrId();
-        }
-        else
-        {
+        } else {
             return null;
         }
-
     }
-
-
-
 }

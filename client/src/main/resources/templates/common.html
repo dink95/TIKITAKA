@@ -18,22 +18,19 @@
             <div class="col-6 col-md-4 order-3 order-md-3 text-right">
                 <!--메뉴 padding 수정-style-260-->
                 <div class="site-top-icons"> <!--버튼 사이즈 수정 style-218-->
-                    <ul>
-                        <!--로그인 하기 전-->
-                        <li><a href="signup" > <span class="sign up"  th:text="${header}=='home'? '회원가입' : '' "></span></a></li><!--회원가입-->
-                        <li><a th:text="${header}=='home' ? '/&nbsp' : '' "></a></li>
-                        <li><a href="login" ><span class="sign in"  th:text="${header}=='home'? '로그인' : '' "></span></a></li> <!--로그인-->
-                        <li><a th:text="${header}=='home' ? '/&nbsp' : '' "></a></li>
-                        <li><a href="#" ><span class="sign in"  th:text="${header}=='home'? '관리자로그인' : '' "></span></a></li> <!--관리자로그인-->
-                        <!--로그인 했을 때
-                        <li><a href="#"><span class="icon icon-person"></span></a></li>
-                      <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
-                      <li>
-                        <a href="cart.html" class="site-cart">
-                          <span class="icon icon-shopping_cart"></span>
-                          <span class="count">0</span>
-                        </a>
-                      </li> -->
+                    <ul >
+
+                        <li th:if="${session.mbrId == null}"><a href="signup" ><span class="sign in">&nbsp;회원가입</span></a></li> <!--로그인 전-->
+                        <li th:if="${session.mbrId != null}"><a><span class="sign in" th:text="${session.mbrId}"
+                                                                      style="color:#7971ea; font-size:16px; "></span></a></li> <!--로그인 후-->
+                        <li>/</li>
+                        <li th:if="${session.mbrId == null}"><a href="login" ><span class="sign in">&nbsp;&nbsp;로그인</span></a></li> <!--로그인 전-->
+                        <li th:if="${session.mbrId != null}"><a href="/logout" ><span class="sign in">&nbsp;&nbsp;로그아웃</span></a></li> <!--로그인 후-->
+
+                     <!--   <&#45;&#45; <li><a href="#" ><span class="sign in">&nbsp;&nbsp;관리자로그인</span></a></li> 관리자로그인&ndash;&gt;-->
+
+
+
                         <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
                         <!--js-menu toggle-->
                     </ul>
@@ -49,8 +46,8 @@
     <div class="container">
         <ul class="site-menu js-clone-nav d-none d-md-block" >
             <li th:classappend="${menu}=='home'? 'active' : ''"><a href="/" >Home</a></li>
-            <li th:classappend="${menu}=='menu1'? 'active' : ''"><a href="menu1 ">상품</a></li>
-            <li th:classappend="${menu}=='menu2'? 'active' : ''"><a href="#">상품2</a></li>
+            <li th:classappend="${menu}=='menu1'? 'active' : ''"><a href="menu1">상품</a></li>
+            <li th:classappend="${menu}=='menu2'? 'active' : ''"><a href="#">상품등록</a></li>
             <li th:classappend="${menu}=='menu3'? 'active' : ''"><a href="#">경매</a></li>
             <li th:classappend="${menu}=='menu4'? 'active' : ''"><a href="#">채팅</a></li>
             <li th:classappend="${menu}=='menu5'? 'active' : ''"><a href="#">내정보</a></li>
