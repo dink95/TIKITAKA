@@ -279,24 +279,24 @@ function CheckName(str)
 	}
 }
 
-function autoHypenPhone(str){
+function autoHypenPhone(str) {
 	str = str.replace(/[^0-9]/g, '');
 	var tmp = '';
-	if( str.length < 4){
+	if (str.length < 4) {
 		return str;
-	}else if(str.length < 7){
+	} else if (str.length < 7) {
 		tmp += str.substr(0, 3);
 		tmp += '-';
 		tmp += str.substr(3);
 		return tmp;
-	}else if(str.length < 11){
+	} else if (str.length < 11) {
 		tmp += str.substr(0, 3);
 		tmp += '-';
 		tmp += str.substr(3, 3);
 		tmp += '-';
 		tmp += str.substr(6);
 		return tmp;
-	}else{
+	} else {
 		tmp += str.substr(0, 3);
 		tmp += '-';
 		tmp += str.substr(3, 4);
@@ -305,10 +305,50 @@ function autoHypenPhone(str){
 		return tmp;
 	}
 	return str;
+}
+	function autoNumber(str){
+		str = str.replace(/[^0-9]/g, '');
+		return str;
 
 }
 
-/*중복확인필수*/
+$(".dropdown img.flag").addClass("flagvisibility");
+
+$(".dropdown dt a ").hover(function() {
+	$(".dropdown dd ul").toggle();
+});
+
+$(".dropdown dd a ").hover(function() {
+	$(".dropdown dd ul").toggle();
+});
+
+$(".dropdown dd ul li a").click(function() {
+	var text = $(this).html();
+	//$(".dropdown dt a span").html(text);
+	$(".dropdown dd ul").hide();
+	/* $("#result").html("Selected value is: " + getSelectedValue("sample"));*/
+});
+
+function getSelectedValue(id) {
+	return $("#" + id).find("dt a span.value").html();
+}
+
+$(document).bind('click', function(e) {
+	var $clicked = $(e.target);
+	if (! $clicked.parents().hasClass("dropdown"))
+		$(".dropdown dd ul").hide();
+});
+
+$(".dropdown img.flag").toggleClass("flagvisibility");
+
+function enterkey() {
+	if (window.event.keyCode == 13) {
+
+
+	}
+}
+
+
 
 
 

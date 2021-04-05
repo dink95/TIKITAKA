@@ -37,12 +37,24 @@ public class MemberController {
     @PostMapping("/mbr/login")
     public String loginChecking(@RequestBody MemberDTO memberDTO) {
         MemberDTO dto = memberService.selectMemberDetail(memberDTO.getMbrId());
-        if (dto != null || passwordEncoder.matches( memberDTO.getMbrPwd(),dto.getMbrPwd())) {
+        if (dto != null && passwordEncoder.matches( memberDTO.getMbrPwd(),dto.getMbrPwd())) {
             return dto.getMbrId();
         } else {
             return null;
         }
     }
+
+    @PostMapping("/mbr/idcheck")
+    public String idChecking(@RequestBody MemberDTO memberDTO) {
+        MemberDTO dto = memberService.selectMemberDetail(memberDTO.getMbrId());
+        if (dto != null) {
+            return dto.getMbrId();
+        } else {
+            return null;
+        }
+    }
+
+
 
     @GetMapping("/mbr/{id}/{name}/{phone}")
     public Boolean memberPasswordChecking(@PathVariable("id") String id,
@@ -59,15 +71,21 @@ public class MemberController {
 
     }
 
+
     @PostMapping("/mbr/id")
     public String findMemberId(@RequestBody MemberDTO memberDTO){
         return  memberService.findMemberId(memberDTO);
     }
+
 
     @PostMapping("/mbr/password")
     public int updatePassword(@RequestBody MemberDTO memberDTO){
         memberDTO.setMbrPwd(passwordEncoder.encode(memberDTO.getMbrPwd()));
         return memberService.updateMember(memberDTO);
     }
+
+
+
+
 
 }

@@ -22,6 +22,7 @@
     </select>
 
 
+
     <insert id="insertMember" parameterType="MemberDTO">
         insert
         mbr (mbr_id, mbr_pwd, mbr_nm, mbr_bday, mbr_addr, mbr_email, mbr_phone) values(

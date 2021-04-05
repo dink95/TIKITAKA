@@ -40,12 +40,12 @@
             <div class="row justify-content-center"><!--justify-content-center 추가-->
 
                 <div class="col-md-7">
-
-                    <div class="col-md-12 ">
-                        <h2 class="h3 mb-3 text-black  ">Login</h2> <!--login logo 위치 수정-->
+                    <div class="col-md-12 " style="display: flex; justify-content: space-between; align-items:flex-end;" >
+                        <h2 class="h3 mb-3 text-black"><span id="login"/>Login</span></h2> <!--login logo 위치 수정-->
+                        <dt><a id="admin" href="#admin" style="font-size: 14px;"><span onclick="adminCheck()" >관리자로그인</span></a></dt>
                     </div>
 
-                    <form name="loginform" action="login" method="get">
+                        <form name="loginform" action="login" method="post">
 
                         <div class="p-3 p-lg-5 border">
 
@@ -53,6 +53,7 @@
                                 <div class="col-md-12">
                                     <label for="c_id" class="text-black">id<span
                                             class="text-danger">*</span></label>
+                                  <input type="hidden"id="role" val=0>
                                     <input type="text"  class="form-control" id="c_id" name="c_id" required onkeyup="onKeyUp('#valid_id');" >
                                     <span id="valid_id" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
@@ -79,10 +80,9 @@
 
                             <div class="site-navbar row justify-content-end " role="banner">
                                 <!-- row, justify-content-end class 추가-->
-
                                 <div class="site-top-icons ">
-                                    <ul>
-                                        <li><a href="signup"> <span class="sign up">회원가입</span></a></li>
+                                    <ul id="signin">
+                                        <li><a href="signup"> <span class="sign in">회원가입</span></a></li>
                                         <!--회원가입-->
                                         /&nbsp&nbsp
                                         <li><a href="findid"><span class="sign in">아이디찾기</span></a></li>
@@ -117,18 +117,16 @@
 
 <script src="js/main.js"></script>
 <script>
-
-
+    /*로그인*/
     function goLogin(){
         $('#valid_loginError').text('');
         if(validation()) {
 
             var param ={
-                userId : document.querySelector('#c_id').value,
-                userPw : document.querySelector('#c_password').value
+                userId : $('#c_id').val(),
+                userPw : $('#c_password').val(),
+                userRole : $('#role').val()
             };
-
-
 
             $.ajax({
                 url: '/login/process',
@@ -145,35 +143,32 @@
 
             }).fail(function (data, textStatus, errorThrown){
                 console.log(textStatus);
-
             });
-
-
         }
     }
 
-
+    /*키 입력시 valid 메세지 삭제*/
     function onKeyUp(props){
         $(props).text('');
-    } /*키 입력시 valid 메세지 삭제*/
+    }
 
-
+    /*input valid 유효성*/
     function validation() {
         var result = true;
-
+        $('#valid_loginError').text('');
         $('#valid_id').text('');
         $('#valid_pw').text('');
         document.querySelectorAll("input").forEach(input => {
             var inValue = input.value;
             if(inValue == '' || $.trim(inValue).length == 0) {
                 document.forms[0].classList.add("was-validated");
-
-                if(input.id =='c_id') {
+                if (input.id == 'c_id') {
                     $('#valid_id').text('* 아이디를 입력해주세요');
-                }else {
+                    result= false;
+                } else if ($('#valid_id').text() == '') {
                     $('#valid_pw').text('* 패스워드를 입력해주세요');
+                    result = false;
                 }
-                result = false;
             }
         });
         return result;
@@ -181,6 +176,21 @@
 
 
 
+    /*관리자 로그인*/
+    $('#role').val(0);
+   function adminCheck() {
+            $('#login').text('Admin');
+            $('#signin').css('display', 'none');
+            $('#admin').text('사용자로그인');
+            $('#valid_id').text('');
+             $('#valid_pw').text('');
+            $('input[type=text]').val('');
+       $('input[type=password]').val('');
+        $(document).ready(function() {
+            $('#role').val(1);
+            $('#admin').attr('href', 'login');
+        })
+    }
 </script>
 
 </body>

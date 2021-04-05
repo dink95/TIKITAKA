@@ -19,7 +19,7 @@ public class MemberDTO {
     private  String mbrEmail;
     private  String mbrPhone;
 
-    public MemberDTO(String name, String id, String phone){
+    public MemberDTO( String name, String id, String phone){
         this.mbrNm = name;
         this.mbrId = id;
         this.mbrPhone = phone;

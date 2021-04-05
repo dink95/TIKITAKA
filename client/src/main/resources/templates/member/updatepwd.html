@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head >
-    <title>TIKITAKA &ndash; 아이디찾기 </title>
+    <title>TIKITAKA &ndash; 비밀번호 변경 </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -23,73 +23,69 @@
 <div class="site-wrap">
     <header class="site-navbar" role="banner">
         <!--replace 헤더-->
-        <div class="site-navbar-top" th:replace="common::header(findid)">
+        <div class="site-navbar-top" th:replace="common::header(updatepwd)">
         </div>
         <!------------->
-        <!--replace-signin---------------------------------->
-        <nav class="site-navigation text-right text-md-center" role="navigation" th:replace="common::menu(findid)">
+        <!--replace-menu-updatepwd---------------------------------->
+        <nav class="site-navigation text-right text-md-center" role="navigation" th:replace="common::menu(updatepwd)">
         </nav>
         <!---------------------------------------------------------->
     </header>
-    <!--replace logo-아이디찾기-->
-    <div class="bg-light py-3" th:replace="common::logo(findid)">
+    <!--replace logo-회원가입-->
+    <div class="bg-light py-3" th:replace="common::logo(updatepwd)">
     </div>
-    <!-------------------------->
-
+    <!----------------------->
     <div class="site-section margin-top-2" >
         <div class="container" >
             <div class="row justify-content-center"><!--justify-content-center 추가-->
 
                 <div class="col-md-7"  >
                     <div class="col-md-12 " >
-                        <h2 class="h3 mb-3 text-black  ">아이디 찾기</h2> <!--login logo 위치 수정-->
+                        <h2 class="h3 mb-3 text-black  " >비밀번호 재설정</h2> <!--login logo 위치 수정-->
                     </div>
-                    <form action="#" method="post">
+                    <form action="" method="post">
 
                         <div class="p-3 p-lg-5 border">
 
                             <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label for="c_id" class="text-black">확인용 Id <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="c_id" name="c_id"   required onkeyup="onKeyUp('#valid_id');">
+                                    <span id="valid_id" style="color: #ff0000;font-size: 10px;"></span>
+                                </div>
+
                                 <div class="col-md-12">
-                                    <label for="c_name" class="text-black">이름<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="c_name" name="c_name" placeholder="" required onkeyup="onKeyUp('#valid_name');">
-                                    <span id="valid_name" style="color: #ff0000;font-size: 10px;"></span>
+                                    <label for="c_password" class="text-black">새로운 비밀번호<span class="text-danger">*</span></label>
+                                    <input type="password" class="form-control" id="c_password" name="c_password" required onkeyup="onKeyUp('#valid_password');">
+                                    <span id="valid_password" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
                             </div>
-
 
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <label for="c_phone" class="text-black">전화번호 <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="c_phone" name="c_phone" value="010-"
-                                           required pattern="[0-1]{2,3}-[0-9]{3,4}-[0-9]{3,4}"
-                                           maxlength="13" onkeyup="onKeyUp('#valid_phone');">
-                                    <span id="valid_phone" style="color: #ff0000;font-size: 10px;"></span>
+                                    <label for="c_pwd_re" class="text-black">비밀번호 확인<span class="text-danger">*</span></label>
+                                    <input type="password" class="form-control" id="c_pwd_re" name="c_pwd_re" required onkeyup="onKeyUp('#valid_password_c');">
+                                    <span id="valid_password_c" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
                             </div>
-                            <span id="valid_findError" style="color: #ff0000;font-size: 10px;"></span>
 
                             <div class="form-group row">
                                 <div class="col-lg-12">
-                                    <input type="button" class="btn btn-primary btn-lg btn-block" value="아이디 찾기" onclick="goFindid()">
+                                    <input id="loginConfirm" type="button" class="btn btn-primary btn-lg btn-block" value="새로운 비밀번호로 설정하기" onclick="goUpdate()">
                                 </div>
                             </div>
-
                             <div class="site-navbar row justify-content-end " role="banner">
                                 <!-- row, justify-content-end class 추가-->
 
                                 <div class="site-top-icons ">
-                                    <ul >
-                                        <li><a href="findpwd"><span class="sign in">비밀번호 찾기</span></a></li>
-                                        <!--비밀번호찾기-->
-                                        /&nbsp&nbsp
-                                        <li><a href="login"><span class="sign in">로그인</span></a></li>
-                                        <!--로그인-->
+                                    <ul>
+                                        <li><a href="login"> <span class="sign up">로그인페이지</span></a></li>
+                                        <!--회원가입-->
                                     </ul>
                                 </div>
 
                             </div>
                         </div>
-
                     </form>
                 </div>
 
@@ -110,19 +106,19 @@
 <script src="js/aos.js"></script>
 
 <script src="js/main.js"></script>
-
-
 <script>
 
-    /*아이디찾기*/
-    function goFindid(){
+    /*새로운 비밀번호 등록*/
+    function goUpdate(){
         if(validation()) {
+
             var param ={
-                userNm : document.querySelector('#c_name').value,
-                userPhone : document.querySelector('#c_phone').value
+                userId : document.querySelector('#c_id').value,
+                userPwd : document.querySelector('#c_password').value
             };
+
             $.ajax({
-                url: '/login/findid',
+                url: '/login/update',
                 data: param,
                 type: 'post',
                 dataType : 'json'
@@ -130,55 +126,57 @@
                 if(data.resultCode == 200) {
                     alert(data.resultMsg);
                 }else {
-                    $('#valid_findError').text('*'+""+data.resultMsg);
+                    alert(data.resultMsg);
                     return false;
                 }
 
             }).fail(function (data, textStatus, errorThrown){
                 console.log(textStatus);
+                alert('ajax fail')
             });
         }
     }
 
-    /*숫자, 하이픈 자동입력*/
-    function initEvent() {
-        $('#c_phone').on('keyup', function (event) {
-            this.value = autoHypenPhone(this.value);
-        });
-    }
-    $(document).ready(function(){
-        initEvent();
-    });
 
     /*키 입력시 valid 메세지 삭제*/
     function onKeyUp(props){
+        if(props=='#valid_id'){
+            $('#isCheckedId').val('');
+        }
         $(props).text('');
+
     }
 
     /*input valid 유효성*/
     function validation() {
         var result = true;
 
-        $('#valid_name').text('');
-        $('#valid_phone').text('');
+        $('#valid_password').text('');
+
+
         document.querySelectorAll("input").forEach(input => {
             var inValue = input.value;
 
-            if(input.id == 'c_name' && !CheckName(inValue)) {
-                document.forms[0].classList.add("was-validated");
-                    $('#valid_name').text('* 이름를 정확히 입력해주세요');
-                result= false;
-            }else if($('#valid_name').text()=='') {
-                if (input.id == 'c_phone' &&(inValue == '' || $.trim(inValue).length != 13)) {
+            if ($('#valid_addr').text() == '') {
+                if (input.id == 'c_password' && $.trim(inValue).length == 0) {
                     document.forms[0].classList.add("was-validated");
-                    $('#valid_phone').text('* 전화번호를 정확히 입력해주세요');
+                    $('#valid_password').text('* 비밀번호를 입력해주세요');
+                    $('#valid_password_c').text('');
+                    result = false;
+                } else if ($('#valid_password').text() == '' && $('#c_password').val() != $('#c_pwd_re').val()) {
+                    document.forms[0].classList.add("was-validated");
+                    $('#valid_password_c').text('* 비밀번호 확인이 일치하지 않습니다.');
                     result = false;
                 }
             }
+
         });
         return result;
     }
 
 </script>
+
 </body>
 </html>
+
+
