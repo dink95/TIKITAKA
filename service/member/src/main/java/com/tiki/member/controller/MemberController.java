@@ -88,8 +88,6 @@ public class MemberController {
     @PatchMapping("/mbr/password")
     public int updatePassword(@RequestBody MemberDTO memberDTO){
         memberDTO.setMbrPwd(passwordEncoder.encode(memberDTO.getMbrPwd()));
-
-        System.out.println(memberDTO);
         return memberService.updateMember(memberDTO);
     }
 

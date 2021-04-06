@@ -72,7 +72,7 @@
         SET
             mbr_pwd = #{mbrPwd,jdbcType=VARCHAR}
         WHERE
-            mbr_id = #{id,jdbcType=VARCHAR}
+            mbr_id = #{mbrId,jdbcType=VARCHAR}
     </update>
 
 </mapper>

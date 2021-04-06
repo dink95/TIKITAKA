@@ -132,14 +132,14 @@
                 userPhone : document.querySelector('#c_phone').value
             };
             $.ajax({
-                url: "login/findpwd",
+                url: "/login/findpwd",
                 data: param,
                 type: 'get',
                 contentType:"application/json;charset=UTF-8",
                 dataType : 'json',
             }).done(function(data){
                 if(data.resultCode == 200) {
-                    alert(data.resultMsg);
+                    location.href=('/updatepwd');
                 }else {
                     alert(data.resultMsg);
                     return false;

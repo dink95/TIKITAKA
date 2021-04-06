@@ -192,7 +192,8 @@ public class MemberController {
         return view;
     }
 
-    @GetMapping("/login/findpwd") /*비밀번호 찾기*/
+    @RequestMapping("/login/findpwd") /*비밀번호 찾기*/
+    @ResponseBody
     public Map<String, Object> loginFindpwd(@RequestParam(value = "userId") String userId,
                                             @RequestParam(value = "userName") String userName,
                                             @RequestParam(value = "userPhone") String userPhone,
@@ -229,7 +230,7 @@ public class MemberController {
         return view;
     }
 
-    @PostMapping("/login/update")  /*비밀번호 재설정*/
+    @RequestMapping("/login/update")  /*비밀번호 재설정*/
     @ResponseBody
     public Map<String, Object> updatePwd(@RequestParam(value = "userId") String userId,
                                          @RequestParam(value = "userPwd") String userPwd) {
