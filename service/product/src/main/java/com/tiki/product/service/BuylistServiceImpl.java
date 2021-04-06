@@ -15,7 +15,7 @@ public class BuylistServiceImpl implements BuylistService {
     private BuylistMapper buylistMapper;
 
     @Override
-    public boolean insertBuylist(BuylistDTO params) {
+    public int insertBuylist(BuylistDTO params) {
 
         return buylistMapper.insertBuylist(params);
     }

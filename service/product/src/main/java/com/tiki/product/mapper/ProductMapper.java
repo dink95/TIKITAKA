@@ -1,9 +1,7 @@
 package com.tiki.product.mapper;
 
 import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
-
 import com.tiki.product.domain.ProductDTO;
 
 @Mapper
