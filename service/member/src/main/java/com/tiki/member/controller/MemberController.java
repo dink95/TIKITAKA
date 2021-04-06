@@ -2,10 +2,14 @@ package com.tiki.member.controller;
 
 import com.tiki.member.domain.MemberDTO;
 import com.tiki.member.service.MemberService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.logging.Logger;
+
+@Slf4j
 @RestController
 public class MemberController {
 
@@ -62,6 +66,9 @@ public class MemberController {
                                           @PathVariable("phone") String phone){
         MemberDTO dto = new MemberDTO(name, id, phone);
         String exists = memberService.existPwd(dto);
+
+        System.out.println(id +":"+name+":"+phone);
+
         if(exists==null){
             return false;
         }
@@ -81,6 +88,8 @@ public class MemberController {
     @PatchMapping("/mbr/password")
     public int updatePassword(@RequestBody MemberDTO memberDTO){
         memberDTO.setMbrPwd(passwordEncoder.encode(memberDTO.getMbrPwd()));
+
+        System.out.println(memberDTO);
         return memberService.updateMember(memberDTO);
     }
 

@@ -3,9 +3,11 @@ package com.tiki.member.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class MemberDTO {
 
     private  String mbrId;
@@ -24,6 +26,5 @@ public class MemberDTO {
         this.mbrId = id;
         this.mbrPhone = phone;
     }
-
 
 }

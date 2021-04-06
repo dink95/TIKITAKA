@@ -63,7 +63,7 @@
           AND
             mbr_phone = #{mbrPhone,jdbcType=VARCHAR}
             AND
-            mbr_id = #{id,jdbcType=VARCHAR}
+            mbr_id = #{mbrId,jdbcType=VARCHAR}
     </select>
 
     <update id="updateMember" parameterType="MemberDTO">
