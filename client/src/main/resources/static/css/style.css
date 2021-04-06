@@ -834,3 +834,23 @@ a {
   margin-bottom: 20px; }
 
 
+
+
+.dropdown dd { position:relative; }
+.dropdown dd, .dropdown dt, .dropdown ul { margin:0px; padding:0px; }
+.dropdown dt a span {cursor:pointer;}
+.dropdown dd ul {  display:none;
+  position:absolute; top:-1px; width:auto; min-width:120px; list-style:none; text-align:left;}
+.dropdown span.value { display:none;}
+.dropdown dd ul li a { display:block;}
+.dropdown img.flag { border:none; vertical-align:middle;padding:11px;}
+.flagvisibility { display:none;}
+
+dt > a:after{
+
+  content: '\e315';
+ font-size: 16px;
+  right: -5px;
+
+  font-family: 'icomoon';
+}

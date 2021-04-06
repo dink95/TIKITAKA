@@ -35,4 +35,40 @@ public class MemberService {
                 .block();
     }
 
+    public String idcheck(MemberDTO memberDTO){
+        return webClient.post()
+                .uri("/mbr/idcheck")
+                .body(Mono.just(memberDTO), MemberDTO.class)
+                .retrieve()
+                .bodyToMono(String.class) //반환정보
+                .block();
+    }
+
+    public String findid(MemberDTO memberDTO){
+        return webClient.post()
+                .uri("/mbr/id")
+                .body(Mono.just(memberDTO), MemberDTO.class)
+                .retrieve()
+                .bodyToMono(String.class) //반환정보
+                .block();
+    }
+
+    public Boolean findpwd(String id, String name ,String phone){
+        String url="/mbr/" + id + "/"+ name +"/"+ phone;
+        return webClient.get()
+                .uri(url)
+                //.body(Mono.just(memberDTO), MemberDTO.class)
+                .retrieve()
+                .bodyToMono(Boolean.class) //반환정보
+                .block();
+    }
+
+    public int update(MemberDTO memberDTO) {
+        return webClient.post()
+                .uri("/mbr/password")
+                .body(Mono.just(memberDTO), MemberDTO.class)
+                .retrieve()
+                .bodyToMono(Integer.class) //반환정보
+                .block();
+    }
 }

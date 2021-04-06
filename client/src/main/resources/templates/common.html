@@ -11,7 +11,7 @@
 
             <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
                 <div class="site-logo" >
-                    <a href="#" class="js-logo-clone"  >tikitaka</a><!--로고크기 style-202-->
+                    <a href="#" class="js-logo-clone">tikitaka</a><!--로고크기 style-202-->
                 </div>
             </div>
 
@@ -21,16 +21,10 @@
                     <ul >
 
                         <li th:if="${session.mbrId == null}"><a href="signup" ><span class="sign in">&nbsp;회원가입</span></a></li> <!--로그인 전-->
-                        <li th:if="${session.mbrId != null}"><a><span class="sign in" th:text="${session.mbrId}"
-                                                                      style="color:#7971ea; font-size:16px; "></span></a></li> <!--로그인 후-->
-                        <li>/</li>
-                        <li th:if="${session.mbrId == null}"><a href="login" ><span class="sign in">&nbsp;&nbsp;로그인</span></a></li> <!--로그인 전-->
+                        <li th:if="${session.mbrId != null}"><a><span class="sign in" th:text="${session.mbrId}" style="color:#7971ea; font-size:16px; "></span></a></li> <!--로그인 후-->
+                        <li>/&nbsp;&nbsp;</li>
+                        <li th:if="${session.mbrId == null}"><a href="login"><span class="sign in">로그인</span></a></li><!--로그인 전-->
                         <li th:if="${session.mbrId != null}"><a href="/logout" ><span class="sign in">&nbsp;&nbsp;로그아웃</span></a></li> <!--로그인 후-->
-
-                     <!--   <&#45;&#45; <li><a href="#" ><span class="sign in">&nbsp;&nbsp;관리자로그인</span></a></li> 관리자로그인&ndash;&gt;-->
-
-
-
                         <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
                         <!--js-menu toggle-->
                     </ul>
@@ -45,12 +39,22 @@
 <nav class="site-navigation text-right text-md-center" role="navigation" th:fragment="menu(menu)"><!--메뉴 간격 수정 style-273-->
     <div class="container">
         <ul class="site-menu js-clone-nav d-none d-md-block" >
-            <li th:classappend="${menu}=='home'? 'active' : ''"><a href="/" >Home</a></li>
-            <li th:classappend="${menu}=='menu1'? 'active' : ''"><a href="menu1">상품</a></li>
-            <li th:classappend="${menu}=='menu2'? 'active' : ''"><a href="#">상품등록</a></li>
-            <li th:classappend="${menu}=='menu3'? 'active' : ''"><a href="#">경매</a></li>
-            <li th:classappend="${menu}=='menu4'? 'active' : ''"><a href="#">채팅</a></li>
-            <li th:classappend="${menu}=='menu5'? 'active' : ''"><a href="#">내정보</a></li>
+            <li th:classappend="${menu}=='home'? 'active' : ''"><a href="/" >Home</a>
+            <li th:classappend="${menu}=='menu1'? 'active' : ''">
+                <a th:if="${session.mbrId == null}" href="login" >상품</a>
+                <a th:if="${session.mbrId != null}" href="#" >상품</a></li>
+            <li th:classappend="${menu}=='menu2'? 'active' : ''">
+                <a th:if="${session.mbrId == null}" href="login" >상품등록</a>
+                <a th:if="${session.mbrId != null}" href="#" >상품등록</a></li>
+            <li th:classappend="${menu}=='menu3'? 'active' : ''">
+                <a th:if="${session.mbrId == null}" href="login" >경매</a>
+                <a th:if="${session.mbrId != null}" href="#" >경매</a></li>
+            <li th:classappend="${menu}=='menu4'? 'active' : ''">
+                <a th:if="${session.mbrId == null}" href="login" >채팅</a>
+                <a th:if="${session.mbrId != null}" href="#" >채팅</a></li>
+            <li th:classappend="${menu}=='menu5'? 'active' : ''">
+                <a th:if="${session.mbrId == null}" href="login" >내정보</a>
+                <a th:if="${session.mbrId != null}" href="#" >내정보</a></li>
         </ul>
     </div>
 </nav>
@@ -63,12 +67,16 @@
             <div class="col-md-12 mb-0"><a href="/">Home</a> /</span>
                 <span class="text-black" th:text="${logo}=='login'? 'Login' : '' "></span>
                 <span class="text-black font-14" th:text="${logo}=='signup'? '회원가입' :'' "></span>
-                <span class="text-black font-14" th:text="${logo}=='findid'? '아이디찾기' : '' "></span> <!--폰트추가-->
+                <span class="text-black font-14" th:text="${logo}=='findid'? '아이디찾기' : '' "></span>
                 <span class="text-black font-14" th:text="${logo}=='findpwd'? '비밀번호찾기' :'' "></span>
-                <span class="text-black" th:text="${logo}=='menu1'? 'menu1' :'' "></span>
+                <span class="text-black font-14" th:text="${logo}=='updatepwd'? '비밀번호 재설정' :'' "></span>
+                <span class="text-black font-14" th:text="${logo}=='menu1'? 'menu1' :'' "></span>
             </div>
         </div>
     </div>
 </div>
 <!-------------------->
+<script>
+
+</script>
 </html>
