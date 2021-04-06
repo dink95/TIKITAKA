@@ -54,9 +54,8 @@ public class MemberService {
     }
 
     public Boolean findpwd(String id, String name ,String phone){
-        String url="/mbr/" + id + "/"+ name +"/"+ phone;
         return webClient.get()
-                .uri(url)
+                .uri("/mbr/{id}/{name}/{phone}",id,name,phone)
                 //.body(Mono.just(memberDTO), MemberDTO.class)
                 .retrieve()
                 .bodyToMono(Boolean.class) //반환정보
@@ -64,11 +63,12 @@ public class MemberService {
     }
 
     public int update(MemberDTO memberDTO) {
-        return webClient.post()
+        return webClient.patch()
                 .uri("/mbr/password")
                 .body(Mono.just(memberDTO), MemberDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
                 .block();
     }
+
 }
