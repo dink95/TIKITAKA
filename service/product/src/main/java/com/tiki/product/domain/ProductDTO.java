@@ -24,7 +24,7 @@ public class ProductDTO {
     private int catNo;
 
     /** 판매자ID(fk) */
-    private int selId;
+    private String selId;
 
     /** 거래방법 */
     private String way;

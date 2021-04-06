@@ -32,8 +32,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO getProductDetail(int prodNo) {
-        return productMapper.selectProductDetail(prod_no);
+    public ProductDTO selectProductDetail(int prodNo) {
+        return productMapper.selectProductDetail(prodNo);
     }
 
     @Override

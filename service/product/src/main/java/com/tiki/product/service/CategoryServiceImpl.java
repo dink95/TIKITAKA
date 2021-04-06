@@ -17,7 +17,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public int insertCategory(CategoryDTO params) {
 
-        return queryResult = categoryMapper.insertCategory(params);
+        return categoryMapper.insertCategory(params);
     }
 
     @Override
