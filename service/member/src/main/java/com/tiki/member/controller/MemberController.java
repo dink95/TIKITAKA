@@ -78,7 +78,7 @@ public class MemberController {
     }
 
 
-    @PostMapping("/mbr/password")
+    @PatchMapping("/mbr/password")
     public int updatePassword(@RequestBody MemberDTO memberDTO){
         memberDTO.setMbrPwd(passwordEncoder.encode(memberDTO.getMbrPwd()));
         return memberService.updateMember(memberDTO);
