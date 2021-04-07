@@ -20,6 +20,13 @@
 
 <body>
 
+<div id="modal_overlay">
+    <div id="modal_main">
+        <h1 id="modal_content"></h1>
+        <a id="modal_button" class="btn btn-primary btn-lg" href=""></a>
+    </div>
+</div>
+
 <div class="site-wrap">
     <header class="site-navbar" role="banner">
         <!--replace 헤더-->
@@ -271,8 +278,7 @@
     /*회원가입*/
     function goSignup() {
         if (validation()) {
-
-            var param = {
+        var param = {
                 mbrId:  $('#c_id').val(),
                 mbrPwd: $('#c_password').val(),
                 mbrNm : $('#c_name').val(),
@@ -295,8 +301,7 @@
                 dataType : 'json'
             }).done(function(data){
                 if(data.resultCode == 200) {
-                    alert(data.resultMsg);
-                    location.href = '/';
+                    modal(data.resultMsg,'확인','/');
                 }else {
                     alert(data.resultMsg);
                     return false;

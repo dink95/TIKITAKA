@@ -34,19 +34,14 @@ public class MemberController {
     @ResponseBody
     public Map<String, Object> loginAccess(@RequestParam(value = "userId") String userId,
                                            @RequestParam(value = "userPw") String userPw,
-                                           @RequestParam(value = "userRole") Boolean userRole,
                                            HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         MemberDTO memberDTO = new MemberDTO();
 
         Map<String, Object> resultMap = new HashMap<>();
 
-
-
         memberDTO.setMbrId(userId);
         memberDTO.setMbrPwd(userPw);
-        memberDTO.setMbrRole(userRole);
-
 
         Boolean role =memberDTO.isMbrRole();
 
@@ -119,7 +114,7 @@ public class MemberController {
         return resultMap;
     }
 
-    @RequestMapping("signup/idcheck") /*아이디 중복체크*/
+    @RequestMapping("login/idcheck") /*아이디 중복체크*/
     @ResponseBody
     public Map<String, Object> loginAccess(@RequestParam(value = "userId") String userId) {
         ModelAndView view = new ModelAndView();
@@ -156,8 +151,7 @@ public class MemberController {
     @RequestMapping("/login/findid") /*아이디찾기*/
     @ResponseBody
     public Map<String, Object> loginFindid(@RequestParam(value = "userNm") String userName,
-                                           @RequestParam(value = "userPhone") String userPhone,
-                                           HttpServletRequest request) {
+                                           @RequestParam(value = "userPhone") String userPhone) {
         ModelAndView view = new ModelAndView();
         MemberDTO memberDTO = new MemberDTO();
 
@@ -170,7 +164,6 @@ public class MemberController {
 
         try {
             if (mbrId != null) {
-                request.getSession().setAttribute("mbrId", mbrId);
                 resultMap.put("resultCode", 200);
                 resultMap.put("resultMsg", "회원님의 아이디는" + "" + mbrId + "입니다.");
             } else {
@@ -196,8 +189,7 @@ public class MemberController {
     @ResponseBody
     public Map<String, Object> loginFindpwd(@RequestParam(value = "userId") String userId,
                                             @RequestParam(value = "userName") String userName,
-                                            @RequestParam(value = "userPhone") String userPhone,
-                                            HttpServletRequest request) {
+                                            @RequestParam(value = "userPhone") String userPhone) {
         ModelAndView view = new ModelAndView();
         Map<String, Object> resultMap = new HashMap<>();
 
@@ -208,11 +200,10 @@ public class MemberController {
             if (exist) {
                 resultMap.put("resultCode", 200);
                 resultMap.put("resultMsg", "ok");
-                System.out.println("ok");
+                resultMap.put("resultId",userId);
             } else {
                 resultMap.put("resultCode", 400);
-                resultMap.put("resultMsg", "no");
-                System.out.println("no");
+                resultMap.put("resultMsg", "정보가 일치하지 않습니다.");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -232,13 +223,12 @@ public class MemberController {
 
     @RequestMapping("/login/update")  /*비밀번호 재설정*/
     @ResponseBody
-    public Map<String, Object> updatePwd(@RequestParam(value = "userId") String userId,
-                                         @RequestParam(value = "userPwd") String userPwd) {
+    public Map<String, Object> updatePwd( @RequestParam(value = "userId") String userId,
+                                             @RequestParam(value = "userPwd") String userPwd) {
 
         MemberDTO memberDTO = new MemberDTO();
 
         Map<String, Object> resultMap = new HashMap<>();
-
         memberDTO.setMbrId(userId);
         memberDTO.setMbrPwd(userPwd);
 
@@ -250,7 +240,7 @@ public class MemberController {
 
             if (result > 0) {
                 resultMap.put("resultCode", 200);
-                resultMap.put("resultMsg", "비밀번호가 변경되었습니다. 다시 로그인해주세요.");
+                resultMap.put("resultMsg", "비밀번호가 변경되었습니다.");
             } else {
                 resultMap.put("resultCode", 400);
                 resultMap.put("resultMsg", "비밀번호 변경이 실패하였습니다. 관리자에게 문의하세요.");

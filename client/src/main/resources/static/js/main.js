@@ -348,6 +348,20 @@ function enterkey() {
 	}
 }
 
+function modal(content,button, href){
+	$('#modal_overlay').css('display','flex');
+	$('#modal_overlay').animate({opacity:'1'},300);
+	$('#modal_content').text(content);
+	$('#modal_button').text(button);
+	$('#modal_button').attr('href',href);
+
+}
+
+/*input 포커스*/
+var len = $('input').val().length;
+$('input').focus();
+$('input')[0].setSelectionRange(len, len);
+
 
 
 
