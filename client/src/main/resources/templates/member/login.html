@@ -38,11 +38,11 @@
     <div class="site-section margin-top-2"><!--margin class-->
         <div class="container">
             <div class="row justify-content-center"><!--justify-content-center 추가-->
-
                 <div class="col-md-7">
                     <div class="col-md-12 " style="display: flex; justify-content: space-between; align-items:flex-end;" >
                         <h2 class="h3 mb-3 text-black"><span id="login"/>Login</span></h2> <!--login logo 위치 수정-->
-                        <dt><a id="admin" href="#admin" style="font-size: 14px;"><span onclick="adminCheck()" >관리자로그인</span></a></dt>
+                        <dt><a id="admin"style="font-size: 14px; color:#7972ea; cursor: pointer;">
+                            <span id="cont" onclick="adminCheck()">관리자로그인</span></a></dt>
                     </div>
 
                         <form name="loginform" action="login" method="post">
@@ -53,7 +53,7 @@
                                 <div class="col-md-12">
                                     <label for="c_id" class="text-black">id<span
                                             class="text-danger">*</span></label>
-                                  <input type="hidden"id="role" val=0>
+                                    <input type="hidden" id="checkAdmin" name="checkAdmin" value="">
                                     <input type="text"  class="form-control" id="c_id" name="c_id" required onkeyup="onKeyUp('#valid_id');" >
                                     <span id="valid_id" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
@@ -125,7 +125,6 @@
             var param ={
                 userId : $('#c_id').val(),
                 userPw : $('#c_password').val(),
-                userRole : $('#role').val()
             };
 
             $.ajax({
@@ -158,39 +157,44 @@
         $('#valid_loginError').text('');
         $('#valid_id').text('');
         $('#valid_pw').text('');
-        document.querySelectorAll("input").forEach(input => {
-            var inValue = input.value;
-            if(inValue == '' || $.trim(inValue).length == 0) {
+            var cid = $('#c_id').val();
+            var cpassword = $('#c_password').val();
+            if(cid == '' || $.trim(cid).length == 0) {
                 document.forms[0].classList.add("was-validated");
-                if (input.id == 'c_id') {
                     $('#valid_id').text('* 아이디를 입력해주세요');
                     result= false;
                 } else if ($('#valid_id').text() == '') {
+                if(cpassword == '' || $.trim(cpassword).length == 0){
                     $('#valid_pw').text('* 패스워드를 입력해주세요');
                     result = false;
                 }
-            }
-        });
+            };
         return result;
     }
 
 
 
     /*관리자 로그인*/
-    $('#role').val(0);
-   function adminCheck() {
-            $('#login').text('Admin');
-            $('#signin').css('display', 'none');
-            $('#admin').text('사용자로그인');
-            $('#valid_id').text('');
-             $('#valid_pw').text('');
-            $('input[type=text]').val('');
-       $('input[type=password]').val('');
-        $(document).ready(function() {
-            $('#role').val(1);
-            $('#admin').attr('href', 'login');
-        })
+
+  function adminCheck() {
+       if($('#checkAdmin').val()=='') {
+           $('#login').text('Admin');
+           $('#checkAdmin').val('admin');
+           $('#cont').text('사용자로그인');
+           $('#valid_id').text('');
+           $('#valid_pw').text('');
+           $('#signin').css('display', 'none');
+
+       }else{
+           $('#login').text('Login');
+           $('#checkAdmin').val('');
+           $('#cont').text('관리자로그인');
+           $('#valid_id').text('');
+           $('#valid_pw').text('');
+           $('#signin').css('display', 'block');
+       }
     }
+
 </script>
 
 </body>
