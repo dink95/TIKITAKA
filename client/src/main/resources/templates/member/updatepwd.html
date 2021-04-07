@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head >
+    <title>TIKITAKA &ndash; 비밀번호 변경 </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/aos.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div id="modal_overlay">
+    <div id="modal_main">
+        <h1 id="modal_content"></h1>
+        <a id="modal_button" class="btn btn-primary btn-lg" href=""></a>
+    </div>
+</div>
+
+
+<div class="site-wrap">
+    <header class="site-navbar" role="banner">
+        <!--replace 헤더-->
+        <div class="site-navbar-top" th:replace="common::header(updatepwd)">
+        </div>
+        <!------------->
+        <!--replace-menu-updatepwd---------------------------------->
+        <nav class="site-navigation text-right text-md-center" role="navigation" th:replace="common::menu(updatepwd)">
+        </nav>
+        <!---------------------------------------------------------->
+    </header>
+    <!--replace logo-회원가입-->
+    <div class="bg-light py-3" th:replace="common::logo(updatepwd)">
+    </div>
+    <!----------------------->
+    <div class="site-section margin-top-2" >
+        <div class="container" >
+            <div class="row justify-content-center"><!--justify-content-center 추가-->
+
+                <div class="col-md-7"  >
+                    <div class="col-md-12 " >
+                        <h2 class="h3 mb-3 text-black  " >비밀번호 재설정</h2> <!--login logo 위치 수정-->
+                    </div>
+                    <form action="" method="post">
+                        <input type="hidden" id="userId" th:value="${session.userId}">
+                        <div class="p-3 p-lg-5 border">
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_password" class="text-black">새로운 비밀번호<span class="text-danger">*</span></label>
+                                    <input type="password" class="form-control" id="c_password" name="c_password" required onkeyup="onKeyUp('#valid_password');">
+                                    <span id="valid_password" style="color: #ff0000;font-size: 10px;"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_pwd_re" class="text-black">비밀번호 확인<span class="text-danger">*</span></label>
+                                    <input type="password" class="form-control" id="c_pwd_re" name="c_pwd_re" required onkeyup="onKeyUp('#valid_password_c');">
+                                    <span id="valid_password_c" style="color: #ff0000;font-size: 10px;"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-lg-12">
+                                    <input id="loginConfirm" type="button" class="btn btn-primary btn-lg btn-block" value="비밀번호 변경" onclick="goUpdate()">
+                                </div>
+                            </div>
+                            <div class="site-navbar row justify-content-end " role="banner">
+                                <!-- row, justify-content-end class 추가-->
+
+                                <div class="site-top-icons ">
+                                    <ul>
+                                        <li><a href="login"> <span class="sign up">로그인페이지</span></a></li>
+                                        <!--회원가입-->
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/aos.js"></script>
+
+<script src="js/main.js"></script>
+<script>
+
+    /*새로운 비밀번호 등록*/
+    function goUpdate(){
+        if(validation()) {
+
+            var param ={
+                userId : document.querySelector('#userId').value,
+                userPwd : document.querySelector('#c_password').value
+            };
+
+            $.ajax({
+                url: '/login/update',
+                data: param,
+                type: 'post',
+                dataType : 'json'
+            }).done(function(data){
+                if(data.resultCode == 200) {
+                    modal(data.resultMsg,'확인','/')
+                }else {
+                    alert(data.resultMsg);
+                    return false;
+                }
+
+            }).fail(function (data, textStatus, errorThrown){
+                console.log(textStatus);
+                alert('ajax fail')
+            });
+        }
+    }
+
+
+    /*키 입력시 valid 메세지 삭제*/
+    function onKeyUp(props){
+        if(props=='#valid_id'){
+            $('#isCheckedId').val('');
+        }
+        $(props).text('');
+
+    }
+
+    /*input valid 유효성*/
+    function validation() {
+        var result = true;
+
+        $('#valid_password').text('');
+        $('#valid_password_c').text('');
+
+        document.querySelectorAll("input[type=password]").forEach(input => {
+            var inValue = input.value;
+
+                if (input.id == 'c_password' && $.trim(inValue).length == 0) {
+                    document.forms[0].classList.add("was-validated");
+                    $('#valid_password').text('* 비밀번호를 입력해주세요');
+                    $('#valid_password_c').text('');
+                    result = false;
+                } else if ($('#valid_password').text() == '' && $('#c_password').val() != $('#c_pwd_re').val()) {
+                    document.forms[0].classList.add("was-validated");
+                    $('#valid_password_c').text('* 비밀번호 확인이 일치하지 않습니다.');
+                    result = false;
+                }
+
+
+        });
+        return result;
+    }
+
+
+
+</script>
+
+</body>
+</html>
+
+
