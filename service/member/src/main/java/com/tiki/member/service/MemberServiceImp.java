@@ -18,6 +18,21 @@ public class MemberServiceImp implements MemberService{
     }
 
     @Override
+    public String existId(String id) {
+        return mapper.existId(id);
+    }
+
+    @Override
+    public String existPhone(String phone) {
+        return mapper.existPhone(phone);
+    }
+
+    @Override
+    public String existEmail(String email) {
+        return mapper.existEmail(email);
+    }
+
+    @Override
     public int insertMember(MemberDTO memberDTO) {
         return mapper.insertMember(memberDTO);
     }
