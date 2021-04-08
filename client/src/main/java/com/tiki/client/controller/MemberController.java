@@ -2,6 +2,8 @@ package com.tiki.client.controller;
 import com.tiki.client.domain.MemberDTO;
 import com.tiki.client.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -115,7 +117,7 @@ public class MemberController {
         return resultMap;
     }
 
-    @RequestMapping("signup/idcheck") /*아이디 중복체크*/
+    @RequestMapping("/login/idcheck") /*아이디 중복체크*/
     @ResponseBody
     public Map<String, Object> loginAccess(@RequestParam(value = "userId") String userId) {
         ModelAndView view = new ModelAndView();
@@ -179,12 +181,25 @@ public class MemberController {
         return resultMap;
     }
 
-    @GetMapping(value = "/findpwd")  /*비밀번호찾기 페이지*/
-    public ModelAndView findpwd() {
-        ModelAndView view = new ModelAndView();
-        view.setViewName("member/findpwd");
-        return view;
+    @RequestMapping(value = "/findpwd")  /*비밀번호찾기 페이지*/
+    public String findpwd(Model model, HttpServletRequest request) {
+        Map<String, Object> resultMap = new HashMap<>();
+        String result=null;
+        try {
+            String referer = request.getHeader("REFERER");
+            if (referer!=null) {
+                result= "/member/findpwd";
+            } else{
+                result= "/index";
+                model.addAttribute("modelCode", 400);
+                model.addAttribute("modelMsg", "올바른 접근이 아닙니다.");
+            }
+        } catch (Exception e) {
+            result= "";
+        }
+        return result;
     }
+
 
     @RequestMapping("/login/findpwd") /*비밀번호 찾기*/
     @ResponseBody
@@ -216,7 +231,7 @@ public class MemberController {
 
 
     @RequestMapping(value = "/updatepwd")  /*비밀번호찾기 페이지*/
-    public String findpwd(Model model, HttpServletRequest request) {
+    public String updatepwd(Model model, HttpServletRequest request) {
         Map<String, Object> resultMap = new HashMap<>();
         String result=null;
         try {
