@@ -25,6 +25,33 @@ public class MemberController {
         return memberService.selectMemberDetail(id);
     }
 
+    @GetMapping("/mbr/existence/id/{id}")
+    public boolean existIdCheck(@PathVariable("id") String id){
+        if(memberService.existId(id)!=null){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+
+    @GetMapping("/mbr/existence/phone/{phone}")
+    public boolean existPhoneCheck(@PathVariable("phone") String phone){
+        if(memberService.existPhone(phone)!=null){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @GetMapping("/mbr/existence/email/{email}")
+    public boolean existEmailCheck(@PathVariable("email") String email){
+        if(memberService.existEmail(email)!=null){
+            return true;
+        }else {
+            return false;
+        }    }
+
     @PostMapping("/mbr")
     public int insertMember(@RequestBody MemberDTO memberDTO){
         MemberDTO dto = memberDTO;

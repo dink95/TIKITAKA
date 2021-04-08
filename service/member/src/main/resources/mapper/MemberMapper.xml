@@ -21,6 +21,23 @@
         where mbr_id = #{id,jdbcType=VARCHAR}
     </select>
 
+    <select id="existId" resultType="String" parameterType="String">
+        select mbr_id
+        from mbr
+        where mbr_id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <select id="existPhone" resultType="String" parameterType="String">
+        select mbr_id
+        from mbr
+        where mbr_phone = #{phone,jdbcType=VARCHAR}
+    </select>
+
+    <select id="existEmail" resultType="String" parameterType="String">
+        select mbr_id
+        from mbr
+        where mbr_email = #{email,jdbcType=VARCHAR}
+    </select>
 
 
     <insert id="insertMember" parameterType="MemberDTO">

@@ -7,11 +7,11 @@ MBR_PWD varbinary(60) NOT NULL,
 MBR_NM varchar(20) NOT NULL,
 MBR_BDAY varchar(20) NOT NULL,
 MBR_ADDR varchar(30) NOT NULL,
-MBR_ROLE boolean NOT NULL default false,
-MBR_POINTS INT default 0,
-MBR_GRADE varchar(20),
-MBR_EMAIL varchar(30) NOT NULL,
-MBR_PHONE varchar(20) NOT NULL 
+MBR_ROLE boolean NOT NULL,
+MBR_POINTS INT NOT NULL,
+MBR_GRADE varchar(20) NOT NULL,
+MBR_EMAIL varchar(30) NOT NULL unique,
+MBR_PHONE varchar(20) NOT NULL unique 
 
 );
 
