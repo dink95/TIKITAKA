@@ -43,7 +43,6 @@
     <div class="bg-light py-3" th:replace="common::logo(findpwd)">
     </div>
     <!------------------------>
-    <input type="hidden" id="resultId" value="">
     <div id="Find" class="site-section margin-top-2" style="display: block;">
         <div class="container" >
             <div class="row justify-content-center"><!--justify-content-center 추가-->
@@ -196,8 +195,7 @@
                 dataType : 'json',
             }).done(function(data){
                 if(data.resultCode == 200) {
-                    $('#resultId').val(data.resultId);
-                    goUpdatepage();
+                    location.href='/updatepwd';
                 }else {
                     $('#valid_findError').text(data.resultMsg);
                     return false;
@@ -207,35 +205,6 @@
                 alert("ajax fail");
             });
 
-        }
-    }
-
-    /*새로운 비밀번호 등록*/
-    function goUpdate(){
-        if(validation_update()) {
-
-            var param ={
-                userId : document.querySelector('#resultId').value,
-                userPwd : document.querySelector('#c_password').value
-            };
-
-            $.ajax({
-                url: '/login/update',
-                data: param,
-                type: 'post',
-                dataType : 'json'
-            }).done(function(data){
-                if(data.resultCode == 200) {
-                    modal(data.resultMsg,'확인','/')
-                }else {
-                    alert(data.resultMsg);
-                    return false;
-                }
-
-            }).fail(function (data, textStatus, errorThrown){
-                console.log(textStatus);
-                alert('ajax fail')
-            });
         }
     }
 
@@ -288,35 +257,6 @@
         return result;
     }
 
-    /*input valid 유효성*/
-    function validation_update() {
-        var result = true;
-        $('#valid_password').text('');
-        $('#valid_password_c').text('');
-        document.querySelectorAll("input[type=password]").forEach(input => {
-            var inValue = input.value;
-
-                if (input.id == 'c_password' && $.trim(inValue).length == 0) {
-                    document.forms[0].classList.add("was-validated");
-                    $('#valid_password').text('* 비밀번호를 입력해주세요');
-                    $('#valid_password_c').text('');
-                    result = false;
-                } else if ($('#valid_password').text() == '' && $('#c_password').val() != $('#c_pwd_re').val()) {
-                    document.forms[0].classList.add("was-validated");
-                    $('#valid_password_c').text('* 비밀번호 확인이 일치하지 않습니다.');
-                    result = false;
-                }
-
-
-        });
-        return result;
-    }
-
-
-    function goUpdatepage(){
-        $('#Find').css('display','none');
-        $('#Update').css('display','block');
-    }
 
 </script>
 </body>

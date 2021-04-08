@@ -3,6 +3,7 @@ import com.tiki.client.domain.MemberDTO;
 import com.tiki.client.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -114,7 +115,7 @@ public class MemberController {
         return resultMap;
     }
 
-    @RequestMapping("login/idcheck") /*아이디 중복체크*/
+    @RequestMapping("signup/idcheck") /*아이디 중복체크*/
     @ResponseBody
     public Map<String, Object> loginAccess(@RequestParam(value = "userId") String userId) {
         ModelAndView view = new ModelAndView();
@@ -189,8 +190,8 @@ public class MemberController {
     @ResponseBody
     public Map<String, Object> loginFindpwd(@RequestParam(value = "userId") String userId,
                                             @RequestParam(value = "userName") String userName,
-                                            @RequestParam(value = "userPhone") String userPhone) {
-        ModelAndView view = new ModelAndView();
+                                            @RequestParam(value = "userPhone") String userPhone,
+                                            HttpServletRequest request) {
         Map<String, Object> resultMap = new HashMap<>();
 
         Boolean exist = false;
@@ -200,7 +201,7 @@ public class MemberController {
             if (exist) {
                 resultMap.put("resultCode", 200);
                 resultMap.put("resultMsg", "ok");
-                resultMap.put("resultId",userId);
+                request.getSession().setAttribute("userId", userId);
             } else {
                 resultMap.put("resultCode", 400);
                 resultMap.put("resultMsg", "정보가 일치하지 않습니다.");
@@ -214,11 +215,23 @@ public class MemberController {
     }
 
 
-    @GetMapping(value = "/updatepwd")  /*비밀번호변경 페이지*/
-    public ModelAndView updatepwd() {
-        ModelAndView view = new ModelAndView();
-        view.setViewName("member/updatepwd");
-        return view;
+    @RequestMapping(value = "/updatepwd")  /*비밀번호찾기 페이지*/
+    public String findpwd(Model model, HttpServletRequest request) {
+        Map<String, Object> resultMap = new HashMap<>();
+        String result=null;
+        try {
+            String referer = request.getHeader("REFERER");
+            if (referer!=null) {
+                result= "/member/updatepwd";
+            } else{
+                result= "/index";
+                model.addAttribute("modelCode", 400);
+                model.addAttribute("modelMsg", "올바른 접근이 아닙니다.");
+            }
+        } catch (Exception e) {
+            result= "";
+        }
+        return result;
     }
 
     @RequestMapping("/login/update")  /*비밀번호 재설정*/
