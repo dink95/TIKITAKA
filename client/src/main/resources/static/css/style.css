@@ -647,7 +647,7 @@ a {
   box-shadow: 0 0 30px -10px rgba(0, 0, 0, 0.1);
   background: #fff; }
   .block-4 .block-4-text h3 {
-    font-size: 20px;
+    font-size: 17px;
     margin-bottom: 0; }
     .block-4 .block-4-text h3 a {
       text-decoration: none; }
@@ -836,6 +836,7 @@ a {
 
 
 
+/*
 .dropdown dd { position:relative; }
 .dropdown dd, .dropdown dt, .dropdown ul { margin:0px; padding:0px; }
 .dropdown dt a span {cursor:pointer;}
@@ -845,14 +846,25 @@ a {
 .dropdown dd ul li a { display:block;}
 .dropdown img.flag { border:none; vertical-align:middle;padding:11px;}
 .flagvisibility { display:none;}
+*/
 
-dt > a:after{
+#arrow_right > a:after{
 
   content: '\e315';
  font-size: 16px;
   right: -5px;
   font-family: 'icomoon';
 }
+
+#arrow_up > a:after{
+
+  content: '\e316';
+  font-size: 30px;
+  right: -5px;
+  font-family: 'icomoon';
+}
+
+
 
 #modal_overlay{
   position: fixed;
