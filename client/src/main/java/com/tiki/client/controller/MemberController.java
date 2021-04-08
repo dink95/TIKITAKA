@@ -117,7 +117,7 @@ public class MemberController {
         return resultMap;
     }
 
-    @RequestMapping("signup/idcheck") /*아이디 중복체크*/
+    @RequestMapping("/login/idcheck") /*아이디 중복체크*/
     @ResponseBody
     public Map<String, Object> loginAccess(@RequestParam(value = "userId") String userId) {
         ModelAndView view = new ModelAndView();
