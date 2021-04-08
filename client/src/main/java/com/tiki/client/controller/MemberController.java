@@ -119,19 +119,15 @@ public class MemberController {
 
     @RequestMapping("/login/idcheck") /*아이디 중복체크*/
     @ResponseBody
-    public Map<String, Object> loginAccess(@RequestParam(value = "userId") String userId) {
-        ModelAndView view = new ModelAndView();
-
+    public Map<String, Object> loginIdCheck(@RequestParam(value = "userId") String id) {
         Map<String, Object> resultMap = new HashMap<>();
-        MemberDTO memberDTO = new MemberDTO();
-        memberDTO.setMbrId(userId);
 
-        String mbrId  =  memberService.idcheck(memberDTO);
-
+        Boolean exist = false;
         try {
-            if (mbrId == null) {
+            exist= memberService.existId(id);
+            if (!exist) {
                 resultMap.put("resultCode", 200);
-                resultMap.put("resultMsg", "OK");
+                resultMap.put("resultMsg", "* 사용 가능한 아이디입니다.");
             } else {
                 resultMap.put("resultCode", 400);
                 resultMap.put("resultMsg", "이미 사용중인 아이디입니다.");
@@ -143,6 +139,80 @@ public class MemberController {
         }
         return resultMap;
     }
+
+    @RequestMapping("/login/phonecheck") /*전화번호 중복체크*/
+    @ResponseBody
+    public Map<String, Object> loginPhoneCheck(@RequestParam(value = "userPhone") String phone) {
+        Map<String, Object> resultMap = new HashMap<>();
+
+        Boolean exist = false;
+        try {
+            exist= memberService.existPhone(phone);
+            if (!exist) {
+                resultMap.put("resultCode", 200);
+                resultMap.put("resultMsg", "* 사용 가능한 전화번호입니다.");
+            } else {
+                resultMap.put("resultCode", 400);
+                resultMap.put("resultMsg", "이미 사용중인 전화번호입니다.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("resultCode", 500);
+            resultMap.put("resultMsg", e.getMessage());
+        }
+        return resultMap;
+    }
+
+    @RequestMapping("/login/emailcheck") /*이메일 중복체크*/
+    @ResponseBody
+    public Map<String, Object> loginEmailCheck(@RequestParam(value = "userEmail") String email) {
+        Map<String, Object> resultMap = new HashMap<>();
+
+        Boolean exist = false;
+        try {
+            exist= memberService.existEmail(email);
+            if (!exist) {
+                resultMap.put("resultCode", 200);
+                resultMap.put("resultMsg", "* 사용 가능한 이메일입니다.");
+            } else {
+                resultMap.put("resultCode", 400);
+                resultMap.put("resultMsg", "이미 사용중인 이메일입니다.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("resultCode", 503);
+            resultMap.put("resultMsg", e.getMessage());
+        }
+        return resultMap;
+    }
+
+    /* @RequestMapping("/login/findpwd") *//*비밀번호 찾기*//*
+    @ResponseBody
+    public Map<String, Object> loginFindpwd(@RequestParam(value = "userId") String userId,
+                                            @RequestParam(value = "userName") String userName,
+                                            @RequestParam(value = "userPhone") String userPhone,
+                                            HttpServletRequest request) {
+        Map<String, Object> resultMap = new HashMap<>();
+
+        Boolean exist = false;
+
+        try {
+            exist= memberService.findpwd(userId, userName, userPhone);
+            if (exist) {
+                resultMap.put("resultCode", 200);
+                resultMap.put("resultMsg", "ok");
+                request.getSession().setAttribute("userId", userId);
+            } else {
+                resultMap.put("resultCode", 400);
+                resultMap.put("resultMsg", "정보가 일치하지 않습니다.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("resultCode", 500);
+            resultMap.put("resultMsg", e.getMessage());
+        }
+        return resultMap;
+    }*/
 
     @GetMapping(value = "/findid") /*아이디찾기 페이지*/
     public ModelAndView findid() {
@@ -180,6 +250,7 @@ public class MemberController {
         }
         return resultMap;
     }
+
 
     @RequestMapping(value = "/findpwd")  /*비밀번호찾기 페이지*/
     public String findpwd(Model model, HttpServletRequest request) {
