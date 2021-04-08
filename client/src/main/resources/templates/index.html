@@ -26,10 +26,8 @@
 </head>
 
   <body>
-
   <input type="hidden" id="modelCode" th:value="${modelCode}"/>
   <input type="hidden" id="modelMsg" th:value="${modelMsg}"/>
-
 
   <div class="site-wrap">
     <header class="site-navbar" role="banner">
@@ -193,11 +191,11 @@
   <script src="js/aos.js"></script>
 
   <script src="js/main.js"></script>
-
   <script>
     if($('#modelCode').val()==400) {
       alert($('#modelMsg').val());
     }
+
 
   </script>
 
