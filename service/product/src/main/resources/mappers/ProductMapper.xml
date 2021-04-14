@@ -52,13 +52,18 @@
           , prod_co = #{prodCo}
         WHERE
             prod_no = #{prodNo}
+        AND
+            sel_id = #{selId}
     </update>
 
     <update id="deleteProduct" parameterType="ProductDTO">
         DELETE
+        FROM
             prod
         WHERE
             prod_no = #{prodNo}
+        AND
+            sel_id = #{selId}
     </update>
 
     <select id="selectProductList" parameterType="ProductDTO" resultType="ProductDTO">
