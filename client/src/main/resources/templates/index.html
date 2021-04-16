@@ -41,7 +41,7 @@
     <!--검색바 중간 삽입-->
     <div class="search-bar-container">
 
-      <div class="category-box " > <!--카테고리 div-->
+      <!--<div class="category-box " > &lt;!&ndash;카테고리 div&ndash;&gt;
         <div class="category" >
           <select onchange="categoryChange(this)" name="category" class="form-control border-0 select-category font-14" required>
             <option class="form-control border-0 font-14" value="" disabled selected>Category</option>
@@ -61,7 +61,7 @@
           </select>
         </div>
       </div>
-
+-->
       <div class="select-search-box ">
 
         <div class="select-box"> <!--셀렉트 박스 div-->
@@ -179,7 +179,8 @@
         </div>
       </div>
     </div>
-    <dt id="arrow_up"><a href="#" style=" position:fixed; cursor:pointer; right: 10%; bottom: 10%;"></a></dt>
+    <a id="arrow_up"  class="scroll_up"  onclick="scroll_up()"></a>
+
   </div>
 
   <script src="js/jquery-3.3.1.min.js"></script>

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <!--공통 헤더-->
-<div class="site-navbar-top" th:fragment="header(header)"> <!--padding 수정 style-196-->
+<div class="site-navbar-top" th:fragment="header(header)" > <!--padding 수정 style-196-->
     <div class="container">
         <div class="row align-items-center">
 
@@ -15,7 +15,7 @@
                 </div>
             </div>
 
-            <div class="col-6 col-md-4 order-3 order-md-3 text-right">
+            <div class="col-6 col-md-4 order-3 order-md-3 text-right" >
                 <!--메뉴 padding 수정-style-260-->
                 <div class="site-top-icons"> <!--버튼 사이즈 수정 style-218-->
                     <ul >
@@ -36,25 +36,25 @@
 <!-------------------->
 
 <!--공통 menu-->
-<nav class="site-navigation text-right text-md-center" role="navigation" th:fragment="menu(menu)"><!--메뉴 간격 수정 style-273-->
+<nav class="site-navigation text-right text-md-center" role="navigation" th:fragment="menu(menu)" ><!--메뉴 간격 수정 style-273-->
     <div class="container">
         <ul class="site-menu js-clone-nav d-none d-md-block" >
             <li th:classappend="${menu}=='home'? 'active' : ''"><a href="/" >Home</a>
             <li th:classappend="${menu}=='menu1'? 'active' : ''">
                 <a th:if="${session.mbrId == null}" href="login" >상품</a>
                 <a th:if="${session.mbrId != null}" href="#" >상품</a></li>
-            <li th:classappend="${menu}=='menu2'? 'active' : ''">
-                <a th:if="${session.mbrId == null}" href="login" >상품등록</a>
-                <a th:if="${session.mbrId != null}" href="#" >상품등록</a></li>
+            <li th:classappend="${menu}=='product_create'? 'active' : ''">
+                <a th:if="${session.mbrId == null}" href="/login" >상품등록</a>
+                <a th:if="${session.mbrId != null}" href="/product/create" >상품등록</a></li>
             <li th:classappend="${menu}=='menu3'? 'active' : ''">
                 <a th:if="${session.mbrId == null}" href="login" >경매</a>
                 <a th:if="${session.mbrId != null}" href="#" >경매</a></li>
             <li th:classappend="${menu}=='menu4'? 'active' : ''">
                 <a th:if="${session.mbrId == null}" href="login" >채팅</a>
                 <a th:if="${session.mbrId != null}" href="#" >채팅</a></li>
-            <li th:classappend="${menu}=='menu5'? 'active' : ''">
+            <li th:classappend="${menu}=='myinfo'? 'active' : ''">
                 <a th:if="${session.mbrId == null}" href="login" >내정보</a>
-                <a th:if="${session.mbrId != null}" href="#" >내정보</a></li>
+                <a th:if="${session.mbrId != null}" href="member/myinfo" >내정보</a></li>
         </ul>
     </div>
 </nav>
@@ -71,6 +71,7 @@
                 <span class="text-black font-14" th:text="${logo}=='findpwd'? '비밀번호찾기' :'' "></span>
                 <span class="text-black font-14" th:text="${logo}=='updatepwd'? '비밀번호 재설정' :'' "></span>
                 <span class="text-black font-14" th:text="${logo}=='menu1'? 'menu1' :'' "></span>
+                <span class="text-black font-14" th:text="${logo}=='product_create'? '상품 등록' :'' "></span>
             </div>
         </div>
     </div>
