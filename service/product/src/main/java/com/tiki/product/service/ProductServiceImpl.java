@@ -22,13 +22,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean updateProduct(ProductDTO params) {
+    public int updateProduct(ProductDTO params) {
 
-        int queryResult = 0;
-
-        queryResult = productMapper.updateProduct(params);
-
-        return (queryResult == 1) ? true : false;
+        return productMapper.updateProduct(params);
     }
 
     @Override

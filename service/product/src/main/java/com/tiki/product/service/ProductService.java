@@ -7,7 +7,7 @@ public interface ProductService {
 
     public int insertProduct(ProductDTO params);
 
-    public boolean updateProduct(ProductDTO params);
+    public int updateProduct(ProductDTO params);
 
     public int deleteProduct(ProductDTO params);
 
