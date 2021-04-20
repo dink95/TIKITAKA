@@ -17,6 +17,8 @@ public interface ProductMapper {
 
     public List<ProductDTO> selectProductList();
 
+    public List<ProductDTO> resultByNmCat(ProductDTO params);
+
     public int selectProductTotalCount();
 
 }

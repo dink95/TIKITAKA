@@ -51,4 +51,18 @@ public class ProductServiceImpl implements ProductService {
 
         return productList;
     }
+
+    @Override
+    public List<ProductDTO> resultByNmCat(ProductDTO params) {
+
+        List<ProductDTO> productList = Collections.emptyList();
+
+        int productTotalCount = productMapper.selectProductTotalCount();
+
+        if (productTotalCount > 0) {
+            productList = productMapper.resultByNmCat(params);
+        }
+
+        return productList;
+    }
 }
