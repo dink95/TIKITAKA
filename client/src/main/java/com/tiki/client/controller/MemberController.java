@@ -2,8 +2,6 @@ package com.tiki.client.controller;
 import com.tiki.client.domain.MemberDTO;
 import com.tiki.client.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +17,10 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-    @GetMapping("/")
-    public String index() {
-        return "index";
-    }
-
+   @RequestMapping("/")
+   public String Home(){
+       return "/index";
+   }
 
     @GetMapping(value = "/login") /*로그인 페이지*/
     public ModelAndView login() {
@@ -45,9 +42,6 @@ public class MemberController {
 
         memberDTO.setMbrId(userId);
         memberDTO.setMbrPwd(userPw);
-
-        Boolean role =memberDTO.isMbrRole();
-
 
         String mbrId = memberService.login(memberDTO);
 
@@ -88,7 +82,7 @@ public class MemberController {
     }
 
 
-    @PostMapping("/login/join")  /*회원가입*/
+    @RequestMapping("/login/join")  /*회원가입*/
     @ResponseBody
     public Map<String, Object> joinMember(@RequestBody MemberDTO memberDTO) {
 
@@ -185,34 +179,6 @@ public class MemberController {
         }
         return resultMap;
     }
-
-    /* @RequestMapping("/login/findpwd") *//*비밀번호 찾기*//*
-    @ResponseBody
-    public Map<String, Object> loginFindpwd(@RequestParam(value = "userId") String userId,
-                                            @RequestParam(value = "userName") String userName,
-                                            @RequestParam(value = "userPhone") String userPhone,
-                                            HttpServletRequest request) {
-        Map<String, Object> resultMap = new HashMap<>();
-
-        Boolean exist = false;
-
-        try {
-            exist= memberService.findpwd(userId, userName, userPhone);
-            if (exist) {
-                resultMap.put("resultCode", 200);
-                resultMap.put("resultMsg", "ok");
-                request.getSession().setAttribute("userId", userId);
-            } else {
-                resultMap.put("resultCode", 400);
-                resultMap.put("resultMsg", "정보가 일치하지 않습니다.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            resultMap.put("resultCode", 500);
-            resultMap.put("resultMsg", e.getMessage());
-        }
-        return resultMap;
-    }*/
 
     @GetMapping(value = "/findid") /*아이디찾기 페이지*/
     public ModelAndView findid() {
@@ -354,5 +320,18 @@ public class MemberController {
         return resultMap;
     }
 
+    @GetMapping(value = "/member/myinfo") /*내정보 페이지*/
+    public ModelAndView myinfo() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("member/myinfo");
+        return view;
+    }
+
+    @GetMapping(value = "/member/report") /*신고하기 페이지*/
+    public ModelAndView report() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("member/report");
+        return view;
+    }
 
 }

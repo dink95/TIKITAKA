@@ -357,12 +357,30 @@ function modal(content,button, href){
 
 }
 
+function pre_modal(content,button){
+	$('#modal_overlay').css('display','flex');
+	$('#modal_overlay').animate({opacity:'1'},300);
+	$('#modal_content').text(content);
+	$('#modal_button').text(button);
+	$('#modal_button').click(function(){
+		$('#modal_overlay').css('display','none');
+	});
+
+}
+
 /*input 포커스*/
 var len = $('input').val().length;
 $('input').focus();
 $('input')[0].setSelectionRange(len, len);
 
+/*스크롤 위로 이동*/
+function scroll_up(){
+	$("html, body").animate({ scrollTop: 0 }, "slow");
+};
 
+$(function(){
+	$("html, body").scrollTop(0);
+});
 
 
 

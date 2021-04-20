@@ -3,7 +3,8 @@ body {
   line-height: 1.7;
   color: #8c92a0;
   font-weight: 300;
-  font-size: 16px; }
+  font-size: 16px;
+   }
 
 .font-14{
   font-size:14px;
@@ -127,7 +128,6 @@ a {
   -webkit-transition: 0.2s all ease-in-out !important;
   -o-transition: 0.2s all ease-in-out !important;
   transition: 0.2s all ease-in-out !important;
-  top: 0;
   letter-spacing: .05em; }
   .btn:hover, .btn:active, .btn:focus {
     outline: none;
@@ -214,7 +214,8 @@ a {
   background: #fff;
   margin-bottom: 0px;
   z-index: 1999;
-  position: relative; }
+  position: relative;
+  top:0}
   .site-navbar.transparent {
     background: transparent; }
   .site-navbar .site-navbar-top {
@@ -848,6 +849,11 @@ a {
 .flagvisibility { display:none;}
 */
 
+
+nav{
+  border-bottom: 1px solid #dee2e6;
+}
+
 #arrow_right > a:after{
 
   content: '\e315';
@@ -856,15 +862,14 @@ a {
   font-family: 'icomoon';
 }
 
-#arrow_up > a:after{
 
+#arrow_up:after{
   content: '\e316';
   font-size: 30px;
   right: -5px;
   font-family: 'icomoon';
+
 }
-
-
 
 #modal_overlay{
   position: fixed;
@@ -895,3 +900,17 @@ a {
 #modal_content{
   font-size:1.5rem;
 }
+
+.scroll_up{
+  color:black;
+  cursor: pointer;
+  position:fixed;
+  bottom: 5%;
+  right: 5%;
+}
+
+.scroll_up:hover{
+  color:black;
+}
+
+
