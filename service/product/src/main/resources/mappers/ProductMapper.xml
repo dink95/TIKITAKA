@@ -10,6 +10,7 @@
 		, cat_no
 		, sel_id
 		, way
+        , nego
 		, wday
         , prod_co
 		, prod_view
@@ -19,12 +20,12 @@
         INSERT INTO prod (
         <include refid="productColumns" />
         ) VALUES (
-        #{prodNo}
-        , #{prodNm}
+        #{prodNm}
         , #{prodPrc}
         , #{catNo}
         , #{selId}
         , #{way}
+        , #{nego}
         , NOW()
         , #{prodCo}
         , #{prodView}
@@ -49,6 +50,7 @@
           , prod_prc = #{prodPrc}
           , cat_no = #{catNo}
           , way = #{way}
+          , nego = #{nego}
           , prod_co = #{prodCo}
         WHERE
             prod_no = #{prodNo}
@@ -75,6 +77,16 @@
             wday ASC
     </select>
 
+    <select id="resultByNmCat" parameterType="ProductDTO" resultType="ProductDTO">
+        SELECT
+            <include refid="productColumns" />
+        FROM
+            prod
+        WHERE
+            prod_nm = #{prodNm}
+        AND
+            cat_no = #{catNo}
+    </select>
     <select id="selectProductTotalCount" parameterType="ProductDTO" resultType="int">
         SELECT
             COUNT(*)

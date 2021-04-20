@@ -29,6 +29,9 @@ public class ProductDTO {
     /** 거래방법 */
     private String way;
 
+    /** 네고여부 */
+    private int nego;
+
     /** 등록날짜 */
     private LocalDateTime wday;
 

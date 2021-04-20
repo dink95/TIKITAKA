@@ -35,6 +35,20 @@ public class ProductController {
         return productList;
     }
 
+    // 검색 결과 보기
+    @GetMapping(value = "/prd/result/{prodNm}/{catNo}")
+    public List resultList(@PathVariable("prodNm") String prodNm,
+                           @PathVariable("catNo") int catNo) {
+
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setProdNm(prodNm);
+        productDTO.setCatNo(catNo);
+
+        List<ProductDTO> productList = productService.resultByNmCat(productDTO);
+
+        return productList;
+    }
+
     // 상품 등록하기
     @PostMapping("/prd/register")
     public int insertProduct(@RequestBody ProductDTO productDTO) {
@@ -42,8 +56,9 @@ public class ProductController {
     }
 
     // 등록된 상품 삭제하기
-    @DeleteMapping("/prd/{prodNo,selId}")
-    public int deleteMember(@PathVariable("prodNo") int prodNo, @PathVariable("selId") String selId ) {
+    @DeleteMapping("/prd/{prodNo}/{selId}")
+    public int deleteMember(@PathVariable("prodNo") int prodNo,
+                            @PathVariable("selId") String selId ) {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setProdNo(prodNo);
         productDTO.setSelId(selId);
