@@ -30,32 +30,30 @@ public class ProductController {
     }
 
     @RequestMapping("/product/create.do")  /*상품등록*/
-    @ResponseBody
-    public Map<String, Object> createProduct(@RequestBody ProductDTO productDTO, MultipartHttpServletRequest multi) {
+    public Map<String, Object> createProduct(ProductDTO productDTO, MultipartHttpServletRequest multi) {
 
         Map<String, Object> resultMap = new HashMap<>();
 
 
         int result = 0;
 
-            try {
-                List<MultipartFile> fileList = multi.getFiles("file");
-                productDTO.setFiles(fileList);
-                result = productService.createProduct(productDTO);
+        try {
+            List<MultipartFile> fileList = multi.getFiles("file");
+            productDTO.setFiles(fileList);
+            result = productService.createProduct(productDTO);
 
         } catch (Exception e) {
 
         }
-
+        System.out.println(productDTO);
 
         return resultMap;
     }
 
-
-    @GetMapping(value = "/product/view") /*상품등록 페이지*/
-    public ModelAndView view() {
+    @GetMapping(value = "/product/list") /*상품 상세 페이지*/
+    public ModelAndView list() {
         ModelAndView view = new ModelAndView();
-        view.setViewName("product/view");
+        view.setViewName("product/list");
         return view;
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <title>TIKITAKA &ndash; 상품등록 </title>
@@ -46,95 +46,138 @@
     <!------------------------->
     <div class="site-section margin-top-2"><!--margin class-->
         <div class="container">
-            <div class="NavContainer">
-                <div class="NavItem">
-                    <label>카테고리</label>
-                </div>
-                <div class="NavItem">
-
-                    <select onchange="categoryChange(this)" name="category"
-                            class="form-control border-0 select-category font-14" required>
-                        <option class="form-control border-0 font-14" value="" disabled selected>Category</option>
-                        <option class="form-control border-0 font-14" value="all">전체</option>
-                        <option class="form-control border-0 font-14" value="passion">패션</option>
-                        <option class="form-control border-0 font-14" value="digital">디지털/가전</option>
-                        <option class="form-control border-0 font-14" value="interior">가구/인테리어</option>
-                        <option class="form-control border-0 font-14" value="leisure">여가활동</option>
-                        <option class="form-control border-0 font-14" value="else">기타</option>
-                        <option class="form-control border-0 font-14" value="buy">삽니다</option>
-                    </select>
-                </div>
-                <div class="NavItem">
-                    <select name="detail" id="detail" class="form-control border-0 select-category font-14" required>
-                        <option class="form-control border-0 font-14" value="" disabled selected>전체</option>
-                    </select>
-
-                </div>
-            </div>
-
-            <form name="product_create" action="" method="post" enctype="multipart/form-data">
-                <input type="text" id="p_id" th:value="${session.mbrId}">
-                <div class="NavContainer">
-                    <div class="NavItemTitle">
-                        <label for="p_title">제목</label></div>
-                    <div class="NavItem">
-                        <input type="text" id="p_title" name="p_title"></div>
-                </div>
+            <form action="/product/create.do" method="post" enctype="multipart/form-data">
+                <input type="hidden" id="p_id" name="selId" th:value="${session.mbrId}">
 
                 <div class="NavContainer">
                     <div class="NavItemTitle">
-                        <label for="p_content">상세정보</label></div>
+                        <label class="text-black">카테고리
+                            <span class="text-danger">*</span></label>
+                        <!-- <img src="/istatic/images/shose/sho1.jpg"/>-->
+                    </div>
                     <div class="NavItem">
-                        <input type="texterea" id="p_content" name="p_content"></div>
+                        <div class="search-bar-container">
+                            <div class="category-box">
+                                <div class="category">
+                                    <select onchange="categoryChange(this)" name="category"
+                                            class="form-control border-0 select-category font-14" required>
+                                        <option class="form-control border-0 font-14" value="" disabled selected>메인 카테고리
+                                        </option>
+                                        <option class="form-control border-0 font-14" value="passion">패션</option>
+                                        <option class="form-control border-0 font-14" value="digital">디지털/가전</option>
+                                        <option class="form-control border-0 font-14" value="interior">가구/인테리어</option>
+                                        <option class="form-control border-0 font-14" value="leisure">여가활동</option>
+                                        <option class="form-control border-0 font-14" value="else">기타</option>
+                                        <option class="form-control border-0 font-14" value="buy">삽니다</option>
+                                    </select>
+                                    <input type="hidden" id="selectedMain" value="">
+                                </div>
+                                <div class="category">
+                                    <select onchange="categoryChangeDetail(this)" name="detail" id="detail"
+                                            class="form-control border-0 select-category font-14"
+                                            required disabled='true'>
+                                        <option class="form-control border-0 font-14" value="" disabled selected>세부 카테고리
+                                        </option>
+                                    </select>
+
+                                    <input type="hidden" id="selectedDetail" name="catNo" value="11">
+                                </div>
+                            </div>
+                        </div>
+                        <span id="valid_p_category" style="color: #ff0000;font-size: 10px;"></span>
+                    </div>
                 </div>
 
                 <div class="NavContainer">
-                    <div class="NavItemTitle">
-                        <label for="p_price">가격</label></div>
+                    <div class="NavItemTitle titleContainer">
+                        <label for="p_title" class="text-black">제목
+                            <span class="text-danger">*</span></label>
+                    </div>
                     <div class="NavItem">
-                        <input type="text" id="p_price" name="p_price"></div>
-                    <div class="NavItem">
-                        <input type="checkbox">가격협의 가능
+                        <input type="text" size="100" class="form-control" id="p_title" name="prodNm" maxlength="20"
+                               onkeyup="onKeyUp('#valid_p_title');">
+                        <span id="valid_p_title" style="color: #ff0000;font-size: 10px;"></span>
+                        <span id="title_count"></span>
                     </div>
                 </div>
 
                 <div class="NavContainer">
                     <div class="NavItemTitle">
-                        <label>거래방법</label></div>
+                        <label class="text-black">상세정보
+                            <span class="text-danger">*</span></label></div>
                     <div class="NavItem">
-                        <input type="radio" name="p_method" value="직거래">직거래
-                    </div>
-                    <div class="NavItem">
-                        <input type="radio" name="p_method" value="택배거래">택배거래
+                    <textarea class="form-control" id="p_content" name="p_content" cols="100" rows="10"
+                              required minlength="3" style="width:100%;" onkeyup="onKeyUp('#valid_p_content');">
+                    </textarea>
+                        <span id="valid_p_content" style="color: #ff0000;font-size: 10px;"></span>
                     </div>
                 </div>
 
                 <div class="NavContainer">
                     <div class="NavItemTitle">
-                        <label for="p_code">상품코드</label></div>
+                        <label for="p_price" class="text-black">가격
+                            <span class="text-danger">*</span></label></div>
                     <div class="NavItem">
-                        <input type="text" id="p_code" name="p_code"></div>
+                        <input type="text" class="form-control" id="p_price" name="prodPrc"
+                               onkeyup="onKeyUp('#valid_p_price');">
+                        <span id="valid_p_price" style="color: #ff0000;font-size: 10px;"></span>
+                    </div>
+                    <div class="NavItem">
+                        <input type="checkbox" id="p_nego" onclick="getCheckboxValue(event)">가격협의 가능
+                        <input type="hidden" id="nego" name="nego" value="0">
+                    </div>
                 </div>
 
                 <div class="NavContainer">
                     <div class="NavItemTitle">
-                        <label for="p_photo">사진</label></div>
+                        <label class="text-black">거래방법</label>
+                        <span class="text-danger">*</span>
+                    </div>
                     <div class="NavItem">
-                        <input type="file" id="p_photo" accept="image/gif, image/jpeg, image/png"></div>
+                        <input type="radio" name="way" value="직거래" checked>직거래
+                    </div>
+                    <div class="NavItem">
+                        <input type="radio" name="way" value="택배거래">택배거래
+                    </div>
+                    <span id="valid_p_method" style="color: #ff0000;font-size: 10px;"></span>
                 </div>
+
+                <div class="NavContainer">
+                    <div class="NavItemTitle">
+                        <label for="p_code" class="text-black">상품코드</label>
+                        <span class="text-danger">*</span></div>
+                    <div class="NavItem">
+                        <input type="text" class="form-control" id="p_code" name="prodCo"
+                               placeholder="상품코드가 필요한 물품의 경우 입력해주세요."></div>
+                </div>
+
+                <input multiple="multiple" class="form-control-file" type="file" name="file" id="file1"
+                       onchange="chk_file_type(this);" accept="image/jpeg,image/gif,image/png"/>
+                <div class="NavContainer">
+                    <div class="NavItemTitle">
+                        <label for="file1" class="text-black">사진</label>
+                        <span class="text-danger">*</span></div>
+                    <div class="NavItem" style="display: flex;">
+                        <div class="photoContainer" onclick="upload()"><i class="fas fa-camera fa-2x"></i>
+                        </div>
+                        <img id="img_file1">
+                    </div>
+
+
+                </div>
+                <span id="photoValue"></span>
                 <div class="NavContainer BtnNavContainer">
                     <div class="ButtonNav">
-                        <input type="button" class="btn btn-primary "
-                               value="등록하기" onclick="goRegist()">
-                        <input type="button" class="btn btn-primary "
-                               value="취소하기">
+                        <input type="submit" class="btn btn-primary" value="등록하기">
+                        <input type="button" class="btn btn-primary" value="취소하기">
                     </div>
                 </div>
                 <div class="NavContainer PreBtnContainer">
-                    <input type="button" class="pre_btn"
-                           value="주의사항" onclick="goPre()">
+                    <input type="button" class="pre_btn" value="주의사항" onclick="goPre()">
                 </div>
+
             </form>
+
         </div>
     </div>
 </div>
@@ -144,31 +187,77 @@
 <style>
 
     .NavContainer {
-        border: 1px solid blue;
+        border-bottom: 1px solid #dee2e6;
         display: flex;
         box-style: border-box;
         padding: 3%;
-
     }
 
     .NavContainer.BtnNavContainer {
         justify-content: center;
+        border: none;
     }
 
     .NavContainer.PreBtnContainer {
         justify-content: flex-end;
+        border: none;
     }
 
 
     .NavItemTitle {
         color: #000;
         width: 10%;
-        border: 1px solid red;
+        text-align: right;
+        min-width: 100px;
     }
 
     .NavItem {
-        padding: 0 2%;
+        padding: 0 10%;
+        box-style: border-box;
+        width: 100%;
+
     }
+
+    #file1 {
+        /*display: none;*/
+    }
+
+    .photoContainer {
+        background: #eee;
+        border: 1px solid #dee2e6;
+        width: 150px;
+        height: 150px;
+        text-align: center;
+        line-height: 150px;
+        transition: 0.4s;
+    }
+
+    .photoContainer:hover {
+        background: #fff;
+    }
+
+    .NavItem {
+        position: relative;
+        display: inline-block;
+    }
+
+    .NavItem span {
+        position: absolute;
+    }
+
+    #title_count {
+        right: 10%;
+        border-radius: 0.5em;
+        padding: 0 .5em 0 .5em;
+        font-size: 1em;
+    }
+
+    img {
+        width: 150px;
+        height: 150px;
+        margin-left: 1%;
+    }
+
 
 </style>
 </div>
@@ -181,45 +270,140 @@
 <script src="../js/owl.carousel.min.js"></script>
 <script src="../js/jquery.magnific-popup.min.js"></script>
 <script src="../js/aos.js"></script>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 
 <script src="../js/main.js"></script>
 <script>
-    /*상품등록*/
-    function goRegist() {
-        alert('regist ok');
-          var param = {
-                prodNm: $('#p_title').val(), //제품이름
-                prodPrc: $('#p_price').val(),//제품가격
-                catNo: 22, //카테고리 번호
-                selId: $('#p_id').val(), //판매자아이디
-                way: "직거래", //거래방법
-                prodCo: $('#p_code').val(), //상품번호
-                prodView: 0,
+
+    function getCheckboxValue(event) {
+        var result = 0;
+        if (event.target.checked) {
+            result = 1;
+        } else {
+            result = 0;
+        }
+        $('#nego').val(result);
+    }
+
+    /*
+ /!*상품등록*!/
+ function goRegist() {
+     if(Validation()){
+     var param = {
+         prodNm: $('#p_title').val(), //제품이름
+         prodPrc: $('#p_price').val(),//제품가격
+         catNo: $('#selectedDetail').val(), //카테고리 번호
+         selId: $('#p_id').val(), //판매자아이디
+         way: $('input[name="p_method"]:checked').val(), //거래방법
+         nego: negoValue,
+         prodCo: $('#p_code').val(), //상품번호
+     }
+
+     $.ajax({
+         url: '/product/create.do',
+         data: JSON.stringify(param),
+         type: 'post',
+         dataType: 'json',
+         contentType: "application/json",
+     }).done(function (data) {
+         if (data.resultCode == 200) {
+             alert(data.resultMsg, '확인', '/');
+         } else {
+             alert(data.resultMsg);
+             return false;
+         }
+
+     }).fail(function (data, textStatus, errorThrown) {
+         console.log(textStatus);
+     });
+ }
+ }
+*/
+
+    function Validation() {
+        var result = true;
+
+        if ($('#selectedDetail').val() == '') {
+            $('#valid_p_category').text("*카테고리는 필수 선택 사항입니다.");
+            result = false;
+        }
+
+        if ($('#p_title').val() == '') {
+            $('#valid_p_title').text("*제목은 필수 입력 사항입니다.");
+            result = false;
+        }
+        if ($('#p_content').length == '') {
+            $('#valid_p_content').text("*상세내용은 필수 입력 사항입니다.");
+            result = false;
+        }
+        if ($('#p_price').val() == '') {
+            $('#valid_p_price').text("*가격은 필수 입력 사항입니다.");
+            result = false;
+        }
+        return result;
+    }
+
+    $(function () {
+        $('#p_title').keyup(function (e) {
+            var p_title = $(this).val();
+            $('#title_count').html(p_title.length + '/20');
+        });
+        $('#p_title').keyup();
+    });
+
+    function goPre() {
+        pre_modal('주의사항', '확인');
+    }
+
+    function upload() {
+        $('#file1').click();
+    }
+
+    /*스크롤 상단 고정*/
+    $(function () {
+        $("html, body").scrollTop(0);
+    });
+
+    /*키 입력시 valid 메세지 삭제*/
+    function onKeyUp(props) {
+        $(props).text('');
+    }
+
+
+
+    function chk_file_type(obj) {
+        var file_kind = obj.value.lastIndexOf('.');
+        var file_name = obj.value.substring(file_kind + 1, obj.length);
+        var file_type = file_name.toLowerCase();
+
+        var check_file_type = ['jpg', 'gif', 'png', 'jpeg'];
+        var agent = navigator.userAgent.toLowerCase()
+
+        if (check_file_type.indexOf(file_type) == -1) {
+            alert('이미지 파일만 선택할 수 있습니다.');
+
+            if ((navigator.appName == 'Netscape'
+                && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1)) {
+                $(obj).replaceWith($(obj).clone(true));
+            } else {
+                $(obj).val("");
             }
-
-
-            $.ajax({
-                url: '/product/create.do',
-                data: JSON.stringify(param),
-                type: 'post',
-                dataType: 'json',
-                contentType: "application/json",
-            }).done(function (data) {
-                if (data.resultCode == 200) {
-                    alert(data.resultMsg, '확인', '/');
-                } else {
-                    alert(data.resultMsg);
-                    return false;
-                }
-
-            }).fail(function (data, textStatus, errorThrown) {
-                console.log(textStatus);
-            });
+        } else {
+            readImage(obj);
+        }
     }
 
-    function goPre(){
-        pre_modal('주의사항','확인');
+    function readImage(file) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var img = $('#img_' + file.id)
+            img.attr("src", e.target.result);
+        };
+        reader.readAsDataURL(file.files[0]);
     }
+
+
 
 </script>
 

@@ -14,7 +14,7 @@ public class GatewayConfiguration {
                 .route(r -> r.path("/mbr/**")
                         .uri("http://localhost:8081/"))
 
-                .route(r -> r.path("/prod/**")
+                .route(r -> r.path("/prd/**")
                         .uri("http://localhost:8082/"))
 
                 .build();
