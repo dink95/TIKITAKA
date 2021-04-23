@@ -1,6 +1,7 @@
 package com.tiki.product.controller;
 
 import com.tiki.product.domain.CategoryDTO;
+import com.tiki.product.domain.InsertProdDTO;
 import com.tiki.product.domain.ProductDTO;
 import com.tiki.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,11 +50,7 @@ public class ProductController {
         return productList;
     }
 
-    // 상품 등록하기
-    @PostMapping("/prd/register")
-    public int insertProduct(@RequestBody ProductDTO productDTO) {
-        return productService.insertProduct(productDTO);
-    }
+
 
     // 등록된 상품 삭제하기
     @DeleteMapping("/prd/{prodNo}/{selId}")
@@ -70,6 +67,28 @@ public class ProductController {
     public int updateProductRegister(@RequestBody ProductDTO productDTO){
         return productService.updateProduct(productDTO);
     }
+
+    // 상품 등록하기
+    @PostMapping("/prd")
+    public int insertProduct(@RequestBody InsertProdDTO insertProdDTO) {
+
+        List<MultipartFile> list = insertProdDTO.getFiles();
+        ProductDTO productDTO = new ProductDTO(insertProdDTO.getProdNm(), insertProdDTO.getProdPrc(),
+                insertProdDTO.getCatNo(),insertProdDTO.getSelId(),insertProdDTO.getWay(),insertProdDTO.getNego()
+        ,insertProdDTO.getProdCo());
+        int count = 0;
+        for(MultipartFile file : list)
+        {
+            count++;
+            System.out.println(count);
+            System.out.println(file.getOriginalFilename());
+            System.out.println(file.getContentType());
+        }
+
+        System.out.println(productDTO);
+        return productService.insertProduct(productDTO);
+    }
+
 
     // 다중 파일 업로드 "4.15" 아직 미완성
     @PostMapping("/prd/multiupload")

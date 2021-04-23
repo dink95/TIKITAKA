@@ -6,10 +6,14 @@ import com.tiki.client.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.FileOutputStream;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -27,30 +31,20 @@ public class ProductController {
 
     @RequestMapping("/product/create.do")  /*상품등록*/
     @ResponseBody
-    public Map<String, Object> createProduct(@RequestBody ProductDTO productDTO) {
+    public Map<String, Object> createProduct(@RequestBody ProductDTO productDTO, MultipartHttpServletRequest multi) {
 
         Map<String, Object> resultMap = new HashMap<>();
 
-        System.out.println(productDTO);
 
         int result = 0;
 
             try {
-            result = productService.createProduct(productDTO);
-
-
-            if (result > 0) {
-                resultMap.put("resultCode", 200);
-                resultMap.put("resultMsg", "ok");
-            } else {
-                resultMap.put("resultCode", 400);
-                resultMap.put("resultMsg", "400 error");
-            }
+                List<MultipartFile> fileList = multi.getFiles("file");
+                productDTO.setFiles(fileList);
+                result = productService.createProduct(productDTO);
 
         } catch (Exception e) {
-            e.printStackTrace();
-            resultMap.put("resultCode", 500);
-            resultMap.put("resultMsg", "500error.");
+
         }
 
 

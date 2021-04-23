@@ -1,18 +1,13 @@
-package com.tiki.client.domain;
-
-import java.time.LocalDateTime;
-import java.util.List;
+package com.tiki.product.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
-@Getter
-@Setter
-@ToString
-public class ProductDTO {
+import java.util.List;
 
+@Getter
+public class InsertProdDTO {
 
     /** 제품이름 */
     private String prodNm;
@@ -36,5 +31,4 @@ public class ProductDTO {
     private String prodCo;
 
     List<MultipartFile> files;
-
 }
