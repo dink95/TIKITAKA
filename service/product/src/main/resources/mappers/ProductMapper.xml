@@ -4,8 +4,7 @@
 <mapper namespace="com.tiki.product.mapper.ProductMapper">
 
     <sql id="productColumns">
-        prod_no
-        , prod_nm
+     prod_nm
 		, prod_prc
 		, cat_no
 		, sel_id
@@ -20,7 +19,8 @@
         INSERT INTO prod (
         <include refid="productColumns" />
         ) VALUES (
-        #{prodPrc}
+         #{prodNm}
+        ,#{prodPrc}
         , #{catNo}
         , #{selId}
         , #{way}

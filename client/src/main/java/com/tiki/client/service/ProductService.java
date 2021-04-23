@@ -1,6 +1,4 @@
 package com.tiki.client.service;
-
-
 import com.tiki.client.domain.ProductDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -19,7 +17,7 @@ public class ProductService {
 
     public int createProduct(ProductDTO productDTO) throws Exception {
         return webClient.post()
-                .uri("/prod")
+                .uri("/prd")
                 .body(Mono.just(productDTO), ProductDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
