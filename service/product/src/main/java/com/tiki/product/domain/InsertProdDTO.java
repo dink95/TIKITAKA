@@ -30,5 +30,4 @@ public class InsertProdDTO {
     /** 상품코드 */
     private String prodCo;
 
-    List<MultipartFile> files;
 }

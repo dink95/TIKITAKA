@@ -35,6 +35,5 @@ public class ProductDTO {
     /** 상품코드 */
     private String prodCo;
 
-    List<MultipartFile> files;
 
 }

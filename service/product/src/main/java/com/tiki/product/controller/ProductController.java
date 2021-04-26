@@ -15,7 +15,7 @@ import java.io.FileOutputStream;
 import java.util.Iterator;
 import java.util.List;
 
-@Controller
+@RestController
 public class ProductController {
 
     @Autowired
@@ -72,21 +72,12 @@ public class ProductController {
     @PostMapping("/prd")
     public int insertProduct(@RequestBody InsertProdDTO insertProdDTO) {
 
-        List<MultipartFile> list = insertProdDTO.getFiles();
         ProductDTO productDTO = new ProductDTO(insertProdDTO.getProdNm(), insertProdDTO.getProdPrc(),
                 insertProdDTO.getCatNo(),insertProdDTO.getSelId(),insertProdDTO.getWay(),insertProdDTO.getNego()
         ,insertProdDTO.getProdCo());
-        int count = 0;
-        for(MultipartFile file : list)
-        {
-            count++;
-            System.out.println(count);
-            System.out.println(file.getOriginalFilename());
-            System.out.println(file.getContentType());
-        }
 
-        System.out.println(productDTO);
-        return productService.insertProduct(productDTO);
+        productService.insertProduct(productDTO);
+        return  productService.selectProductNo(productDTO);
     }
 
 
