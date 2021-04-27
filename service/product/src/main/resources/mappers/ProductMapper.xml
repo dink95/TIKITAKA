@@ -18,8 +18,16 @@
 
     <insert id="insertProduct" parameterType="ProductDTO">
         INSERT INTO prod (
-        <include refid="productColumns" />
+                           prod_nm,
+                           prod_prc
+                         , cat_no
+                         , sel_id
+                         , way
+                         , nego
+                         , wday
+                         , prod_co
         ) VALUES (
+                  #{prodNm},
         #{prodPrc}
         , #{catNo}
         , #{selId}
@@ -27,7 +35,6 @@
         , #{nego}
         , NOW()
         , #{prodCo}
-        , #{prodView}
         )
     </insert>
 
@@ -91,6 +98,22 @@
             COUNT(*)
         FROM
             prod
+    </select>
+
+    <select id="selectProductNo" parameterType="ProductDTO" resultType="int">
+        SELECT
+            prod_no
+        FROM
+            prod
+        WHERE
+            sel_id = #{selId}
+        AND
+            cat_no = #{catNo}
+        AND
+            prod_nm = #{prodNm}
+        AND
+            way=#{way}
+
     </select>
 
 </mapper>

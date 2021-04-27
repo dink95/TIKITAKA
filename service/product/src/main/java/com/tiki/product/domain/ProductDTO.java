@@ -41,4 +41,16 @@ public class ProductDTO {
     /** 조회수 */
     private int prodView;
 
+    public ProductDTO(String prodNm,int prodPrc, int catNo, String selId, String way, int nego, String prodCo){
+        this.prodNm=prodNm;
+        this.prodPrc= prodPrc;
+        this.catNo=catNo;
+        this.selId=selId;
+        this.way=way;
+        this.nego= nego;
+        this.prodCo=prodCo;
+    };
+
+    public ProductDTO(){};
+
 }

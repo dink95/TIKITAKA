@@ -16,4 +16,7 @@ public interface ProductService {
     public List<ProductDTO> getProductList();
 
     public List<ProductDTO> resultByNmCat(ProductDTO params);
+
+    public int selectProductNo(ProductDTO params);
+
 }

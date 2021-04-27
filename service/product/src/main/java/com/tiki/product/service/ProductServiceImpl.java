@@ -65,4 +65,9 @@ public class ProductServiceImpl implements ProductService {
 
         return productList;
     }
+
+    @Override
+    public int selectProductNo(ProductDTO params) {
+        return productMapper.selectProductNo(params);
+    }
 }

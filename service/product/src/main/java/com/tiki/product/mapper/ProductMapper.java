@@ -13,6 +13,8 @@ public interface ProductMapper {
 
     public int deleteProduct(ProductDTO params);
 
+    public int selectProductNo(ProductDTO params);
+
     public ProductDTO selectProductDetail(int prodNo);
 
     public List<ProductDTO> selectProductList();
