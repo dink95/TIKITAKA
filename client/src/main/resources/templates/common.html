@@ -11,7 +11,7 @@
 
             <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
                 <div class="site-logo" >
-                    <a href="/" class="js-logo-clone">
+                    <a href="/" class="js-logo-clone" >
                         <img src="../images/TIKITAKA2.png" alt="Image placeholder" class="img-fluid"
                              style="width: 180.97px; height: 90px;">
                     </a><!--로고크기 style-202-->
@@ -57,7 +57,7 @@
                 <a th:if="${session.mbrId != null}" href="#" >채팅</a></li>
             <li th:classappend="${menu}=='myinfo'? 'active' : ''">
                 <a th:if="${session.mbrId == null}" href="login" >내정보</a>
-                <a th:if="${session.mbrId != null}" href="member/myinfo" >내정보</a></li>
+                <a th:if="${session.mbrId != null}" href="/member/myinfo" >내정보</a></li>
         </ul>
     </div>
 </nav>
@@ -73,7 +73,7 @@
                 <span class="text-black font-14" th:text="${logo}=='findid'? '아이디찾기' : '' "></span>
                 <span class="text-black font-14" th:text="${logo}=='findpwd'? '비밀번호찾기' :'' "></span>
                 <span class="text-black font-14" th:text="${logo}=='updatepwd'? '비밀번호 재설정' :'' "></span>
-                <span class="text-black font-14" th:text="${logo}=='menu1'? 'menu1' :'' "></span>
+                <span class="text-black font-14" th:text="${logo}=='myinfo'? '내 정보' :'' "></span>
                 <span class="text-black font-14" th:text="${logo}=='product_create'? '상품 등록' :'' "></span>
             </div>
         </div>

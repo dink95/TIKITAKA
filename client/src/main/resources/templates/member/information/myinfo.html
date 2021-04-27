@@ -19,33 +19,121 @@
 </head>
 
 <body>
+
+<div id="modal_overlay">
+    <div id="modal_main">
+        <h1 id="modal_content"></h1>
+        <a id="modal_button" class="btn btn-primary btn-lg" style="color:white;"></a>
+    </div>
+</div>
+
 <div class="site-wrap">
     <header class="site-navbar" role="banner">
         <!--replace 헤더-->
-        <div class="site-navbar-top" th:replace="common::header(myinfo)">
+        <div class="site-navbar-top" th:replace="common::header(myinfos)">
         </div>
         <!------------->
         <!--replace-login-------------------------------->
-        <nav class="site-navigation text-right text-md-center" role="navigation" th:replace="common::menu(myinfo)">
+
+        <nav class="site-navigation text-right text-md-center" role="navigation"
+             th:replace="common::menu(myinfo)">
         </nav>
         <!----------------------------------------------------------->
     </header>
-
     <!--replace logo-login-->
-
     <div class="bg-light py-3" th:replace="common::logo(myinfo)">
     </div>
     <!------------------------->
     <div class="site-section margin-top-2"><!--margin class-->
         <div class="container">
-            <h1>내정보</h1>
-            <span><a href="">수정하기</a></span>
-            <span><a href="">삭제</a></span>
+            <div class="NavContainer">
+                <div class="NavItemTitle titleContainer">
+                    <label for="p_id" class="text-black">ID
+                        <span class="text-danger">*</span></label>
+                </div>
+                <div class="NavItemTitle titleContainer">
+                    <span id="p_id" th:text="${session.mbrId}" style="color: #9792ea; font-size: 20px;"></span>
+                </div>
+                <div class="NavItem">
+                    <button type="button" class="btn btn-primary">개인정보수정</button>
+                </div>
+            </div>
+            <div class="NavContainer">
+                <div class="NavItemTitle titleContainer">
+                    <label for="p_grade" class="text-black">거래등급
+                        <span class="text-danger">*</span></label>
+                </div>
+                <div class="NavItemTitle titleContainer">
+                    <span id="p_grade" style="color: #9792ea; font-size: 20px;">등급</span>
+                </div>
+                <div class="NavItem">
+                    <button type="button" class="btn btn-primary">등급기준</button>
+                </div>
+
+                <div class="NavItemTitle titleContainer">
+                    <label for="p_point" class="text-black">판매점수
+                        <span class="text-danger">*</span></label>
+                </div>
+                <div class="NavItemTitle titleContainer">
+                    <span id="p_point" style="color: #9792ea; font-size: 20px;">점수</span>
+                </div>
+                <div class="NavItem">
+                    <button type="button" class="btn btn-primary">이메일인증</button>
+                </div>
+            </div>
+
+
+            <div class="NavContainer">
+                <div class="NavItemTitle">
+                    <label class="text-black">판매상품
+                        <span class="text-danger">*</span></label></div>
+            </div>
+            <div class="NavContainer">
+                <div class="gridContainer">
+                    <div class="gridItem">
+                        <div class="item">
+                            <div class="block-4 text-center">
+                                <a href="/product/detail">
+                                    <figure class="block-4-image">
+                                        <img src="../images/tiki_1.jpg" alt="Image placeholder" class="img-fluid"
+                                             style="width: 100%; height: 193.53px;">
+                                    </figure>
+                                    <div class="block-4-text p-4">
+                                        <h3><a href="product/detail">캔버스 신발 팜 240</a></h3>
+                                        <!--<p class="mb-0">Finding perfect t-shirt</p>-->
+                                        <p class="text-primary font-weight-bold">50000원</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gridItem">
+                        <div class="item">
+                            <div class="block-4 text-center">
+                                <a href="/product/detail">
+                                    <figure class="block-4-image">
+                                        <img src="../images/tiki_1.jpg" alt="Image placeholder" class="img-fluid"
+                                             style="width: 100%; height: 193.53px;">
+                                    </figure>
+                                    <div class="block-4-text p-4">
+                                        <h3><a href="product/detail">캔버스 신발 팜 240</a></h3>
+                                        <!--<p class="mb-0">Finding perfect t-shirt</p>-->
+                                        <p class="text-primary font-weight-bold">50000원</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
         </div>
     </div>
-
-
 </div>
+
+<a id="arrow_up" class="scroll_up" onclick="scroll_up()"> </a>
 
 <script src="../js/jquery-3.3.1.min.js"></script>
 <script src="../js/jquery-ui.js"></script>
@@ -61,5 +149,11 @@
 
 </script>
 
+<style>
+    .NavContainer:not(:nth-child(2)) {
+        border: none;
+    }
+
+</style>
 </body>
 </html>

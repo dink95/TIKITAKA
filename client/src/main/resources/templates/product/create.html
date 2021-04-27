@@ -46,7 +46,8 @@
     <!------------------------->
     <div class="site-section margin-top-2"><!--margin class-->
         <div class="container">
-            <form action="/product/create.do" method="post" enctype="multipart/form-data">
+            <form action="/product/create.do" method="post" enctype="multipart/form-data"
+                  onsubmit="return Validation()">
                 <input type="hidden" id="p_id" name="selId" th:value="${session.mbrId}">
 
                 <div class="NavContainer">
@@ -60,7 +61,7 @@
                             <div class="category-box">
                                 <div class="category">
                                     <select onchange="categoryChange(this)" name="category"
-                                            class="form-control border-0 select-category font-14" required>
+                                            class="form-control border-0 select-category font-14">
                                         <option class="form-control border-0 font-14" value="" disabled selected>메인 카테고리
                                         </option>
                                         <option class="form-control border-0 font-14" value="passion">패션</option>
@@ -75,7 +76,7 @@
                                 <div class="category">
                                     <select onchange="categoryChangeDetail(this)" name="detail" id="detail"
                                             class="form-control border-0 select-category font-14"
-                                            required disabled='true'>
+                                            disabled='true'>
                                         <option class="form-control border-0 font-14" value="" disabled selected>세부 카테고리
                                         </option>
                                     </select>
@@ -107,8 +108,7 @@
                             <span class="text-danger">*</span></label></div>
                     <div class="NavItem">
                     <textarea class="form-control" id="p_content" name="p_content" cols="100" rows="10"
-                              required minlength="3" style="width:100%;" onkeyup="onKeyUp('#valid_p_content');">
-                    </textarea>
+                              style="width:100%;" onkeyup="onKeyUp('#valid_p_content');"></textarea>
                         <span id="valid_p_content" style="color: #ff0000;font-size: 10px;"></span>
                     </div>
                 </div>
@@ -118,8 +118,8 @@
                         <label for="p_price" class="text-black">가격
                             <span class="text-danger">*</span></label></div>
                     <div class="NavItem">
-                        <input type="text" class="form-control" id="p_price" name="prodPrc"
-                               onkeyup="onKeyUp('#valid_p_price');">
+                        <input type="number" class="form-control" id="p_price" name="prodPrc"
+                               onkeyup="onKeyUp('#valid_p_price');" >
                         <span id="valid_p_price" style="color: #ff0000;font-size: 10px;"></span>
                     </div>
                     <div class="NavItem">
@@ -151,8 +151,9 @@
                                placeholder="상품코드가 필요한 물품의 경우 입력해주세요."></div>
                 </div>
 
-                <input multiple="multiple" class="form-control-file" type="file" name="file" id="file1"
-                       onchange="chk_file_type(this);" accept="image/jpeg,image/gif,image/png"/>
+
+           <input class="form-control-file" onchange="chk_file_type(this)" type="file" name="file" id="file1"
+                       accept="image/jpeg,image/gif,image/png" multiple/>
                 <div class="NavContainer">
                     <div class="NavItemTitle">
                         <label for="file1" class="text-black">사진</label>
@@ -160,10 +161,10 @@
                     <div class="NavItem" style="display: flex;">
                         <div class="photoContainer" onclick="upload()"><i class="fas fa-camera fa-2x"></i>
                         </div>
-                        <img id="img_file1">
+                        <div class="imgs_wrap">
+                        <img id="img_file1"/>
+                        </div>
                     </div>
-
-
                 </div>
                 <span id="photoValue"></span>
                 <div class="NavContainer BtnNavContainer">
@@ -175,94 +176,24 @@
                 <div class="NavContainer PreBtnContainer">
                     <input type="button" class="pre_btn" value="주의사항" onclick="goPre()">
                 </div>
-
             </form>
-
         </div>
     </div>
 </div>
 
 <a id="arrow_up" class="scroll_up" onclick="scroll_up()"> </a>
 
+</div>
+
+
 <style>
-
-    .NavContainer {
-        border-bottom: 1px solid #dee2e6;
-        display: flex;
-        box-style: border-box;
-        padding: 3%;
-    }
-
-    .NavContainer.BtnNavContainer {
-        justify-content: center;
-        border: none;
-    }
-
-    .NavContainer.PreBtnContainer {
-        justify-content: flex-end;
-        border: none;
-    }
-
-
-    .NavItemTitle {
-        color: #000;
-        width: 10%;
-        text-align: right;
-        min-width: 100px;
-    }
-
-    .NavItem {
-        padding: 0 10%;
-        box-style: border-box;
-        width: 100%;
-
-    }
 
     #file1 {
         /*display: none;*/
     }
 
-    .photoContainer {
-        background: #eee;
-        border: 1px solid #dee2e6;
-        width: 150px;
-        height: 150px;
-        text-align: center;
-        line-height: 150px;
-        transition: 0.4s;
-    }
-
-    .photoContainer:hover {
-        background: #fff;
-    }
-
-    .NavItem {
-        position: relative;
-        display: inline-block;
-    }
-
-    .NavItem span {
-        position: absolute;
-    }
-
-    #title_count {
-        right: 10%;
-        border-radius: 0.5em;
-        padding: 0 .5em 0 .5em;
-        font-size: 1em;
-    }
-
-    img {
-        width: 150px;
-        height: 150px;
-        margin-left: 1%;
-    }
-
-
 </style>
-</div>
 
-</span>
 <script src="../js/jquery-3.3.1.min.js"></script>
 <script src="../js/jquery-ui.js"></script>
 <script src="../js/popper.min.js"></script>
@@ -285,41 +216,6 @@
         $('#nego').val(result);
     }
 
-    /*
- /!*상품등록*!/
- function goRegist() {
-     if(Validation()){
-     var param = {
-         prodNm: $('#p_title').val(), //제품이름
-         prodPrc: $('#p_price').val(),//제품가격
-         catNo: $('#selectedDetail').val(), //카테고리 번호
-         selId: $('#p_id').val(), //판매자아이디
-         way: $('input[name="p_method"]:checked').val(), //거래방법
-         nego: negoValue,
-         prodCo: $('#p_code').val(), //상품번호
-     }
-
-     $.ajax({
-         url: '/product/create.do',
-         data: JSON.stringify(param),
-         type: 'post',
-         dataType: 'json',
-         contentType: "application/json",
-     }).done(function (data) {
-         if (data.resultCode == 200) {
-             alert(data.resultMsg, '확인', '/');
-         } else {
-             alert(data.resultMsg);
-             return false;
-         }
-
-     }).fail(function (data, textStatus, errorThrown) {
-         console.log(textStatus);
-     });
- }
- }
-*/
-
     function Validation() {
         var result = true;
 
@@ -332,8 +228,8 @@
             $('#valid_p_title').text("*제목은 필수 입력 사항입니다.");
             result = false;
         }
-        if ($('#p_content').length == '') {
-            $('#valid_p_content').text("*상세내용은 필수 입력 사항입니다.");
+        if ($('#p_content').val() == '') {
+            $('#valid_p_content').text("*내용은 필수 입력 사항입니다.");
             result = false;
         }
         if ($('#p_price').val() == '') {
@@ -369,9 +265,8 @@
         $(props).text('');
     }
 
-
-
     function chk_file_type(obj) {
+
         var file_kind = obj.value.lastIndexOf('.');
         var file_name = obj.value.substring(file_kind + 1, obj.length);
         var file_type = file_name.toLowerCase();
@@ -402,9 +297,6 @@
         };
         reader.readAsDataURL(file.files[0]);
     }
-
-
-
 </script>
 
 </body>

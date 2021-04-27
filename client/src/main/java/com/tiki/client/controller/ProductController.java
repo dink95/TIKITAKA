@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -30,32 +31,47 @@ public class ProductController {
     }
 
     @RequestMapping("/product/create.do")  /*상품등록*/
-    public Map<String, Object> createProduct(@ModelAttribute ProductDTO productDTO, MultipartHttpServletRequest multi) {
+    public Map<String, Object> createProduct(ProductDTO productDTO, MultipartHttpServletRequest multi) {
 
         Map<String, Object> resultMap = new HashMap<>();
-
-
+        System.out.println("-------------------------------");
         int result = 0;
+        System.out.println(productDTO);
+        productDTO.setSelId("dink95");
 
         try {
-            List<MultipartFile> fileList = multi.getFiles("file");
-            productDTO.setFiles(fileList);
             result = productService.createProduct(productDTO);
+            List<MultipartFile> fileList = multi.getFiles("file");
+            String path = "c:/tmp/"+Integer.toString(result)+"/";
+            System.out.println(path);
+            File dir = new File(path);
+            if (!dir.isDirectory()) {
+                dir.mkdir();
+            }
+
+            int count =1;
+            for (MultipartFile filePart : fileList) {
+
+                FileOutputStream fs = new FileOutputStream(path+Integer.toString(count)+".jpg");
+                fs.write(filePart.getBytes());
+                fs.close();
+                count++;
+
+            }
+
+
 
         } catch (Exception e) {
 
         }
-        System.out.println(productDTO);
 
         return resultMap;
     }
 
-      @GetMapping(value = "/product/list") /*상품 상세 페이지*/
+    @GetMapping(value = "/product/list") /*상품 상세 페이지*/
     public ModelAndView list() {
         ModelAndView view = new ModelAndView();
         view.setViewName("product/list");
         return view;
     }
-
-
 }
