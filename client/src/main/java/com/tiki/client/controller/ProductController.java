@@ -37,8 +37,8 @@ public class ProductController {
         System.out.println("-------------------------------");
         int result = 0;
         System.out.println(productDTO);
-        productDTO.setSelId("dink95");
 
+        System.out.println(productDTO);
         try {
             result = productService.createProduct(productDTO);
             List<MultipartFile> fileList = multi.getFiles("file");

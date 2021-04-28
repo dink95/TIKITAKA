@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head >
+<head>
   <title>TIKITAKA &ndash; 홈 </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -21,184 +21,405 @@
   <link rel="stylesheet" href="css/style.css">
 
 
-
-
 </head>
 
-  <body>
-  <input type="hidden" id="modelCode" th:value="${modelCode}"/>
-  <input type="hidden" id="modelMsg" th:value="${modelMsg}"/>
+<body>
+<input type="hidden" id="modelCode" th:value="${modelCode}"/>
+<input type="hidden" id="modelMsg" th:value="${modelMsg}"/>
 
-  <div class="site-wrap">
-    <header class="site-navbar" role="banner">
-      <div class="site-navbar-top" th:replace="common::header(home)"></div>
-      <!--replace menu-home------------------------------------------------>
-      <nav class="site-navigation text-right text-md-center" role="navigation" th:replace="common::menu(home)">
-      </nav>
-      <!-------------------------------------------------------------------->
-    </header>
+<div class="site-wrap">
+  <header class="site-navbar" role="banner">
+    <div class="site-navbar-top" th:replace="common::header(home)"></div>
+    <!--replace menu-home------------------------------------------------>
+    <nav class="site-navigation text-right text-md-center" role="navigation" th:replace="common::menu(home)">
+    </nav>
+    <!-------------------------------------------------------------------->
+  </header>
 
-    <!--검색바 중간 삽입-->
-    <div class="search-bar-container">
+  <!--상품 사진 top5-->
+  <div class="site-section block-3 site-blocks-2 bg-light" style="padding-top:10px">
 
-      <!--<div class="category-box " > &lt;!&ndash;카테고리 div&ndash;&gt;
-        <div class="category" >
-          <select onchange="categoryChange(this)" name="category" class="form-control border-0 select-category font-14" required>
-            <option class="form-control border-0 font-14" value="" disabled selected>Category</option>
-            <option class="form-control border-0 font-14" value="all">전체</option>
-            <option class="form-control border-0 font-14" value="passion">패션</option>
-            <option class="form-control border-0 font-14" value="digital">디지털/가전</option>
-            <option class="form-control border-0 font-14" value="interior">가구/인테리어</option>
-            <option class="form-control border-0 font-14" value="leisure">여가활동</option>
-            <option class="form-control border-0 font-14" value="else">기타</option>
-            <option class="form-control border-0 font-14" value="buy">삽니다</option>
-          </select>
-        </div>
+    <!--상품사진-->
+    <div class="container">
+      <div class="categoryMenuBox">
+        <li class="categoryMenu">
+          <a><i class="fas fa-tshirt fa-3x" onclick="categoryClick(1)"></i>
+            <p>패션</p></a>
+          <a><i class="fas fa-tv fa-3x" onclick="categoryClick(2)"></i>
+            <p>디지털/가전</p></a>
+          <a><i class="fas fa-couch fa-3x" onclick="categoryClick(3)"></i>
+            <p>가구/인테리어</p></a>
+          <a><i class="fas fa-bicycle fa-3x" onclick="categoryClick(4)"></i>
+            <p>여가활동</p></a>
+          <a><i class="fas fa-ellipsis-h fa-3x" onclick="categoryClick(5)"></i>
+            <p>기타</p></a>
+          <a href="product/list"><i class="fas fa-shopping-cart fa-3x"></i>
+            <p>삽니다</p></a>
+        </li>
+      </div>
+      <div class="hideBox">
+        <ul class="hide gridContainer">
+          <li><a href="product/list">전체</a></li>
+          <li><a href="product/list">남성의류</a></li>
+          <li><a href="product/list">여성의류</a></li>
+          <li><a href="product/list">아동의류</a></li>
+          <li><a href="product/list">가방</a></li>
+          <li><a href="product/list">모자</a></li>
+          <li><a href="product/list">신발</a></li>
+          <li><a href="product/list">액세서리</a></li>
+          <li><a href="product/list">화장품</a></li>
+          <li><a href="product/list">기타</a></li>
+        </ul>
+        <ul class="hide gridContainer">
+          <li><a href="product/list">전체</a></li>
+          <li><a href="product/list">pc/노트북</a></li>
+          <li><a href="product/list">휴대폰/태블릿</a></li>
+          <li><a href="product/list">카메라</a></li>
+          <li><a href="product/list">게임</a></li>
+          <li><a href="product/list">기타</a></li>
+        </ul>
+        <ul class="hide gridContainer">
+          <li><a href="product/list">전체</a></li>
+          <li><a href="product/list">침실</a></li>
+          <li><a href="product/list">주방</a></li>
+          <li><a href="product/list">DIY</a></li>
+          <li><a href="product/list">서재/사무용</a></li>
+          <li><a href="product/list">기타</a></li>
+        </ul>
+        <ul class="hide gridContainer">
+          <li><a href="product/list">전체</a></li>
+          <li><a href="product/list">등산</a></li>
+          <li><a href="product/list">캠핑</a></li>
+          <li><a href="product/list">골프</a></li>
+          <li><a href="product/list">헬스</a></li>
+          <li><a href="product/list">공연/티켓</a></li>
+          <li><a href="product/list">여행</a></li>
+          <li><a href="product/list">기타</a></li>
+        </ul>
+        <ul class="hide gridContainer">
+          <li><a href="product/list">전체</a></li>
+          <li><a href="product/list">반려동물용품</a></li>
+          <li><a href="product/list">차량용품</a></li>
+          <li><a href="product/list">출산/유아용품</a></li>
+        </ul>
+      </div>
+      <!--검색바 중간 삽입-->
+      <div class="search-bar-container" style="margin: 20px 0 50px 0;">
+        <div class="select-search-box">
 
-        <div class="category" >
-          <select name="detail" id="detail" class="form-control border-0 select-category font-14" required>
-            <option class="form-control border-0 font-14" value="" disabled selected>전체</option>
-          </select>
+          <div class="select-box"> <!--셀렉트 박스 div-->
+            <select name="" class="form-control border-0 select-infor font-14">
+              <option class="form-control border-0 font-14" value="">전체</option>
+              <option class="form-control border-0 font-14" value="">제목</option>
+              <option class="form-control border-0 font-14" value="">ID</option>
+              <option class="form-control border-0 font-14" value="">상품코드</option>
+            </select>
+          </div>
+
+          <div class="search-box"> <!--search box div-->
+            <form action="product/list" class="site-block-top-search input-search">
+              <input type="text" class="form-control border-0 input-search" placeholder="Search">
+              <span type="submit" class="icon icon-search2"></span>
+            </form>
+
+          </div>
+
         </div>
       </div>
--->
-      <div class="select-search-box ">
+      <!------------------------------------------------------------------------------->
 
-        <div class="select-box"> <!--셀렉트 박스 div-->
-          <select name="" class="form-control border-0 select-infor font-14">
-            <option class="form-control border-0 font-14" value="">전체</option>
-            <option class="form-control border-0 font-14" value="">제목</option>
-            <option class="form-control border-0 font-14" value="">ID</option>
-            <option class="form-control border-0 font-14" value="">상품코드</option>
-          </select>
+      <div class="gridContainer">
+        <div class="gridItem">
+          <div class="item">
+            <div class="block-4 text-center">
+              <a href="product/detail">
+                <figure class="block-4-image">
+                  <img src="images/tiki_1.jpg" alt="Image placeholder" class="img-fluid"
+                       style="width: 100%; height: 193.53px;">
+                </figure>
+                <div class="block-4-text p-4">
+                  <h3><a href="product/detail">캔버스 신발 팜 240</a></h3>
+                  <!--<p class="mb-0">Finding perfect t-shirt</p>-->
+                  <p class="text-primary font-weight-bold">50000원</p>
+                </div>
+              </a>
+            </div>
+          </div>
         </div>
-
-        <div class="search-box"> <!--search box div-->
-          <form action="shop.html" class="site-block-top-search input-search">
-            <span class="icon icon-search2"></span>
-            <input type="text" class="form-control border-0 input-search" placeholder="Search">
-          </form>
+        <div class="gridItem">
+          <div class="item">
+            <div class="block-4 text-center">
+              <a href="product/detail">
+                <figure class="block-4-image">
+                  <img src="images/tiki_1.jpg" alt="Image placeholder" class="img-fluid"
+                       style="width: 100%; height: 193.53px;">
+                </figure>
+                <div class="block-4-text p-4">
+                  <h3><a href="product/detail">캔버스 신발 팜 240</a></h3>
+                  <!--<p class="mb-0">Finding perfect t-shirt</p>-->
+                  <p class="text-primary font-weight-bold">50000원</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="gridItem">
+          <div class="item">
+            <div class="block-4 text-center">
+              <a href="/product/detail">
+                <figure class="block-4-image">
+                  <img src="images/tiki_1.jpg" alt="Image placeholder" class="img-fluid"
+                       style="width: 100%; height: 193.53px;">
+                </figure>
+                <div class="block-4-text p-4">
+                  <h3><a href="product/detail">캔버스 신발 팜 240</a></h3>
+                  <!--<p class="mb-0">Finding perfect t-shirt</p>-->
+                  <p class="text-primary font-weight-bold">50000원</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="gridItem">
+          <div class="item">
+            <div class="block-4 text-center">
+              <a href="/product/detail">
+                <figure class="block-4-image">
+                  <img src="images/tiki_1.jpg" alt="Image placeholder" class="img-fluid"
+                       style="width: 100%; height: 193.53px;">
+                </figure>
+                <div class="block-4-text p-4">
+                  <h3><a href="product/detail">캔버스 신발 팜 240</a></h3>
+                  <!--<p class="mb-0">Finding perfect t-shirt</p>-->
+                  <p class="text-primary font-weight-bold">50000원</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="gridItem">
+          <div class="item">
+            <div class="block-4 text-center">
+              <a href="/product/detail">
+                <figure class="block-4-image">
+                  <img src="images/tiki_1.jpg" alt="Image placeholder" class="img-fluid"
+                       style="width: 100%; height: 193.53px;">
+                </figure>
+                <div class="block-4-text p-4">
+                  <h3><a href="product/detail">캔버스 신발 팜 240</a></h3>
+                  <!--<p class="mb-0">Finding perfect t-shirt</p>-->
+                  <p class="text-primary font-weight-bold">50000원</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="gridItem">
+          <div class="item">
+            <div class="block-4 text-center">
+              <a href="/product/detail">
+                <figure class="block-4-image">
+                  <img src="images/tiki_1.jpg" alt="Image placeholder" class="img-fluid"
+                       style="width: 100%; height: 193.53px;">
+                </figure>
+                <div class="block-4-text p-4">
+                  <h3><a href="product/detail">캔버스 신발 팜 240</a></h3>
+                  <!--<p class="mb-0">Finding perfect t-shirt</p>-->
+                  <p class="text-primary font-weight-bold">50000원</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="gridItem">
+          <div class="item">
+            <div class="block-4 text-center">
+              <a href="/product/detail">
+                <figure class="block-4-image">
+                  <img src="images/tiki_1.jpg" alt="Image placeholder" class="img-fluid"
+                       style="width: 100%; height: 193.53px;">
+                </figure>
+                <div class="block-4-text p-4">
+                  <h3><a href="product/detail">캔버스 신발 팜 240</a></h3>
+                  <!--<p class="mb-0">Finding perfect t-shirt</p>-->
+                  <p class="text-primary font-weight-bold">50000원</p>
+                </div>
+              </a>
+            </div>
+          </div>
         </div>
 
       </div>
 
     </div>
-  <!------------------------------------------------------------------------------->
-
-    <!--상품 사진 top5-->
-    <div class="site-section block-3 site-blocks-2 bg-light">
-      <!--상품사진-->
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-7 site-section-heading text-center pt-4">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12" style="display: flex; justify-content: center;">
-
-            <div class="nonloop-block-3 owl-carousel" style="width:80%;">
-              <div class="item">
-                <div class="block-4 text-center">
-                  <figure class="block-4-image">
-                    <img src="images/tiki_1.jpg" alt="Image placeholder" class="img-fluid" style="width: 272.66px; height: 193.53px;">
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="#">캔버스 신발 팜 240</a></h3>
-                    <!--<p class="mb-0">Finding perfect t-shirt</p>-->
-                    <p class="text-primary font-weight-bold">50000원</p>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="block-4 text-center">
-                  <figure class="block-4-image">
-                    <img src="images/tiki_2.jpg" alt="Image placeholder" class="img-fluid" style="width: 272.66px; height: 193.53px;">
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="#">책상 팔아요...</a></h3>
-                    <!--<p class="mb-0">Finding perfect t-shirt</p>-->
-                    <p class="text-primary font-weight-bold">30000원</p>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="block-4 text-center">
-                  <figure class="block-4-image">
-                    <img src="images/tiki_3.jpg" alt="Image placeholder" class="img-fluid" style="width: 272.66px; height: 193.53px;">
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="#">아디다스 L사이즈 트레이닝복 </a></h3>
-                    <!--<p class="mb-0">Finding perfect t-shirt</p>-->
-                    <p class="text-primary font-weight-bold">60000원</p>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="block-4 text-center">
-                  <figure class="block-4-image">
-                    <img src="images/tiki_4.jpg" alt="Image placeholder" class="img-fluid" style="width: 272.66px; height: 193.53px;">
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="#">애플 트랙패드</a></h3>
-                    <!--<p class="mb-0">Finding perfect t-shirt</p>-->
-                    <p class="text-primary font-weight-bold">40000원</p>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="block-4 text-center">
-                  <figure class="block-4-image">
-                    <img src="images/tiki_5.jpg" alt="Image placeholder" class="img-fluid" style="width: 272.66px; height: 193.53px;">
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="#">헤드셋 팝니다</a></h3>
-                    <!--<p class="mb-0">Finding perfect t-shirt</p>-->
-                    <p class="text-primary font-weight-bold">90000원</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!----------------------------------------->
-
-            <!--top-5-box------------------------------->
-            <div id="top-5" >
-              <h2>top5</h2>
-              <ol id="top-5-list" >
-
-                <li>mkmkmk11</li>
-                <li>kims19</li>
-                <li>tikitiki12</li>
-                <li>hahaha10</li>
-                <li>101010101</li>
-
-              </ol>
-
-            </div>
-            <!--------------------------------------------->
-          </div>
-        </div>
-      </div>
-    </div>
-    <a id="arrow_up"  class="scroll_up"  onclick="scroll_up()"></a>
-
   </div>
+  <a id="arrow_up" class="scroll_up" onclick="scroll_up()"></a>
 
-  <script src="js/jquery-3.3.1.min.js"></script>
-  <script src="js/jquery-ui.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/aos.js"></script>
+</div>
 
-  <script src="js/main.js"></script>
-  <script>
-    if($('#modelCode').val()==400) {
-      alert($('#modelMsg').val());
+
+<style>
+
+  .categoryMenuBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .categoryMenu {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .categoryMenu a {
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    border-bottom: 0px solid #ddd;
+    padding-top: 1%;
+    margin: 0 1%;
+  }
+
+  a:hover {
+    color: #8800ff;
+  }
+
+  a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover {
+    color: #8800ff;
+  }
+
+  .categoryMenu a p {
+    font-size: 0.7rem;
+  }
+
+  .hideBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hide {
+    box-shadow: 0 -1px #ddd;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 10px;
+    width: 80%;
+    /*min-width: 744px;*/
+    padding: 0;
+  }
+
+  .hide li {
+    margin: 2% 0;
+    list-style: none;
+    font-size: 18px;
+    color: black;
+
+  }
+
+  .hide li:hover {
+    font-weight: bold;
+    color: red;
+  }
+
+
+</style>
+
+
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/aos.js"></script>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+<script src="js/main.js"></script>
+<script>
+  if ($('#modelCode').val() == 400) {
+    alert($('#modelMsg').val());
+  }
+
+  $('.hide').css('display', 'none');
+
+  function categoryClick(props) {
+    if (props == 1) {
+      $('.hide:not(:nth-child(1))').css('display', 'none');
+      $('.categoryMenu>a:not(:nth-child(1))').css({'color': '', 'border-bottom': '0px solid #ddd'})
+      var submenu = $('.hide:nth-child(1)');
+      var Icon = $('.categoryMenu>a:nth-child(1)');
+      if (submenu.is(":visible")) {
+        submenu.slideUp();
+        Icon.css({'color': '', 'border-bottom': '0px solid #ddd'});
+      } else {
+        submenu.slideDown();
+        $('.hideBox').css('justify-content', 'center');
+        Icon.css({'color': '#3a2ee0', 'border-bottom': '3px solid #7972ea'});
+      }
     }
+    if (props == 2) {
+      $('.hide:not(:nth-child(2))').css('display', 'none');
+      $('.categoryMenu>a:not(:nth-child(2))').css({'color': '', 'border-bottom': '0px solid #ddd'})
+      var submenu = $('.hide:nth-child(2)');
+      var Icon = $('.categoryMenu>a:nth-child(2)');
+      if (submenu.is(":visible")) {
+        submenu.slideUp();
+        Icon.css({'color': '', 'border-bottom': '0px solid #ddd'});
+      } else {
+        submenu.slideDown();
+        $('.hideBox').css('justify-content', 'center');
+        Icon.css({'color': '#3a2ee0', 'border-bottom': '3px solid #7972ea'});
+      }
+    }
+    if (props == 3) {
+      $('.hide:not(:nth-child(3))').css('display', 'none');
+      $('.categoryMenu>a:not(:nth-child(3))').css({'color': '', 'border-bottom': '0px solid #ddd'})
+      var submenu = $('.hide:nth-child(3)');
+      var Icon = $('.categoryMenu>a:nth-child(3)');
+      if (submenu.is(":visible")) {
+        submenu.slideUp();
+        Icon.css({'color': '', 'border-bottom': '0px solid #ddd'});
+      } else {
+        submenu.slideDown();
+        $('.hideBox').css('justify-content', 'center');
+        Icon.css({'color': '#3a2ee0', 'border-bottom': '3px solid #7972ea'});
+      }
+    }
+    if (props == 4) {
+      $('.hide:not(:nth-child(4))').css('display', 'none');
+      $('.categoryMenu>a:not(:nth-child(4))').css({'color': '', 'border-bottom': '0px solid #ddd'})
+      var submenu = $('.hide:nth-child(4)');
+      var Icon = $('.categoryMenu>a:nth-child(4)');
+      if (submenu.is(":visible")) {
+        submenu.slideUp();
+        Icon.css({'color': '', 'border-bottom': '0px solid #ddd'});
+      } else {
+        submenu.slideDown();
+        $('.hideBox').css('justify-content', 'center');
+        Icon.css({'color': '#3a2ee0', 'border-bottom': '3px solid #7972ea'});
+      }
+    }
+    if (props == 5) {
+      $('.hide:not(:nth-child(5))').css('display', 'none');
+      $('.categoryMenu>a:not(:nth-child(5))').css({'color': '', 'border-bottom': '0px solid #ddd'})
+      var submenu = $('.hide:nth-child(5)');
+      var Icon = $('.categoryMenu>a:nth-child(5)');
+      if (submenu.is(":visible")) {
+        submenu.slideUp();
+        Icon.css({'color': '', 'border-bottom': '0px solid #ddd'});
+      } else {
+        submenu.slideDown();
+        $('.hideBox').css('justify-content', 'center');
+        Icon.css({'color': '#3a2ee0', 'border-bottom': '3px solid #7972ea'});
+      }
+    }
+  }
+</script>
 
-
-  </script>
-
-  </body>
+</body>
 </html>
