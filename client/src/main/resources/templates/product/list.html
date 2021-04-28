@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="../css/owl.theme.default.min.css">
     <link rel="stylesheet" href="../css/aos.css">
     <link rel="stylesheet" href="../css/style.css">
+
+
 </head>
 
 <body>
@@ -30,24 +32,26 @@
 <div class="site-wrap">
     <header class="site-navbar" role="banner">
         <!--replace 헤더-->
-        <div class="site-navbar-top" th:replace="common::header(product_create)">
+        <div class="site-navbar-top" th:replace="common::header(product_list)">
         </div>
         <!------------->
         <!--replace-login-------------------------------->
 
         <nav class="site-navigation text-right text-md-center" role="navigation"
-             th:replace="common::menu(product_create)">
+             th:replace="common::menu(product_list)">
         </nav>
         <!----------------------------------------------------------->
     </header>
     <!--replace logo-login-->
-    <div class="bg-light py-3" th:replace="common::logo(product_create)">
+    <div class="bg-light py-3" th:replace="common::logo(product_list)">
     </div>
     <!------------------------->
-    리스트
+
+    <div class="container">
+        <h1>사진 리스트</h1>
+    </div>
 </div>
 
-</span>
 <script src="../js/jquery-3.3.1.min.js"></script>
 <script src="../js/jquery-ui.js"></script>
 <script src="../js/popper.min.js"></script>
@@ -55,10 +59,8 @@
 <script src="../js/owl.carousel.min.js"></script>
 <script src="../js/jquery.magnific-popup.min.js"></script>
 <script src="../js/aos.js"></script>
-
 <script src="../js/main.js"></script>
 <script>
-
 
 </script>
 
