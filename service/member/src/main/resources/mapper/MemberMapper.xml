@@ -50,7 +50,7 @@
         #{mbrAddr, jdbcType=VARCHAR},
         #{mbrEmail, jdbcType=VARCHAR},
         #{mbrPhone, jdbcType=VARCHAR}
-        );
+        )
     </insert>
 
     <delete id="deleteMember" parameterType="String">
