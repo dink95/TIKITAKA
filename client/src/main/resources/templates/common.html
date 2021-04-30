@@ -5,11 +5,13 @@
 <div class="site-navbar-top" th:fragment="header(header)" > <!--padding 수정 style-196-->
     <div class="container">
         <div class="row align-items-center">
+<!--
 
             <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left"></div>
-            <!--원래 검색바 수정-->
+            &lt;!&ndash;원래 검색바 수정&ndash;&gt;
+-->
 
-            <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
+            <div class="col-6 col-md-3 order-1 order-md-1 text-left">
                 <div class="site-logo" >
                     <a href="/" class="js-logo-clone" >
                         <img src="../images/TIKITAKA2.png" alt="Image placeholder" class="img-fluid"
@@ -18,7 +20,34 @@
                 </div>
             </div>
 
-            <div class="col-6 col-md-4 order-3 order-md-3 text-right" >
+            <div class="col-12 col-md-6 order-3 order-md-2  text-center">
+            <!--검색바 중간 삽입-->
+            <div class="search-bar-container" >
+                <div class="select-search-box">
+
+                    <div class="select-box"> <!--셀렉트 박스 div-->
+                        <select name="" class="form-control border-0 select-infor font-14">
+                            <option class="form-control border-0 font-14" value="">전체</option>
+                            <option class="form-control border-0 font-14" value="">제목</option>
+                            <option class="form-control border-0 font-14" value="">ID</option>
+                            <option class="form-control border-0 font-14" value="">상품코드</option>
+                        </select>
+                    </div>
+
+                    <div class="search-box"> <!--search box div-->
+                        <form action="product/list" class="site-block-top-search input-search">
+                            <input type="text" class="form-control border-0 input-search" placeholder="Search">
+                            <span type="submit" class="icon icon-search2"></span>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+            <!------------------------------------------------------------------------------->
+            </div>
+
+            <div class="col-6 col-md-3 order-2 order-md-3 text-right" >
                 <!--메뉴 padding 수정-style-260-->
                 <div class="site-top-icons"> <!--버튼 사이즈 수정 style-218-->
                     <ul >
@@ -43,9 +72,9 @@
     <div class="container">
         <ul class="site-menu js-clone-nav d-none d-md-block" >
             <li th:classappend="${menu}=='home'? 'active' : ''"><a href="/" >Home</a>
-            <li th:classappend="${menu}=='menu1'? 'active' : ''">
+            <li th:classappend="${menu}=='product_list'? 'active' : ''">
                 <a th:if="${session.mbrId == null}" href="login" >상품</a>
-                <a th:if="${session.mbrId != null}" href="#" >상품</a></li>
+                <a th:if="${session.mbrId != null}" href="/product/list" >상품</a></li>
             <li th:classappend="${menu}=='product_create'? 'active' : ''">
                 <a th:if="${session.mbrId == null}" href="/login" >상품등록</a>
                 <a th:if="${session.mbrId != null}" href="/product/create" >상품등록</a></li>
@@ -75,6 +104,8 @@
                 <span class="text-black font-14" th:text="${logo}=='updatepwd'? '비밀번호 재설정' :'' "></span>
                 <span class="text-black font-14" th:text="${logo}=='myinfo'? '내 정보' :'' "></span>
                 <span class="text-black font-14" th:text="${logo}=='product_create'? '상품 등록' :'' "></span>
+                <span class="text-black font-14" th:text="${logo}=='product_list'? '상품 리스트' :'' "></span>
+            </div>
             </div>
         </div>
     </div>

@@ -22,12 +22,6 @@
 
 <body>
 
-<div id="modal_overlay">
-    <div id="modal_main">
-        <h1 id="modal_content"></h1>
-        <a id="modal_button" class="btn btn-primary btn-lg" style="color:white;"></a>
-    </div>
-</div>
 
 <div class="site-wrap">
     <header class="site-navbar" role="banner">
@@ -46,23 +40,131 @@
     <div class="bg-light py-3" th:replace="common::logo(product_list)">
     </div>
     <!------------------------->
+    <div class="site-section block-3 site-blocks-2 bg-light" style="padding-top:10px">
+        <div class="container">
 
-    <div class="container">
-        <h1>사진 리스트</h1>
+
+            <!--검색바 중간 삽입-->
+            <div class="search-bar-container">
+
+                <div class="category-box" style="display: flex; padding-bottom: 10px;">
+                    <div class="category col-md-3 order-1 order-md-1 text-center" style="padding:0;">
+                        <select onchange="categoryChange(this)" name="category"
+                                class="form-control border-0 select-category font-14" required>
+                            <option class="form-control border-0 font-14" value="" disabled selected>메인 카테고리</option>
+                            <option class="form-control border-0 font-14" value="passion">패션</option>
+                            <option class="form-control border-0 font-14" value="digital">디지털/가전</option>
+                            <option class="form-control border-0 font-14" value="interior">가구/인테리어</option>
+                            <option class="form-control border-0 font-14" value="leisure">여가활동</option>
+                            <option class="form-control border-0 font-14" value="else">기타</option>
+                            <option class="form-control border-0 font-14" value="buy">삽니다</option>
+                        </select>
+                    </div>
+                    <div class=" order-1 order-md-1 text-center" style="display:flex; align-items: center;">
+                        <i class="fas fa-chevron-right fa-1x" style="color:#7972ea"></i>
+                    </div>
+                    <div class="category col-md-3 order-1 order-md-2 text-center" style="padding:0">
+                        <select name="detail" id="detail" class="form-control border-0 select-category font-14" disabled
+                                required>
+                            <option class="form-control border-0 font-14" id="categoryName" value="" selected>세부 카테고리
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!------------------------------------------------------------------------------->
+                <h1>남성의류 검색 예시</h1>
+                <div class="gridContainer">
+                </div>
+            </div>
+        </div>
+
     </div>
-</div>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <script src="../js/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/owl.carousel.min.js"></script>
+    <script src="../js/jquery.magnific-popup.min.js"></script>
+    <script src="../js/aos.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+    <script>
 
-<script src="../js/jquery-3.3.1.min.js"></script>
-<script src="../js/jquery-ui.js"></script>
-<script src="../js/popper.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
-<script src="../js/owl.carousel.min.js"></script>
-<script src="../js/jquery.magnific-popup.min.js"></script>
-<script src="../js/aos.js"></script>
-<script src="../js/main.js"></script>
-<script>
 
-</script>
+        function getProductList() {
+
+            var param = {
+                category: null
+            }
+
+            $.ajax({
+                url: '/product/list.query',
+                data: null,
+                type: 'post',
+                dataType: 'json'
+            }).done(function (data) {
+                drawPrdList(data);
+                console.log(data);
+            }).fail(function (data, textStatus, errorThrown) {
+                console.log(textStatus);
+            });
+
+
+        }
+
+
+        function drawPrdList(data) {
+
+            if (typeof data.dataList !== 'undefined' && data.dataList.length > 0) {
+                var container = $('.gridContainer');
+                container.empty();
+                var contents = '';
+                var imgPath = '';
+                $.each(data.dataList, function (index, obj) {
+                    // 매번 컨텐츠가 달라야하니 초기화
+                    contents = '';
+                    //이미지경로를 미리 만들어놓는다.
+                    imgPath = '/istatic/images/' + obj.prodNo + '/1.jpg';
+
+                    //상품 하나 html
+                    contents += '<div class="gridItem">';
+                    contents += '    <div class="item">';
+                    contents += '       <div class="block-4 text-center">';
+                    contents += '          <a href="#" onclick="goDetail(' + obj.prodNo + ')">';
+                    contents += '               <figure class="block-4">';
+                    contents += '                    <img src="' + imgPath + '"  alt="Image placeholder"  class="img-fluid" style="width: 100%; height: 193.53px;">';
+                    contents += '                </figure>';
+                    contents += '                <div class="block-4-text p-4">';
+                    contents += '                    <h3><a href="#" onclick="goDetail(' + obj.prodNo + ')">' + obj.prodNm + '</a></h3>';
+                    contents += '                    <p class="text-primary font-weight-bold">' + obj.prodPrc + '</p>';
+                    contents += '                </div>';
+                    contents += '            </a>';
+                    contents += '        </div>';
+                    contents += '    </div>';
+                    contents += '</div>';
+
+                    //그리드에 삽입
+                    container.append(contents)
+                })
+
+
+            }
+
+        }
+
+        //상세페이지
+        function goDetail(prodNo) {
+            location.href = '/product/detail?prodNo=' + prodNo;
+            $('#categoryName').text('>' + obj.catNo); //카테고리 이름
+        }
+
+
+        $(document).ready(function () {
+            getProductList();
+        });
+
+    </script>
 
 </body>
 </html>

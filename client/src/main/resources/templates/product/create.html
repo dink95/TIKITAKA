@@ -56,6 +56,7 @@
                             <span class="text-danger">*</span></label>
                         <!-- <img src="/istatic/images/shose/sho1.jpg"/>-->
                     </div>
+
                     <div class="NavItem">
                         <div class="search-bar-container">
                             <div class="category-box">
@@ -152,19 +153,19 @@
                 </div>
 
 
-                <input class="form-control-file" onchange="chk_file_type(this)" type="file" name="file" id="file1"
-                       accept="image/jpeg,image/gif,image/png" multiple/>
-                <div class="NavContainer">
+                <input class="form-control-file" onchange="chk_file_type(this)" type="file" name="file" id="file"
+                       accept="image/jpeg,image/gif,image/png"  multiple="multiple"/>
+                <div class="NavContainer" style=" display: block;">
                     <div class="NavItemTitle">
-                        <label for="file1" class="text-black">사진</label>
+                        <label for="file" class="text-black">사진</label>
                         <span class="text-danger">*</span></div>
-                    <div class="NavItem" style="display: flex;">
+                    <div class="imgs_wrap NavItem fileGridContainer" id="imgDiv" >
                         <div class="photoContainer" onclick="upload()"><i class="fas fa-camera fa-2x"></i>
+                        <span id="fileCount">(0/5)</span>
                         </div>
-                        <div class="imgs_wrap">
-                            <img id="img_file1"/>
+
                         </div>
-                    </div>
+
                 </div>
                 <span id="photoValue"></span>
                 <div class="NavContainer BtnNavContainer">
@@ -180,7 +181,6 @@
         </div>
     </div>
 </div>
-
 <a id="arrow_up" class="scroll_up" onclick="scroll_up()"> </a>
 
 </div>
@@ -188,14 +188,24 @@
 
 <style>
 
-    #file1 {
-        /*display: none;*/
+    #file {
+        display: none;
     }
     img {
         width: 150px;
         height: 150px;
         margin-left: 1%;
     }
+
+    .imgs_wrap{
+        padding:0px;
+    }
+    .fileGridContainer {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, auto));
+        row-gap: 10px;
+    }
+
 </style>
 
 <script src="../js/jquery-3.3.1.min.js"></script>
@@ -256,7 +266,7 @@
     }
 
     function upload() {
-        $('#file1').click();
+        $('#file').click();
     }
 
     /*스크롤 상단 고정*/
@@ -268,39 +278,71 @@
     function onKeyUp(props) {
         $(props).text('');
     }
-
+    var fileCount = 0;
     function chk_file_type(obj) {
 
-        var file_kind = obj.value.lastIndexOf('.');
-        var file_name = obj.value.substring(file_kind + 1, obj.length);
-        var file_type = file_name.toLowerCase();
+        var count = 0;
+        for (var i = 0; i < obj.files.length; i++) {
 
-        var check_file_type = ['jpg', 'gif', 'png', 'jpeg'];
+            var data = obj.files[i];
+
+            var file_kind = data.name.lastIndexOf('.');
+            var file_name = data.name.substring(file_kind + 1, obj.length);
+            var file_type = file_name.toLowerCase();
+
+            var check_file_type = ['jpg', 'gif', 'png', 'jpeg'];
+
+            if (check_file_type.indexOf(file_type) == -1) {
+                alert('이미지 파일만 선택할 수 있습니다.');
+                fileClear(obj);
+                break;
+            } else {
+                count++;
+                readImage(count, data);
+            }
+        }
+        ;
+        fileCount += count;
+        $('#fileCount').text('(' +fileCount+ '/5)')
+    }
+
+
+    function  fileClear(obj) {
         var agent = navigator.userAgent.toLowerCase()
 
-        if (check_file_type.indexOf(file_type) == -1) {
-            alert('이미지 파일만 선택할 수 있습니다.');
-
-            if ((navigator.appName == 'Netscape'
-                && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1)) {
-                $(obj).replaceWith($(obj).clone(true));
-            } else {
-                $(obj).val("");
-            }
+        if ((navigator.appName == 'Netscape'
+            && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1)) {
+            $(obj).replaceWith($(data).clone(true));
         } else {
-            readImage(obj);
+            $(obj).val("");
         }
     }
 
-    function readImage(file) {
+    function imageClear(){
+        var imgDiv = $('#imgDiv');
+        imgDiv.empty();
+    }
+
+    function removeImg(count) {
+        $('#img_file'+count).remove();
+    }
+
+    function readImage(count, file) {
         var reader = new FileReader();
 
+        var imgDiv = $('#imgDiv')
+
         reader.onload = function (e) {
-            var img = $('#img_' + file.id)
-            img.attr("src", e.target.result);
+            var imgTag = $('<img/>');
+
+            imgTag.attr('id', 'img_file'+count);
+            imgTag.attr("src", e.target.result);
+            imgDiv.append(imgTag);
         };
-        reader.readAsDataURL(file.files[0]);
+        reader.readAsDataURL(file);
     }
+
+
 </script>
 
 </body>

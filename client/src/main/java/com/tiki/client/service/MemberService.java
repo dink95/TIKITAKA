@@ -74,7 +74,6 @@ public class MemberService {
     public boolean existId(String id){
         return webClient.get()
                 .uri("/mbr/existence/id/{id}",id)
-                //.body(Mono.just(memberDTO), MemberDTO.class)
                 .retrieve()
                 .bodyToMono(Boolean.class) //반환정보
                 .block();
@@ -83,7 +82,6 @@ public class MemberService {
     public boolean existPhone(String phone){
         return webClient.get()
                 .uri("/mbr/existence/phone/{phone}",phone)
-                //.body(Mono.just(memberDTO), MemberDTO.class)
                 .retrieve()
                 .bodyToMono(Boolean.class) //반환정보
                 .block();
@@ -92,7 +90,6 @@ public class MemberService {
     public boolean existEmail(String email){
         return webClient.get()
                 .uri("/mbr/existence/email/{email}",email)
-                //.body(Mono.just(memberDTO), MemberDTO.class)
                 .retrieve()
                 .bodyToMono(Boolean.class) //반환정보
                 .block();

@@ -814,8 +814,7 @@ option[value=""][disabled]{
 
 }
 .category-box>.category{
-  width:50%;
-  min-width:150px;
+  padding:0;
   border: 1px solid  #eee8e8;
   border-radius: 5px;
 
@@ -834,7 +833,7 @@ option[value=""][disabled]{
 
 }
 .select-search-box>.select-box{
-  width: 16%;
+  width: 25%;
   border-top:1px solid #9702ea;
   border-left:1px solid  #9702ea;
   border-bottom:1px solid  #9702ea;
@@ -843,7 +842,7 @@ option[value=""][disabled]{
 
 }
 .select-search-box>.search-box{
-  width: 48%;
+  width: 75%;
   border-top:1px solid  #9702ea;
   border-right:1px solid  #9702ea;
   border-bottom:1px solid  #9702ea;
