@@ -34,7 +34,6 @@ public class ProductController {
     public Map<String, Object> createProduct(ProductDTO productDTO, MultipartHttpServletRequest multi) {
 
         Map<String, Object> resultMap = new HashMap<>();
-        System.out.println("-------------------------------");
         int result = 0;
         System.out.println(productDTO);
 
@@ -43,7 +42,6 @@ public class ProductController {
             result = productService.createProduct(productDTO);
             List<MultipartFile> fileList = multi.getFiles("file");
             String path = "c:/tmp/"+Integer.toString(result)+"/";
-            System.out.println(path);
             File dir = new File(path);
             if (!dir.isDirectory()) {
                 dir.mkdir();
