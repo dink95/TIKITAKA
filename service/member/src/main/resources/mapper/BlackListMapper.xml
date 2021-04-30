@@ -4,5 +4,8 @@
 
 <mapper namespace="com.tiki.member.mapper.BlackListMapper">
 
-
+    <insert id="insertMember" parameterType="String">
+        insert blist
+        values(#{mbrId, jdbcType=VARCHAR})
+    </insert>
 </mapper>
