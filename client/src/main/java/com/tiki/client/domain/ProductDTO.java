@@ -35,5 +35,8 @@ public class ProductDTO {
     /** 상품코드 */
     private String prodCo;
 
+    /** 상세설명 */
+    private String content;
+
 
 }
