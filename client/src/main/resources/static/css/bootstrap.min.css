@@ -2088,6 +2088,10 @@ pre code {
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out
 }
+.form-control:hover{
+    background: #f3f2f2;
+    transform: 0.4s;
+}
 
 @media screen and (prefers-reduced-motion: reduce) {
     .form-control {
@@ -6502,7 +6506,8 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
 }
 
 .border-0 {
-    border: 0 !important
+    /*  border: 0 !important*/
+
 }
 
 .border-top-0 {
