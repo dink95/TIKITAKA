@@ -235,23 +235,24 @@ function categoryChange(e) {
 		target.appendChild(opt);
 	}
 
-	if ($("select[name=category]").val() == "메인카테고리") {
-		$("select[name=detail]").attr("disabled", true);
+	if ($('#category').val() == "메인카테고리") {
+		$('#detail').attr("disabled", true);
 	} else {
-		$("select[name=detail]").attr("disabled", false);
+		$('#detail').attr("disabled", false);
 	}
 
 }
 
-var arr = [["남성의류", "여성의류", "아동의류", "가방", "모자", "신발", "엑세서리", "화장품", "기타"],
+var arr = [["남성의류", "여성의류", "아동의류", "가방", "신발", "모자", "액세서리", "화장품", "기타"],
 	["pc/노트북", "휴대폰/태블릿", "카메라", "게임", "기타"],
-	["침실", "주방", "DIY", "서재/사무용", "기타"],
+	["침실", "주방","거실", "DIY", "서재/사무용", "기타"],
 	["등산", "캠핑", "골프", "헬스", "공연/티켓", "여행", "기타"],
 	["반려동물용품", "차량용품", "출산/유아용품"],
 	["삽니다"]];
 
 
 function categoryChangeDetail(e) {
+
 	for (var i = 0; i < arr.length; i++) {
 		for (var j = 0; j < arr[i].length; j++) {
 			if(e.value=="선택하세요"){
@@ -259,7 +260,7 @@ function categoryChangeDetail(e) {
 			}
 			else if($('#selectedMain').val()=="passion"){
 				if (arr[0][j] == e.value) {
-					$('#selectedDetail').val(10+j)
+					$('#selectedDetail').val(10+j);
 				}
 			}
 
@@ -288,7 +289,6 @@ function categoryChangeDetail(e) {
 					$('#selectedDetail').val(60 + j);
 				}
 			}
-
 
 		}
 	}

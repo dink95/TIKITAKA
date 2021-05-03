@@ -41,7 +41,7 @@
         )
     </insert>
 
-    <select id="selectPoductDetail" parameterType="int" resultType="ProductDTO">
+    <select id="selectProductDetail" parameterType="int" resultType="ProductDTO">
         SELECT
             <include refid="productColumns" />
         FROM

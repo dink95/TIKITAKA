@@ -17,10 +17,10 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-   @RequestMapping("/")
-   public String Home(){
-       return "/index";
-   }
+    @RequestMapping("/")
+    public String Home(){
+        return "/index";
+    }
 
     @GetMapping(value = "/login") /*로그인 페이지*/
     public ModelAndView login() {
@@ -289,7 +289,7 @@ public class MemberController {
     @RequestMapping("/login/update")  /*비밀번호 재설정*/
     @ResponseBody
     public Map<String, Object> updatePwd( @RequestParam(value = "userId") String userId,
-                                             @RequestParam(value = "userPwd") String userPwd) {
+                                          @RequestParam(value = "userPwd") String userPwd) {
 
         MemberDTO memberDTO = new MemberDTO();
 
@@ -323,14 +323,14 @@ public class MemberController {
     @GetMapping(value = "/member/myinfo") /*내정보 페이지*/
     public ModelAndView myinfo() {
         ModelAndView view = new ModelAndView();
-        view.setViewName("member/myinfo");
+        view.setViewName("member/information/myinfo");
         return view;
     }
 
     @GetMapping(value = "/member/report") /*신고하기 페이지*/
     public ModelAndView report() {
         ModelAndView view = new ModelAndView();
-        view.setViewName("member/report");
+        view.setViewName("member/information/report");
         return view;
     }
 
