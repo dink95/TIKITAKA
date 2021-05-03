@@ -74,7 +74,7 @@ public class ProductController {
 
         ProductDTO productDTO = new ProductDTO(insertProdDTO.getProdNm(), insertProdDTO.getProdPrc(),
                 insertProdDTO.getCatNo(),insertProdDTO.getSelId(),insertProdDTO.getWay(),insertProdDTO.getNego()
-        ,insertProdDTO.getProdCo());
+        ,insertProdDTO.getProdCo(), insertProdDTO.getContent());
 
         productService.insertProduct(productDTO);
         return  productService.selectProductNo(productDTO);

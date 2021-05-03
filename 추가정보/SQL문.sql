@@ -23,20 +23,20 @@ CAT_NO INT primary key
 
 create TABLE PROD(
 PROD_NO INT auto_increment,
-PROD_NM varchar(20) NOT NULL,
+PROD_NM varchar(60) NOT NULL,
 PROD_PRC INT NOT NULL,
 CAT_NO INT,
 SEL_ID varchar(20),
 WAY VARCHAR(15) NOT NULL,
 NEGO INT default 0,
-WDAY DATE NOT NULL,
+CONTENT mediumtext,
+WDAY DATETIME default CURRENT_TIMESTAMP,
 PROD_CO varchar(60),
 PROD_VIEW int default 0,
 primary key(PROD_NO),
 foreign key(CAT_NO) references CAT(CAT_NO) on update cascade on delete CASCADE,
 foreign key(SEL_ID) references MBR(MBR_ID) on update cascade on delete CASCADE
 );
-
 
 
 CREATE TABLE MANAGER(

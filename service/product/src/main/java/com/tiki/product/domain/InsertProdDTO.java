@@ -30,4 +30,6 @@ public class InsertProdDTO {
     /** 상품코드 */
     private String prodCo;
 
+    private String content;
+
 }

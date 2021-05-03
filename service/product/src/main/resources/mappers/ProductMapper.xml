@@ -14,6 +14,7 @@
 		, wday
         , prod_co
 		, prod_view
+        , content
     </sql>
 
     <insert id="insertProduct" parameterType="ProductDTO">
@@ -26,6 +27,7 @@
                          , nego
                          , wday
                          , prod_co
+                         , content
         ) VALUES (
                   #{prodNm},
         #{prodPrc}
@@ -35,6 +37,7 @@
         , #{nego}
         , NOW()
         , #{prodCo}
+        , #{content}
         )
     </insert>
 
@@ -58,6 +61,7 @@
           , way = #{way}
           , nego = #{nego}
           , prod_co = #{prodCo}
+          , content = #{content}
         WHERE
             prod_no = #{prodNo}
         AND
