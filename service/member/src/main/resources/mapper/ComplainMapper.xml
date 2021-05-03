@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.tiki.member.mapper.ComplainMapper">
+
+
+    <insert id="insertComplain" parameterType="ComplainDTO">
+        insert comp(comp_nm,comp_con,spt,repo)
+        values(#{compNm, jdbcType=VARCHAR},
+        #{compCon, jdbcType=VARCHAR},
+        #{spt, jdbcType=VARCHAR},
+        #{repo, jdbcType=VARCHAR})
+    </insert>
+
+    <delete id="deleteComplain" parameterType="int">
+        delete from comp
+        where comp_idx = #{compIdx, jdbcType=INTEGER}
+    </delete>
+</mapper>
