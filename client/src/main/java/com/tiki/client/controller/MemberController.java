@@ -323,14 +323,14 @@ public class MemberController {
     @GetMapping(value = "/member/myinfo") /*내정보 페이지*/
     public ModelAndView myinfo() {
         ModelAndView view = new ModelAndView();
-        view.setViewName("member/myinfo");
+        view.setViewName("member/information/myinfo");
         return view;
     }
 
     @GetMapping(value = "/member/report") /*신고하기 페이지*/
     public ModelAndView report() {
         ModelAndView view = new ModelAndView();
-        view.setViewName("member/report");
+        view.setViewName("member/information/report");
         return view;
     }
 
