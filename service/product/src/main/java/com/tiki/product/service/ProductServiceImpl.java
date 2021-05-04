@@ -67,6 +67,48 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<ProductDTO> resultByProdNm(String prodNm) {
+
+        List<ProductDTO> productList = Collections.emptyList();
+
+        int productTotalCount = productMapper.selectProductTotalCount();
+
+        if (productTotalCount > 0) {
+            productList = productMapper.resultByProdNm(prodNm);
+        }
+
+        return productList;
+    }
+
+    @Override
+    public List<ProductDTO> resultById(String selId) {
+
+        List<ProductDTO> productList = Collections.emptyList();
+
+        int productTotalCount = productMapper.selectProductTotalCount();
+
+        if (productTotalCount > 0) {
+            productList = productMapper.resultById(selId);
+        }
+
+        return productList;
+    }
+
+    @Override
+    public List<ProductDTO> resultByCatNm(String catNm) {
+
+        List<ProductDTO> productList = Collections.emptyList();
+
+        int productTotalCount = productMapper.selectProductTotalCount();
+
+        if (productTotalCount > 0) {
+            productList = productMapper.resultByCatNm(catNm);
+        }
+
+        return productList;
+    }
+
+    @Override
     public int selectProductNo(ProductDTO params) {
         return productMapper.selectProductNo(params);
     }

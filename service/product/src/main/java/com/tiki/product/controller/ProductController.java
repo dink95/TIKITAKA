@@ -50,6 +50,33 @@ public class ProductController {
         return productList;
     }
 
+    // 검색 결과 보기 상품 이름으로
+    @GetMapping(value = "/prd/result/{prodNm}")
+    public List resultProdNameList(@PathVariable("prodNm") String prodNm) {
+
+        List<ProductDTO> productList = productService.resultByProdNm(prodNm);
+
+        return productList;
+    }
+
+    // 검색 결과 보기 판매자 이름으로
+    @GetMapping(value = "/prd/result/{selId}")
+    public List resultSelIdList(@PathVariable("selId") String selId) {
+
+        List<ProductDTO> productList = productService.resultById(selId);
+
+        return productList;
+    }
+
+    // 검색 결과 보기 카테코리 이름으로
+    @GetMapping(value = "/prd/result/{catNm}")
+    public List resultList(@PathVariable("catNm") String catNm) {
+
+        List<ProductDTO> productList = productService.resultByCatNm(catNm);
+
+        return productList;
+    }
+
 
 
     // 등록된 상품 삭제하기
@@ -62,7 +89,7 @@ public class ProductController {
         return productService.deleteProduct(productDTO);
     }
 
-    // 등록된 상품 삭제하기
+    // 등록된 상품 업데이트
     @PatchMapping("/prd/update")
     public int updateProductRegister(@RequestBody ProductDTO productDTO){
         return productService.updateProduct(productDTO);

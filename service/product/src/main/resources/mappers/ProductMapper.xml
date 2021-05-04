@@ -97,6 +97,44 @@
         AND
             cat_no = #{catNo}
     </select>
+
+    <select id="resultByProdNm" parameterType="String" resultType="ProductDTO">
+        SELECT
+        <include refid="productColumns" />
+        FROM
+            prod
+        WHERE
+          prod_nm LIKE concat('%',#{prodNm},'%')
+    </select>
+
+    <select id="resultById" parameterType="String" resultType="ProductDTO">
+        SELECT
+            <include refid="productColumns" />
+        FROM
+            prod
+        WHERE
+            sel_id = #{selId}
+    </select>
+
+    <select id="resultByCatNm" parameterType="String" resultType="ProductDTO">
+        SELECT
+            prod_no
+             , prod_nm
+             , prod_prc
+             , p.cat_no
+             , sel_id
+             , way
+             , nego
+             , wday
+             , prod_co
+             , prod_view
+             , content
+        FROM
+            prod p join cat c on p.cat_no = c.cat_no
+        WHERE
+            c.cat_nm = #{catNm}
+    </select>
+
     <select id="selectProductTotalCount" parameterType="ProductDTO" resultType="int">
         SELECT
             COUNT(*)

@@ -17,6 +17,12 @@ public interface ProductService {
 
     public List<ProductDTO> resultByNmCat(ProductDTO params);
 
+    public List<ProductDTO> resultByProdNm(String prodNm);
+
+    public List<ProductDTO> resultById(String selId);
+
+    public List<ProductDTO> resultByCatNm(String catNm);
+
     public int selectProductNo(ProductDTO params);
 
 }

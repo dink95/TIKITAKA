@@ -38,13 +38,14 @@ class ProductApplicationTests {
     public void testOfSelectDetail() {
         int productTotalCount = productMapper.selectProductTotalCount();
         if(productTotalCount > 0) {
-            List<ProductDTO> productList = productMapper.selectProductList();
+            List<ProductDTO> productList = productMapper.resultByCatNm("여성의류");
             if(CollectionUtils.isEmpty(productList) == false) {
                 for(ProductDTO product : productList) {
                     System.out.println("==============");
                     System.out.println(product.getProdNm());
                     System.out.println(product.getSelId());
                     System.out.println(product.getProdPrc());
+                    System.out.println(product.getCatNo());
                     System.out.println("==============");
                 }
             }
