@@ -50,21 +50,22 @@
                   onsubmit="return Validation()">
                 <input type="hidden" id="p_id" name="selId" th:value="${session.mbrId}">
 
-                <div class="NavContainer">
-                    <div class="NavItemTitle">
+                <div class="row align-items-sm-start justify-content-center">
+                    <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
                         <label class="text-black">카테고리
                             <span class="text-danger">*</span></label>
                         <!-- <img src="/istatic/images/shose/sho1.jpg"/>-->
                     </div>
 
-                    <div class="NavItem">
+                    <div class="col-12 col-md-9 order-2 order-md-2  text-left text-lg-center">
                         <div class="search-bar-container">
                             <div class="">
-                                <div class="category" >
+                                <div class="category">
                                     <select onchange="categoryChange(this)" name="category"
                                             class="form-control border-0 select-category font-14">
                                         <option class="form-control border-0 font-14" value="" disabled selected>메인 카테고리
                                         </option>
+                                        <option class="form-control border-0 font-14" value="buy">삽니다</option>
                                         <option class="form-control border-0 font-14" value="passion">패션</option>
                                         <option class="form-control border-0 font-14" value="digital">디지털/가전</option>
                                         <option class="form-control border-0 font-14" value="interior">가구/인테리어</option>
@@ -74,7 +75,7 @@
                                     </select>
                                     <input type="hidden" id="selectedMain" value="">
                                 </div>
-                                <div class="category" >
+                                <div class="category">
                                     <select onchange="categoryChangeDetail(this)" name="detail" id="detail"
                                             class="form-control border-0 select-category font-14"
                                             disabled='true'>
@@ -90,92 +91,97 @@
                     </div>
                 </div>
 
-                <div class="NavContainer">
-                    <div class="NavItemTitle titleContainer">
+                <div class="row align-items-sm-start justify-content-center">
+                    <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
                         <label for="p_title" class="text-black">제목
                             <span class="text-danger">*</span></label>
                     </div>
-                    <div class="NavItem">
+                    <div class="col-12 col-md-9 order-2 order-md-2  text-left text-lg-center">
                         <input type="text" size="100" class="form-control" id="p_title" name="prodNm" maxlength="20"
                                onkeyup="onKeyUp('#valid_p_title');">
                         <span id="valid_p_title" style="color: #ff0000;font-size: 10px;"></span>
-                        <span id="title_count"></span>
                     </div>
+                        <div class="col-12 col-md-11 order-2 order-md-2 text-right text-lg-right">
+                            <span id="title_count"></span>
+                        </div>
                 </div>
 
-                <div class="NavContainer">
-                    <div class="NavItemTitle">
+
+
+                <div class="row align-items-sm-start justify-content-center">
+                    <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
                         <label class="text-black">상세정보
                             <span class="text-danger">*</span></label></div>
-                    <div class="NavItem">
+                    <div class="col-12 col-md-9 order-2 order-md-2  text-left text-lg-center">
                     <textarea class="form-control" id="p_content" name="content" cols="100" rows="10"
                               style="width:100%;" onkeyup="onKeyUp('#valid_p_content');"></textarea>
                         <span id="valid_p_content" style="color: #ff0000;font-size: 10px;"></span>
                     </div>
                 </div>
 
-                <div class="NavContainer">
-                    <div class="NavItemTitle">
+                <div class="row align-items-sm-start justify-content-center">
+                    <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
                         <label for="p_price" class="text-black">가격
                             <span class="text-danger">*</span></label></div>
-                    <div class="NavItem">
+                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-center">
                         <input type="number" class="form-control" id="p_price" name="prodPrc"
-                               onkeyup="onKeyUp('#valid_p_price');" >
+                               onkeyup="onKeyUp('#valid_p_price');">
                         <span id="valid_p_price" style="color: #ff0000;font-size: 10px;"></span>
                     </div>
-                    <div class="NavItem">
+                    <div class="col-6 col-md-5 order-2 order-md-2  text-left text-lg-center">
                         <input type="checkbox" id="p_nego" onclick="getCheckboxValue(event)">가격협의 가능
                         <input type="hidden" id="nego" name="nego" value="0">
                     </div>
                 </div>
 
-                <div class="NavContainer">
-                    <div class="NavItemTitle">
+                <div class="row align-items-sm-start justify-content-center">
+                    <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
                         <label class="text-black">거래방법</label>
                         <span class="text-danger">*</span>
                     </div>
-                    <div class="NavItem">
+                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-center">
                         <input type="radio" name="way" value="직거래" checked>직거래
                     </div>
-                    <div class="NavItem">
+                    <div class="col-6 col-md-5 order-2 order-md-2  text-left text-lg-center">
                         <input type="radio" name="way" value="택배거래">택배거래
                     </div>
                     <span id="valid_p_method" style="color: #ff0000;font-size: 10px;"></span>
                 </div>
 
-                <div class="NavContainer">
-                    <div class="NavItemTitle">
+                <div class="row align-items-sm-start justify-content-center">
+                    <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
                         <label for="p_code" class="text-black">상품코드</label>
                         <span class="text-danger">*</span></div>
-                    <div class="NavItem">
+                    <div class="col-12 col-md-9 order-2 order-md-2  text-left text-lg-center">
                         <input type="text" class="form-control" id="p_code" name="prodCo"
                                placeholder="상품코드가 필요한 물품의 경우 입력해주세요."></div>
                 </div>
 
 
                 <input class="form-control-file" onchange="chk_file_type(this)" type="file" name="file" id="file"
-                       accept="image/jpeg,image/gif,image/png"  multiple="multiple"/>
+                       accept="image/jpeg,image/gif,image/png" multiple="multiple"/>
                 <div class="NavContainer" style=" display: block;">
-                    <div class="NavItemTitle">
+                    <div class="NavItemTitle" style="text-align: left">
                         <label for="file" class="text-black">사진</label>
                         <span class="text-danger">*</span></div>
-                    <div class="imgs_wrap NavItem fileGridContainer" id="imgDiv" >
+                    <div class="imgs_wrap NavItem fileGridContainer" id="imgDiv">
                         <div class="photoContainer" onclick="upload()"><i class="fas fa-camera fa-2x"></i>
                             <span id="fileCount">(0/5)</span>
                         </div>
-
                     </div>
-
+                    <div style="display:flex; justify-content: flex-end;">
+                        <div class="pre_btn" onclick="removeImg()" style="cursor: pointer;">지우기</div>
+                    </div>
                 </div>
                 <span id="photoValue"></span>
                 <div class="NavContainer BtnNavContainer">
                     <div class="ButtonNav">
-                        <input type="submit" class="btn btn-primary" value="등록하기">
-                        <input type="button" class="btn btn-primary" value="취소하기">
+                        <input type="submit" class="border-0-btn btn btn-primary" value="등록하기">
+                        <input onclick="historyBack()" class="border-0-btn btn btn-primary" value="취소하기">
                     </div>
                 </div>
                 <div class="NavContainer PreBtnContainer">
-                    <input type="button" class="pre_btn" value="주의사항" onclick="goPre()">
+                    <div class="pre_btn" onclick="goPre()" style="cursor: pointer;">주의사항</div>
                 </div>
             </form>
         </div>
@@ -188,22 +194,30 @@
 
 <style>
 
+
     #file {
-        /*display: none;*/
+        display: none;
     }
+
     img {
         width: 150px;
         height: 150px;
         margin-left: 1%;
     }
 
-    .imgs_wrap{
-        padding:0px;
+    .imgs_wrap {
+        padding: 0px;
     }
+
     .fileGridContainer {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(150px, auto));
         row-gap: 10px;
+    }
+
+    .align-items-sm-start {
+        padding: 30px;
+        border-bottom: 1px solid #ddd;
     }
 
 </style>
@@ -278,7 +292,9 @@
     function onKeyUp(props) {
         $(props).text('');
     }
+
     var fileCount = 0;
+
     function chk_file_type(obj) {
 
         var count = 0;
@@ -298,19 +314,17 @@
                 break;
             } else {
                 count++;
-
                 readImage(count, data);
-
             }
 
         }
         ;
         fileCount += count;
-        $('#fileCount').text('(' +fileCount+ '/5)')
+        $('#fileCount').text('(' + fileCount + '/5)')
 
     }
 
-    function  fileClear(obj) {
+    function fileClear(obj) {
         var agent = navigator.userAgent.toLowerCase()
 
         if ((navigator.appName == 'Netscape'
@@ -322,20 +336,14 @@
         }
     }
 
-    function imageClear(){
-        var imgDiv = $('#imgDiv');
-        imgDiv.empty();
-    }
-
-
-
-    function removeImg(count) {
-        fileCount=fileCount-1;
-        $('#fileCount').text('(' +fileCount+ '/5)')
-        $('#img_file'+count).remove();
+    function removeImg() {
+        fileCount = 0;
+        $('#fileCount').text('(0/5)')
+        $('img').remove();
         fileClear('#file');
 
     }
+
     function readImage(count, file) {
         var reader = new FileReader();
 
@@ -343,14 +351,12 @@
         reader.onload = function (e) {
             var imgTag = $('<img/>');
 
-            imgTag.attr('id', 'img_file'+count);
+            imgTag.attr('id', 'img_file' + count);
             imgTag.attr("src", e.target.result);
-            imgTag.attr("onclick","removeImg("+count+");");
             imgDiv.append(imgTag);
         };
         reader.readAsDataURL(file);
     }
-
 
 </script>
 

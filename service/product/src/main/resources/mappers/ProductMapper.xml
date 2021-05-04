@@ -84,7 +84,7 @@
         FROM
             prod
         ORDER BY
-            wday ASC
+            wday DESC
     </select>
 
     <select id="resultByNmCat" parameterType="ProductDTO" resultType="ProductDTO">

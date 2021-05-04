@@ -43,11 +43,11 @@
                 <div class="site-top-icons"> <!--버튼 사이즈 수정 style-218-->
                     <ul >
 
-                        <li th:if="${session.mbrId == null}"><a href="signup" ><span class="sign in">&nbsp;회원가입</span></a></li> <!--로그인 전-->
-                        <li th:if="${session.mbrId != null}"><a><span class="sign in" th:text="${session.mbrId}" style="color:#7971ea; font-size:16px; "></span></a></li> <!--로그인 후-->
+                        <li th:if="${session.mbrId == null}"><a href="signup" ><span class="sign in" style="font-size:0.8rem;">&nbsp;회원가입</span></a></li> <!--로그인 전-->
+                        <li th:if="${session.mbrId != null}"><a><span class="sign in" th:text="${session.mbrId}" style="color:#7971ea; font-size:0.9rem; "></span></a></li> <!--로그인 후-->
                         <li>/&nbsp;&nbsp;</li>
-                        <li th:if="${session.mbrId == null}"><a href="/login"><span class="sign in">로그인</span></a></li><!--로그인 전-->
-                        <li th:if="${session.mbrId != null}"><a href="/logout" ><span class="sign in">&nbsp;&nbsp;로그아웃</span></a></li> <!--로그인 후-->
+                        <li th:if="${session.mbrId == null}"><a href="/login"><span class="sign in" style="font-size:0.8rem;">로그인</span></a></li><!--로그인 전-->
+                        <li th:if="${session.mbrId != null}"><a href="/logout" ><span class="sign in" style="font-size:0.8rem;">&nbsp;&nbsp;로그아웃</span></a></li> <!--로그인 후-->
                         <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
                         <!--js-menu toggle-->
                     </ul>

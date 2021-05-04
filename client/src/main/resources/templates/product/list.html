@@ -186,7 +186,7 @@
                 console.log("@query data prodNo",obj.prodNo);
                 // 매번 컨텐츠가 달라야하니 초기화
                 contents = '';
-                var wday=obj.wday.substring(0,10);
+                var wday=timeForToday(obj.wday);
                 //이미지경로를 미리 만들어놓는다.
                 imgPath = '/istatic/images/' + obj.prodNo + '/1.jpg';
 
@@ -199,7 +199,7 @@
                 contents += '                    <img src="' + imgPath + '"  alt="Image placeholder"  class="img-fluid" style="width: 100%; height: 193.53px;">';
                 contents += '                </figure>';
                 contents += '                <div class="block-4-text">';
-                contents += '                    <h3 class="ItemName"><a href="#" onclick="goDetail(' + obj.prodNo + ')">' + obj.prodNm + '</a></h3>';
+                contents += '                    <h3 class="ItemName"><a href="#" onclick="goDetail(' + obj.prodNo + ')">' + textLengthOverCut(obj.prodNm,11,'...') + '</a></h3>';
                 contents += '                    <div class=priceContent>';
                 contents += '                    <p class="text-primary font-weight-bold">' + obj.prodPrc + '</p>';
                 contents += '                    <span>' + wday + '</span>';
