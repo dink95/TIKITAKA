@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -68,11 +69,58 @@ public class ProductController {
         return productList;
     }
 
-    // 검색 결과 보기 카테코리 이름으로
-    @GetMapping(value = "/prd/result/{catNm}")
-    public List resultList(@PathVariable("catNm") String catNm) {
+    // 검색 결과 보기 카테코리 번호로
+    @GetMapping(value = "/prd/result/{catNo}")
+    public List resultList(@PathVariable("catNo") int catNo) {
 
-        List<ProductDTO> productList = productService.resultByCatNm(catNm);
+        List<ProductDTO> productList = new ArrayList();
+        List<ProductDTO> finalList = new ArrayList();
+        List<ProductDTO> tempList = null;
+
+        int[] highCatNo = {10, 20, 30, 40};
+        boolean check = true;
+
+        for(int i = 0; i < 4; i++){
+            if (catNo == highCatNo[i]) {
+                check = false;
+                break;
+            }
+        }
+
+        if(check) {
+            productList = productService.resultByCatNo(catNo);
+        }
+        else {
+            int finishCat = 0;
+
+            switch(catNo) {
+                case 10:
+                    finishCat = 19;
+                    break;
+                case 20:
+                    finishCat = 26;
+                    break;
+                case 30:
+                    finishCat = 36;
+                    break;
+                case 40:
+                    finishCat = 47;
+                    break;
+                default:
+                    System.out.println("잘못된 접근입니다.");
+            }
+
+            for(catNo = catNo + 1; catNo <= finishCat; catNo++) {
+                tempList = productService.resultByCatNo(catNo);
+                finalList.addAll(tempList);
+            }
+
+            productList = finalList;
+        }
+
+        if(productList == null) {
+            System.out.println("에러가 나왔으니 확인바람");
+        }
 
         return productList;
     }

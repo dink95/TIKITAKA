@@ -25,7 +25,7 @@ public interface ProductMapper {
 
     public List<ProductDTO> resultById(String selId);
 
-    public List<ProductDTO> resultByCatNm(String catNm);
+    public List<ProductDTO> resultByCatNo(int catNo);
 
     public int selectProductTotalCount();
 

@@ -116,23 +116,13 @@
             sel_id = #{selId}
     </select>
 
-    <select id="resultByCatNm" parameterType="String" resultType="ProductDTO">
+    <select id="resultByCatNo" parameterType="int" resultType="ProductDTO">
         SELECT
-            prod_no
-             , prod_nm
-             , prod_prc
-             , p.cat_no
-             , sel_id
-             , way
-             , nego
-             , wday
-             , prod_co
-             , prod_view
-             , content
+            <include refid="productColumns" />
         FROM
-            prod p join cat c on p.cat_no = c.cat_no
+            prod
         WHERE
-            c.cat_nm = #{catNm}
+            cat_no = #{catNo}
     </select>
 
     <select id="selectProductTotalCount" parameterType="ProductDTO" resultType="int">

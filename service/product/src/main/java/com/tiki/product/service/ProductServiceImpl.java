@@ -95,14 +95,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> resultByCatNm(String catNm) {
+    public List<ProductDTO> resultByCatNo(int catNo) {
 
         List<ProductDTO> productList = Collections.emptyList();
 
         int productTotalCount = productMapper.selectProductTotalCount();
 
         if (productTotalCount > 0) {
-            productList = productMapper.resultByCatNm(catNm);
+            productList = productMapper.resultByCatNo(catNo);
         }
 
         return productList;

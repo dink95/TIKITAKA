@@ -38,7 +38,7 @@ class ProductApplicationTests {
     public void testOfSelectDetail() {
         int productTotalCount = productMapper.selectProductTotalCount();
         if(productTotalCount > 0) {
-            List<ProductDTO> productList = productMapper.resultByCatNm("여성의류");
+            List<ProductDTO> productList = productMapper.resultByCatNo(15);
             if(CollectionUtils.isEmpty(productList) == false) {
                 for(ProductDTO product : productList) {
                     System.out.println("==============");

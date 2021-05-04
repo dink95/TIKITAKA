@@ -78,9 +78,9 @@ public class ProductService {
                 .block();
     }
 
-    public List productQueryCatNmList(String catNm) throws Exception {
+    public List productQueryCatNoList(int catNo) throws Exception {
         return webClient.get()
-                .uri("/prd/result/{catNm}",catNm)
+                .uri("/prd/result/{catNo}",catNo)
                 .retrieve()
                 .bodyToMono(List.class) //반환정보
                 .block();
