@@ -17,6 +17,9 @@ public class GatewayConfiguration {
                 .route(r -> r.path("/prd/**")
                         .uri("http://localhost:8082/"))
 
+                .route(r -> r.path("/cat/**")
+                        .uri("http://localhost:8082/"))
+
                 .build();
 
     }

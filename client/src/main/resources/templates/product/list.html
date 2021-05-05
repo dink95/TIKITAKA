@@ -37,7 +37,14 @@
         <!----------------------------------------------------------->
     </header>
     <!--replace logo-login-->
-    <div class="bg-light py-3" th:replace="common::logo(product_list)">
+    <div class="bg-light py-3" th:fragment="logo(logo)">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mb-0"><a href="/">Home</a> /</span>
+                    <span class="text-black" id="queryText" ></span>
+                </div>
+            </div>
+        </div>
     </div>
     <!------------------------->
     <div class="site-section block-3 site-blocks-2 bg-light" style="padding-top:10px">
@@ -157,6 +164,45 @@
         }
     });
 
+    function searchParam(key) {
+        return new URLSearchParams(location.search).get(key);
+    };
+        $('#queryText').text(searchParam('prodNm'));
+
+        function getProdNmQueryList(){
+        param = {
+            prodNm:searchParam('prodNm'),
+        }
+        $.ajax({
+            url: '/product/list.prodNm',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            drawPrdList(data);
+            console.log(data);
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+    }
+
+    function getCatQueryList(){
+        param = {
+            catNo:searchParam('catNo'),
+        }
+        $.ajax({
+            url: '/product/list.category',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            drawPrdList(data);
+            console.log(data);
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+    }
+
     function getProductList() {
         param = {
             prodNm:$('#prodNm').val(),
@@ -217,6 +263,22 @@
         }
 
     }
+
+    //상세페이지
+    function goDetail(prodNo) {
+        location.href = '/product/detail?prodNo=' + prodNo;
+    }
+
+
+    if(searchParam('prodNm')) {
+           getProdNmQueryList();
+       }
+    else if(searchParam('catNo')) {
+        getCatQueryList();
+    }
+
+
+
 
 </script>
 

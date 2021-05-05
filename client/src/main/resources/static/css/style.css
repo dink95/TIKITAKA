@@ -538,12 +538,12 @@ a:hover {
   right: 0;
   bottom: 0;
   left: 0;
-  background: -moz-linear-gradient(top, transparent 0%, transparent 18%, rgba(0, 0, 0, 0.8) 99%, rgba(0, 0, 0, 0.8) 100%);
+/*  background: -moz-linear-gradient(top, transparent 0%, transparent 18%, rgba(0, 0, 0, 0.8) 99%, rgba(0, 0, 0, 0.8) 100%);
   background: -webkit-linear-gradient(top, transparent 0%, transparent 18%, rgba(0, 0, 0, 0.8) 99%, rgba(0, 0, 0, 0.8) 100%);
   background: -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(18%, transparent), color-stop(99%, rgba(0, 0, 0, 0.8)), to(rgba(0, 0, 0, 0.8)));
   background: -o-linear-gradient(top, transparent 0%, transparent 18%, rgba(0, 0, 0, 0.8) 99%, rgba(0, 0, 0, 0.8) 100%);
   background: linear-gradient(to bottom, transparent 0%, transparent 18%, rgba(0, 0, 0, 0.8) 99%, rgba(0, 0, 0, 0.8) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#cc000000',GradientType=0 ); }
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#cc000000',GradientType=0 );*/ }
 .site-blocks-2 .block-2-item .image {
   position: relative;
   margin-bottom: 0;
@@ -866,7 +866,7 @@ nav{
 #arrow_right > a:after{
 
   content: '\e315';
-  font-size: 16px;
+  font-size: 30px;
   right: -5px;
   font-family: 'icomoon';
 }
@@ -874,9 +874,13 @@ nav{
 
 #arrow_up:after{
   content: '\e316';
-  font-size: 30px;
+  font-size: 28px;
   right: -5px;
   font-family: 'icomoon';
+  z-index: 100000;
+  background: #9792ea;
+  border-radius: 5px;
+  color: #fff;
 
 }
 
@@ -999,11 +1003,11 @@ nav{
 
 input[type=button]{
   -webkit-appearance: none;
-  -webkit-border-radius: 0;
+
 }
 input[type=submit]{
   -webkit-appearance: none;
-  -webkit-border-radius: 0;
+
 
 }
 
@@ -1015,6 +1019,25 @@ input[type=submit]{
 
 .ButtonNav{
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
 }
+.ButtonNav >.btn{
+  margin:1%;!important;
+}
+.site-navbar{
+  position: sticky;!important;
+  top: 0px;!important;
+}
+figure{
+  overflow: hidden;!important;
+  top:0px; left: 0;!important;
 
+
+}
+figure > img{
+  background-size: cover;!important;
+  max-height: 100%;!important;
+ width: 100%;!important;
+
+
+}

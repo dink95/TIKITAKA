@@ -90,40 +90,7 @@
             </div>
             <div class="NavContainer">
                 <div class="gridContainer">
-                    <div class="gridItem">
-                        <div class="item">
-                            <div class="block-4 text-center">
-                                <a href="/product/detail">
-                                    <figure class="block-4-image">
-                                        <img src="../images/tiki_1.jpg" alt="Image placeholder" class="img-fluid"
-                                             style="width: 100%; height: 193.53px;">
-                                    </figure>
-                                    <div class="block-4-text p-4">
-                                        <h3><a href="product/detail">캔버스 신발 팜 240</a></h3>
-                                        <!--<p class="mb-0">Finding perfect t-shirt</p>-->
-                                        <p class="text-primary font-weight-bold">50000원</p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="gridItem">
-                        <div class="item">
-                            <div class="block-4 text-center">
-                                <a href="/product/detail">
-                                    <figure class="block-4-image">
-                                        <img src="../images/tiki_1.jpg" alt="Image placeholder" class="img-fluid"
-                                             style="width: 100%; height: 193.53px;">
-                                    </figure>
-                                    <div class="block-4-text p-4">
-                                        <h3><a href="product/detail">캔버스 신발 팜 240</a></h3>
-                                        <!--<p class="mb-0">Finding perfect t-shirt</p>-->
-                                        <p class="text-primary font-weight-bold">50000원</p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
 
@@ -144,16 +111,126 @@
 <script src="../js/aos.js"></script>
 
 <script src="../js/main.js"></script>
-<script>
-
-
-</script>
-
 <style>
     .NavContainer:not(:nth-child(2)) {
         border: none;
     }
+    /*이미지리스트 css*/
+    .block-4-image{
+        margin:0;
+    }
+    .block-4-text {
+        font-size: 16px; color: #000;
 
+
+    }
+
+    .img-fluid{
+        width: 100%;
+        height: 193.53px;
+    }
+    .block-4-text{
+        padding:10px 0;
+    }
+    .ItemName{
+        margin:0 20px 20px 20px;
+        display:flex;
+        justify-content: flex-start;
+    }
+    .ItemName>a {
+        text-align: left;
+    }
+
+    p{
+        margin:0;
+        color: #000;
+    }
+
+    span{
+        font-size: 14px;
+    }
+    .priceContent{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin:20px 10px 0 20px;
+    }
 </style>
+
+<script>
+
+    function getIdQueryList(){
+        param = {
+            selId:$('#p_id').text(),
+        }
+        $.ajax({
+            url: '/product/list.selId',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            drawPrdList(data);
+            console.log(data);
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+    }
+
+    function drawPrdList(data) {
+        console.log("@@product data", data);
+
+        if (typeof data.dataQueryList !== 'undefined' && data.dataQueryList.length > 0) {
+            var container = $('.gridContainer');
+            container.empty();
+            var contents = '';
+            var imgPath = '';
+
+            $.each(data.dataQueryList, function (index, obj) {
+                $('#objCatNo').val(obj.catNo); //카테고리 상품 디테일 -> 카테고리 번호 저장
+                //매번 컨텐츠가 달라야하니 초기화
+                contents = '';
+                var wday=timeForToday(obj.wday);
+                //이미지경로를 미리 만들어놓는다.
+                imgPath = '/istatic/images/' + obj.prodNo + '/1.jpg';
+
+                //제품 html
+                contents += '<div class="gridItem">';
+                contents += '    <div class="item">';
+                contents += '       <div class="block-4 text-center">';
+                contents += '          <a href="#" onclick="goDetail(' + obj.prodNo + ')">';
+                contents += '               <figure class="block-4-image" >';
+                contents += '                    <img src="' + imgPath + '"  alt="Image placeholder"  class="img-fluid">';
+                contents += '                </figure>';
+                contents += '                <div class="block-4-text">';
+                contents += '                    <h3 class="ItemName"><a href="#"  onclick="goDetail(' + obj.prodNo + ')">' + textLengthOverCut(obj.prodNm,11,'...') + ' </a></h3>';
+                contents += '                    <div class=priceContent>';
+                contents += '                    <p class="text-primary font-weight-bold">' + obj.prodPrc + '원</p>';
+                contents += '                    <span>' + wday + '</span>';
+                contents += '                    </div>';
+                contents += '                </div>';
+                contents += '            </a>';
+                contents += '        </div>';
+                contents += '    </div>';
+                contents += '</div>';
+
+                //그리드에 삽입
+                container.append(contents);
+            })
+
+        }
+    }
+
+
+    //상세페이지
+    function goDetail(prodNo) {
+        location.href = '/product/detail?prodNo=' + prodNo;
+    }
+
+    $(document).ready(function () {
+        getIdQueryList();
+    });
+
+</script>
+
 </body>
 </html>

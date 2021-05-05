@@ -57,62 +57,66 @@
                         <!-- <img src="/istatic/images/shose/sho1.jpg"/>-->
                     </div>
 
-                    <div class="col-12 col-md-9 order-2 order-md-2  text-left text-lg-center">
-                        <div class="search-bar-container">
-                            <div class="">
-                                <div class="category">
-                                    <select onchange="categoryChange(this)" name="category"
-                                            class="form-control border-0 select-category font-14">
-                                        <option class="form-control border-0 font-14" value="" disabled selected>메인 카테고리
-                                        </option>
-                                        <option class="form-control border-0 font-14" value="buy">삽니다</option>
-                                        <option class="form-control border-0 font-14" value="passion">패션</option>
-                                        <option class="form-control border-0 font-14" value="digital">디지털/가전</option>
-                                        <option class="form-control border-0 font-14" value="interior">가구/인테리어</option>
-                                        <option class="form-control border-0 font-14" value="leisure">여가활동</option>
-                                        <option class="form-control border-0 font-14" value="else">기타</option>
-                                        <option class="form-control border-0 font-14" value="buy">삽니다</option>
-                                    </select>
-                                    <input type="hidden" id="selectedMain" value="">
-                                </div>
-                                <div class="category">
-                                    <select onchange="categoryChangeDetail(this)" name="detail" id="detail"
-                                            class="form-control border-0 select-category font-14"
-                                            disabled='true'>
-                                        <option class="form-control border-0 font-14" value="" disabled selected>세부 카테고리
-                                        </option>
-                                    </select>
 
-                                    <input type="hidden" id="selectedDetail" name="catNo" value="">
-                                </div>
-                            </div>
+                    <div class="col-12 col-md-4 order-2 order-md-2  text-left text-lg-center">
+                        <div class="category">
+                            <select onchange="categoryChange(this)" name="category"
+                                    class="form-control border-0 select-category font-14">
+                                <option id="MainCatNm" class="form-control border-0 font-14" value="" disabled
+                                        selected>메인 카테고리
+                                </option>
+                                <option class="form-control border-0 font-14" value="buy">삽니다</option>
+                                <option class="form-control border-0 font-14" value="passion">패션</option>
+                                <option class="form-control border-0 font-14" value="digital">디지털/가전</option>
+                                <option class="form-control border-0 font-14" value="interior">가구/인테리어</option>
+                                <option class="form-control border-0 font-14" value="leisure">여가활동</option>
+                                <option class="form-control border-0 font-14" value="else">기타</option>
+                                <option class="form-control border-0 font-14" value="buy">삽니다</option>
+                            </select>
+                            <input type="hidden" id="selectedMain" value="">
                         </div>
-                        <span id="valid_p_category" style="color: #ff0000;font-size: 10px;"></span>
                     </div>
+
+                    <div class="col-12 col-md-4 order-3 order-md-3  text-left text-lg-center">
+                        <div class="category">
+                            <select onchange="categoryChangeDetail(this)" name="detail" id="detail"
+                                    class="form-control border-0 select-category font-14"
+                                    disabled='true'>
+                                <option id="detailCatNm" class="form-control border-0 font-14" value="" disabled
+                                        selected>
+                                    세부 카테고리
+                                </option>
+                            </select>
+
+                            <input type="hidden" id="selectedDetail" name="catNo" value="">
+                        </div>
+                    </div>
+
                 </div>
+                <span id="valid_p_category" style="color: #ff0000;font-size: 10px;"></span>
+
 
                 <div class="row align-items-sm-start justify-content-center">
                     <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
                         <label for="p_title" class="text-black">제목
                             <span class="text-danger">*</span></label>
                     </div>
-                    <div class="col-12 col-md-9 order-2 order-md-2  text-left text-lg-center">
+                    <div class="col-12 col-md-8 order-2 order-md-2  text-left text-lg-center">
                         <input type="text" size="100" class="form-control" id="p_title" name="prodNm" maxlength="20"
                                onkeyup="onKeyUp('#valid_p_title');">
                         <span id="valid_p_title" style="color: #ff0000;font-size: 10px;"></span>
                     </div>
-                        <div class="col-12 col-md-11 order-2 order-md-2 text-right text-lg-right">
-                            <span id="title_count"></span>
-                        </div>
+                    <div class="col-12 col-md-10 order-2 order-md-2 text-right text-lg-right">
+                        <span id="title_count"></span>
+                    </div>
                 </div>
-
 
 
                 <div class="row align-items-sm-start justify-content-center">
                     <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
                         <label class="text-black">상세정보
                             <span class="text-danger">*</span></label></div>
-                    <div class="col-12 col-md-9 order-2 order-md-2  text-left text-lg-center">
+                    <div class="col-12 col-md-8 order-2 order-md-2  text-left text-lg-center">
                     <textarea class="form-control" id="p_content" name="content" cols="100" rows="10"
                               style="width:100%;" onkeyup="onKeyUp('#valid_p_content');"></textarea>
                         <span id="valid_p_content" style="color: #ff0000;font-size: 10px;"></span>
@@ -128,7 +132,7 @@
                                onkeyup="onKeyUp('#valid_p_price');">
                         <span id="valid_p_price" style="color: #ff0000;font-size: 10px;"></span>
                     </div>
-                    <div class="col-6 col-md-5 order-2 order-md-2  text-left text-lg-center">
+                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-center">
                         <input type="checkbox" id="p_nego" onclick="getCheckboxValue(event)">가격협의 가능
                         <input type="hidden" id="nego" name="nego" value="0">
                     </div>
@@ -142,7 +146,7 @@
                     <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-center">
                         <input type="radio" name="way" value="직거래" checked>직거래
                     </div>
-                    <div class="col-6 col-md-5 order-2 order-md-2  text-left text-lg-center">
+                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-center">
                         <input type="radio" name="way" value="택배거래">택배거래
                     </div>
                     <span id="valid_p_method" style="color: #ff0000;font-size: 10px;"></span>
@@ -152,11 +156,10 @@
                     <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
                         <label for="p_code" class="text-black">상품코드</label>
                         <span class="text-danger">*</span></div>
-                    <div class="col-12 col-md-9 order-2 order-md-2  text-left text-lg-center">
+                    <div class="col-12 col-md-8 order-2 order-md-2  text-left text-lg-center">
                         <input type="text" class="form-control" id="p_code" name="prodCo"
                                placeholder="상품코드가 필요한 물품의 경우 입력해주세요."></div>
                 </div>
-
 
                 <input class="form-control-file" onchange="chk_file_type(this)" type="file" name="file" id="file"
                        accept="image/jpeg,image/gif,image/png" multiple="multiple"/>
@@ -172,6 +175,7 @@
                     <div style="display:flex; justify-content: flex-end;">
                         <div class="pre_btn" onclick="removeImg()" style="cursor: pointer;">지우기</div>
                     </div>
+
                 </div>
                 <span id="photoValue"></span>
                 <div class="NavContainer BtnNavContainer">
@@ -181,7 +185,7 @@
                     </div>
                 </div>
                 <div class="NavContainer PreBtnContainer">
-                    <div class="pre_btn" onclick="goPre()" style="cursor: pointer;">주의사항</div>
+                    <a onclick="goPre()" style="cursor: pointer;">주의사항</a>
                 </div>
             </form>
         </div>

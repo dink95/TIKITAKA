@@ -20,6 +20,13 @@
 
 <body>
 
+<div id="img_modal" >
+        <img id="img_modal_content" src="" alt="">
+    <a id="img_close_button" onclick="closeModalImg()"><i class="fas fa-times fa-1x"></i></a>
+
+</div>
+
+
 <div class="site-wrap">
     <header class="site-navbar" role="banner">
         <!--replace 헤더-->
@@ -59,9 +66,10 @@
             <input type="hidden" id="nego" value="">
             <input type="hidden" id="prodCo" value="">
             <div class="row align-items-start" style="border-bottom: 1px solid #ddd; padding:0 0 5% 0;">
-                <div class="col-12 col-md-6 order-1 order-md-1  text-center" style="max-height: 500px; overflow: hidden">
-                    <figure class="block-4-image"  >
-                        <img id="mainDetailImg" src="" alt="Image placeholder" class="img-fluid">
+                <div class="col-12 col-md-6 order-1 order-md-1  text-center">
+                    <figure class="block-4-image">
+                        <img id="mainDetailImg" src="" alt="Image placeholder" class="img-fluid"
+                             style="max-height: 500px;">
                     </figure>
                 </div>
                 <div class="col-12 col-md-6 order-2 order-md-2  text-left">
@@ -73,10 +81,10 @@
                         </div>
                     </div>
                     <div class="aic2">
-                    <p>판매자아이디:&nbsp<span id="selId"></span></p>
-                    <p>거래방법:&nbsp<span id="detailWay"></span></p>
-                    <p>거래지역:&nbsp<span id="detailAddr"></span></p>
-                    <a href="///" id="detailMap"><span>지도보기</span></a>
+                        <p>판매자아이디:&nbsp<span id="selId"></span></p>
+                        <p>거래방법:&nbsp<span id="detailWay"></span></p>
+                        <p>거래지역:&nbsp<span id="detailAddr"></span></p>
+                        <a href="///" id="detailMap"><span>지도보기</span></a>
                     </div>
                     <div class="aic3 ButtonNav">
                         <input type="button" class="border-0-btn btn btn-primary"
@@ -84,7 +92,7 @@
                         <input type="button" class=" border-0-btn btn btn-info"
                                value="수정하기" onclick="goRegist()">
                         <input tpye="button" class="border-0-btn btn btn-danger"
-                                   value="신고하기" onclick="goReport()">
+                               value="신고하기" onclick="goReport()">
                         <input type="button" class="border-0-btn btn btn-danger"
                                value="삭제하기" onclick="removeCheck()">
                     </div>
@@ -99,45 +107,70 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="nonloop-block-3 owl-carousel">
-                                <div class="item">
-                                    <div class="block-4 text-center">
-                                        <figure class="block-4-image" style="max-height: 300px;">
-                                            <img src="" class="img-fluid0 img-fluid1">
-                                        </figure>
+                                <div class=" aos-init aos-animate" data-aos="fade" data-aos-delay="">
+                                    <a class="block-2-item" onclick="goDetailPhoto('.img-fluid1')">
+                                        <div class="item">
+                                            <div class="block-4 text-center">
+                                                <figure class="block-4-image image">
+                                                    <img src="" class="img-fluid0 img-fluid1"
+                                                         style="max-height: 300px;">
+                                                </figure>
 
-                                    </div>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
-                                <div class="item">
-                                    <div class="block-4 text-center">
-                                        <figure class="block-4-image" style="max-height: 300px;">
-                                            <img src="" class="img-fluid0 img-fluid2">
-                                        </figure>
+                                <div class=" aos-init aos-animate" data-aos="fade" data-aos-delay="">
+                                    <a class="block-2-item" onclick="goDetailPhoto('.img-fluid2')">
+                                        <div class="item">
+                                            <div class="block-4 text-center">
+                                                <figure class="block-4-image image">
+                                                    <img src="" class="img-fluid0 img-fluid2"
+                                                         style="max-height: 300px;">
+                                                </figure>
 
-                                    </div>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
-                                <div class="item">
-                                    <div class="block-4 text-center">
-                                        <figure class="block-4-image" style="max-height: 300px;">
-                                            <img src="" class="img-fluid0 img-fluid3">
-                                        </figure>
+                                <div class=" aos-init aos-animate" data-aos="fade" data-aos-delay="">
+                                    <a class="block-2-item" onclick="goDetailPhoto('.img-fluid3')">
+                                        <div class="item">
+                                            <div class="block-4 text-center">
+                                                <figure class="block-4-image image">
+                                                    <img src="" class="img-fluid0 img-fluid3"
+                                                         style="max-height: 300px;">
+                                                </figure>
 
-                                    </div>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
-                                <div class="item">
-                                    <div class="block-4 text-center">
-                                        <figure class="block-4-image" style="max-height: 300px;">
-                                            <img src="" class="img-fluid0 img-fluid4">
-                                        </figure>
+                                <div class=" aos-init aos-animate" data-aos="fade" data-aos-delay="">
+                                    <a class="block-2-item" onclick="goDetailPhoto('.img-fluid4')">
+                                        <div class="item">
+                                            <div class="block-4 text-center">
+                                                <figure class="block-4-image image">
+                                                    <img src="" class="img-fluid0 img-fluid4"
+                                                         style="max-height: 300px;">
+                                                </figure>
 
-                                    </div>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
-                                <div class="item">
-                                    <div class="block-4 text-center">
-                                        <figure class="block-4-image" style="max-height: 300px;">
-                                            <img src="" class="img-fluid0 img-fluid5">
-                                        </figure>
+                                <div class=" aos-init aos-animate" data-aos="fade" data-aos-delay="">
+                                    <a class="block-2-item" onclick="goDetailPhoto('.img-fluid5')">
+                                        <div class="item">
+                                            <div class="block-4 text-center">
+                                                <figure class="block-4-image image">
+                                                    <img src="" class="img-fluid0 img-fluid5"
+                                                         style="max-height: 300px;">
+                                                </figure>
 
-                                    </div>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -146,7 +179,7 @@
             </div>
 
             <div class="row align-items-center"
-                 style="border-bottom: 1px solid #ddd; border-top: 1px solid #ddd;  margin:30px 0 10px 0; padding:30px 0 10px 0;">
+                 style="border-bottom: 1px solid #ddd;  margin:30px 0 10px 0; padding:30px 0 10px 0;">
                 <div class="col-12  order-1 order-md-1  text-left">
                     <label for="prodContent">상세정보</label><span
                         class="text-danger">*</span></div>
@@ -162,23 +195,32 @@
     <a id="arrow_up" class="scroll_up" onclick="scroll_up()"> </a>
 
     <style>
-        #detailMap>span{
+        #detailMap > span {
             color: #a88d2c;
         }
+
         .img-fluid0 {
             display: none;
+            border-radius: 5px;
         }
-        #mainDetailImg{
+
+        #mainDetailImg {
 
         }
 
-        .ButtonNav{
-            padding:10% 0;
+        .ButtonNav {
+            padding: 10% 0;
         }
+
+        .ButtonNav > .btn {
+            margin: 1%;
+        !important;
+        }
+
         #detailName {
             color: #000;
             font-size: 20px;
-            margin-bottom:50px;
+            margin-bottom: 50px;
         }
 
         #detailPrice {
@@ -204,18 +246,52 @@
             color: #9792ea;
         }
 
-        .aic1{
-            padding-top:2%;
+        .aic1 {
+            padding-top: 2%;
         }
-        .aic2{
-            padding-top:2%;
+
+        .aic2 {
+            padding-top: 2%;
         }
 
         #prodContent {
             color: #000;
         }
-        figure{
-            overflow:hidden;
+
+        figure {
+            overflow: hidden;
+        }
+
+        #img_modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            z-index: 20000;
+        }
+
+        #img_modal_content {
+            background-size: cover;
+            max-height: 95%;
+            max-width: 95%;
+            z-index: 10000;
+            position: relative;
+        }
+
+        #img_close_button{
+            position: absolute;
+            z-index: 10001;
+            color: #fff;
+            font-size: 30px;
+            font-weight: bold;
+            top: 3%;
+            right :10%;
+            cursor: pointer;
         }
 
     </style>
@@ -229,9 +305,10 @@
 <script src="../js/owl.carousel.min.js"></script>
 <script src="../js/jquery.magnific-popup.min.js"></script>
 <script src="../js/aos.js"></script>
-
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script src="../js/main.js"></script>
 <script>
+
 
     /*정보*/
     function getProductDetail() {
@@ -247,7 +324,7 @@
             dataType: 'json'
         }).done(function (data) {
             drawPrdList(data);
-            console.log("data.dataDetail",data.dataDetail);
+            console.log("data.dataDetail", data.dataDetail);
 
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
@@ -292,7 +369,6 @@
     }
 
 
-
     function drawPrdList(data) {
         console.log("@@detail data", data);
 
@@ -309,9 +385,9 @@
             $('#detailName').text(data.dataDetail.prodNm);
             $('#detailPrice').text(data.dataDetail.prodPrc);
             $('#selId').text(data.dataDetail.selId);
-            if(data.dataDetail.selId == $('#p_id').val()){
+            if (data.dataDetail.selId == $('#p_id').val()) {
                 buttonCheck(1);
-            }else{
+            } else {
                 buttonCheck(0);
             }
             $('#detailWay').text(data.dataDetail.way);
@@ -353,10 +429,10 @@
     };
 
 
-
     $('#query').val(searchParam('prodNo'));
+
     function buttonCheck(props) {
-        if (props==1) {
+        if (props == 1) {
             $('.ButtonNav>input:nth-child(2n-1)').css('display', 'none');
             $('.ButtonNav>a').css('display', 'none');
         } else {
@@ -376,14 +452,27 @@
         location.href = "/product/update?prodNo=" + prodNo + '&prodNm=' + prodNm + '&prodPrc=' + prodPrc + '&catNo=' + catNo + '&way=' + way + '&nego=' + nego + '&prodCo=' + prodCo + '&content=' + content;
     }
 
-    function goReport(){
-        location.href="/member/report"
+    function goReport() {
+        location.href = "/member/report"
     }
 
 
     $(document).ready(function () {
         getProductDetail();
     });
+
+    function goDetailPhoto(i) {
+        var imgPath = $(i).attr("src");
+        $('#img_modal').css('display', 'flex');
+        $('#img_modal').children('img').attr("src", imgPath);
+
+    }
+
+    function closeModalImg() {
+        $('#img_modal').css('display', 'none');
+    }
+
+
 </script>
 
 </body>
