@@ -17,6 +17,8 @@ public interface ProductMapper {
 
     public ProductDTO selectProductDetail(int prodNo);
 
+    public int updateView(int prodNo);
+
     public List<ProductDTO> selectProductList();
 
     public List<ProductDTO> resultByNmCat(ProductDTO params);

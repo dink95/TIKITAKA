@@ -53,6 +53,15 @@
             prod_no = #{prodNo}
     </select>
 
+    <update id="updateView" parameterType="int">
+        UPDATE
+            prod
+        SET
+            prod_view = prod_view + 1
+        WHERE
+            prod_no = #{prodNo}
+    </update>
+
     <update id="updateProduct" parameterType="ProductDTO">
         UPDATE
             prod

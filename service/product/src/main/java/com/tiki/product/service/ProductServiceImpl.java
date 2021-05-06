@@ -29,6 +29,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO selectProductDetail(int prodNo) {
+
+        productMapper.updateView(prodNo);
+
         return productMapper.selectProductDetail(prodNo);
     }
 
