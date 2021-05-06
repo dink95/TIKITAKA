@@ -243,12 +243,13 @@ function categoryChange(e) {
 
 }
 
-var arr = [["남성의류", "여성의류", "아동의류", "가방", "신발", "모자", "액세서리", "화장품", "기타"],
-	["pc/노트북", "휴대폰/태블릿", "카메라", "게임", "기타"],
-	["침실", "주방","거실", "DIY", "서재/사무용", "기타"],
-	["등산", "캠핑", "골프", "헬스", "공연/티켓", "여행", "기타"],
-	["반려동물용품", "차량용품", "출산/유아용품"],
-	["삽니다"]];
+var arr = [["삽니다"],
+	["패션","남성의류", "여성의류", "아동의류", "가방", "신발", "모자", "액세서리", "화장품", "기타"],
+	["디지털/가전","pc/노트북", "휴대폰/태블릿", "카메라", "게임", "기타"],
+	["가구/인테리어","침실", "주방","거실", "DIY", "서재/사무용", "기타"],
+	["여가활동","등산", "캠핑", "골프", "헬스", "공연/티켓", "여행", "기타"],
+	["기타","반려동물용품", "차량용품", "출산/유아용품"]
+	];
 
 
 function categoryChangeDetail(e) {
@@ -258,35 +259,35 @@ function categoryChangeDetail(e) {
 			if(e.value=="선택하세요"){
 				$('#selectedDetail').val('');
 			}
-			else if($('#selectedMain').val()=="passion"){
+			else if($('#selectedMain').val()=="buy"){
 				if (arr[0][j] == e.value) {
-					$('#selectedDetail').val(10+j);
+					$('#selectedDetail').val(j);
 				}
 			}
 
-			else if($('#selectedMain').val()=="digital"){
+			else if($('#selectedMain').val()=="passion"){
 				if (arr[1][j] == e.value) {
-					$('#selectedDetail').val(20 + j);
+					$('#selectedDetail').val(10 + j);
+				}
+			}
+			else if($('#selectedMain').val()=="digital"){
+				if (arr[2][j] == e.value) {
+					$('#selectedDetail').val(20+ j);
 				}
 			}
 			else if($('#selectedMain').val()=="interior"){
-				if (arr[2][j] == e.value) {
+				if (arr[3][j] == e.value) {
 					$('#selectedDetail').val(30 + j);
 				}
 			}
 			else if($('#selectedMain').val()=="leisure"){
-				if (arr[3][j] == e.value) {
-					$('#selectedDetail').val(40 + j);
+				if (arr[4][j] == e.value) {
+					$('#selectedDetail').val(40+ j);
 				}
 			}
 			else if($('#selectedMain').val()=="else"){
-				if (arr[4][j] == e.value) {
-					$('#selectedDetail').val(50 + j);
-				}
-			}
-			else if($('#selectedMain').val()=="buy"){
 				if (arr[5][j] == e.value) {
-					$('#selectedDetail').val(60 + j);
+					$('#selectedDetail').val(50 + j);
 				}
 			}
 
@@ -428,4 +429,46 @@ function scroll_up() {
 	$("html, body").animate({scrollTop: 0}, "slow");
 };
 
+/*경과시간*/
+function timeForToday(value) {
 
+	const today = new Date();
+	const timeValue = new Date(value);
+
+	const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
+	if (betweenTime < 1) return '방금전';
+	if (betweenTime < 60) {
+		return `${betweenTime}분전`;
+	}
+
+	const betweenTimeHour = Math.floor(betweenTime / 60);
+	if (betweenTimeHour < 24) {
+		return `${betweenTimeHour}시간전`;
+	}
+
+	const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+	if (betweenTimeDay < 365) {
+		return `${betweenTimeDay}일전`;
+	}
+
+	return `${Math.floor(betweenTimeDay / 365)}년전`;
+}
+
+/*글자수 제한*/
+function textLengthOverCut(txt, len, lastTxt) {
+	if (len == "" || len == null) { // 기본값
+		len = 20;
+	}
+	if (lastTxt == "" || lastTxt == null) { // 기본값
+		lastTxt = "...";
+	}
+	if (txt.length > len) {
+		txt = txt.substr(0, len) + lastTxt;
+	}
+	return txt;
+}
+
+/*뒤로가기 함수*/
+function historyBack(){
+	history.back();
+}

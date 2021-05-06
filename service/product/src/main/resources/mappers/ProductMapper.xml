@@ -15,6 +15,7 @@
         , prod_co
 		, prod_view
         , content
+        , img_count
     </sql>
 
     <insert id="insertProduct" parameterType="ProductDTO">
@@ -28,6 +29,7 @@
                          , wday
                          , prod_co
                          , content
+                         , img_count
         ) VALUES (
                   #{prodNm},
         #{prodPrc}
@@ -38,6 +40,7 @@
         , NOW()
         , #{prodCo}
         , #{content}
+        , #{imgCount}
         )
     </insert>
 
@@ -84,7 +87,7 @@
         FROM
             prod
         ORDER BY
-            wday ASC
+            wday DESC
     </select>
 
     <select id="resultByNmCat" parameterType="ProductDTO" resultType="ProductDTO">
@@ -93,10 +96,38 @@
         FROM
             prod
         WHERE
-            prod_nm = #{prodNm}
+            prod_nm LIKE concat('%',#{prodNm},'%')
         AND
             cat_no = #{catNo}
     </select>
+
+    <select id="resultByProdNm" parameterType="String" resultType="ProductDTO">
+        SELECT
+        <include refid="productColumns" />
+        FROM
+        prod
+        WHERE
+        prod_nm LIKE concat('%',#{prodNm},'%')
+    </select>
+
+    <select id="resultById" parameterType="String" resultType="ProductDTO">
+        SELECT
+        <include refid="productColumns" />
+        FROM
+        prod
+        WHERE
+        sel_id = #{selId}
+    </select>
+
+    <select id="resultByCatNo" parameterType="int" resultType="ProductDTO">
+        SELECT
+        <include refid="productColumns" />
+        FROM
+        prod
+        WHERE
+        cat_no = #{catNo}
+    </select>
+
     <select id="selectProductTotalCount" parameterType="ProductDTO" resultType="int">
         SELECT
             COUNT(*)

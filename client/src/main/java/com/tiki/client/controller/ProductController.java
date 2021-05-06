@@ -157,6 +157,59 @@ public class ProductController {
         return resultMap;
     }
 
+    @RequestMapping("/product/list.prodNm")  /*상품이름 검색 리스트 */
+    @ResponseBody
+    public Map<String,Object> ProdNmQueryList(@RequestParam(value = "prodNm") String prodNm) {
+        Map<String,Object> resultMap = new HashMap<>();
+        List<Object> list = null;
+        System.out.println(prodNm);
+        try {
+            list= productService.productQueryProdNmList(prodNm);
+            System.out.println("@QueryList"+ list);
+            resultMap.put("dataQueryList", list);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+
+
+    @RequestMapping("/product/list.category")  /*상품 카테고리 검색 리스트 */
+    @ResponseBody
+    public Map<String,Object> CatQuerytList(@RequestParam(value = "catNo") Integer catNo) {
+        Map<String,Object> resultMap = new HashMap<>();
+        List<Object> list = null;
+        System.out.println(catNo);
+        try {
+            list= productService.productQueryCatNoList(catNo);
+            System.out.println("@QueryList"+ list);
+            resultMap.put("dataQueryList", list);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+
+    @RequestMapping("/product/list.selId")  /*상품 아이디 검색 리스트 */
+    @ResponseBody
+    public Map<String,Object> IdQuerytList(@RequestParam(value = "selId") String selId) {
+        Map<String,Object> resultMap = new HashMap<>();
+        List<Object> list = null;
+        System.out.println(selId);
+        try {
+            list= productService.productQuerySelIdList(selId);
+            System.out.println("@QueryList"+ list);
+            resultMap.put("dataQueryList", list);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+
+
     @GetMapping(value = "/product/detail") /*상품 상세 페이지*/
     public ModelAndView detail() {
         ModelAndView view = new ModelAndView();

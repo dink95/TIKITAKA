@@ -1,4 +1,4 @@
-package com.tiki.member.domain;
+package com.tiki.client.domain;
 
 public class ComplainDTO {
 

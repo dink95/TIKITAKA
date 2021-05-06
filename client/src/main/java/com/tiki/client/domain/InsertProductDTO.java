@@ -33,4 +33,8 @@ public class InsertProductDTO {
 
     /** 상세정보 */
     private String content;
+
+    /** 사진 개수 **/
+    private int imgCount;
+
 }

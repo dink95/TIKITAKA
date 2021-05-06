@@ -62,6 +62,30 @@ public class ProductService {
                 .block();
     }
 
+    public List productQueryProdNmList(String prodNm) throws Exception {
+        return webClient.get()
+                .uri("/prd/result/prodNm/{prodNm}",prodNm)
+                .retrieve()
+                .bodyToMono(List.class) //반환정보
+                .block();
+    }
+
+    public List productQuerySelIdList(String selId) throws Exception {
+        return webClient.get()
+                .uri("/prd/result/selId/{selId}",selId)
+                .retrieve()
+                .bodyToMono(List.class) //반환정보
+                .block();
+    }
+
+    public List productQueryCatNoList(Integer catNo) throws Exception {
+        return webClient.get()
+                .uri("/prd/result/catNo/{catNo}",catNo)
+                .retrieve()
+                .bodyToMono(List.class) //반환정보
+                .block();
+    }
+
     public ProductDTO productDetail(Integer prodNo) {
         return webClient.get()
                 .uri("/prd/{prodNo}",prodNo)

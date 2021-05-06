@@ -32,6 +32,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new ProcessInterceptor())
                 .addPathPatterns("/product/create")
+                .addPathPatterns("/member/myinfo")
                 .excludePathPatterns("/main/**", "/webjars/**", "/dist/**", "/plugins/**", "/css/**")
                 .excludePathPatterns("/images/**", "/js/**", "/fonts", "/webfonts/**", "/scss/**");
     }

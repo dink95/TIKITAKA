@@ -21,6 +21,12 @@ public interface ProductMapper {
 
     public List<ProductDTO> resultByNmCat(ProductDTO params);
 
+    public List<ProductDTO> resultByProdNm(String prodNm);
+
+    public List<ProductDTO> resultById(String selId);
+
+    public List<ProductDTO> resultByCatNo(int catNo);
+
     public int selectProductTotalCount();
 
 }
