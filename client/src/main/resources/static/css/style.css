@@ -866,7 +866,7 @@ nav{
 #arrow_right > a:after{
 
   content: '\e315';
-  font-size: 30px;
+  font-size: 16px;
   right: -5px;
   font-family: 'icomoon';
 }
@@ -874,13 +874,11 @@ nav{
 
 #arrow_up:after{
   content: '\e316';
-  font-size: 28px;
+  font-size: 30px;
   right: -5px;
   font-family: 'icomoon';
   z-index: 100000;
-  background: #9792ea;
-  border-radius: 5px;
-  color: #fff;
+
 
 }
 

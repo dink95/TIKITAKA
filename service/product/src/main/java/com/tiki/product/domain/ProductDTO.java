@@ -44,7 +44,10 @@ public class ProductDTO {
     /** 상세정보 */
     private String content;
 
-    public ProductDTO(String prodNm,int prodPrc, int catNo, String selId, String way, int nego, String prodCo, String content){
+    /** 사진 개수 **/
+    private int imgCount;
+
+    public ProductDTO(String prodNm,int prodPrc, int catNo, String selId, String way, int nego, String prodCo, String content, int imgCount){
         this.prodNm=prodNm;
         this.prodPrc= prodPrc;
         this.catNo=catNo;
@@ -53,6 +56,7 @@ public class ProductDTO {
         this.nego= nego;
         this.prodCo=prodCo;
         this.content=content;
+        this.imgCount = imgCount;
     };
 
     public ProductDTO(){};

@@ -172,6 +172,7 @@
                             <span id="fileCount">(0/5)</span>
                         </div>
                     </div>
+                    <input type="hidden" name="imgCount">
                     <div style="display:flex; justify-content: flex-end;">
                         <div class="pre_btn" onclick="removeImg()" style="cursor: pointer;">지우기</div>
                     </div>
@@ -324,7 +325,8 @@
         }
         ;
         fileCount += count;
-        $('#fileCount').text('(' + fileCount + '/5)')
+        $('#fileCount').text('(' + fileCount + '/5)');
+        $('input[name=imgCount]').val(fileCount);
 
     }
 

@@ -30,6 +30,9 @@ public class InsertProdDTO {
     /** 상품코드 */
     private String prodCo;
 
+    /** 상세내용 **/
     private String content;
 
+    /** 사진 개수 **/
+    private int imgCount;
 }

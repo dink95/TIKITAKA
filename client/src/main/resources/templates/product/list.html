@@ -47,7 +47,7 @@
         </div>
     </div>
     <!------------------------->
-    <div class="site-section block-3 site-blocks-2 bg-light" style="padding-top:10px">
+    <div style="padding-top:10px">
         <div class="container">
             <!--검색바 중간 삽입-->
             <div class="search-bar-container">
@@ -86,7 +86,7 @@
                             <input type="hidden" id="selectedDetail" value="">
                             <input type="text" class="form-control border-0 input-search" placeholder="Search"
                                    id="prodNm">
-                            <span  class="icon icon-search2" ></span>
+                            <span type="submit" class="icon icon-search2" ></span>
                         </div>
                     </div>
                 </div>
@@ -187,6 +187,7 @@
     }
 
     function getCatQueryList(){
+
         param = {
             catNo:searchParam('catNo'),
         }
@@ -277,7 +278,9 @@
         getCatQueryList();
     }
 
-
+    function selectDetail(e){
+        alert(e.value());
+    }
 
 
 </script>

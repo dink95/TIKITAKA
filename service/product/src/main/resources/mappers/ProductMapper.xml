@@ -15,6 +15,7 @@
         , prod_co
 		, prod_view
         , content
+        , img_count
     </sql>
 
     <insert id="insertProduct" parameterType="ProductDTO">
@@ -28,6 +29,7 @@
                          , wday
                          , prod_co
                          , content
+                         , img_count
         ) VALUES (
                   #{prodNm},
         #{prodPrc}
@@ -38,6 +40,7 @@
         , NOW()
         , #{prodCo}
         , #{content}
+        , #{imgCount}
         )
     </insert>
 

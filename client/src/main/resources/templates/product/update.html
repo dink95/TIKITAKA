@@ -293,7 +293,7 @@
         $(props).text('');
     }
 
-    for (var i = 1; i < 6; i++) {
+    for (var i = 1; i < parseInt(searchParam('imgCount'))+1; i++) {
 
         var imgDiv = $('#imgDiv')
         var imgTag = $('<img/>');
@@ -364,7 +364,6 @@
     }
     $('input[name=prodCo]').val(searchParam('prodCo'));
     $('textarea[name=content]').val(searchParam('content'));
-
 
     $(document).ready(function () {
         getCategory();

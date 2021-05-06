@@ -104,6 +104,7 @@
                 <div class="container">
                     <div class="row justify-content-center">
                     </div>
+                    <input type="hidden" id="imgCount">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="nonloop-block-3 owl-carousel">
@@ -189,7 +190,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
     <a id="arrow_up" class="scroll_up" onclick="scroll_up()"> </a>
@@ -398,6 +398,7 @@
             $('#nego').val(data.dataDetail.nego);
             $('#prodCo').val(data.dataDetail.prodCo);
             $('#prodContent').text(data.dataDetail.content);
+            $('#imgCount').val(data.dataDetail.imgCount);
             var wday = data.dataDetail.wday;
             $('#wday').text(timeForToday(wday));
             imgDetailPath1 = '/istatic/images/' + data.dataDetail.prodNo + '/' + 1 + '.jpg';
@@ -449,7 +450,8 @@
         var nego = $('#nego').val();
         var prodCo = $('#prodCo').val();
         var content = $('#prodContent').text();
-        location.href = "/product/update?prodNo=" + prodNo + '&prodNm=' + prodNm + '&prodPrc=' + prodPrc + '&catNo=' + catNo + '&way=' + way + '&nego=' + nego + '&prodCo=' + prodCo + '&content=' + content;
+        var imgCount = $('#imgCount').val();
+        location.href = "/product/update?prodNo=" + prodNo + '&prodNm=' + prodNm + '&prodPrc=' + prodPrc + '&catNo=' + catNo + '&way=' + way + '&nego=' + nego + '&prodCo=' + prodCo + '&content=' + content + '&imgCount=' + imgCount;
     }
 
     function goReport() {
