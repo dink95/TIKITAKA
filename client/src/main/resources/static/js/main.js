@@ -457,7 +457,7 @@ function timeForToday(value) {
 /*글자수 제한*/
 function textLengthOverCut(txt, len, lastTxt) {
 	if (len == "" || len == null) { // 기본값
-		len = 20;
+		len = 60;
 	}
 	if (lastTxt == "" || lastTxt == null) { // 기본값
 		lastTxt = "...";

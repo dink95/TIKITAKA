@@ -38,6 +38,8 @@ foreign key(CAT_NO) references CAT(CAT_NO) on update cascade on delete CASCADE,
 foreign key(SEL_ID) references MBR(MBR_ID) on update cascade on delete CASCADE
 );
 
+alter table prod add IMG_COUNT int default '0'; 
+
 
 CREATE TABLE MANAGER(
 MAN_ID varchar(20) primary KEY,

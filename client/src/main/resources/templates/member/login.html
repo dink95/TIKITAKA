@@ -134,7 +134,7 @@
                 dataType : 'json'
             }).done(function(data){
                 if(data.resultCode == 200) {
-                    location.href = '/';
+                    location.href ='/';
                 }else {
                     $('#valid_loginError').text('* 가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.');
                     return false;

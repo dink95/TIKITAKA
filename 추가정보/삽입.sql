@@ -25,8 +25,7 @@ values
 ('휴대폰/태블릿', 22),
 ('카메라', 23),
 ('게임', 24),
-('자동차', 25),
-('기타', 26);
+('기타', 25);
 
 insert into cat(cat_nm, cat_no)
 values
@@ -51,7 +50,10 @@ values
 
 insert into cat(cat_nm, cat_no)
 values
-('반려동물용품', 50);
+('기타', 50),
+('반려동물용품',51),
+('차량용품',52),
+('출산/유아용품',53);
 
 insert into cat(cat_nm, cat_no)
 values('기타', 60);

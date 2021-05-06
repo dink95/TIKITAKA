@@ -14,20 +14,27 @@
 
 <body>
 <input type="hidden" id="resultCode" th:value="${resultCode}">
+<input type="hidden" id="prodNo" th:value="${prodNo}">
 </body>
 <script>
 
     function  showResult() {
         var resultCode = $('#resultCode').val();
+        var prodNo = $('#prodNo').val();
         if(resultCode === 200 || resultCode === '200' ) {
             alert('상품이 등록되었습니다.');
             location.href ='/';
         }
         else if(resultCode === 201 || resultCode === '201' ) {
-            alert('상품이 수정되었습니다..');
+            alert('상품이 수정되었습니다.');
             location.href='/member/myinfo';
-        }else  {
-            alert('상품등록이 실패하였습니다. 관리자에게 문의하세요.');
+        }
+        else if(resultCode === 202 || resultCode === '202' ) {
+            alert('신고내용이 접수되었습니다.');
+            location.href="/product/detail?prodNo=" + prodNo;
+        }
+        else  {
+            alert('실패하였습니다. 관리자에게 문의하세요.');
             history.back();
         }
 

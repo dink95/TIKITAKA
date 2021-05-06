@@ -401,11 +401,13 @@
             $('#imgCount').val(data.dataDetail.imgCount);
             var wday = data.dataDetail.wday;
             $('#wday').text(timeForToday(wday));
-            imgDetailPath1 = '/istatic/images/' + data.dataDetail.prodNo + '/' + 1 + '.jpg';
-            $('.img-fluid1').attr("src", imgDetailPath1);
-            $('.img-fluid1').css("display", '');
+            for(var i=1; i < data.dataDetail.imgCount+1; i++) {
+                 imgDetailPath = '/istatic/images/' + data.dataDetail.prodNo + '/' + i + '.jpg';
+                $('.img-fluid' + i).attr("src", imgDetailPath);
+                $('.img-fluid' + i).css("display", '');
+            }
 
-            imgDetailPath2 = '/istatic/images/' + data.dataDetail.prodNo + '/' + 2 + '.jpg';
+            /*imgDetailPath2 = '/istatic/images/' + data.dataDetail.prodNo + '/' + 2 + '.jpg';
             $('.img-fluid2').attr("src", imgDetailPath2);
             $('.img-fluid2').css("display", '');
 
@@ -421,7 +423,7 @@
             $('.img-fluid5').attr("src", imgDetailPath4);
             $('.img-fluid5').css("display", '');
 
-        }
+*/        }
 
     }
 
@@ -455,7 +457,10 @@
     }
 
     function goReport() {
-        location.href = "/member/report"
+        var prodNo = $("#query").val();
+        var selId = $('#selId').text();
+        var prodNm = $('#prodNm').val();
+        location.href = "/complain/index?prodNo=" + prodNo + '&selId=' + selId + '&prodNm=' + prodNm;
     }
 
 
