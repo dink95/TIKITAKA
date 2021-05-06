@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.tiki.product.domain.ProductDTO;
 import com.tiki.product.mapper.ProductMapper;
+import com.tiki.product.service.ProductService;
+
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
@@ -18,23 +20,25 @@ class ProductApplicationTests {
     @Autowired
     private ProductMapper productMapper;
 
-    /*@Test
-    public void testOfInsert() {
-        ProductDTO params = new ProductDTO();
-        params.setProdNm("테스트");
-        params.setProdPrc(2500);
-        params.setCatNo(123);
-        params.setSelId("94dglee");
-        params.setWay("직거래");
-        params.setWday(LocalDateTime.now());
-        params.setProdCo("1423");
-
-        int result = productMapper.insertProduct(params);
-        System.out.println("결과는 " + result + "입니다.");
-
-    }*/
+    @Autowired
+    private ProductService productService;
 
     @Test
+    public void testOfUpdateView() {
+
+        //int result = productMapper.updateView(1);
+
+        ProductDTO productDTO = productService.selectProductDetail(1);
+
+        System.out.println("=============");
+        System.out.println(productDTO.getProdNo());
+        System.out.println(productDTO.getProdNm());
+        System.out.println(productDTO.getProdView());
+        System.out.println("=============");
+
+    }
+
+    /**@Test
     public void testOfSelectDetail() {
         int productTotalCount = productMapper.selectProductTotalCount();
         if(productTotalCount > 0) {
@@ -49,6 +53,6 @@ class ProductApplicationTests {
                 }
             }
         }
-    }
+    }*/
 
 }
