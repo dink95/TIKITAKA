@@ -41,7 +41,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12 mb-0"><a href="/">Home</a> /</span>
-                    <span class="text-black" id="queryText" ></span>
+                    <span class="text-black" id="queryTextCatNm" ></span>
+                    <span class="text-black" id="queryTextProdNm" ></span>
                 </div>
             </div>
         </div>
@@ -164,10 +165,54 @@
         }
     });
 
+    /*카테고리 이름*/
+    function getCategory() {
+
+        param = {
+            catNo: searchParam('catNo'),
+        }
+
+        $.ajax({
+            url: '/category/get',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            console.log("@@data.categoryDTO", data.categoryDTO);
+            $('#detailCatNm').text(data.categoryDTO.catNm);
+            console.log(Math.floor(data.categoryDTO.catNo / 10) * 10);
+
+            Mainparam = {
+                catNo: Math.floor(data.categoryDTO.catNo / 10) * 10,
+            }
+
+            $.ajax({
+                url: '/category/get',
+                data: Mainparam,
+                type: 'post',
+                dataType: 'json'
+            }).done(function (data) {
+                $('#queryTextCatNm').text(data.categoryDTO.catNm);
+                console.log("@@mainCatNm", data.categoryDTO.catNm)
+            }).fail(function (data, textStatus, errorThrown) {
+                console.log(textStatus);
+
+
+            });
+
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+
+
+        });
+    }
+
     function searchParam(key) {
         return new URLSearchParams(location.search).get(key);
     };
-        $('#queryText').text(searchParam('prodNm'));
+    if(searchParam('prodNm')){
+            $('#queryTextProdNm').text(searchParam('prodNm'));
+        }
 
         function getProdNmQueryList(){
         param = {
@@ -215,6 +260,7 @@
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
+            $('#queryTextProdNm').text($('#prodNm').val());
             drawPrdList(data);
             console.log(data);
         }).fail(function (data, textStatus, errorThrown) {
@@ -278,9 +324,9 @@
         getCatQueryList();
     }
 
-    function selectDetail(e){
-        alert(e.value());
-    }
+    $(document).ready(function () {
+        getCategory();
+    });
 
 
 </script>

@@ -327,11 +327,4 @@ public class MemberController {
         return view;
     }
 
-    @GetMapping(value = "/member/report") /*신고하기 페이지*/
-    public ModelAndView report() {
-        ModelAndView view = new ModelAndView();
-        view.setViewName("member/information/report");
-        return view;
-    }
-
 }

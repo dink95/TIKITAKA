@@ -77,7 +77,7 @@
                         </div>
                     </div>
 
-                    <div class="col-12 col-md-4 order-3 order-md-3  text-left text-lg-center">
+                    <div class="col-12 col-md-4 order-3 order-md-3  text-left text-lg-left">
                         <div class="category">
                             <select onchange="categoryChangeDetail(this)" name="detail" id="detail"
                                     class="form-control border-0 select-category font-14"
@@ -87,13 +87,13 @@
                                     세부 카테고리
                                 </option>
                             </select>
-
                             <input type="hidden" id="selectedDetail" name="catNo" value="">
                         </div>
+                        <span class="valid" id="valid_p_category"></span>
                     </div>
 
                 </div>
-                <span id="valid_p_category" style="color: #ff0000;font-size: 10px;"></span>
+
 
 
                 <div class="row align-items-sm-start justify-content-center">
@@ -101,10 +101,10 @@
                         <label for="p_title" class="text-black">제목
                             <span class="text-danger">*</span></label>
                     </div>
-                    <div class="col-12 col-md-8 order-2 order-md-2  text-left text-lg-center">
-                        <input type="text" size="100" class="form-control" id="p_title" name="prodNm" maxlength="20"
+                    <div class="col-12 col-md-8 order-2 order-md-2  text-left text-lg-left">
+                        <input type="text" size="100" class="form-control" id="p_title" name="prodNm" maxlength="60"
                                onkeyup="onKeyUp('#valid_p_title');">
-                        <span id="valid_p_title" style="color: #ff0000;font-size: 10px;"></span>
+                        <span class ="valid" id="valid_p_title" style="color: #ff0000;font-size: 10px;"></span>
                     </div>
                     <div class="col-12 col-md-10 order-2 order-md-2 text-right text-lg-right">
                         <span id="title_count"></span>
@@ -116,10 +116,10 @@
                     <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
                         <label class="text-black">상세정보
                             <span class="text-danger">*</span></label></div>
-                    <div class="col-12 col-md-8 order-2 order-md-2  text-left text-lg-center">
+                    <div class="col-12 col-md-8 order-2 order-md-2  text-left text-lg-left">
                     <textarea class="form-control" id="p_content" name="content" cols="100" rows="10"
                               style="width:100%;" onkeyup="onKeyUp('#valid_p_content');"></textarea>
-                        <span id="valid_p_content" style="color: #ff0000;font-size: 10px;"></span>
+                        <span class ="valid" id="valid_p_content" style="color: #ff0000;font-size: 10px;"></span>
                     </div>
                 </div>
 
@@ -127,12 +127,12 @@
                     <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
                         <label for="p_price" class="text-black">가격
                             <span class="text-danger">*</span></label></div>
-                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-center">
+                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-left">
                         <input type="number" class="form-control" id="p_price" name="prodPrc"
                                onkeyup="onKeyUp('#valid_p_price');">
-                        <span id="valid_p_price" style="color: #ff0000;font-size: 10px;"></span>
+                        <span class ="valid" id="valid_p_price" style="color: #ff0000;font-size: 10px;"></span>
                     </div>
-                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-center">
+                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-left">
                         <input type="checkbox" id="p_nego" onclick="getCheckboxValue(event)">가격협의 가능
                         <input type="hidden" id="nego" name="nego" value="0">
                     </div>
@@ -143,20 +143,20 @@
                         <label class="text-black">거래방법</label>
                         <span class="text-danger">*</span>
                     </div>
-                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-center">
+                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-left">
                         <input type="radio" name="way" value="직거래" checked>직거래
                     </div>
-                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-center">
+                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-left">
                         <input type="radio" name="way" value="택배거래">택배거래
                     </div>
-                    <span id="valid_p_method" style="color: #ff0000;font-size: 10px;"></span>
+                    <span class ="valid" id="valid_p_method" style="color: #ff0000;font-size: 10px;"></span>
                 </div>
 
                 <div class="row align-items-sm-start justify-content-center">
                     <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
                         <label for="p_code" class="text-black">상품코드</label>
                         <span class="text-danger">*</span></div>
-                    <div class="col-12 col-md-8 order-2 order-md-2  text-left text-lg-center">
+                    <div class="col-12 col-md-8 order-2 order-md-2  text-left text-lg-left">
                         <input type="text" class="form-control" id="p_code" name="prodCo"
                                placeholder="상품코드가 필요한 물품의 경우 입력해주세요."></div>
                 </div>
@@ -172,6 +172,7 @@
                             <span id="fileCount">(0/5)</span>
                         </div>
                     </div>
+                    <span class ="valid" id="valid_p_file" style="color: #ff0000;font-size: 10px;"></span>
                     <input type="hidden" name="imgCount">
                     <div style="display:flex; justify-content: flex-end;">
                         <div class="pre_btn" onclick="removeImg()" style="cursor: pointer;">지우기</div>
@@ -224,6 +225,9 @@
         padding: 30px;
         border-bottom: 1px solid #ddd;
     }
+    .valid{
+        color: #ff0000;font-size: 10px;
+    }
 
 </style>
 
@@ -269,13 +273,18 @@
             $('#valid_p_price').text("*가격은 필수 입력 사항입니다.");
             result = false;
         }
+        if($('input[name=imgCount]').val()==0)
+        {
+            $('#valid_p_file').text("*사진을 등록해주세요.");
+            result = false;
+        }
         return result;
     }
 
     $(function () {
         $('#p_title').keyup(function (e) {
             var p_title = $(this).val();
-            $('#title_count').html(p_title.length + '/20');
+            $('#title_count').html(p_title.length + '/60');
         });
         $('#p_title').keyup();
     });
@@ -317,17 +326,22 @@
                 alert('이미지 파일만 선택할 수 있습니다.');
                 fileClear(obj);
                 break;
-            } else {
+            } else if( obj.files.length>5){
+                alert('파일은 최대 5개까지 등록할 수 있습니다.');
+                fileClear(obj);
+                break;
+
+            }
+            else {
                 count++;
                 readImage(count, data);
             }
 
-        }
-        ;
+        };
         fileCount += count;
+
         $('#fileCount').text('(' + fileCount + '/5)');
         $('input[name=imgCount]').val(fileCount);
-
     }
 
     function fileClear(obj) {
@@ -347,6 +361,7 @@
         $('#fileCount').text('(0/5)')
         $('img').remove();
         fileClear('#file');
+        $('input[name=imgCount]').val(0);
 
     }
 

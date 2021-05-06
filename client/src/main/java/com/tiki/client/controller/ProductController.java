@@ -1,12 +1,10 @@
 package com.tiki.client.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.tiki.client.domain.InsertProductDTO;
 import com.tiki.client.domain.ProductDTO;
 import com.tiki.client.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
