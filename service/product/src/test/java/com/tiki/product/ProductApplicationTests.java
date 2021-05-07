@@ -26,7 +26,7 @@ class ProductApplicationTests {
     @Test
     public void testOfUpdateView() {
 
-        //int result = productMapper.updateView(1);
+        ///int result = productMapper.updateView(1);
 
         ProductDTO productDTO = productService.selectProductDetail(1);
 

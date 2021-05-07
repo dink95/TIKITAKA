@@ -33,76 +33,27 @@
     </nav>
     <!-------------------------------------------------------------------->
   </header>
-
-  <!--상품 사진 top5-->
+  <div class="container">
+  <div class="categoryMenuBox">
+    <li class="categoryMenu" >
+      <a onclick="goCatDetail(10)"><i class="fas fa-tshirt fa-2x" style="color:black" ></i>
+        <p>패션</p></a>
+      <a onclick="goCatDetail(20)"><i class="fas fa-tv fa-2x" style="color:black" ></i>
+        <p>디지털/가전</p></a>
+      <a onclick="goCatDetail(30)"><i class="fas fa-couch fa-2x" style="color:black" ></i>
+        <p>가구/인테리어</p></a>
+      <a onclick="goCatDetail(40)"><i class="fas fa-bicycle fa-2x" style="color:black" ></i>
+        <p>여가활동</p></a>
+      <a onclick="goCatDetail(50)"><i class="fas fa-ellipsis-h fa-2x" style="color:black"></i>
+        <p>기타</p></a>
+      <a href="#" onclick="goCatDetail(0)"><i class="fas fa-shopping-cart fa-2x" style="color:black"></i>
+        <p>삽니다</p></a>
+    </li>
+  </div>
+  </div>
   <div class="site-section block-3 site-blocks-2 bg-light" style="padding-top:10px">
-
     <!--상품사진-->
     <div class="container">
-      <div class="categoryMenuBox">
-        <li class="categoryMenu">
-          <a onclick="goCatDetail(10)"><i class="fas fa-tshirt fa-2x" style="color:black" ></i>
-            <p>패션</p></a>
-          <a onclick="goCatDetail(20)"><i class="fas fa-tv fa-2x" style="color:black" ></i>
-            <p>디지털/가전</p></a>
-          <a onclick="goCatDetail(30)"><i class="fas fa-couch fa-2x" style="color:black" ></i>
-            <p>가구/인테리어</p></a>
-          <a onclick="goCatDetail(40)"><i class="fas fa-bicycle fa-2x" style="color:black" ></i>
-            <p>여가활동</p></a>
-          <a onclick="goCatDetail(50)"><i class="fas fa-ellipsis-h fa-2x" style="color:black"></i>
-            <p>기타</p></a>
-          <a href="#" onclick="goCatDetail(0)"><i class="fas fa-shopping-cart fa-2x" style="color:black"></i>
-            <p>삽니다</p></a>
-        </li>
-      </div>
-      <div class="hideBox">
-        <input type="hidden" id="objCatNo" value="">
-        <ul class="hide">
-          <li><a href="product/list">전체</a></li>
-          <li><a onclick="goCatDetail(10);">남성의류</a></li>
-          <li><a onclick="goCatDetail(11);">여성의류</a></li>
-          <li><a onclick="goCatDetail(12);">아동의류</a></li>
-          <li><a onclick="goCatDetail(13);">가방</a></li>
-          <li><a onclick="goCatDetail(14);">모자</a></li>
-          <li><a onclick="goCatDetail(15);">신발</a></li>
-          <li><a onclick="goCatDetail(16);">액세서리</a></li>
-          <li><a onclick="goCatDetail(17);">화장품</a></li>
-          <li><a onclick="goCatDetail(18);">기타</a></li>
-        </ul>
-        <ul class="hide">
-          <li><a href="product/list">전체</a></li>
-          <li><a href="product/list">pc/노트북</a></li>
-          <li><a href="product/list">휴대폰/태블릿</a></li>
-          <li><a href="product/list">카메라</a></li>
-          <li><a href="product/list">게임</a></li>
-          <li><a href="product/list">기타</a></li>
-        </ul>
-        <ul class="hide">
-          <li><a href="product/list">전체</a></li>
-          <li><a href="product/list">침실</a></li>
-          <li><a href="product/list">주방</a></li>
-          <li><a href="product/list">DIY</a></li>
-          <li><a href="product/list">서재/사무용</a></li>
-          <li><a href="product/list">기타</a></li>
-        </ul>
-        <ul class="hide">
-          <li><a href="product/list">전체</a></li>
-          <li><a href="product/list">등산</a></li>
-          <li><a href="product/list">캠핑</a></li>
-          <li><a href="product/list">골프</a></li>
-          <li><a href="product/list">헬스</a></li>
-          <li><a href="product/list">공연/티켓</a></li>
-          <li><a href="product/list">여행</a></li>
-          <li><a href="product/list">기타</a></li>
-        </ul>
-        <ul class="hide">
-          <li><a href="product/list">전체</a></li>
-          <li><a href="product/list">반려동물용품</a></li>
-          <li><a href="product/list">차량용품</a></li>
-          <li><a href="product/list">출산/유아용품</a></li>
-        </ul>
-      </div>
-
       <div class="gridContainer">
 
       </div>
@@ -116,61 +67,6 @@
 
 <style>
 
-  .categoryMenuBox {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .categoryMenu {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 10px;
-  }
-
-  .categoryMenu a {
-    cursor: pointer;
-    width: 100%;
-    text-align: center;
-    border-bottom: 0px solid #9a9393;
-    padding-top: 1%;
-    margin: 1%;
-    border: 2px solid black;
-    border-radius: 5px;
-  }
-
-  a:hover {
-    color: #8800ff;
-  }
-
-  a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover {
-    color: #8800ff;
-  }
-
-  .categoryMenu a p {
-    font-size: 0.5rem;
-  }
-
-  .hideBox {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .hide {
-    box-shadow: 0 -1px #ddd;
-    background: white;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    border-radius: 10px;
-    width: 80%;
-    /*min-width: 744px;*/
-    padding: 0;
-  }
 
   .hide li {
     margin: 2% 0;
@@ -339,12 +235,6 @@
   function goCatDetail(catNo) {
     location.href = '/product/list?catNo=' + catNo;
   }
-
-  //검색 페이지
-  function goSearchDetail(prodNm) {
-    location.href = '/product/list?prodNm=' + prodNm;
-  }
-
 
   $(document).ready(function () {
     getProductList();

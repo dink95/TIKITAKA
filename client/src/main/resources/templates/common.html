@@ -3,6 +3,24 @@
 
 <!--공통 헤더-->
 <div class="site-navbar-top" th:fragment="header(header)" > <!--padding 수정 style-196-->
+    <div id="mobile_div">
+        <div class="categoryMenuBox">
+            <li class="categoryMenu">
+                <a onclick="goCatDetail(10)"><i class="fas fa-tshirt fa-2x" style="color:black" ></i>
+                    <p>패션</p></a>
+                <a onclick="goCatDetail(20)"><i class="fas fa-tv fa-2x" style="color:black" ></i>
+                    <p>디지털/가전</p></a>
+                <a onclick="goCatDetail(30)"><i class="fas fa-couch fa-2x" style="color:black" ></i>
+                    <p>가구/인테리어</p></a>
+                <a onclick="goCatDetail(40)"><i class="fas fa-bicycle fa-2x" style="color:black" ></i>
+                    <p>여가활동</p></a>
+                <a onclick="goCatDetail(50)"><i class="fas fa-ellipsis-h fa-2x" style="color:black"></i>
+                    <p>기타</p></a>
+                <a href="#" onclick="goCatDetail(0)"><i class="fas fa-shopping-cart fa-2x" style="color:black"></i>
+                    <p>삽니다</p></a>
+            </li>
+        </div>
+    </div>
     <div class="container" >
         <div class="row align-items-center">
             <!--
@@ -59,13 +77,13 @@
 <!-------------------->
 
 <!--공통 menu-->
-<nav class="site-navigation text-right text-md-center" role="navigation" th:fragment="menu(menu)" ><!--메뉴 간격 수정 style-273-->
+<nav class="site-navigation text-center text-md-center" role="navigation" th:fragment="menu(menu)" ><!--메뉴 간격 수정 style-273-->
     <div class="container">
         <ul class="site-menu js-clone-nav d-none d-md-block" >
             <li th:classappend="${menu}=='home'? 'active' : ''"><a href="/" >Home</a>
-            <li th:classappend="${menu}=='product_list'? 'active' : ''">
-                <a th:if="${session.mbrId == null}" href="login" >상품</a>
-                <a th:if="${session.mbrId != null}" href="/product/list" >상품</a></li>
+             <li><a style="cursor: pointer;" onclick="categoryMenuChange()">
+            <span class="icon-menu pcToMobile" style="padding-left: 1%; font-size: 17px; text-align: center">
+           </span>카테고리</a></li>
             <li th:classappend="${menu}=='product_create'? 'active' : ''">
                 <a th:if="${session.mbrId == null}" href="/login" >상품등록</a>
                 <a th:if="${session.mbrId != null}" href="/product/create" >상품등록</a></li>
@@ -108,7 +126,4 @@
 
 <!-------------------->
 
-<script>
-
-</script>
 </html>

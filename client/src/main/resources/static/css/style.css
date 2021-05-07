@@ -253,15 +253,21 @@ a:hover {
   font-size: 15px;
   display: inline-block; }
 .site-navbar .site-navigation .site-menu > li {
-
   display: inline-block;
-  padding: 10px 4%; } /*메뉴 간격 수정*/
+  padding: 10px 3%; } /*메뉴 간격 수정*/
+/*.site-navbar .site-navigation .site-menu > li:nth-child(2) {
+  display: inline-block;
+  padding: 10px 4% 0 0 } !*메뉴 간격 수정*!
+.site-navbar .site-navigation .site-menu > li:nth-child(3) {
+  display: inline-block;
+  padding: 10px 3% 0 16%; } !*메뉴 간격 수정*!*/
 .site-navbar .site-navigation .site-menu > li > a {
   padding: 10px 5px;
   text-transform: uppercase;
   letter-spacing: .05em;
   color: #25262a;
   font-size: 17px;
+  width: 110px;
   text-decoration: none !important; }
 .site-navbar .site-navigation .site-menu > li > a:hover {
   color: #7971ea; }
@@ -993,7 +999,6 @@ nav{
   column-gap: 10px;
 }
 .gridItem{
-
   height: fit-content;
 }
 
@@ -1038,4 +1043,54 @@ figure > img{
  width: 100%;!important;
 
 
+}
+
+ #mobile_div{
+   width: 100%;
+   height: 70px;
+   background: #fff;
+   position: fixed;
+   bottom: 0;
+   border-top:1px solid #fff;
+
+ }
+@media  screen and (min-width: 769px) {
+  #mobile_div{display: none}
+}
+@media  screen and (max-width:480px) {
+  #mobile_div{display: block}
+}
+
+.categoryMenuBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.categoryMenu {
+  width: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.categoryMenu a {
+  cursor: pointer;
+  width: 15%;
+  text-align: center;
+  padding-top: 1%;
+
+}
+.categoryMenu a p {
+  font-size: 0.5rem;
+  margin: 0;
+  color: #000;
+}
+
+.container{
+  opacity: .99;
+}
+#categoryIcon{
+  cursor: pointer;
 }

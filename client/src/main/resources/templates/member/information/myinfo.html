@@ -46,38 +46,25 @@
     <!------------------------->
     <div class="site-section margin-top-2"><!--margin class-->
         <div class="container">
-            <div class="NavContainer">
-                <div class="NavItemTitle titleContainer">
+            <div class="row align-items-sm-start justify-content-center">
+                <div class="col-12 col-md-4 order-1 order-md-1 text-left text-lg-center">
                     <label for="p_id" class="text-black">ID
                         <span class="text-danger">*</span></label>
-                </div>
-                <div class="NavItemTitle titleContainer">
                     <span id="p_id" th:text="${session.mbrId}" style="color: #9792ea; font-size: 20px;"></span>
-                </div>
-                <div class="NavItem">
                     <button type="button" class="btn btn-primary">개인정보수정</button>
                 </div>
-            </div>
-            <div class="NavContainer">
-                <div class="NavItemTitle titleContainer">
+
+                <div class="col-12 col-md-4 order-2 order-md-2 text-left text-lg-center">
                     <label for="p_grade" class="text-black">거래등급
                         <span class="text-danger">*</span></label>
-                </div>
-                <div class="NavItemTitle titleContainer">
                     <span id="p_grade" style="color: #9792ea; font-size: 20px;">등급</span>
-                </div>
-                <div class="NavItem">
                     <button type="button" class="btn btn-primary">등급기준</button>
                 </div>
 
-                <div class="NavItemTitle titleContainer">
+                <div class="col-12 col-md-4 order-3 order-md-3 text-left text-lg-center">
                     <label for="p_point" class="text-black">판매점수
                         <span class="text-danger">*</span></label>
-                </div>
-                <div class="NavItemTitle titleContainer">
                     <span id="p_point" style="color: #9792ea; font-size: 20px;">점수</span>
-                </div>
-                <div class="NavItem">
                     <button type="button" class="btn btn-primary">이메일인증</button>
                 </div>
             </div>
@@ -89,11 +76,10 @@
                         <span class="text-danger">*</span></label></div>
             </div>
             <div class="NavContainer">
-                <div class="gridContainer">
+                <div class="gridContainer" style="">
 
                 </div>
             </div>
-
 
 
         </div>
@@ -115,53 +101,57 @@
     .NavContainer:not(:nth-child(2)) {
         border: none;
     }
+
     /*이미지리스트 css*/
-    .block-4-image{
-        margin:0;
+    .block-4-image {
+        margin: 0;
     }
+
     .block-4-text {
-        font-size: 16px; color: #000;
+        font-size: 16px;
+        color: #000;
 
 
     }
 
-    .img-fluid{
+    .img-fluid {
         width: 100%;
         height: 193.53px;
     }
-    .block-4-text{
-        padding:10px 0;
-    }
-    .ItemName{
-        margin:0 20px 20px 20px;
-        display:flex;
-        justify-content: flex-start;
-    }
-    .ItemName>a {
-        text-align: left;
+
+    .block-4-text {
+        padding: 10px 0;
     }
 
-    p{
-        margin:0;
+
+    p {
+        margin: 0;
         color: #000;
     }
 
-    span{
-        font-size: 14px;
-    }
-    .priceContent{
+    .priceContent {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin:20px 10px 0 20px;
+        margin: 20px 10px 0 20px;
+    }
+
+    label {
+        margin-right: 20px;
+        padding-bottom:20px;
+    }
+
+    label + span {
+        margin-right: 20px;
+        font-size: 14px;
     }
 </style>
 
 <script>
 
-    function getIdQueryList(){
+    function getIdQueryList() {
         param = {
-            selId:$('#p_id').text(),
+            selId: $('#p_id').text(),
         }
         $.ajax({
             url: '/product/list.selId',
@@ -189,7 +179,7 @@
                 $('#objCatNo').val(obj.catNo); //카테고리 상품 디테일 -> 카테고리 번호 저장
                 //매번 컨텐츠가 달라야하니 초기화
                 contents = '';
-                var wday=timeForToday(obj.wday);
+                var wday = timeForToday(obj.wday);
                 //이미지경로를 미리 만들어놓는다.
                 imgPath = '/istatic/images/' + obj.prodNo + '/1.jpg';
 
@@ -202,7 +192,7 @@
                 contents += '                    <img src="' + imgPath + '"  alt="Image placeholder"  class="img-fluid">';
                 contents += '                </figure>';
                 contents += '                <div class="block-4-text">';
-                contents += '                    <h3 class="ItemName"><a href="#"  onclick="goDetail(' + obj.prodNo + ')">' + textLengthOverCut(obj.prodNm,11,'...') + ' </a></h3>';
+                contents += '                    <h3 class="ItemName"><a href="#"  onclick="goDetail(' + obj.prodNo + ')">' + textLengthOverCut(obj.prodNm, 11, '...') + ' </a></h3>';
                 contents += '                    <div class=priceContent>';
                 contents += '                    <p class="text-primary font-weight-bold">' + obj.prodPrc + '원</p>';
                 contents += '                    <span>' + wday + '</span>';

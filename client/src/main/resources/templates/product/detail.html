@@ -81,10 +81,10 @@
                         </div>
                     </div>
                     <div class="aic2">
-                        <p>판매자아이디:&nbsp<span id="selId"></span></p>
-                        <p>거래방법:&nbsp<span id="detailWay"></span></p>
-                        <p>거래지역:&nbsp<span id="detailAddr"></span></p>
-                        <a href="///" id="detailMap"><span>지도보기</span></a>
+                        <p>판매자아이디:&nbsp&nbsp<span id="selId"></span></p>
+                        <p>거래방법:&nbsp&nbsp<span id="detailWay"></span></p>
+                        <p>거래지역:&nbsp&nbsp<span id="detailAddr"></span><a href="///" id="detailMap"><span>지도보기</span></a></p>
+                        <p>조회수:&nbsp&nbsp<span id="detailView"></span></p>
                     </div>
                     <div class="aic3 ButtonNav">
                         <input type="button" class="border-0-btn btn btn-primary"
@@ -195,6 +195,11 @@
     <a id="arrow_up" class="scroll_up" onclick="scroll_up()"> </a>
 
     <style>
+
+        #detailMap{
+            margin:10px;
+        }
+
         #detailMap > span {
             color: #a88d2c;
         }
@@ -233,17 +238,8 @@
             font-size: 20px;
             color: #000;
         }
-
-        #selId {
+        #selId, #detailWay, #detailAddr, #detailView {
             color: #000;
-        }
-
-        #detailWay {
-            color: #000;
-        }
-
-        #detailMap {
-            color: #9792ea;
         }
 
         .aic1 {
@@ -309,6 +305,27 @@
 <script src="../js/main.js"></script>
 <script>
 
+    /*멤버정보*/
+    function getMemberDetail() {
+        var param = {
+            userId: $('#p_id').val(),
+        }
+
+        $.ajax({
+            url: '/member/detail',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            console.log("data.memberDetail", data.memberDetail);
+            $('#detailAddr').text(data.memberDetail.mbrAddr);
+
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+
+    }
+
 
     /*정보*/
     function getProductDetail() {
@@ -370,8 +387,6 @@
 
 
     function drawPrdList(data) {
-        console.log("@@detail data", data);
-
         if (typeof data.dataDetail !== 'undefined') {
 
             var imgPath = '';
@@ -385,6 +400,7 @@
             $('#detailName').text(data.dataDetail.prodNm);
             $('#detailPrice').text(data.dataDetail.prodPrc);
             $('#selId').text(data.dataDetail.selId);
+            $('#detailView').text(data.dataDetail.prodView);
             if (data.dataDetail.selId == $('#p_id').val()) {
                 buttonCheck(1);
             } else {
@@ -401,29 +417,13 @@
             $('#imgCount').val(data.dataDetail.imgCount);
             var wday = data.dataDetail.wday;
             $('#wday').text(timeForToday(wday));
-            for(var i=1; i < data.dataDetail.imgCount+1; i++) {
-                 imgDetailPath = '/istatic/images/' + data.dataDetail.prodNo + '/' + i + '.jpg';
+            for (var i = 1; i < data.dataDetail.imgCount + 1; i++) {
+                imgDetailPath = '/istatic/images/' + data.dataDetail.prodNo + '/' + i + '.jpg';
                 $('.img-fluid' + i).attr("src", imgDetailPath);
                 $('.img-fluid' + i).css("display", '');
             }
 
-            /*imgDetailPath2 = '/istatic/images/' + data.dataDetail.prodNo + '/' + 2 + '.jpg';
-            $('.img-fluid2').attr("src", imgDetailPath2);
-            $('.img-fluid2').css("display", '');
-
-            imgDetailPath3 = '/istatic/images/' + data.dataDetail.prodNo + '/' + 3 + '.jpg';
-            $('.img-fluid3').attr("src", imgDetailPath3);
-            $('.img-fluid3').css("display", '');
-
-            imgDetailPath4 = '/istatic/images/' + data.dataDetail.prodNo + '/' + 4 + '.jpg';
-            $('.img-fluid4').attr("src", imgDetailPath4);
-            $('.img-fluid4').css("display", '');
-
-            imgDetailPath4 = '/istatic/images/' + data.dataDetail.prodNo + '/' + 5 + '.jpg';
-            $('.img-fluid5').attr("src", imgDetailPath4);
-            $('.img-fluid5').css("display", '');
-
-*/        }
+        }
 
     }
 
@@ -465,6 +465,7 @@
 
 
     $(document).ready(function () {
+        getMemberDetail();
         getProductDetail();
     });
 

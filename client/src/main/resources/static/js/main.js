@@ -472,3 +472,11 @@ function textLengthOverCut(txt, len, lastTxt) {
 function historyBack(){
 	history.back();
 }
+
+function categoryMenuChange(){
+	if ( $('.categoryMenu').css('display') === 'none' ) {
+		$('.categoryMenu').css('display', 'flex');
+	}else{
+		$('.categoryMenu').css('display', 'none');
+	}
+	}

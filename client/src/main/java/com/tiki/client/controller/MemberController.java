@@ -1,5 +1,6 @@
 package com.tiki.client.controller;
 import com.tiki.client.domain.MemberDTO;
+import com.tiki.client.domain.ProductDTO;
 import com.tiki.client.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -73,6 +74,19 @@ public class MemberController {
         return view;
     }
 
+    @RequestMapping("/member/detail") /*멤버 정보 조회*/
+    @ResponseBody
+    public Map<String, Object> memberDetail(@RequestParam(value = "userId") String userId) {
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            MemberDTO memberDTO = memberService.Detail(userId);
+            resultMap.put("memberDetail", memberDTO);
+        }catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("detail error");
+        }
+        return resultMap;
+    }
 
     @GetMapping(value = "/signup") /*회원가입 페이지*/
     public ModelAndView signup() {

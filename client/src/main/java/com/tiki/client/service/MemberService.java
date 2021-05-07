@@ -35,12 +35,11 @@ public class MemberService {
                 .block();
     }
 
-    public String idcheck(MemberDTO memberDTO){
-        return webClient.post()
-                .uri("/mbr/idcheck")
-                .body(Mono.just(memberDTO), MemberDTO.class)
+    public MemberDTO Detail(String userId){
+        return webClient.get()
+                .uri("/mbr/{id}",userId)
                 .retrieve()
-                .bodyToMono(String.class) //반환정보
+                .bodyToMono(MemberDTO.class) //반환정보
                 .block();
     }
 
