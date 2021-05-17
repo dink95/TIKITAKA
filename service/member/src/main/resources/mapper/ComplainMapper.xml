@@ -17,4 +17,23 @@
         delete from comp
         where comp_idx = #{compIdx, jdbcType=INTEGER}
     </delete>
+
+    <select id="selectListBySuspect" parameterType="String" resultType="ComplainDTO">
+        SELECT *
+        FROM
+            comp
+        WHERE
+            spt = #{spt,jdbcType=VARCHAR}
+
+    </select>
+
+    <select id="selectListByReporter" parameterType="String" resultType="ComplainDTO">
+        SELECT *
+        FROM
+            comp
+        WHERE
+            repo = #{repo,jdbcType=VARCHAR}
+
+    </select>
+
 </mapper>
