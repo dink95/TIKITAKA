@@ -43,6 +43,14 @@ public class MemberService {
                 .block();
     }
 
+    public int deleteMember(String mbrId){
+        return webClient.delete()
+                .uri("/mbr/{mbrId}",mbrId)
+                .retrieve()
+                .bodyToMono(Integer.class)
+                .block();
+    }
+
     public String findid(MemberDTO memberDTO){
         return webClient.post()
                 .uri("/mbr/id")

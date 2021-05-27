@@ -23,6 +23,7 @@ public class MemberController {
         return memberService.selectMemberDetail(id);
     }
 
+
     @GetMapping("/mbr/existence/id/{id}")
     public boolean existIdCheck(@PathVariable("id") String id){
         if(memberService.existId(id)!=null){
