@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 
 @Service("ComplainService")
 public class ComplainService {
@@ -37,6 +39,22 @@ public class ComplainService {
                 .uri("/comp/{idx}",idx)
                 .retrieve()
                 .bodyToMono(Integer.class)
+                .block();
+    }
+
+    public List<ComplainDTO> selectBySpt(String spt){
+        return webClient.get()
+                .uri("/comp/spt/{spt}",spt)
+                .retrieve()
+                .bodyToMono(List.class) //반환정보
+                .block();
+    }
+
+    public List<ComplainDTO> selectByRepo(String repo){
+        return webClient.get()
+                .uri("/comp/repo/{repo}",repo)
+                .retrieve()
+                .bodyToMono(List.class) //반환정보
                 .block();
     }
 
