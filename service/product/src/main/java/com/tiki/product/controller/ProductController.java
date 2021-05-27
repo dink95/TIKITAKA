@@ -73,9 +73,7 @@ public class ProductController {
     @GetMapping(value = "/prd/result/catNo/{catNo}")
     public List resultList(@PathVariable("catNo") int catNo) {
 
-        List<ProductDTO> productList = new ArrayList();
-        List<ProductDTO> finalList = new ArrayList();
-        List<ProductDTO> tempList = null;
+        List<ProductDTO> productList;
 
         int[] highCatNo = {10, 20, 30, 40};
         boolean check = true;
@@ -88,34 +86,30 @@ public class ProductController {
         }
 
         if(check) {
-            productList = productService.resultByCatNo(catNo);
+            productList = productService.resultByCatNo(catNo, catNo);
         }
         else {
-            int finishCat = 0;
+            int finishNo = 0;
 
             switch(catNo) {
                 case 10:
-                    finishCat = 19;
+                    finishNo = 19;
                     break;
                 case 20:
-                    finishCat = 26;
+                    finishNo = 26;
                     break;
                 case 30:
-                    finishCat = 36;
+                    finishNo = 36;
                     break;
                 case 40:
-                    finishCat = 47;
+                    finishNo = 47;
                     break;
                 default:
                     System.out.println("잘못된 접근입니다.");
             }
 
-            for(catNo = catNo + 1; catNo <= finishCat; catNo++) {
-                tempList = productService.resultByCatNo(catNo);
-                finalList.addAll(tempList);
-            }
+            productList = productService.resultByCatNo(catNo, finishNo);
 
-            productList = finalList;
         }
 
         if(productList == null) {
@@ -124,8 +118,6 @@ public class ProductController {
 
         return productList;
     }
-
-
 
     // 등록된 상품 삭제하기
     @DeleteMapping("/prd/{prodNo}/{selId}")
@@ -143,6 +135,12 @@ public class ProductController {
         return productService.updateProduct(productDTO);
     }
 
+    // 판매완료 상품 업데이트
+    @PatchMapping("/prd/prodfinsh")
+    public int updateProductFinish(@RequestBody ProductDTO productDTO) {
+        return productService.updateProductFinish(productDTO);
+    }
+
     // 상품 등록하기
     @PostMapping("/prd")
     public int insertProduct(@RequestBody InsertProdDTO insertProdDTO) {
@@ -155,43 +153,4 @@ public class ProductController {
         return  productService.selectProductNo(productDTO);
     }
 
-
-    // 다중 파일 업로드 "4.15" 아직 미완성
-    @PostMapping("/prd/multiupload")
-    public String MultifileUp(MultipartHttpServletRequest multi) {
-        // 저장경로 설정
-        String path = "*/product/resources/photo/";
-        String fileName = ""; // 업로드 되는 파일명
-
-        File dir = new File(path);
-        if (!dir.isDirectory()) {
-            dir.mkdir();
-        }
-
-        Iterator<String> files = multi.getFileNames();
-        MultipartFile mpf = multi.getFile(files.next());
-
-        if (mpf == null || mpf.getSize() <= 0) {
-            System.out.println("파일용량 x");
-            return "ajaxUpload";
-        }
-
-        List<MultipartFile> fileList = multi.getFiles("file");
-        for (MultipartFile filePart : fileList) {
-            fileName = filePart.getOriginalFilename(); // 원본 파일 명
-            System.out.println("실제 파일 이름 : " + fileName);
-            long fileSize = filePart.getSize(); // 파일 사이즈
-
-            if (!fileName.equals("")) { //파일 쓰기
-                try {
-                    FileOutputStream fs = new FileOutputStream(path + fileName);
-                    fs.write(filePart.getBytes());
-                    fs.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return "ajaxUpload";
-    }
 }

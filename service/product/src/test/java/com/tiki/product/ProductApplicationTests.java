@@ -23,7 +23,7 @@ class ProductApplicationTests {
     @Autowired
     private ProductService productService;
 
-    @Test
+    /** @Test
     public void testOfUpdateView() {
 
         ///int result = productMapper.updateView(1);
@@ -36,13 +36,13 @@ class ProductApplicationTests {
         System.out.println(productDTO.getProdView());
         System.out.println("=============");
 
-    }
+    }*/
 
     /**@Test
     public void testOfSelectDetail() {
         int productTotalCount = productMapper.selectProductTotalCount();
         if(productTotalCount > 0) {
-            List<ProductDTO> productList = productMapper.selectProductList();
+            List<ProductDTO> productList = productService.resultByCatNo(10,19);
             if(CollectionUtils.isEmpty(productList) == false) {
                 for(ProductDTO product : productList) {
                     System.out.println("==============");
