@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>TIKITAKA &ndash; 신고리스트 </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="/fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/jquery-ui.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/aos.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+
+<div class="site-wrap">
+    <header class="site-navbar" role="banner">
+        <!--replace 헤더-->
+        <div class="site-navbar-top" th:replace="common::header(complain_list)">
+        </div>
+        <!------------->
+        <nav class="site-navigation text-right text-md-center" role="navigation"
+             th:replace="common::adminmenu(complain_list)">
+        </nav>
+        <!---------------------------------------------------------->
+    </header>
+
+    <!--모바일 검색창-->
+    <div th:replace="common::mobile_search(complain_list)"></div>
+
+    <div class="bg-light py-3" th:replace="common::logo(신고리스트)">
+    </div>
+    <!----------------------->
+    <div class="site-section margin-top-2">
+        <div class="container">
+            <table style="border: 1px solid #ddd;">
+                <thead style="border: 1px solid #ddd;">
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>내용</th>
+                    <th>신고자</th>
+                    <th>용의자</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>욕</td>
+                    <td>욕했어요</td>
+                    <td>admin</td>
+                    <td>user</td>
+                    <td> <input tpye="button" class="border-0-btn btn btn-dark"
+                                value="보기" onclick="goDetailComplain()"></td>
+                </tr>
+
+                </tbody>
+            </table>
+        </td>
+
+        </div>
+    </div>
+
+
+
+</div>
+<style>
+    table{
+        width: 100%;
+    }
+    th{
+        padding: 0 20px;
+        text-align: center;
+        border-right:1px solid #ddd;
+    }
+    th:nth-child(6){
+        padding: 0;
+        width: 100px;
+    }
+    td{
+        border-right: 1px solid #ddd;
+        color: #000;
+    }
+    .btn{
+        width: 100px;
+    }
+
+</style>
+
+
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/jquery-ui.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/aos.js"></script>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<script src="/js/main.js"></script>
+
+<script>
+ function goDetailComplain(){
+     location.href = '/admin/complain/detail';
+ }
+</script>
+
+</body>
+</html>
+
+

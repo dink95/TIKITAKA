@@ -36,13 +36,28 @@
         </nav>
         <!----------------------------------------------------------->
     </header>
+
+    <!--모바일 검색창-->
+    <div th:replace="common::mobile_search(product_list)"></div>
+
+
     <!--replace logo-login-->
     <div class="bg-light py-3" th:fragment="logo(logo)">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 mb-0"><a href="/">Home</a> /</span>
+                <div class="col-md-12 mb-0"><a href="/"> 카테고리 </a></span>
                     <span class="text-black" id="queryTextCatNm" ></span>
-                    <span class="text-black" id="queryTextProdNm" ></span>
+                    <span id="detailCatNm"></span>
+
+                    <!--search box div-->
+                    <div id="form" class="site-block-top-search input-search" style="margin:0 10px; width: 20%; display: inline-block; min-width: 220px;">
+                        <input type="hidden" id="selectedMain" value="">
+                        <input type="hidden" id="selectedDetail" value="">
+                        <input type="hidden" id="selectCat" value="">
+                        <input type="text" class="form-control border-0 input-search" placeholder="Search"
+                               id="prodNm" style="height: 30px;">
+                        <span type="submit" class="icon icon-search2" ></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -50,50 +65,9 @@
     <!------------------------->
     <div style="padding-top:10px">
         <div class="container">
+            <h1 class="text-black" id="queryTextProdNm" ></h1>
             <!--검색바 중간 삽입-->
             <div class="search-bar-container">
-
-                <div class="row align-items-center" style="display: flex; padding-bottom: 10px;">
-                    <div class="category col-6 col-md-3 order-1 order-md-1 text-left"
-                         style="padding:0; border: 1px solid #ddd;">
-                        <select onchange="categoryChange(this)" id="category"
-                                class="form-control border-0 select-category font-14" required>
-                            <option class="form-control border-0 font-14" value="" disabled selected>메인 카테고리
-                            </option>
-                            <option class="form-control border-0 font-14" value="passion">패션</option>
-                            <option class="form-control border-0 font-14" value="digital">디지털/가전</option>
-                            <option class="form-control border-0 font-14" value="interior">가구/인테리어</option>
-                            <option class="form-control border-0 font-14" value="leisure">여가활동</option>
-                            <option class="form-control border-0 font-14" value="else">기타</option>
-                            <option class="form-control border-0 font-14" value="buy">삽니다</option>
-                        </select>
-                    </div>
-
-                    <div class="category col-6 col-md-3 order-2 order-md-2 text-center"
-                         style="padding:0; border: 1px solid #ddd;">
-                        <select onchange="categoryChangeDetail(this)" id="detail"
-                                class="form-control border-0 select-category font-14" disabled
-                                required>
-                            <option class="form-control border-0 font-14" id="categoryName" selected>세부
-                                카테고리
-                            </option>
-                        </select>
-                    </div>
-                    <!--search box div-->
-                    <div class="category col-12 col-md-6 order-3 order-md-3 text-right"
-                         style="padding:0;border: 1px solid #ddd; ">
-                        <div id="form" class="site-block-top-search input-search">
-                            <input type="hidden" id="selectedMain" value="">
-                            <input type="hidden" id="selectedDetail" value="">
-                            <input type="text" class="form-control border-0 input-search" placeholder="Search"
-                                   id="prodNm">
-                            <span type="submit" class="icon icon-search2" ></span>
-                        </div>
-                    </div>
-                </div>
-
-
-
                 <!------------------------------------------------------------------------------->
                 <div class="gridContainer">
                 </div>
@@ -102,7 +76,13 @@
     </div>
 </div>
 
+<!-- 모바일 메뉴-->
+<div th:replace="common::mobile(product_list)"></div>
+
 <style>
+    .form-control.border-0.input-search{
+        border-style: none;
+    }
     /*이미지리스트 css*/
     .block-4-image {
         margin: 0;
@@ -145,6 +125,9 @@
         align-items: center;
         margin: 20px 10px 0 20px;
     }
+    .gridItem{
+        max-width: 225px;
+    }
 
     /*****************/
 </style>
@@ -179,9 +162,12 @@
             dataType: 'json'
         }).done(function (data) {
             console.log("@@data.categoryDTO", data.categoryDTO);
-            $('#detailCatNm').text(data.categoryDTO.catNm);
-            console.log(Math.floor(data.categoryDTO.catNo / 10) * 10);
-
+            if(data.categoryDTO.catNo % 10 != 0)
+            {
+                $('#detailCatNm').text(" " + ">" + " " + data.categoryDTO.catNm);
+                $('#selectedDetail').val(data.categoryDTO.catNo);
+                console.log(Math.floor(data.categoryDTO.catNo / 10) * 10);
+            }
             Mainparam = {
                 catNo: Math.floor(data.categoryDTO.catNo / 10) * 10,
             }
@@ -192,8 +178,12 @@
                 type: 'post',
                 dataType: 'json'
             }).done(function (data) {
-                $('#queryTextCatNm').text(data.categoryDTO.catNm);
-                console.log("@@mainCatNm", data.categoryDTO.catNm)
+                $('#queryTextCatNm').text(" " + ">" +" " + data.categoryDTO.catNm);
+                if( $('#selectedDetail').val() == '') {
+                    $('#selectCat').val(data.categoryDTO.catNo);
+                }else{
+                    $('#selectCat').val( $('#selectedDetail').val());
+                }
             }).fail(function (data, textStatus, errorThrown) {
                 console.log(textStatus);
 
@@ -211,10 +201,11 @@
         return new URLSearchParams(location.search).get(key);
     };
     if(searchParam('prodNm')){
-            $('#queryTextProdNm').text(searchParam('prodNm'));
-        }
+        $('#queryTextCatNm').text(" "+ ">" + " "+ "전체");
+        $('#queryTextProdNm').text('"' + searchParam('prodNm') + '"' + "검색결과" );
+    }
 
-        function getProdNmQueryList(){
+    function getProdNmQueryList(){
         param = {
             prodNm:searchParam('prodNm'),
         }
@@ -224,8 +215,12 @@
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            drawPrdList(data);
-            console.log(data);
+            if(data.dataQueryList.length == 0){
+                $('#queryTextProdNm').text('"' + searchParam('prodNm')+ '"' + ' ' + "검색결과가 없습니다.");
+            }else {
+                drawPrdList(data);
+                console.log(data);
+            }
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
         });
@@ -252,7 +247,7 @@
     function getProductList() {
         param = {
             prodNm:$('#prodNm').val(),
-            catNo:$('#selectedDetail').val()
+            catNo:$('#selectCat').val()
         }
         $.ajax({
             url: '/product/list.query',
@@ -260,9 +255,13 @@
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            $('#queryTextProdNm').text($('#prodNm').val());
-            drawPrdList(data);
-            console.log(data);
+            if(data.dataQueryList.length == 0){
+                $('#queryTextProdNm').text('"' + $('#prodNm').val() + '"' + "검색결과가 없습니다.");
+            }else {
+                $('#queryTextProdNm').text('"' + $('#prodNm').val() + '"' + "검색결과");
+                drawPrdList(data);
+                console.log(data);
+            }
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
         });
@@ -318,8 +317,8 @@
 
 
     if(searchParam('prodNm')) {
-           getProdNmQueryList();
-       }
+        getProdNmQueryList();
+    }
     else if(searchParam('catNo')) {
         getCatQueryList();
     }

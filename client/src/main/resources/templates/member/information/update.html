@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head >
+    <title>TIKITAKA &ndash; 개인정보 수정 </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="/fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/jquery-ui.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/aos.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+
+<div class="site-wrap">
+    <header class="site-navbar" role="banner">
+        <!--replace 헤더-->
+        <div class="site-navbar-top" th:replace="common::header(updateinfo)">
+        </div>
+        <!------------->
+        <nav class="site-navigation text-right text-md-center" role="navigation" th:replace="common::menu(updatinfo)">
+        </nav>
+        <!---------------------------------------------------------->
+    </header>
+
+    <!--모바일 검색창-->
+    <div th:replace="common::mobile_search(updatainfo)"></div>
+
+    <div class="bg-light py-3" th:replace="common::logo(개인정보수정)">
+    </div>
+    <!----------------------->
+    <div class="site-section margin-top-2" >
+        <div class="container" >
+            <div class="row justify-content-center"><!--justify-content-center 추가-->
+
+                <div class="col-md-7"  >
+                    <div class="col-md-12 " >
+                        <h2 class="h3 mb-3 text-black  " >개인정보 수정</h2> <!--login logo 위치 수정-->
+                    </div>
+                    <form action="" method="post">
+                        <input type="hidden" id="userId" th:value="${session.mbrId}">
+                        <div class="p-3 p-lg-5 border">
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_id" class="text-black">아이디<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="c_id" name="c_id" required onkeyup="onKeyUp('#valid_password');" disabled>
+                                    <span id="valid_id" style="color: #ff0000;font-size: 10px;"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="current_password" class="text-black">현재 비밀번호<span class="text-danger">*</span></label>
+                                    <input type="password" class="form-control" id="current_password" name="current_password" required onkeyup="onKeyUp('#valid_current_password');">
+                                    <span id="valid_current_password" style="color: #ff0000;font-size: 10px;"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_password" class="text-black">새로운 비밀번호<span class="text-danger">*</span></label>
+                                    <input type="password" class="form-control" id="c_password" name="c_password" required onkeyup="onKeyUp('#valid_password');">
+                                    <span id="valid_password" style="color: #ff0000;font-size: 10px;"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_pwd_re" class="text-black">비밀번호 확인<span class="text-danger">*</span></label>
+                                    <input type="password" class="form-control" id="c_pwd_re" name="c_pwd_re" required onkeyup="onKeyUp('#valid_password_c');">
+                                    <span id="valid_password_c" style="color: #ff0000;font-size: 10px;"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_name" class="text-black">이름<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="c_name" name="c_name" required onkeyup="onKeyUp('#valid_password');" disabled>
+                                    <span id="valid_name" style="color: #ff0000;font-size: 10px;"></span>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_addr" class="text-black">주소<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="c_addr" name="c_addr" required onkeyup="onKeyUp('#valid_password');"disabled>
+                                    <span id="valid_addr" style="color: #ff0000;font-size: 10px;"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_birth" class="text-black">생년월일<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="c_birth" name="c_birth" required onkeyup="onKeyUp('#valid_password');" disabled>
+                                    <span id="valid_birth" style="color: #ff0000;font-size: 10px;"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_email" class="text-black">이메일<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="c_email" name="c_email" required onkeyup="onKeyUp('#valid_password');" disabled>
+                                    <span id="valid_email" style="color: #ff0000;font-size: 10px;"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_phone" class="text-black">전화번호<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="c_phone" name="c_phone" required onkeyup="onKeyUp('#valid_password');" disabled>
+                                    <span id="valid_phone" style="color: #ff0000;font-size: 10px;"></span>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <div class="col-lg-12">
+                                    <input id="loginConfirm" type="button" class="border-0-btn btn btn-primary btn-lg btn-block" value="개인정보 수정" onclick="getPasswordCheck()">
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/jquery-ui.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/aos.js"></script>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<script src="/js/main.js"></script>
+<script>
+
+
+    /*개인정보 수정*/
+    function goUpdate(){
+        if(validation()) {
+
+            var param ={
+                userId : $('#userId').val(),
+                userPwd : document.querySelector('#c_password').value
+            };
+
+            $.ajax({
+                url: '/info/update',
+                data: param,
+                type: 'post',
+                dataType : 'json'
+            }).done(function(data){
+                if(data.resultCode == 200) {
+                    alert(data.resultMsg);
+                    location.href = '/';
+                }else {
+                    alert(data.resultMsg);
+                    return false;
+                }
+
+            }).fail(function (data, textStatus, errorThrown){
+                console.log(textStatus);
+                alert('ajax fail')
+            });
+        }
+    }
+
+
+    /*키 입력시 valid 메세지 삭제*/
+    function onKeyUp(props){
+        if(props=='#valid_id'){
+            $('#isCheckedId').val('');
+        }
+        $(props).text('');
+
+    }
+
+    /*input valid 유효성*/
+    function validation() {
+        var result = true;
+
+        $('#valid_password').text('');
+        $('#valid_password_c').text('');
+
+        document.querySelectorAll("input[type=password]").forEach(input => {
+            var inValue = input.value;
+
+            if (input.id == 'current_password' && $.trim(inValue).length == 0) {
+                document.forms[0].classList.add("was-validated");
+                $('#valid_current_password').text('* 비밀번호를 입력해주세요');
+                result = false;
+            }
+
+            if (input.id == 'c_password' && $.trim(inValue).length == 0) {
+                document.forms[0].classList.add("was-validated");
+                $('#valid_password').text('* 비밀번호를 입력해주세요');
+                $('#valid_password_c').text('');
+                result = false;
+            } else if ($('#valid_password').text() == '' && $('#c_password').val() != $('#c_pwd_re').val()) {
+                document.forms[0].classList.add("was-validated");
+                $('#valid_password_c').text('* 비밀번호 확인이 일치하지 않습니다.');
+                result = false;
+            }
+
+
+        });
+        return result;
+    }
+
+    /*멤버 정보*/
+    function getMemberDetail(){
+        var param ={
+              /*  userId : document.querySelector('#userId').value,*/
+                userId :$('#userId').val()
+
+        };
+
+            $.ajax({
+                url: '/member/detail',
+                data: param,
+                type: 'post',
+                dataType : 'json'
+            }).done(function(data){
+                console.log("data.memberDetail",data.memberDetail);
+                $('#c_id').val(data.memberDetail.mbrId);
+                $('#c_name').val(data.memberDetail.mbrNm);
+                $('#c_email').val(data.memberDetail.mbrEmail);
+                $('#c_addr').val(data.memberDetail.mbrAddr);
+                $('#c_phone').val(data.memberDetail.mbrPhone);
+                var year = data.memberDetail.mbrBday.substring(0,2);
+                var month = data.memberDetail.mbrBday.substring(2,4);
+                var day = data.memberDetail.mbrBday.substring(4,6);
+                $('#c_birth').val(year + " / " + month + " / " + day);
+
+            }).fail(function (data, textStatus, errorThrown){
+                console.log(textStatus);
+                alert('ajax fail')
+            });
+
+    }
+
+    /*현재 비밀번호 체크*/
+    function getPasswordCheck(){
+        var param ={
+            /*  userId : document.querySelector('#userId').value,*/
+            userId : $('#userId').val(),
+            userPw : $('#current_password').val(),
+        };
+
+        $.ajax({
+            url: '/login/process',
+            data: param,
+            type: 'post',
+            dataType : 'json'
+        }).done(function(data){
+            if(data.resultCode==400 || data.resultCode == '400'){
+                $('#valid_current_password').text('비밀번호가 일치하지 않습니다.');
+            }else{
+                goUpdate();
+            }
+
+        }).fail(function (data, textStatus, errorThrown){
+            console.log(textStatus);
+            alert('ajax fail')
+        });
+
+    }
+
+    $(document).ready(function () {
+        getMemberDetail();
+    });
+
+</script>
+
+</body>
+</html>
+
+

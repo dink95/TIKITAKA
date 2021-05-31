@@ -41,33 +41,33 @@
             <span  id="prodNm"></span>
             <h3 style="color: #000;">이 게시글 신고하기</h3>
             <form action="/complain/index.do" onsubmit="return Validation()">
-            <input type="hidden" name="spt" th:value="${session.mbrId}">
-            <input type="hidden" name="repo">
+                <input type="hidden" name="spt">
+                <input type="hidden" name="repo" th:value="${session.mbrId}">
                 <input type="hidden" name="prodNo">
-            <select onchange="categoryChange(this)" name="compNm"
-                    class="form-control border-0 select-category font-14" >
-                <option class="form-control border-0 font-14" value="" disabled selected>신고사유 선택</option>
-                <option class="form-control border-0 font-14">명의도용</option>
-                <option class="form-control border-0 font-14">욕설</option>
-                <option class="form-control border-0 font-14">거래사기</option>
-                <option class="form-control border-0 font-14">기타</option>
-                <option class="form-control border-0 font-14">광고</option>
-                <option class="form-control border-0 font-14">불법거래</option>
-                <option class="form-control border-0 font-14">재판매</option>
-            </select>
-            <span id="valid_p_category" style="color: #ff0000;font-size: 10px;"></span>
-            <div>
-
+                <select onchange="categoryChange(this)" name="compNm"
+                        class="form-control border-0 select-category font-14" >
+                    <option class="form-control border-0 font-14" value="" disabled selected>신고사유 선택</option>
+                    <option class="form-control border-0 font-14">명의도용</option>
+                    <option class="form-control border-0 font-14">욕설</option>
+                    <option class="form-control border-0 font-14">거래사기</option>
+                    <option class="form-control border-0 font-14">기타</option>
+                    <option class="form-control border-0 font-14">광고</option>
+                    <option class="form-control border-0 font-14">불법거래</option>
+                    <option class="form-control border-0 font-14">재판매</option>
+                </select>
+                <span id="valid_p_category" style="color: #ff0000;font-size: 10px;"></span>
                 <div>
+
+                    <div>
                     <textarea class="form-control" id="p_content" name="compCon" cols="100" rows="10"
                               onkeyup="onKeyUp('#valid_p_content');"
                               placeholder="신고 내용을 입력하세요."></textarea>
+                    </div>
+                    <span id="valid_p_content" style="color: #ff0000;font-size: 10px;"></span>
+                    <div class="ButtonNav">
+                        <input type="submit" class="btn btn-primary" value="신고하기" onclick="goReport()">
+                    </div>
                 </div>
-                <span id="valid_p_content" style="color: #ff0000;font-size: 10px;"></span>
-                <div class="ButtonNav">
-                    <input type="submit" class="btn btn-primary" value="신고하기" onclick="goReport()">
-                </div>
-            </div>
             </form>
         </div>
 
@@ -125,7 +125,7 @@
         return new URLSearchParams(location.search).get(key);
     };
 
-    $('input[name=repo]').val(searchParam('selId'));
+    $('input[name=spt]').val(searchParam('selId'));
     $('input[name=prodNo]').val(searchParam('prodNo'));
     $('#prodNm').text("'"+ searchParam('prodNm') + "'");
 </script>

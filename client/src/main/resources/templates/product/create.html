@@ -29,6 +29,7 @@
 
 <div class="site-wrap">
     <header class="site-navbar" role="banner">
+
         <!--replace 헤더-->
         <div class="site-navbar-top" th:replace="common::header(product_create)">
         </div>
@@ -40,9 +41,14 @@
         </nav>
         <!----------------------------------------------------------->
     </header>
+
+    <!--모바일 검색창-->
+    <div th:replace="common::mobile_search(product_create)"></div>
+
     <!--replace logo-login-->
     <div class="bg-light py-3" th:replace="common::logo(product_create)">
     </div>
+
     <!------------------------->
     <div class="site-section margin-top-2"><!--margin class-->
         <div class="container">
@@ -205,7 +211,7 @@
         display: none;
     }
 
-    img {
+    .creat_img {
         width: 150px;
         height: 150px;
         margin-left: 1%;
@@ -370,7 +376,7 @@
 
         var imgDiv = $('#imgDiv')
         reader.onload = function (e) {
-            var imgTag = $('<img/>');
+            var imgTag = $('<img class="creat_img" />');
 
             imgTag.attr('id', 'img_file' + count);
             imgTag.attr("src", e.target.result);

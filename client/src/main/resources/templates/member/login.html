@@ -30,6 +30,11 @@
         </nav>
         <!----------------------------------------------------------->
     </header>
+
+    <!--모바일 검색창-->
+    <div th:replace="common::mobile_search(login)"></div>
+
+
     <!--replace logo-login-->
     <div class="bg-light py-3" th:replace="common::logo(login)">
     </div>
@@ -45,7 +50,7 @@
                             <span id="cont" onclick="adminCheck()">관리자로그인</span></a></dt>
                     </div>
 
-                        <form name="loginform" action="login" method="post">
+                    <form name="loginform" action="login" method="post">
 
                         <div class="p-3 p-lg-5 border">
 
@@ -157,18 +162,18 @@
         $('#valid_loginError').text('');
         $('#valid_id').text('');
         $('#valid_pw').text('');
-            var cid = $('#c_id').val();
-            var cpassword = $('#c_password').val();
-            if(cid == '' || $.trim(cid).length == 0) {
-                document.forms[0].classList.add("was-validated");
-                    $('#valid_id').text('* 아이디를 입력해주세요');
-                    result= false;
-                } else if ($('#valid_id').text() == '') {
-                if(cpassword == '' || $.trim(cpassword).length == 0){
-                    $('#valid_pw').text('* 패스워드를 입력해주세요');
-                    result = false;
-                }
-            };
+        var cid = $('#c_id').val();
+        var cpassword = $('#c_password').val();
+        if(cid == '' || $.trim(cid).length == 0) {
+            document.forms[0].classList.add("was-validated");
+            $('#valid_id').text('* 아이디를 입력해주세요');
+            result= false;
+        } else if ($('#valid_id').text() == '') {
+            if(cpassword == '' || $.trim(cpassword).length == 0){
+                $('#valid_pw').text('* 패스워드를 입력해주세요');
+                result = false;
+            }
+        };
         return result;
     }
 
@@ -176,23 +181,23 @@
 
     /*관리자 로그인*/
 
-  function adminCheck() {
-       if($('#checkAdmin').val()=='') {
-           $('#login').text('Admin');
-           $('#checkAdmin').val('admin');
-           $('#cont').text('사용자로그인');
-           $('#valid_id').text('');
-           $('#valid_pw').text('');
-           $('#signin').css('display', 'none');
+    function adminCheck() {
+        if($('#checkAdmin').val()=='') {
+            $('#login').text('Admin');
+            $('#checkAdmin').val('admin');
+            $('#cont').text('사용자로그인');
+            $('#valid_id').text('');
+            $('#valid_pw').text('');
+            $('#signin').css('display', 'none');
 
-       }else{
-           $('#login').text('Login');
-           $('#checkAdmin').val('');
-           $('#cont').text('관리자로그인');
-           $('#valid_id').text('');
-           $('#valid_pw').text('');
-           $('#signin').css('display', 'block');
-       }
+        }else{
+            $('#login').text('Login');
+            $('#checkAdmin').val('');
+            $('#cont').text('관리자로그인');
+            $('#valid_id').text('');
+            $('#valid_pw').text('');
+            $('#signin').css('display', 'block');
+        }
     }
 
 </script>
