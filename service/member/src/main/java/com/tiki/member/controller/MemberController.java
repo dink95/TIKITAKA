@@ -4,8 +4,12 @@ import com.tiki.member.domain.MemberDTO;
 import com.tiki.member.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Random;
 
 @Slf4j
 @RestController
@@ -17,6 +21,27 @@ public class MemberController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    public JavaMailSender javaMail;
+
+    @GetMapping("/mbr/{email}")
+    public void sendMail(@PathVariable("email") String email) {
+
+        int leftLimit = 97; // a
+        int rightLimit = 122; // z
+        int stringLength = 5;
+        Random random = new Random();
+        String emailKey = random.ints(leftLimit, rightLimit + 1)
+                .limit(stringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+        SimpleMailMessage simpleMessage = new SimpleMailMessage();
+        simpleMessage.setTo(email);
+        simpleMessage.setSubject("TIKITAKA 이메일 인증");
+        simpleMessage.setText("인증번호 : " + emailKey);
+
+    }
 
     @GetMapping("/mbr/{id}")
     public MemberDTO selectMemberById(@PathVariable("id") String id){
@@ -33,7 +58,6 @@ public class MemberController {
         }
     }
 
-
     @GetMapping("/mbr/existence/phone/{phone}")
     public boolean existPhoneCheck(@PathVariable("phone") String phone){
         if(memberService.existPhone(phone)!=null){
@@ -49,7 +73,8 @@ public class MemberController {
             return true;
         }else {
             return false;
-        }    }
+        }
+    }
 
     @PostMapping("/mbr")
     public int insertMember(@RequestBody MemberDTO memberDTO){
@@ -84,8 +109,6 @@ public class MemberController {
         }
     }
 
-
-
     @GetMapping("/mbr/{id}/{name}/{phone}")
     public Boolean memberPasswordChecking(@PathVariable("id") String id,
                                           @PathVariable("name") String name,
@@ -104,21 +127,15 @@ public class MemberController {
 
     }
 
-
     @PostMapping("/mbr/id")
     public String findMemberId(@RequestBody MemberDTO memberDTO){
         return  memberService.findMemberId(memberDTO);
     }
-
 
     @PatchMapping("/mbr/password")
     public int updatePassword(@RequestBody MemberDTO memberDTO){
         memberDTO.setMbrPwd(passwordEncoder.encode(memberDTO.getMbrPwd()));
         return memberService.updateMember(memberDTO);
     }
-
-
-
-
 
 }

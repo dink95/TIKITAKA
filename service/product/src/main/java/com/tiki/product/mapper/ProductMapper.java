@@ -3,6 +3,7 @@ package com.tiki.product.mapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import com.tiki.product.domain.ProductDTO;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface ProductMapper {
@@ -10,6 +11,8 @@ public interface ProductMapper {
     public int insertProduct(ProductDTO params);
 
     public int updateProduct(ProductDTO params);
+
+    public int updateProductFinish(ProductDTO params);
 
     public int deleteProduct(ProductDTO params);
 
@@ -27,7 +30,7 @@ public interface ProductMapper {
 
     public List<ProductDTO> resultById(String selId);
 
-    public List<ProductDTO> resultByCatNo(int catNo);
+    public List<ProductDTO> resultByCatNo(@Param("firstNo") int firstNo, @Param("lastNo") int lastNo);
 
     public int selectProductTotalCount();
 

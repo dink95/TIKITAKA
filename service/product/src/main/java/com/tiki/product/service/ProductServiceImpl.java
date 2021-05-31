@@ -3,6 +3,7 @@ package com.tiki.product.service;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,12 @@ public class ProductServiceImpl implements ProductService {
     public int updateProduct(ProductDTO params) {
 
         return productMapper.updateProduct(params);
+    }
+
+    @Override
+    public int updateProductFinish(ProductDTO params) {
+
+        return productMapper.updateProductFinish(params);
     }
 
     @Override
@@ -98,14 +105,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> resultByCatNo(int catNo) {
+    public List<ProductDTO> resultByCatNo(@Param("firstNo") int firstNo, @Param("lastNo") int lastNo) {
 
         List<ProductDTO> productList = Collections.emptyList();
 
         int productTotalCount = productMapper.selectProductTotalCount();
 
         if (productTotalCount > 0) {
-            productList = productMapper.resultByCatNo(catNo);
+            productList = productMapper.resultByCatNo(firstNo, lastNo);
         }
 
         return productList;

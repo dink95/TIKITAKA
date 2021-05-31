@@ -39,7 +39,7 @@ foreign key(SEL_ID) references MBR(MBR_ID) on update cascade on delete CASCADE
 );
 
 alter table prod add IMG_COUNT int default '0'; 
-
+alter table prod add PROD_FINISH boolean default false;
 
 CREATE TABLE MANAGER(
 MAN_ID varchar(20) primary KEY,

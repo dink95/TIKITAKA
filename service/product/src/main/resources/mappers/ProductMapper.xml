@@ -16,6 +16,7 @@
 		, prod_view
         , content
         , img_count
+        , prod_finish
     </sql>
 
     <insert id="insertProduct" parameterType="ProductDTO">
@@ -80,6 +81,17 @@
             sel_id = #{selId}
     </update>
 
+    <update id="updateProductFinish" parameterType="ProductDTO">
+        UPDATE
+            prod
+        SET
+            prod_finish = true
+        where
+            prod_no = #{prodNo}
+        AND
+            sel_id = #{selId}
+    </update>
+
     <update id="deleteProduct" parameterType="ProductDTO">
         DELETE
         FROM
@@ -95,6 +107,8 @@
             <include refid="productColumns" />
         FROM
             prod
+        WHERE NOT
+            prod_finish = true
         ORDER BY
             wday DESC
     </select>
@@ -130,11 +144,13 @@
 
     <select id="resultByCatNo" parameterType="int" resultType="ProductDTO">
         SELECT
-        <include refid="productColumns" />
+            <include refid="productColumns" />
         FROM
-        prod
+            prod
         WHERE
-        cat_no = #{catNo}
+            cat_no BETWEEN #{firstNo} AND #{lastNo}
+        ORDER BY
+            wday DESC
     </select>
 
     <select id="selectProductTotalCount" parameterType="ProductDTO" resultType="int">
