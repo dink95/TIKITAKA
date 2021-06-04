@@ -38,6 +38,10 @@
         </nav>
         <!---------------------------------------------------------->
     </header>
+
+    <!--모바일 검색창-->
+    <div th:replace="common::mobile_search(findid)"></div>
+
     <!--replace logo-아이디찾기-->
     <div class="bg-light py-3" th:replace="common::logo(findid)">
     </div>
@@ -105,8 +109,8 @@
     </div>
 </div>
 
-
 </div>
+
 
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/jquery-ui.js"></script>
@@ -173,7 +177,7 @@
 
             if(input.id == 'c_name' && !CheckName(inValue)) {
                 document.forms[0].classList.add("was-validated");
-                    $('#valid_name').text('* 이름를 정확히 입력해주세요');
+                $('#valid_name').text('* 이름를 정확히 입력해주세요');
                 result= false;
             }else if($('#valid_name').text()=='') {
                 if (input.id == 'c_phone' &&(inValue == '' || $.trim(inValue).length != 13)) {

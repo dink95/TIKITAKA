@@ -341,4 +341,92 @@ public class MemberController {
         return view;
     }
 
+    @RequestMapping(value = "/member/info/update")  /*개인정보수정 페이지*/
+    public ModelAndView updateinfo(){
+        ModelAndView view = new ModelAndView();
+        view.setViewName("member/information/update");
+        return view;
+    }
+
+    @RequestMapping("/info/update")  /*개인정보 수정*/
+    @ResponseBody
+    public Map<String, Object> updateInfo( @RequestParam(value = "userId") String userId,
+                                           @RequestParam(value = "userPwd") String userPwd) {
+
+        MemberDTO memberDTO = new MemberDTO();
+
+        Map<String, Object> resultMap = new HashMap<>();
+        memberDTO.setMbrId(userId);
+        memberDTO.setMbrPwd(userPwd);
+
+        int result =0;
+
+        try {
+
+            result= memberService.update(memberDTO);
+
+            if (result > 0) {
+                resultMap.put("resultCode", 200);
+                resultMap.put("resultMsg", "회원정보가 수정되었습니다..");
+            } else {
+                resultMap.put("resultCode", 400);
+                resultMap.put("resultMsg", "회원정보 수정이 실패하였습니다. 관리자에게 문의하세요.");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("resultCode", 500);
+            resultMap.put("resultMsg", "관리자에게 문의하세요");
+        }
+
+        return resultMap;
+    }
+
+
+    @RequestMapping(value = "/member/info/delete")  /*회원탈퇴 페이지*/
+    public ModelAndView deleteinfo(){
+        ModelAndView view = new ModelAndView();
+        view.setViewName("member/information/delete");
+        return view;
+    }
+
+    @RequestMapping("/info/delete")  /*회원탈퇴*/
+    @ResponseBody
+    public Map<String, Object> deleteInfo( @RequestParam(value = "userId") String userId) {
+
+        MemberDTO memberDTO = new MemberDTO();
+
+        Map<String, Object> resultMap = new HashMap<>();
+        memberDTO.setMbrId(userId);
+
+        int result =0;
+
+        try {
+
+            result= memberService.deleteMember(userId);
+
+            if (result > 0) {
+                resultMap.put("resultCode", 200);
+                resultMap.put("resultMsg", "회원탈퇴가 완료되었습니다.");
+            } else {
+                resultMap.put("resultCode", 400);
+                resultMap.put("resultMsg", "실패하였습니다. 관리자에게 문의하세요.");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("resultCode", 500);
+            resultMap.put("resultMsg", "실패하였습니다. 관리자에게 문의하세요");
+        }
+
+        return resultMap;
+    }
+
+    @RequestMapping(value = "/member/info/certify")  /*이메일인증 페이지*/
+    public ModelAndView certifyemail(){
+        ModelAndView view = new ModelAndView();
+        view.setViewName("member/information/certify");
+        return view;
+    }
 }
+

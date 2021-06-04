@@ -16,7 +16,7 @@
 		, prod_view
         , content
         , img_count
-        , prod_finish
+       , prod_finish
     </sql>
 
     <insert id="insertProduct" parameterType="ProductDTO">
