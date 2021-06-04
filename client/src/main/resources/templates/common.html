@@ -2,72 +2,50 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <!--공통 헤더-->
-<div class="site-navbar-top" th:fragment="header(header)" > <!--padding 수정 style-196-->
-    <div id="mobile_div">
-        <div class="categoryMenuBox">
-            <li class="categoryMenu">
-                <a onclick="goCatDetail(10)"><i class="fas fa-tshirt fa-2x" style="color:black" ></i>
-                    <p>패션</p></a>
-                <a onclick="goCatDetail(20)"><i class="fas fa-tv fa-2x" style="color:black" ></i>
-                    <p>디지털/가전</p></a>
-                <a onclick="goCatDetail(30)"><i class="fas fa-couch fa-2x" style="color:black" ></i>
-                    <p>가구/인테리어</p></a>
-                <a onclick="goCatDetail(40)"><i class="fas fa-bicycle fa-2x" style="color:black" ></i>
-                    <p>여가활동</p></a>
-                <a onclick="goCatDetail(50)"><i class="fas fa-ellipsis-h fa-2x" style="color:black"></i>
-                    <p>기타</p></a>
-                <a href="#" onclick="goCatDetail(0)"><i class="fas fa-shopping-cart fa-2x" style="color:black"></i>
-                    <p>삽니다</p></a>
-            </li>
-        </div>
-    </div>
-    <div class="container" >
-        <div class="row align-items-center">
-            <!--
-
-                        <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left"></div>
-                        &lt;!&ndash;원래 검색바 수정&ndash;&gt;
-            -->
-
+<div class="site-navbar-top" th:fragment="header(header)"> <!--padding 수정 style-196-->
+    <div class="container ">
+        <div class="row align-items-center mobile_search_hide_text">
             <div class="col-6 col-md-3 order-1 order-md-1 text-left">
-                <div class="site-logo" >
-                    <a href="/" class="js-logo-clone" >
-                        TIKITAKA
+                <div class="site-logo">
+                    <a href="/" class="js-logo-clone">
 
+                        <img class="logo_img" src="/images/TIKITAKA2.png" alt="">
                     </a><!--로고크기 style-202-->
+                    <a style="display:flex; justify-content: center; align-items: center;">
+                        <span class="mobile_search_icon icon icon-search2"></span></a>
                 </div>
             </div>
 
             <div class="col-12 col-md-6 order-3 order-md-2  text-center">
-                <!--검색바 중간 삽입-->
-                <!--  <div class="select-box"> &lt;!&ndash;셀렉트 박스 div&ndash;&gt;
-                      <select name="" class="form-control border-0 select-infor font-14">
-                          <option class="form-control border-0 font-14" value="">전체</option>
-                          <option class="form-control border-0 font-14" value="">제목</option>
-                          <option class="form-control border-0 font-14" value="">ID</option>
-                          <option class="form-control border-0 font-14" value="">상품코드</option>
-                      </select>
-                  </div>-->
                 <form action="/product/list" class="site-block-top-search input-search">
-                    <input type="text" name="prodNm" class="form-control input-search" placeholder="Search" style="border: 1px solid #ddd; border-radius: 50px;">
+                    <input type="text" name="prodNm" class="form-control input-search" placeholder="Search">
                     <span type="submit" class="icon icon-search2"></span>
                 </form>
 
                 <!------------------------------------------------------------------------------->
             </div>
 
-            <div class="col-6 col-md-3 order-2 order-md-3 text-right" >
+            <div class="col-6 col-md-3 order-2 order-md-3 text-right">
                 <!--메뉴 padding 수정-style-260-->
                 <div class="site-top-icons"> <!--버튼 사이즈 수정 style-218-->
-                    <ul >
+                    <ul>
 
-                        <li th:if="${session.mbrId == null}"><a href="signup" ><span class="sign in" style="font-size:0.8rem;">&nbsp;회원가입</span></a></li> <!--로그인 전-->
-                        <li th:if="${session.mbrId != null}"><a><span class="sign in" th:text="${session.mbrId}" style="color:#7971ea; font-size:0.9rem; "></span></a></li> <!--로그인 후-->
+                        <li th:if="${session.mbrId == null}"><a href="signup"><span
+                                class="sign-in">&nbsp;회원가입</span></a>
+                        </li> <!--로그인 전-->
+                        <li th:if="${session.mbrId != null}"><a><span class="sign-in-id"
+                                                                      th:text="${session.mbrId}"></span></a>
+                        </li> <!--로그인 후-->
                         <li>/&nbsp;&nbsp;</li>
-                        <li th:if="${session.mbrId == null}"><a href="/login"><span class="sign in" style="font-size:0.8rem;">로그인</span></a></li><!--로그인 전-->
-                        <li th:if="${session.mbrId != null}"><a href="/logout" ><span class="sign in" style="font-size:0.8rem;">&nbsp;&nbsp;로그아웃</span></a></li> <!--로그인 후-->
-                        <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
-                        <!--js-menu toggle-->
+                        <li th:if="${session.mbrId == null}"><a href="/login"><span class="sign-in">로그인</span></a>
+                        </li><!--로그인 전-->
+                        <li th:if="${session.mbrId != null}"><a href="/logout"><span
+                                class="sign-in">&nbsp;&nbsp;로그아웃</span></a>
+                        </li> <!--로그인 후-->
+                        <!--<li class="d-inline-block d-md-none ml-md-0"><a href="#"
+                                                                        class="site-menu-toggle js-menu-toggle"><span
+                                class="icon-menu"></span></a></li>
+                        &lt;!&ndash;js-menu toggle&ndash;&gt;-->
                     </ul>
                 </div>
             </div>
@@ -76,28 +54,164 @@
 </div>
 <!-------------------->
 
-<!--공통 menu-->
-<nav class="site-navigation text-center text-md-center" role="navigation" th:fragment="menu(menu)" ><!--메뉴 간격 수정 style-273-->
-    <div class="container">
-        <ul class="site-menu js-clone-nav d-none d-md-block" >
-            <li th:classappend="${menu}=='home'? 'active' : ''"><a href="/" >Home</a>
-             <li><a style="cursor: pointer;" onclick="categoryMenuChange()">
-            <span class="icon-menu pcToMobile" style="padding-left: 1%; font-size: 17px; text-align: center">
-           </span>카테고리</a></li>
-            <li th:classappend="${menu}=='product_create'? 'active' : ''">
-                <a th:if="${session.mbrId == null}" href="/login" >상품등록</a>
-                <a th:if="${session.mbrId != null}" href="/product/create" >상품등록</a></li>
-            <li th:classappend="${menu}=='menu3'? 'active' : ''">
-                <a th:if="${session.mbrId == null}" href="login" >경매</a>
-                <a th:if="${session.mbrId != null}" href="#" >경매</a></li>
-            <li th:classappend="${menu}=='menu4'? 'active' : ''">
-                <a th:if="${session.mbrId == null}" href="login" >채팅</a>
-                <a th:if="${session.mbrId != null}" href="#" >채팅</a></li>
-            <li th:classappend="${menu}=='myinfo'? 'active' : ''">
-                <a th:if="${session.mbrId == null}" href="login" >내정보</a>
-                <a th:if="${session.mbrId != null}" href="/member/myinfo" >내정보</a></li>
-        </ul>
+<!--모바일 검색창-->
+<div class=" input-mobile-search_div" th:fragment="mobile_search(header)">
+    <div class="input-mobile-search_nav">
+        <form action="/product/list" class="site-block-top-search input-mobile-search">
+            <input type="text" name="prodNm" class="form-control " placeholder="Search">
+            <span type="submit" class="icon icon-search2"></span>
+        </form>
+        <span class="mobile_search_close_btn">닫기</span>
+    </div>
+    <div class="input-mobile-search_content"></div>
+    <div class="input-mobile-search_other"></div>
+</div>
 
+<!--공통 모바일 메뉴바-->
+<div class="mobile_nav" th:fragment="mobile(menu)">
+    <ul class="mobile_nav_item">
+        <li th:classappend="${menu}=='home'? 'active' : ''"><a href="/"><i class="nav_icon fas fa-home fa-2x"></i></a>
+            <a href="/">Home</a></li>
+        <li th:classappend="${menu}=='product_list'? 'active' : ''">
+            <a th:if="${session.mbrId == null}" href="/login"><i class="nav_icon fas fa-bars fa-2x"></i></i></a>
+            <a th:if="${session.mbrId != null}" href="/product/list"><i class="nav_icon fas fa-bars fa-2x"></i></i></a>
+            <a th:if="${session.mbrId == null}" href="/login">카테고리</a>
+            <a th:if="${session.mbrId != null}" href="/product/list">카테고리</a></li>
+        <li th:classappend="${menu}=='product_create'? 'active' : ''">
+            <a th:if="${session.mbrId == null}" href="/login"><i class="nav_icon fas fa-plus fa-2x"></i></a>
+            <a th:if="${session.mbrId != null}" href="/product/create"><i class="nav_icon fas fa-plus fa-2x"></i></a>
+            <a th:if="${session.mbrId == null}" href="/login">상품등록</a>
+            <a th:if="${session.mbrId != null}" href="/product/create">상품등록</a></li>
+        <li th:classappend="${menu}=='menu4'? 'active' : ''">
+            <a th:if="${session.mbrId == null}" href="login"><i class="nav_icon far fa-comments fa-2x"></i></a>
+            <a th:if="${session.mbrId != null}" href="#"><i class="nav_icon far fa-comments fa-2x"></i></a>
+            <a th:if="${session.mbrId == null}" href="login">채팅</a>
+            <a th:if="${session.mbrId != null}" href="#">채팅</a></li>
+        <li th:classappend="${menu}=='myinfo'? 'active' : ''">
+            <a th:if="${session.mbrId == null}" href="login"><i class="nav_icon far fa-user fa-2x"></i></a>
+            <a th:if="${session.mbrId != null}" href="/member/myinfo"><i class="nav_icon far fa-user fa-2x"></i></i></a>
+            <a th:if="${session.mbrId == null}" href="login">내정보</a>
+            <a th:if="${session.mbrId != null}" href="/member/myinfo">내정보</a></li>
+    </ul>
+</div>
+
+<!--관리자 공통 menu-->
+<nav class=" site-navigation text-center text-md-left" role="navigation" th:fragment="adminmenu(menu)">
+    <!--메뉴 간격 수정 style-273-->
+
+    <div class="container">
+        <ul class="site-menu js-clone-nav  d-md-block">
+            <li th:classappend="${menu}=='complain_list'? 'menu_active' : ''">
+                <a href="/admin/complain/list">신고리스트</a>
+            </li>
+            <li th:classappend="${menu}=='menu2'? 'menu_active' : ''">
+                <a href="">menu2</a>
+            </li>
+            <li th:classappend="${menu}=='menu3'? 'menu_active' : ''">
+                <a href="">menu3</a>
+            </li>
+            <li th:classappend="${menu}=='menu4'? 'menu_active' : ''">
+                <a href="">menu4</a>
+            </li>
+            <li th:classappend="${menu}=='menu5'? 'menu_active' : ''">
+                <a href="">menu5</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--공통 menu-->
+<nav class="site-navigation text-center text-md-center" role="navigation" th:fragment="menu(menu)">
+    <!--메뉴 간격 수정 style-273-->
+    <div>
+        <ul class="site-menu js-clone-nav  d-md-block">
+            <li th:classappend="${menu}=='home'? 'menu_active' : ''"><i class="nav_icon fas fa-home"></i>
+                <a href="/">Home</a>
+
+            <li class="category_popup" th:classappend="${menu}=='product_list'? 'menu_active' : ''">
+                <i class="category_popup nav_icon fas fa-bars"></i>
+                <a>카테고리</a>
+                <!--공통 카테고리 nav-->
+                <div class="category_nav" th:fragment="category(menu)">
+                    <div class="category_nav_main_item">
+                        <ul>
+                            <div class="category_main_title">전체 카테고리</div>
+                            <li class="category_nav_main_item1" onclick="goCatDetail(10)">패션<a class="category_next_icon"><i class="fas fa-chevron-right fa-1x"></i></a></li>
+                            <li class="category_nav_main_item2" onclick="goCatDetail(20)">디지털/가전<a class="category_next_icon"><i class="fas fa-chevron-right fa-1x"></i></a></li>
+                            <li class="category_nav_main_item3" onclick="goCatDetail(30)">가구/인테리어<a class="category_next_icon"><i class="fas fa-chevron-right fa-1x"></i></a></li>
+                            <li class="category_nav_main_item4" onclick="goCatDetail(40)">여가활동<a class="category_next_icon"><i class="fas fa-chevron-right fa-1x"></i></a></li>
+                            <li class="category_nav_main_item5" onclick="goCatDetail(50)">기타<a class="category_next_icon"><i class="fas fa-chevron-right fa-1x"></i></a></li>
+                            <li class="category_nav_main_item0" onclick="goCatDetail(0)">삽니다<a class="category_next_icon"><i class="fas fa-chevron-right fa-1x"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="category_nav_detail_item category_nav_detail_item1">
+                        <ul>
+                            <div class="category_detail_title">패션</div>
+                            <li onclick="goCatDetail(11)">남성의류</li>
+                            <li onclick="goCatDetail(12)">여성의류</li>
+                            <li onclick="goCatDetail(13)">아동의류</li>
+                            <li onclick="goCatDetail(14)">가방</li>
+                            <li onclick="goCatDetail(15)">신발</li>
+                            <li onclick="goCatDetail(16)">모자</li>
+                            <li onclick="goCatDetail(17)">액세서리</li>
+                            <li onclick="goCatDetail(18)">화장품</li>
+                            <li onclick="goCatDetail(19)">기타</li>
+                        </ul>
+                    </div>
+                    <div class="category_nav_detail_item category_nav_detail_item2">
+                        <ul>
+                            <div class="category_detail_title">디지털/가전</div>
+                            <li onclick="goCatDetail(21)">pc/노트북</li>
+                            <li onclick="goCatDetail(22)">휴대폰/태블릿</li>
+                            <li onclick="goCatDetail(23)">카메라</li>
+                            <li onclick="goCatDetail(24)">게임</li>
+                            <li onclick="goCatDetail(25)">기타</li>
+                        </ul>
+                    </div>
+                    <div class="category_nav_detail_item category_nav_detail_item3">
+                        <ul>
+                            <div class="category_detail_title">가구/인테리어</div>
+                            <li onclick="goCatDetail(31)">침실</li>
+                            <li onclick="goCatDetail(32)">주방</li>
+                            <li onclick="goCatDetail(33)">거실</li>
+                            <li onclick="goCatDetail(34)">DIY</li>
+                            <li onclick="goCatDetail(35)">서재/사무용</li>
+                            <li onclick="goCatDetail(36)">기타</li>
+                        </ul>
+                    </div>
+                    <div class="category_nav_detail_item category_nav_detail_item4">
+                        <ul>
+                            <div class="category_detail_title">여가활동</div>
+                            <li onclick="goCatDetail(41)">등산</li>
+                            <li onclick="goCatDetail(42)">캠핑</li>
+                            <li onclick="goCatDetail(43)">골프</li>
+                            <li onclick="goCatDetail(44)">헬스</li>
+                            <li onclick="goCatDetail(45)">공연/티켓</li>
+                            <li onclick="goCatDetail(46)">여행</li>
+                            <li onclick="goCatDetail(46)">기타</li>
+                        </ul>
+                    </div>
+                    <div class="category_nav_detail_item category_nav_detail_item5">
+                        <ul>
+                            <div class="category_detail_title">기타</div>
+                            <li onclick="goCatDetail(51)">반려동물용품</li>
+                            <li onclick="goCatDetail(52)">차량용품</li>
+                            <li onclick="goCatDetail(53)">출산/유아용품</li>
+                        </ul>
+                    </div>
+                </div>
+            <li th:classappend="${menu}=='product_create'? 'menu_active' : ''">
+                <i class="nav_icon fas fa-plus"></i>
+                <a th:if="${session.mbrId == null}" href="/login">상품등록</a>
+                <a th:if="${session.mbrId != null}" href="/product/create">상품등록</a></li>
+            <li th:classappend="${menu}=='menu4'? 'menu_active' : ''">
+                <i class="nav_icon far fa-comments"></i>
+                <a th:if="${session.mbrId == null}" href="login">채팅</a>
+                <a th:if="${session.mbrId != null}" href="#">채팅</a></li>
+            <li th:classappend="${menu}=='myinfo'? 'menu_active' : ''">
+                <i class="nav_icon far fa-user"></i>
+                <a th:if="${session.mbrId == null}" href="login">내정보</a>
+                <a th:if="${session.mbrId != null}" href="/member/myinfo">내정보</a></li>
+        </ul>
     </div>
 </nav>
 <!---------------->
@@ -107,23 +221,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 mb-0"><a href="/">Home</a> /</span>
-                <span class="text-black" th:text="${logo}=='login'? 'Login' : '' "></span>
-                <span class="text-black font-14" th:text="${logo}=='signup'? '회원가입' :'' "></span>
-                <span class="text-black font-14" th:text="${logo}=='findid'? '아이디찾기' : '' "></span>
-                <span class="text-black font-14" th:text="${logo}=='findpwd'? '비밀번호찾기' :'' "></span>
-                <span class="text-black font-14" th:text="${logo}=='updatepwd'? '비밀번호 재설정' :'' "></span>
-                <span class="text-black font-14" th:text="${logo}=='myinfo'? '내 정보' :'' "></span>
-                <span class="text-black font-14" th:text="${logo}=='product_create'? '상품 등록' :'' "></span>
-                <span class="text-black font-14" th:text="${logo}=='product_list'? '상품 리스트' :'' "></span>
-                <span class="text-black font-14" th:text="${logo}=='product_update'? '수정하기' :'' "></span>
-                <span class="text-black font-14" th:text="${logo}=='report'? '게시글 신고' :'' "></span>
+                <span class="text-black font-14" th:text="${logo}"></span>
             </div>
         </div>
     </div>
 </div>
 </div>
 
-
-<!-------------------->
 
 </html>

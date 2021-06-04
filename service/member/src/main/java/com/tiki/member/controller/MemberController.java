@@ -24,8 +24,11 @@ public class MemberController {
     @Autowired
     public JavaMailSender javaMail;
 
-    @GetMapping("/mbr/{email}")
-    public void sendMail(@PathVariable("email") String email) {
+    @GetMapping("/mbr/emailrollcheck/{id}")
+    public void sendMail(@PathVariable("id") String id) {
+
+        MemberDTO dto = memberService.selectMemberDetail(id);
+        String email = dto.getMbrEmail();
 
         int leftLimit = 97; // a
         int rightLimit = 122; // z

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head >
+    <title>TIKITAKA &ndash; 이메일 인증 </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="/fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/jquery-ui.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/aos.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+
+<div class="site-wrap">
+    <header class="site-navbar" role="banner">
+        <!--replace 헤더-->
+        <div class="site-navbar-top" th:replace="common::header(certifyEmail)">
+        </div>
+        <!------------->
+        <nav class="site-navigation text-right text-md-center" role="navigation" th:replace="common::menu(certifyEmail)">
+        </nav>
+        <!---------------------------------------------------------->
+    </header>
+
+    <!--모바일 검색창-->
+    <div th:replace="common::mobile_search(certifyEmail)"></div>
+
+    <div class="bg-light py-3" th:replace="common::logo(이메일인증)">
+    </div>
+    <!----------------------->
+    <div class="site-section margin-top-2" >
+        <div class="container" >
+            <div class="row justify-content-center"><!--justify-content-center 추가-->
+
+                <div class="col-md-7"  >
+                    <div class="col-md-12 " >
+                        <h2 class="h3 mb-3 text-black  " >이메일인증</h2> <!--login logo 위치 수정-->
+                    </div>
+                    <form action="" method="post">
+                        <input type="hidden" id="userId" th:value="${session.mbrId}">
+                        <div class="p-3 p-lg-5 border">
+
+
+                            <div class="row align-items-sm-start justify-content-center align-items-center" >
+                                <div class="col-md-8">
+                                    <label for="c_email" class="text-black">이메일<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="c_email" name="c_email" required onkeyup="onKeyUp('#valid_password');" >
+                                       <span id="valid_email" style="color: #ff0000;font-size: 10px;"></span>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <span id="sendCertifyNum" onclick="goCertify()">인증번호 보내기</span>
+                                </div>
+                            </div>
+
+                            <div class="row align-items-sm-start justify-content-center align-items-center" >
+                                <div class="col-md-8">
+                                    <input type="password" class="form-control" placeholder="인증번호를 입력하세요."
+                                           id="current_password" name="current_password"
+                                           required onkeyup="onKeyUp('#valid_current_password');">
+                                    <span id="valid_current_password" style="color: #ff0000;font-size: 10px;"></span>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <input id="loginConfirm" type="button" class="border-0-btn btn btn-primary btn-lg btn-block" value="인증하기">
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #sendCertifyNum{
+        color: red;
+        cursor: pointer;
+    }
+</style>
+</div>
+
+
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/jquery-ui.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/aos.js"></script>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<script src="/js/main.js"></script>
+<script>
+
+
+    /*이메일 인증*/
+    function goCertify(){
+
+            var param ={
+                id : $('#c_email').val(),
+            };
+
+            $.ajax({
+                url: '/info/certify',
+                data: param,
+                type: 'post',
+                dataType : 'json'
+            }).done(function(data){
+                if(data.resultCode == 200) {
+                    alert(data.resultMsg);
+                    location.href = '/';
+                }else {
+                    alert(data.resultMsg);
+                    return false;
+                }
+
+            }).fail(function (data, textStatus, errorThrown){
+                console.log(textStatus);
+                alert('ajax fail')
+            });
+
+    }
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
+
+

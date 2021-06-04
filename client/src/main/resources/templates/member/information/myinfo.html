@@ -30,7 +30,7 @@
 <div class="site-wrap">
     <header class="site-navbar" role="banner">
         <!--replace 헤더-->
-        <div class="site-navbar-top" th:replace="common::header(myinfos)">
+        <div class="site-navbar-top" th:replace="common::header(myinfo)">
         </div>
         <!------------->
         <!--replace-login-------------------------------->
@@ -40,32 +40,39 @@
         </nav>
         <!----------------------------------------------------------->
     </header>
+
+    <!--모바일 검색창-->
+    <div th:replace="common::mobile_search(home)"></div>
+
     <!--replace logo-login-->
-    <div class="bg-light py-3" th:replace="common::logo(myinfo)">
+    <div class="bg-light py-3" th:replace="common::logo(내정보)">
     </div>
     <!------------------------->
     <div class="site-section margin-top-2"><!--margin class-->
         <div class="container">
             <div class="row align-items-sm-start justify-content-center">
-                <div class="col-12 col-md-4 order-1 order-md-1 text-left text-lg-center">
+                <div class="col-12 col-md-4 order-1 order-md-1 text-left text-lg-left">
                     <label for="p_id" class="text-black">ID
                         <span class="text-danger">*</span></label>
                     <span id="p_id" th:text="${session.mbrId}" style="color: #9792ea; font-size: 20px;"></span>
-                    <button type="button" class="btn btn-primary">개인정보수정</button>
+                    <button type="button" class="btn btn-primary" onclick="goUpdateInfo()">
+                        개인정보수정</button>
+                    <button type="button" class="btn btn-outline-danger" onclick="removeCheck()" style="padding:6px 6px;">
+                        탈퇴하기</button>
                 </div>
 
-                <div class="col-12 col-md-4 order-2 order-md-2 text-left text-lg-center">
+                <div class="col-12 col-md-4 order-2 order-md-2 text-left text-lg-right">
                     <label for="p_grade" class="text-black">거래등급
                         <span class="text-danger">*</span></label>
                     <span id="p_grade" style="color: #9792ea; font-size: 20px;">등급</span>
                     <button type="button" class="btn btn-primary">등급기준</button>
                 </div>
 
-                <div class="col-12 col-md-4 order-3 order-md-3 text-left text-lg-center">
+                <div class="col-12 col-md-4 order-3 order-md-3 text-left text-lg-right">
                     <label for="p_point" class="text-black">판매점수
                         <span class="text-danger">*</span></label>
                     <span id="p_point" style="color: #9792ea; font-size: 20px;">점수</span>
-                    <button type="button" class="btn btn-primary">이메일인증</button>
+                    <button type="button" class="btn btn-primary" onclick="goCertify()">이메일인증</button>
                 </div>
             </div>
 
@@ -85,7 +92,8 @@
         </div>
     </div>
 </div>
-
+<!-- 모바일 메뉴-->
+<div th:replace="common::mobile(myinfo)"></div>
 <a id="arrow_up" class="scroll_up" onclick="scroll_up()"> </a>
 
 <script src="../js/jquery-3.3.1.min.js"></script>
@@ -94,10 +102,16 @@
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/owl.carousel.min.js"></script>
 <script src="../js/jquery.magnific-popup.min.js"></script>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script src="../js/aos.js"></script>
 
 <script src="../js/main.js"></script>
 <style>
+
+    .NavContainer{
+        padding:3% 3% 0 3%;
+    }
+
     .NavContainer:not(:nth-child(2)) {
         border: none;
     }
@@ -145,6 +159,12 @@
         margin-right: 20px;
         font-size: 14px;
     }
+    .ItemName > a {
+        margin: 0 20px 20px 20px;
+        display: flex;
+        justify-content: flex-start;
+    }
+
 </style>
 
 <script>
@@ -181,15 +201,15 @@
                 contents = '';
                 var wday = timeForToday(obj.wday);
                 //이미지경로를 미리 만들어놓는다.
-                imgPath = '/istatic/images/' + obj.prodNo + '/1.jpg';
-
+               /* imgPath = '/istatic/images/' + obj.prodNo + '/1.jpg';*/
+                imgPath = '/static/images/tiki_1.jpg';
                 //제품 html
                 contents += '<div class="gridItem">';
                 contents += '    <div class="item">';
                 contents += '       <div class="block-4 text-center">';
                 contents += '          <a href="#" onclick="goDetail(' + obj.prodNo + ')">';
                 contents += '               <figure class="block-4-image" >';
-                contents += '                    <img src="' + imgPath + '"  alt="Image placeholder"  class="img-fluid">';
+                contents += '                    <img src="../static/images/tiki_2.jpg"  alt="Image placeholder"  class="img-fluid">';
                 contents += '                </figure>';
                 contents += '                <div class="block-4-text">';
                 contents += '                    <h3 class="ItemName"><a href="#"  onclick="goDetail(' + obj.prodNo + ')">' + textLengthOverCut(obj.prodNm, 11, '...') + ' </a></h3>';
@@ -220,6 +240,17 @@
         getIdQueryList();
     });
 
+    function goUpdateInfo(){
+        location.href = '/member/info/update';
+    }
+
+    /*탈퇴 페이지 이동*/
+    function removeCheck() {
+        location.href = '/member/info/delete';
+    }
+    function goCertify(){
+        location.href = '/member/info/certify';
+    }
 </script>
 
 </body>
