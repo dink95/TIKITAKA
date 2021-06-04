@@ -428,5 +428,28 @@ public class MemberController {
         view.setViewName("member/information/certify");
         return view;
     }
+
+    @RequestMapping("/info/certify") /*이메일 인증*/
+    @ResponseBody
+    public Map<String, Object> certifyEmail(@RequestParam(value = "id") String id) {
+        Map<String, Object> resultMap = new HashMap<>();
+
+        Boolean exist = false;
+        try {
+            exist= memberService.certifyEmail(id);
+            if (!exist) {
+                resultMap.put("resultCode", 200);
+                resultMap.put("resultMsg", "인증완료");
+            } else {
+                resultMap.put("resultCode", 400);
+                resultMap.put("resultMsg", "인증실패 400");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("resultCode", 500);
+            resultMap.put("resultMsg", "인증실패 500");
+        }
+        return resultMap;
+    }
 }
 

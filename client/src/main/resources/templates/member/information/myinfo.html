@@ -201,15 +201,15 @@
                 contents = '';
                 var wday = timeForToday(obj.wday);
                 //이미지경로를 미리 만들어놓는다.
-                imgPath = '/istatic/images/' + obj.prodNo + '/1.jpg';
-
+               /* imgPath = '/istatic/images/' + obj.prodNo + '/1.jpg';*/
+                imgPath = '/static/images/tiki_1.jpg';
                 //제품 html
                 contents += '<div class="gridItem">';
                 contents += '    <div class="item">';
                 contents += '       <div class="block-4 text-center">';
                 contents += '          <a href="#" onclick="goDetail(' + obj.prodNo + ')">';
                 contents += '               <figure class="block-4-image" >';
-                contents += '                    <img src="' + imgPath + '"  alt="Image placeholder"  class="img-fluid">';
+                contents += '                    <img src="../static/images/tiki_2.jpg"  alt="Image placeholder"  class="img-fluid">';
                 contents += '                </figure>';
                 contents += '                <div class="block-4-text">';
                 contents += '                    <h3 class="ItemName"><a href="#"  onclick="goDetail(' + obj.prodNo + ')">' + textLengthOverCut(obj.prodNm, 11, '...') + ' </a></h3>';

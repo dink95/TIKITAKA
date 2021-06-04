@@ -54,12 +54,12 @@
                             <div class="row align-items-sm-start justify-content-center align-items-center" >
                                 <div class="col-md-8">
                                     <label for="c_email" class="text-black">이메일<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="c_email" name="c_email" required onkeyup="onKeyUp('#valid_password');" disabled>
+                                    <input type="text" class="form-control" id="c_email" name="c_email" required onkeyup="onKeyUp('#valid_password');" >
                                        <span id="valid_email" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
 
                                 <div class="col-lg-4">
-                                    <span id="sendCertifyNum" onclick="getPasswordCheck()">인증번호 보내기</span>
+                                    <span id="sendCertifyNum" onclick="goCertify()">인증번호 보내기</span>
                                 </div>
                             </div>
 
@@ -72,7 +72,7 @@
                                 </div>
 
                                 <div class="col-lg-4">
-                                    <input id="loginConfirm" type="button" class="border-0-btn btn btn-primary btn-lg btn-block" value="인증하기" onclick="getPasswordCheck()">
+                                    <input id="loginConfirm" type="button" class="border-0-btn btn btn-primary btn-lg btn-block" value="인증하기">
                                 </div>
                             </div>
 
@@ -107,12 +107,10 @@
 
 
     /*이메일 인증*/
-    function goUpdate(){
-        if(validation()) {
+    function goCertify(){
 
             var param ={
-                userId : $('#userId').val(),
-                userPwd : document.querySelector('#c_password').value
+                id : $('#c_email').val(),
             };
 
             $.ajax({
@@ -133,113 +131,13 @@
                 console.log(textStatus);
                 alert('ajax fail')
             });
-        }
-    }
-
-
-    /*키 입력시 valid 메세지 삭제*/
-    function onKeyUp(props){
-        if(props=='#valid_id'){
-            $('#isCheckedId').val('');
-        }
-        $(props).text('');
 
     }
 
-    /*input valid 유효성*/
-    function validation() {
-        var result = true;
-
-        $('#valid_password').text('');
-        $('#valid_password_c').text('');
-
-        document.querySelectorAll("input[type=password]").forEach(input => {
-            var inValue = input.value;
-
-            if (input.id == 'current_password' && $.trim(inValue).length == 0) {
-                document.forms[0].classList.add("was-validated");
-                $('#valid_current_password').text('* 비밀번호를 입력해주세요');
-                result = false;
-            }
-
-            if (input.id == 'c_password' && $.trim(inValue).length == 0) {
-                document.forms[0].classList.add("was-validated");
-                $('#valid_password').text('* 비밀번호를 입력해주세요');
-                $('#valid_password_c').text('');
-                result = false;
-            } else if ($('#valid_password').text() == '' && $('#c_password').val() != $('#c_pwd_re').val()) {
-                document.forms[0].classList.add("was-validated");
-                $('#valid_password_c').text('* 비밀번호 확인이 일치하지 않습니다.');
-                result = false;
-            }
 
 
-        });
-        return result;
-    }
 
-    /*멤버 정보*/
-    function getMemberDetail(){
-        var param ={
-            /*  userId : document.querySelector('#userId').value,*/
-            userId :$('#userId').val()
 
-        };
-
-        $.ajax({
-            url: '/member/detail',
-            data: param,
-            type: 'post',
-            dataType : 'json'
-        }).done(function(data){
-            console.log("data.memberDetail",data.memberDetail);
-            $('#c_id').val(data.memberDetail.mbrId);
-            $('#c_name').val(data.memberDetail.mbrNm);
-            $('#c_email').val(data.memberDetail.mbrEmail);
-            $('#c_addr').val(data.memberDetail.mbrAddr);
-            $('#c_phone').val(data.memberDetail.mbrPhone);
-            var year = data.memberDetail.mbrBday.substring(0,2);
-            var month = data.memberDetail.mbrBday.substring(2,4);
-            var day = data.memberDetail.mbrBday.substring(4,6);
-            $('#c_birth').val(year + " / " + month + " / " + day);
-
-        }).fail(function (data, textStatus, errorThrown){
-            console.log(textStatus);
-            alert('ajax fail')
-        });
-
-    }
-
-    /*현재 비밀번호 체크*/
-    function getPasswordCheck(){
-        var param ={
-            /*  userId : document.querySelector('#userId').value,*/
-            userId : $('#userId').val(),
-            userPw : $('#current_password').val(),
-        };
-
-        $.ajax({
-            url: '/login/process',
-            data: param,
-            type: 'post',
-            dataType : 'json'
-        }).done(function(data){
-            if(data.resultCode==400 || data.resultCode == '400'){
-                $('#valid_current_password').text('비밀번호가 일치하지 않습니다.');
-            }else{
-                goUpdate();
-            }
-
-        }).fail(function (data, textStatus, errorThrown){
-            console.log(textStatus);
-            alert('ajax fail')
-        });
-
-    }
-
-    $(document).ready(function () {
-        getMemberDetail();
-    });
 
 </script>
 
