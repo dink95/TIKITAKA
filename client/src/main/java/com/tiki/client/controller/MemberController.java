@@ -429,21 +429,16 @@ public class MemberController {
         return view;
     }
 
-    @RequestMapping("/info/certify") /*이메일 인증*/
+    @RequestMapping("/info/certify") // 이메일 인증
     @ResponseBody
     public Map<String, Object> certifyEmail(@RequestParam(value = "id") String id) {
         Map<String, Object> resultMap = new HashMap<>();
-
-        Boolean exist = false;
+        String pinnum;
         try {
-            exist= memberService.certifyEmail(id);
-            if (!exist) {
-                resultMap.put("resultCode", 200);
-                resultMap.put("resultMsg", "인증완료");
-            } else {
-                resultMap.put("resultCode", 400);
-                resultMap.put("resultMsg", "인증실패 400");
-            }
+            pinnum= memberService.certifyEmail(id);
+            System.out.println(pinnum);
+            resultMap.put("resultCode", 200);
+            resultMap.put("resultMsg", "성공"+ " "+ "pinnum:" + pinnum);
         } catch (Exception e) {
             e.printStackTrace();
             resultMap.put("resultCode", 500);

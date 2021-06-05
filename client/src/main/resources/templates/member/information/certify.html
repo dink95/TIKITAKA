@@ -113,19 +113,19 @@
                 id : $('#c_email').val(),
             };
 
-            $.ajax({
-                url: '/info/certify',
-                data: param,
-                type: 'post',
-                dataType : 'json'
-            }).done(function(data){
-                if(data.resultCode == 200) {
-                    alert(data.resultMsg);
-                    location.href = '/';
-                }else {
-                    alert(data.resultMsg);
-                    return false;
-                }
+        $.ajax({
+            url: '/info/certify',
+            data: param,
+            type: 'post',
+            dataType : 'json'
+        }).done(function(data){
+            if(data.resultCode == 200) {
+                alert(data.resultMsg);
+
+            }else {
+                alert(data.resultMsg);
+                return false;
+            }
 
             }).fail(function (data, textStatus, errorThrown){
                 console.log(textStatus);

@@ -9,6 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Member;
 import java.util.Random;
 
 @Slf4j
@@ -25,7 +26,7 @@ public class MemberController {
     public JavaMailSender javaMail;
 
     @GetMapping("/mbr/emailrollcheck/{id}")
-    public void sendMail(@PathVariable("id") String id) {
+    public String sendMail(@PathVariable("id") String id) {
 
         MemberDTO dto = memberService.selectMemberDetail(id);
         String email = dto.getMbrEmail();
@@ -40,10 +41,23 @@ public class MemberController {
                 .toString();
 
         SimpleMailMessage simpleMessage = new SimpleMailMessage();
-        simpleMessage.setTo(email);
         simpleMessage.setSubject("TIKITAKA 이메일 인증");
         simpleMessage.setText("인증번호 : " + emailKey);
+        simpleMessage.setTo(email);
+        javaMail.send(simpleMessage);
 
+        return emailKey;
+
+    }
+
+    @PatchMapping("/mbr/emailRoleUpdate/{id}")
+    public int updateEmailRole(@PathVariable("id") String id){
+
+        MemberDTO dto = memberService.selectMemberDetail(id);
+
+        dto.setMbrRole(true);
+
+        return memberService.updateRole(dto);
     }
 
     @GetMapping("/mbr/{id}")

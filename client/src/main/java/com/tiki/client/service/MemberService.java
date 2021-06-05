@@ -105,12 +105,12 @@ public class MemberService {
                 .block();
     }
 
-    public boolean certifyEmail(String id){
+    public String certifyEmail(String id){
         return webClient.get()
                 .uri("/mbr/emailrollcheck/{id}",id)
                 //.body(Mono.just(memberDTO), MemberDTO.class)
                 .retrieve()
-                .bodyToMono(Boolean.class) //반환정보
+                .bodyToMono(String.class) //반환정보
                 .block();
     }
 

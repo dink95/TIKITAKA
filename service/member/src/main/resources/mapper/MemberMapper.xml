@@ -92,4 +92,13 @@
             mbr_id = #{mbrId,jdbcType=VARCHAR}
     </update>
 
+    <update id="updateRoll" parameterType="MemberDTO">
+        UPDATE
+            mbr
+        SET
+            mbr_role = true
+        WHERE
+            mbr_id = #{mbrId,jdbcType=VARCHAR}
+    </update>
+
 </mapper>

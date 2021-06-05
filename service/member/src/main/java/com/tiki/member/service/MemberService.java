@@ -22,5 +22,6 @@ public interface MemberService {
 
     public int updateMember(MemberDTO dto);
 
+    public int updateRole(MemberDTO dto);
 
 }
