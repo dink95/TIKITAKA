@@ -25,7 +25,7 @@ public class MemberController {
     @Autowired
     public JavaMailSender javaMail;
 
-    @GetMapping("/mbr/emailrollcheck/{id}")
+    @GetMapping("/mbr/emailrollcheck/{id}") // 이메일 보내기
     public String sendMail(@PathVariable("id") String id) {
 
         MemberDTO dto = memberService.selectMemberDetail(id);
@@ -50,7 +50,7 @@ public class MemberController {
 
     }
 
-    @PatchMapping("/mbr/emailRoleUpdate/{id}")
+    @PatchMapping("/mbr/emailRoleUpdate/{id}") // 멤버 이메일 인증 업데이트
     public int updateEmailRole(@PathVariable("id") String id){
 
         MemberDTO dto = memberService.selectMemberDetail(id);
@@ -64,7 +64,6 @@ public class MemberController {
     public MemberDTO selectMemberById(@PathVariable("id") String id){
         return memberService.selectMemberDetail(id);
     }
-
 
     @GetMapping("/mbr/existence/id/{id}")
     public boolean existIdCheck(@PathVariable("id") String id){
