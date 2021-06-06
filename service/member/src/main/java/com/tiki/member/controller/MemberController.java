@@ -31,8 +31,8 @@ public class MemberController {
         MemberDTO dto = memberService.selectMemberDetail(id);
         String email = dto.getMbrEmail();
 
-        int leftLimit = 97; // a
-        int rightLimit = 122; // z
+        int leftLimit = 65; // A
+        int rightLimit = 90; // Z
         int stringLength = 5;
         Random random = new Random();
         String emailKey = random.ints(leftLimit, rightLimit + 1)
@@ -44,6 +44,7 @@ public class MemberController {
         simpleMessage.setSubject("TIKITAKA 이메일 인증");
         simpleMessage.setText("인증번호 : " + emailKey);
         simpleMessage.setTo(email);
+        simpleMessage.setFrom("movegun1027@gmail.com");
         javaMail.send(simpleMessage);
 
         return emailKey;
