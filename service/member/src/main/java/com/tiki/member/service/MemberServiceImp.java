@@ -56,4 +56,6 @@ public class MemberServiceImp implements MemberService{
     public int updateMemberPwd(MemberDTO dto) {
         return mapper.updateMemberPwd(dto);
     }
+
+    public int updateMember(MemberDTO dto) { return mapper.updateMember(dto); }
 }
