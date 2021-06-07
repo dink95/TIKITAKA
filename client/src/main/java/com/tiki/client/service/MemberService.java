@@ -123,5 +123,13 @@ public class MemberService {
                 .block();
     }
 
+    public int updateMemberRole(MemberDTO memberDTO) {
+        return webClient.patch()
+                .uri("/mbr/role")
+                .body(Mono.just(memberDTO), MemberDTO.class)
+                .retrieve()
+                .bodyToMono(Integer.class) //반환정보
+                .block();
+    }
 
 }
