@@ -44,7 +44,7 @@
 
 
     <!--replace-logo-비번찾기-->
-    <div class="bg-light py-3" th:replace="common::logo(findpwd)">
+    <div class="bg-light py-3" th:replace="common::logo(비밀번호찾기)">
     </div>
     <!------------------------>
     <div id="Find" class="site-section margin-top-2" style="display: block;">
@@ -168,6 +168,11 @@
 
 </div>
 
+<style>
+    .text-black{
+        font-weight: normal;
+    }
+</style>
 
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/jquery-ui.js"></script>
@@ -187,6 +192,7 @@
     function goFindpwd(){
         $('#valid_findError').text('');
         if(validation()) {
+            console.log(document.querySelector('#c_id').value,document.querySelector('#c_name').value,document.querySelector('#c_phone').value)
             var param ={
                 userId : document.querySelector('#c_id').value,
                 userName : document.querySelector('#c_name').value,

@@ -51,32 +51,51 @@
     <div class="site-section"><!--margin class-->
         <div class="container">
             <div class="myinfoContainer">
-                <div class="myinfoNav1">
-                    <span id="p_id" th:text="${session.mbrId}" style="color: #9792ea; font-size: 20px;"></span>
-                    <span style="font-size: 16px; font-weight: bold;color: #000;">님</span>
-                    <button type="button" class="btn btn-primary" onclick="goUpdateInfo()">
-                        개인정보수정
-                    </button>
-                    <button type="button" class="btn btn-outline-danger" onclick="removeCheck()"
-                            style="padding:6px 6px;">
-                        탈퇴하기
-                    </button>
+                <div class="myinfoMainNav">
+                    <div class="myinfoMainId">
+                        <span id="p_id" th:text="${session.mbrId}" style="color: #5f0080; font-size: 20px;"></span>
+                        <span style="font-size: 16px; font-weight: bold;color: #000;">님</span>
+                    </div>
+                    <div>
+
+                    </div>
+                    <div>
+                        <button onclick="goUpdateInfo()">
+                            개인정보수정</button>
+
+                        <button onclick="removeCheck()">
+                            탈퇴하기</button>
+
+                    </div>
                 </div>
 
-                <div class="myinfoNav2">
-                    <label for="p_grade" class="text-black">거래등급
-                        <span class="text-danger">*</span></label>
-                    <span id="p_grade" style="color: #9792ea; font-size: 20px;">등급</span>
-                    <button type="button" class="btn btn-primary">등급기준</button>
+                <div class="myinfoSubNav">
+                    <div class="myinfoSubGrade">
+                        <label for="p_grade" class="text-black">거래등급
+                        </label>
+                    </div>
+                    <div>
+                        <span id="p_grade">보통</span>
+                    </div>
+                    <div>
+                        <span id="p_grade_confirm">등급기준 ></span>
+                    </div>
                 </div>
 
-                <div class="myinfoNav3">
-                    <label for="p_point" class="text-black">판매점수
-                        <span class="text-danger">*</span></label>
-                    <span id="p_point" style="color: #9792ea; font-size: 20px;">점수</span>
-                    <button type="button" class="btn btn-primary" onclick="goCertify()">이메일인증</button>
+                <div class="myinfoSubNav">
+                    <div>
+                        <label for="p_point" class="text-black">판매점수</label>
+                    </div>
+                    <div>
+                        <span id="p_point">0</span>
+                        <span>점</span>
+                    </div>
+                    <div>
+                        <span onclick="goCertify()">이메일인증 ></span>
+                    </div>
                 </div>
             </div>
+
 
             <div class="container">
                 <div class="NavContainer">
@@ -111,27 +130,94 @@
 <script src="../js/main.js"></script>
 <style>
 
-    .site-section{
+    .site-section {
         background: #f8f9fa;
     }
-    .myinfoContainer{
+
+    .myinfoContainer {
         display: flex;
         justify-content: center;
         align-items: center;
     }
-    .myinfoNav1,.myinfoNav2,.myinfoNav3{
+
+    .myinfoMainNav, .myinfoSubNav {
         background: #fff;
         padding: 10px;
         margin: 3px;
         height: 200px;
+
     }
-    .myinfoNav1{
-        width: 40%;
-    }
-    .myinfoNav2,.myinfoNav3{
+
+    .myinfoMainNav {
         width: 30%;
     }
-    
+
+    .myinfoSubNav {
+        width: 30%;
+    }
+
+    .myinfoMainNav > div:nth-child(1) {
+        margin-left: 30px;
+        font-weight: normal;
+    }
+
+    .myinfoMainNav > div:nth-child(2) {
+        margin-left: 30px;
+        font-size: 30px;
+        color: #5f0080;
+        font-weight: normal;
+        height: 50%;
+    }
+
+    .myinfoMainNav > div:nth-child(3) {
+        text-align: right;
+        color: #000;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-around;
+        border-radius: 25px;
+    }
+    .myinfoMainNav > div:nth-child(3)>button {
+        border-style: none;
+        font-size: 14px;
+        font-weight: normal;
+        padding:5px 30px;
+        border-radius: 25px;
+    }
+    .myinfoMainNav > div:nth-child(3)>button:focus {
+      outline: none;
+    }
+    .myinfoMainNav > div:nth-child(3)>button:nth-child(2) {
+        color: red;
+    }
+
+    .myinfoSubNav > div:nth-child(1) {
+        margin-left: 30px;
+        font-weight: normal;
+    }
+
+    .myinfoSubNav > div:nth-child(2) {
+        margin-left: 30px;
+        font-size: 30px;
+        color: #5f0080;
+        font-weight: normal;
+        height: 50%;
+    }
+
+    .myinfoSubNav > div:nth-child(2) > span:nth-child(2) {
+        font-size: 14px;
+        color: #000;
+        font-weight: bold;
+    }
+
+    .myinfoSubNav > div:nth-child(3) {
+        text-align: right;
+        margin-right: 30px;
+        color: #000;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
     .NavContainer {
         padding: 3% 3% 0 3%;
     }

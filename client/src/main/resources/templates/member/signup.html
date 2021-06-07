@@ -20,12 +20,7 @@
 
 <body>
 
-<div id="modal_overlay">
-    <div id="modal_main">
-        <h1 id="modal_content"></h1>
-        <a id="modal_button" class="btn btn-primary btn-lg" href=""></a>
-    </div>
-</div>
+
 
 <div class="site-wrap">
     <header class="site-navbar" role="banner">
@@ -61,7 +56,7 @@
 
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <label for="c_name" class="text-black">이름<span class="text-danger">*</span></label>
+                                    <label for="c_name" class="text-black" style="font-weight: normal;">이름<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="c_name" name="c_name" required onkeyup="onKeyUp('#valid_name');" >
                                     <span id="valid_name" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
@@ -77,7 +72,7 @@
 
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <label for="c_phone" class="text-black">전화번호 <span class="text-danger">*</span></label>
+                                    <label for="c_phone" class="text-black" style="font-weight: normal;">전화번호 <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="c_phone" name="c_phone" value="010-"
                                            required pattern="[0-1]{2,3}-[0-9]{3,4}-[0-9]{3,4}"
                                            maxlength="13" onkeyup="onKeyUp('#valid_phone');">
@@ -111,7 +106,7 @@
 
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <label for="c_bday" class="text-black">생년월일 <span class="text-danger">*</span></label>
+                                    <label for="c_bday" class="text-black" style="font-weight: normal;">생년월일 <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="c_bday" name="c_bday"
                                            required pattern="[0-9]{6}" placeholder="ex) 901225"
                                            maxlength="6" onkeyup="onKeyUp('#valid_bday');">
@@ -121,7 +116,7 @@
 
                             <div class="form-group row">
                                 <div class="col-md-6">
-                                    <label for="c_post" class="text-black">주소<span class="text-danger">*</span></label>
+                                    <label for="c_post" class="text-black" style="font-weight: normal;">주소<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="c_post" name="c_post" placeholder="우편번호"
                                            required readonly >&nbsp;&nbsp;&nbsp;
                                 </div>
@@ -143,7 +138,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <label for="c_password" class="text-black">비밀번호<span class="text-danger">*</span></label>
+                                    <label for="c_password" class="text-black" style="font-weight: normal;">비밀번호<span class="text-danger">*</span></label>
                                     <input type="password" class="form-control" id="c_password" name="c_password" required onkeyup="onKeyUp('#valid_password');">
                                     <span id="valid_password" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
@@ -151,7 +146,7 @@
 
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <label for="c_pwd_re" class="text-black">비밀번호 확인<span class="text-danger">*</span></label>
+                                    <label for="c_pwd_re" class="text-black" style="font-weight: normal;">비밀번호 확인<span class="text-danger">*</span></label>
                                     <input type="password" class="form-control" id="c_pwd_re" name="c_pwd_re" required onkeyup="onKeyUp('#valid_password_c');">
                                     <span id="valid_password_c" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
@@ -184,7 +179,6 @@
 
 
 </div>
-
 
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/jquery-ui.js"></script>
@@ -374,9 +368,9 @@
                 dataType : 'json'
             }).done(function(data){
                 if(data.resultCode == 200) {
-                    modal(data.resultMsg,'확인','/');
+                    popup('회원가입',data.resultMsg,'/');
                 }else {
-                    alert(data.resultMsg);
+                    popup('알림메세지',data.resultMsg);
                     return false;
                 }
 

@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/css/owl.theme.default.min.css">
     <link rel="stylesheet" href="/css/aos.css">
     <link rel="stylesheet" href="/css/style.css">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 
 <body>
@@ -47,7 +48,7 @@
                         <h2 class="h3 mb-3 text-black  " >개인정보 수정</h2> <!--login logo 위치 수정-->
                     </div>
                     <form action="" method="post">
-                        <input type="text" id="userId" th:value="${session.mbrId}">
+                        <input type="hidden" id="userId" th:value="${session.mbrId}">
                         <div class="p-3 p-lg-5 border">
 
                             <div class="form-group row">
@@ -60,9 +61,9 @@
 
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <label for="current_password" class="text-black">현재 비밀번호<span class="text-danger">*</span></label>
-                                    <input type="password" class="form-control" id="current_password" name="current_password" required onkeyup="onKeyUp('#valid_current_password');">
-                                    <span id="valid_current_password" style="color: #ff0000;font-size: 10px;"></span>
+                                    <label for="c_name" class="text-black">이름<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="c_name" name="c_name" required  disabled>
+                                    <span id="valid_name" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
                             </div>
 
@@ -83,26 +84,40 @@
                             </div>
 
                             <div class="form-group row">
-                                <div class="col-md-12">
-                                    <label for="c_name" class="text-black">이름<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="c_name" name="c_name" required onkeyup="onKeyUp('#valid_password');" disabled>
-                                    <span id="valid_name" style="color: #ff0000;font-size: 10px;"></span>
+                                <div class="col-md-6">
+                                    <label for="c_post" class="text-black">주소<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="c_post" name="c_post" placeholder="우편번호"
+                                           required readonly >&nbsp;&nbsp;&nbsp;
+                                </div>
+                                <div class="col-md-6">
+                                    <label  class="text-black"><span class="text-danger" style="opacity: 0">*</span></label>
+                                    <input type="button" class="form-control btn btn-primary btn-lg btn-block" value="우편번호 찾기&nbsp;"
+                                           required onclick="sample2_execDaumPostcode()"><br/>
                                 </div>
                             </div>
-
-
+                            <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch; border-radius: 5px;">
+                                <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="border-radius:5px;
+                                cursor:pointer;position:absolute;right:0px;top:0px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
+                            </div>
                             <div class="form-group row">
-                                <div class="col-md-12">
-                                    <label for="c_addr" class="text-black">주소<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="c_addr" name="c_addr" required onkeyup="onKeyUp('#valid_password');"disabled>
+                                <div  class="col-md-12">
+                                    <input type="text" class="form-control" id="c_addr" name="c_addr" required placeholder="주소" readonly>
                                     <span id="valid_addr" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <div class="col-md-12">
+                                    <label for="c_phone" class="text-black">전화번호<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="c_phone" name="c_phone" required>
+                                    <span id="valid_phone" style="color: #ff0000;font-size: 10px;"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
                                     <label for="c_birth" class="text-black">생년월일<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="c_birth" name="c_birth" required onkeyup="onKeyUp('#valid_password');" disabled>
+                                    <input type="text" class="form-control" id="c_birth" name="c_birth" required disabled>
                                     <span id="valid_birth" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
                             </div>
@@ -116,17 +131,8 @@
                             </div>
 
                             <div class="form-group row">
-                                <div class="col-md-12">
-                                    <label for="c_phone" class="text-black">전화번호<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="c_phone" name="c_phone" required onkeyup="onKeyUp('#valid_password');" disabled>
-                                    <span id="valid_phone" style="color: #ff0000;font-size: 10px;"></span>
-                                </div>
-                            </div>
-
-
-                            <div class="form-group row">
                                 <div class="col-lg-12">
-                                    <input id="loginConfirm" type="button" class="border-0-btn btn btn-primary btn-lg btn-block" value="개인정보 수정" onclick="getPasswordCheck()">
+                                    <input id="loginConfirm" type="button" class="border-0-btn btn btn-primary btn-lg btn-block" value="개인정보 수정" onclick="goUpdate()">
                                 </div>
                             </div>
 
@@ -142,7 +148,21 @@
 
 </div>
 
+<style>
+    .text-black{
+        font-weight: normal;
+    }
+    #c_addr{
 
+        background: #fff;
+    }
+    #c_post{
+        background: #fff;
+    }
+    #c_phone{
+
+    }
+</style>
 <script src="/js/jquery-3.3.1.min.js"></script>
 <script src="/js/jquery-ui.js"></script>
 <script src="/js/popper.min.js"></script>
@@ -157,31 +177,78 @@
 
     /*개인정보 수정*/
     function goUpdate(){
-        if(validation()) {
-
-            var param ={
-                userId : $('#userId').val(),
-                userPwd : document.querySelector('#c_password').value
+        if($('#c_password').val()=='') {
+            var param = {
+                userId: $('#userId').val(),
+                userAddr: $('#c_addr').val(),
+                userPhone: $('#c_phone').val()
             };
 
             $.ajax({
                 url: '/info/update',
                 data: param,
                 type: 'post',
-                dataType : 'json'
-            }).done(function(data){
-                if(data.resultCode == 200) {
-                    alert(data.resultMsg);
-                    location.href = '/';
-                }else {
-                    alert(data.resultMsg);
+                dataType: 'json'
+            }).done(function (data) {
+                if (data.resultCode == 200) {
+                    popup('회원정보수정', data.resultMsg, '/logout');
+                } else {
+                    popup('알림메세지', data.resultMsg);
                     return false;
                 }
 
-            }).fail(function (data, textStatus, errorThrown){
+            }).fail(function (data, textStatus, errorThrown) {
                 console.log(textStatus);
                 alert('ajax fail')
             });
+        }else{
+            if(validation())
+            {
+                var param1 = {
+                    userId:$('#userId').val(),
+                    userPwd: $('#c_password').val()
+                };
+
+                $.ajax({
+                    url: '/login/update',
+                    data: param1,
+                    type: 'post',
+                    dataType: 'json'
+                }).done(function (data) {
+                    if (data.resultCode == 200) {
+                        var param2 = {
+                            userId: $('#userId').val(),
+                            userAddr: $('#c_addr').val(),
+                            userPhone: $('#c_phone').val()
+                        };
+
+                        $.ajax({
+                            url: '/info/update',
+                            data: param2,
+                            type: 'post',
+                            dataType: 'json'
+                        }).done(function (data) {
+                            if (data.resultCode == 200) {
+                                popup('회원정보수정', data.resultMsg, '/logout');
+                            } else {
+                                popup('알림메세지', data.resultMsg);
+                                return false;
+                            }
+
+                        }).fail(function (data, textStatus, errorThrown) {
+                            console.log(textStatus);
+                            alert('ajax fail')
+                        });
+                    } else {
+                        popup('알림메세지', data.resultMsg);
+                        return false;
+                    }
+                }).fail(function (data, textStatus, errorThrown) {
+                    console.log(textStatus);
+                    alert('ajax fail')
+                });
+
+            }
         }
     }
 
@@ -204,19 +271,7 @@
 
         document.querySelectorAll("input[type=password]").forEach(input => {
             var inValue = input.value;
-
-            if (input.id == 'current_password' && $.trim(inValue).length == 0) {
-                document.forms[0].classList.add("was-validated");
-                $('#valid_current_password').text('* 비밀번호를 입력해주세요');
-                result = false;
-            }
-
-            if (input.id == 'c_password' && $.trim(inValue).length == 0) {
-                document.forms[0].classList.add("was-validated");
-                $('#valid_password').text('* 비밀번호를 입력해주세요');
-                $('#valid_password_c').text('');
-                result = false;
-            } else if ($('#valid_password').text() == '' && $('#c_password').val() != $('#c_pwd_re').val()) {
+            if ($('#valid_password').text() == '' && $('#c_password').val() != $('#c_pwd_re').val()) {
                 document.forms[0].classList.add("was-validated");
                 $('#valid_password_c').text('* 비밀번호 확인이 일치하지 않습니다.');
                 result = false;
@@ -233,7 +288,6 @@
             userId : $('#userId').val(),
 
         };
-        alert($('#userId').val())
 
         $.ajax({
             url: '/member/detail',
@@ -250,7 +304,7 @@
             var year = data.memberDetail.mbrBday.substring(0,2);
             var month = data.memberDetail.mbrBday.substring(2,4);
             var day = data.memberDetail.mbrBday.substring(4,6);
-            $('#c_birth').val(year + " / " + month + " / " + day);
+            $('#c_birth').val("19"+ year + " / " + month + " / " + day);
 
         }).fail(function (data, textStatus, errorThrown){
             console.log(textStatus);
@@ -259,35 +313,59 @@
 
     }
 
-    /*현재 비밀번호 체크*/
-    function getPasswordCheck(){
-        var param ={
-            userId : $('#userId').val(),
-            userPw : $('#current_password').val(),
-        };
 
-        $.ajax({
-            url: '/login/process',
-            data: param,
-            type: 'post',
-            dataType : 'json'
-        }).done(function(data){
-            if(data.resultCode==400 || data.resultCode == '400'){
-                $('#valid_current_password').text('비밀번호가 일치하지 않습니다.');
-            }else{
-                goUpdate();
-            }
-
-        }).fail(function (data, textStatus, errorThrown){
-            console.log(textStatus);
-            alert('ajax fail')
-        });
-
-    }
 
     $(document).ready(function () {
         getMemberDetail();
     });
+
+    /*우편번호조회 api*/
+    var element_layer = document.getElementById('layer');
+
+    function closeDaumPostcode() {
+        // iframe을 넣은 element를 안보이게 한다.
+        element_layer.style.display = 'none';
+    }
+
+    function sample2_execDaumPostcode() {
+        $('#valid_addr').text('');
+        new daum.Postcode({
+            oncomplete: function(data) {
+                var addr = ''; // 주소 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('c_post').value = data.zonecode;
+                document.getElementById("c_addr").value = addr;
+
+                element_layer.style.display = 'none';
+            },
+            width : '100%',
+            height : '100%',
+            maxSuggestItems : 5
+        }).embed(element_layer);
+        element_layer.style.display = 'block';
+        initLayerPosition();
+    }
+
+    // 브라우저의 크기 변경에 따라 레이어를 가운데로 이동하려면
+    // resize이벤트나, orientationchange이벤트를 이용하여 값이 변경될때마다 아래 함수를 실행, 아니면 직접 element_layer의 top,left값을 수정
+    function initLayerPosition(){
+        var width = 500;
+        var height = 600;
+        var borderWidth = 1;
+        element_layer.style.width = width + 'px';
+        element_layer.style.height = height + 'px';
+        element_layer.style.border = borderWidth + 'px solid #ced4da ';
+        element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
+        element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
+    }
+
 
 </script>
 

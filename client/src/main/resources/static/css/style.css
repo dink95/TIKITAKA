@@ -1408,6 +1408,81 @@ figure > img {
 #categoryIcon {
   cursor: pointer;
 }
+
+/*팝업창*/
+
+.popupLayout{
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #000;
+  background-color: rgba( 0, 0, 0, 0.5 );
+  position: fixed;
+  z-index: 100;
+  display: none;
+}
+.popup{
+  width: 490px;
+  height: 250px;
+  position: fixed;
+  border: 1px solid #f1ecf1;
+  background: #fff;
+
+}
+.popupTitleNav{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin:0 15px;
+  height: 20%;
+  border-bottom: 1px solid #ddd;
+}
+#popupTitle{
+  font-size: 14px;
+  color: #5f0080;
+  font-weight: bold;
+}
+.popupContentNav{
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.popupContentNav>span{
+  color: #000;
+}
+#popupContent{
+  font-size: 14px;
+  font-weight: bold;
+  color: #000;
+}
+.popupConfirm{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30%;
+}
+.popupConfirm>button{
+  border-style: none;
+  color: #fff;
+  background: #5f0080;
+  border-radius: 2px;
+  font-size: 13px;
+  cursor: pointer;
+  padding:5px 30px;
+  opacity: .8;
+}
+.popupConfirm>button:active{
+  opacity: 1;
+  border-style: none;
+}
+/*************/
+
 /********************************반응형********************************/
 
 .site-wrap{

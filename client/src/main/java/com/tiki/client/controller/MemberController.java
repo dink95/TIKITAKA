@@ -1,4 +1,5 @@
 package com.tiki.client.controller;
+
 import com.tiki.client.domain.MemberDTO;
 import com.tiki.client.domain.ProductDTO;
 import com.tiki.client.service.MemberService;
@@ -19,7 +20,7 @@ public class MemberController {
     private MemberService memberService;
 
     @RequestMapping("/")
-    public String Home(){
+    public String Home() {
         return "/index";
     }
 
@@ -81,7 +82,7 @@ public class MemberController {
         try {
             MemberDTO memberDTO = memberService.Detail(userId);
             resultMap.put("memberDetail", memberDTO);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("detail error");
         }
@@ -132,7 +133,7 @@ public class MemberController {
 
         Boolean exist = false;
         try {
-            exist= memberService.existId(id);
+            exist = memberService.existId(id);
             if (!exist) {
                 resultMap.put("resultCode", 200);
                 resultMap.put("resultMsg", "* 사용 가능한 아이디입니다.");
@@ -155,7 +156,7 @@ public class MemberController {
 
         Boolean exist = false;
         try {
-            exist= memberService.existPhone(phone);
+            exist = memberService.existPhone(phone);
             if (!exist) {
                 resultMap.put("resultCode", 200);
                 resultMap.put("resultMsg", "* 사용 가능한 전화번호입니다.");
@@ -178,7 +179,7 @@ public class MemberController {
 
         Boolean exist = false;
         try {
-            exist= memberService.existEmail(email);
+            exist = memberService.existEmail(email);
             if (!exist) {
                 resultMap.put("resultCode", 200);
                 resultMap.put("resultMsg", "* 사용 가능한 이메일입니다.");
@@ -218,7 +219,7 @@ public class MemberController {
         try {
             if (mbrId != null) {
                 resultMap.put("resultCode", 200);
-                resultMap.put("resultMsg", "회원님의 아이디는" + "" + mbrId + "입니다.");
+                resultMap.put("resultMsg", mbrId);
             } else {
                 resultMap.put("resultCode", 400);
                 resultMap.put("resultMsg", "가입된 아이디가 없습니다.");
@@ -235,18 +236,18 @@ public class MemberController {
     @RequestMapping(value = "/findpwd")  /*비밀번호찾기 페이지*/
     public String findpwd(Model model, HttpServletRequest request) {
         Map<String, Object> resultMap = new HashMap<>();
-        String result=null;
+        String result = null;
         try {
             String referer = request.getHeader("REFERER");
-            if (referer!=null) {
-                result= "/member/findpwd";
-            } else{
-                result= "/index";
+            if (referer != null) {
+                result = "/member/findpwd";
+            } else {
+                result = "/index";
                 model.addAttribute("modelCode", 400);
                 model.addAttribute("modelMsg", "올바른 접근이 아닙니다.");
             }
         } catch (Exception e) {
-            result= "";
+            result = "";
         }
         return result;
     }
@@ -263,7 +264,7 @@ public class MemberController {
         Boolean exist = false;
 
         try {
-            exist= memberService.findPwd(userId, userName, userPhone);
+            exist = memberService.findPwd(userId, userName, userPhone);
             if (exist) {
                 resultMap.put("resultCode", 200);
                 resultMap.put("resultMsg", "ok");
@@ -281,29 +282,29 @@ public class MemberController {
     }
 
 
-    @RequestMapping(value = "/updatepwd")  /*비밀번호찾기 페이지*/
+    @RequestMapping(value = "/updatepwd")  /*비밀번호변경 페이지*/
     public String updatepwd(Model model, HttpServletRequest request) {
         Map<String, Object> resultMap = new HashMap<>();
-        String result=null;
+        String result = null;
         try {
             String referer = request.getHeader("REFERER");
-            if (referer!=null) {
-                result= "/member/updatepwd";
-            } else{
-                result= "/index";
+            if (referer != null) {
+                result = "/member/updatepwd";
+            } else {
+                result = "/index";
                 model.addAttribute("modelCode", 400);
                 model.addAttribute("modelMsg", "올바른 접근이 아닙니다.");
             }
         } catch (Exception e) {
-            result= "";
+            result = "";
         }
         return result;
     }
 
     @RequestMapping("/login/update")  /*비밀번호 재설정*/
     @ResponseBody
-    public Map<String, Object> updatePwd( @RequestParam(value = "userId") String userId,
-                                          @RequestParam(value = "userPwd") String userPwd) {
+    public Map<String, Object> updatePwd(@RequestParam(value = "userId") String userId,
+                                         @RequestParam(value = "userPwd") String userPwd) {
 
         MemberDTO memberDTO = new MemberDTO();
 
@@ -311,11 +312,11 @@ public class MemberController {
         memberDTO.setMbrId(userId);
         memberDTO.setMbrPwd(userPwd);
 
-        int result =0;
+        int result = 0;
 
         try {
 
-            result= memberService.updatePwd(memberDTO);
+            result = memberService.updatePwd(memberDTO);
 
             if (result > 0) {
                 resultMap.put("resultCode", 200);
@@ -328,7 +329,7 @@ public class MemberController {
         } catch (Exception e) {
             e.printStackTrace();
             resultMap.put("resultCode", 500);
-            resultMap.put("resultMsg", "관리자에게 문의하세요");
+            resultMap.put("resultMsg", "실패하였습니다. 관리자에게 문의하세요");
         }
 
         return resultMap;
@@ -342,49 +343,58 @@ public class MemberController {
     }
 
     @RequestMapping(value = "/member/info/update")  /*개인정보수정 페이지*/
-    public ModelAndView updateinfo(){
+    public ModelAndView updateinfo() {
         ModelAndView view = new ModelAndView();
         view.setViewName("member/information/update");
         return view;
     }
 
+
     @RequestMapping("/info/update")  /*개인정보 수정*/
     @ResponseBody
-    public Map<String, Object> updateInfo( @RequestParam(value = "userId") String userId,
-                                           @RequestParam(value = "userPwd") String userPwd) {
+    public Map<String, Object> updatePwd(@RequestParam(value = "userId") String userId,
+                                         @RequestParam(value = "userAddr") String userAddr,
+                                         @RequestParam(value = "userPhone") String userPhone) {
 
         MemberDTO memberDTO = new MemberDTO();
 
         Map<String, Object> resultMap = new HashMap<>();
         memberDTO.setMbrId(userId);
-        memberDTO.setMbrPwd(userPwd);
+        memberDTO.setMbrAddr(userAddr);
+        memberDTO.setMbrPhone(userPhone);
 
-        int result =0;
+        int result = 0;
 
         try {
 
-            result= memberService.updatePwd(memberDTO);
+            result = memberService.updateMemberInfo(memberDTO);
 
             if (result > 0) {
                 resultMap.put("resultCode", 200);
-                resultMap.put("resultMsg", "회원정보가 수정되었습니다..");
+                resultMap.put("resultMsg", "회원정보가 변경되었습니다. 다시 로그인해주세요");
             } else {
                 resultMap.put("resultCode", 400);
-                resultMap.put("resultMsg", "회원정보 수정이 실패하였습니다. 관리자에게 문의하세요.");
+                resultMap.put("resultMsg", "회원정보 변경이 실패하였습니다. 관리자에게 문의하세요.");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
             resultMap.put("resultCode", 500);
-            resultMap.put("resultMsg", "관리자에게 문의하세요");
+            resultMap.put("resultMsg", "실패하였습니다. 관리자에게 문의하세요");
         }
 
         return resultMap;
     }
 
+    @RequestMapping(value = "/member/info/pwdconfirm")  /*비밀번호확인 페이지*/
+    public ModelAndView pwdconfirm() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("member/information/pwdconfirm");
+        return view;
+    }
 
     @RequestMapping(value = "/member/info/delete")  /*회원탈퇴 페이지*/
-    public ModelAndView deleteinfo(){
+    public ModelAndView deleteinfo() {
         ModelAndView view = new ModelAndView();
         view.setViewName("member/information/delete");
         return view;
@@ -392,18 +402,18 @@ public class MemberController {
 
     @RequestMapping("/info/delete")  /*회원탈퇴*/
     @ResponseBody
-    public Map<String, Object> deleteInfo( @RequestParam(value = "userId") String userId) {
+    public Map<String, Object> deleteInfo(@RequestParam(value = "userId") String userId) {
 
         MemberDTO memberDTO = new MemberDTO();
 
         Map<String, Object> resultMap = new HashMap<>();
         memberDTO.setMbrId(userId);
 
-        int result =0;
+        int result = 0;
 
         try {
 
-            result= memberService.deleteMember(userId);
+            result = memberService.deleteMember(userId);
 
             if (result > 0) {
                 resultMap.put("resultCode", 200);
@@ -423,7 +433,7 @@ public class MemberController {
     }
 
     @RequestMapping(value = "/member/info/certify")  /*이메일인증 페이지*/
-    public ModelAndView certifyemail(){
+    public ModelAndView certifyemail() {
         ModelAndView view = new ModelAndView();
         view.setViewName("member/information/certify");
         return view;
@@ -433,18 +443,53 @@ public class MemberController {
     @ResponseBody
     public Map<String, Object> certifyEmail(@RequestParam(value = "id") String id) {
         Map<String, Object> resultMap = new HashMap<>();
-        String pinnum;
+        String emailKey;
         try {
-            pinnum= memberService.certifyEmail(id);
-            System.out.println(pinnum);
+            emailKey = memberService.certifyEmail(id);
             resultMap.put("resultCode", 200);
-            resultMap.put("resultMsg", "성공"+ " "+ "pinnum:" + pinnum);
+            resultMap.put("resultMsg", emailKey);
+
         } catch (Exception e) {
             e.printStackTrace();
             resultMap.put("resultCode", 500);
-            resultMap.put("resultMsg", "인증실패 500");
+            resultMap.put("resultMsg", "전송실패 다시 시도하세요.");
         }
         return resultMap;
     }
+
+
+    @RequestMapping("/certify/role/update")  /*이메일인증 role 수정*/
+    @ResponseBody
+    public Map<String, Object> updateRole(@RequestParam(value = "userId") String userId) {
+
+        MemberDTO memberDTO = new MemberDTO();
+
+        Map<String, Object> resultMap = new HashMap<>();
+        memberDTO.setMbrId(userId);
+
+        int result = 0;
+
+        try {
+
+            result = memberService.updateMemberRole(memberDTO);
+
+            if (result > 0) {
+                resultMap.put("resultCode", 200);
+                resultMap.put("resultMsg", "이메일 인증이 완료되었습니다.");
+            } else {
+                resultMap.put("resultCode", 400);
+                resultMap.put("resultMsg", "실패하였습니다. 다시 시도해주세요.");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("resultCode", 500);
+            resultMap.put("resultMsg", "실패하였습니다. 관리자에게 문의하세요.");
+        }
+
+        return resultMap;
+    }
+
+
 }
 

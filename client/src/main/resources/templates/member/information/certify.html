@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-<head >
+<head>
     <title>TIKITAKA &ndash; 이메일 인증 </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -27,7 +27,8 @@
         <div class="site-navbar-top" th:replace="common::header(certifyEmail)">
         </div>
         <!------------->
-        <nav class="site-navigation text-right text-md-center" role="navigation" th:replace="common::menu(certifyEmail)">
+        <nav class="site-navigation text-right text-md-center" role="navigation"
+             th:replace="common::menu(certifyEmail)">
         </nav>
         <!---------------------------------------------------------->
     </header>
@@ -38,41 +39,43 @@
     <div class="bg-light py-3" th:replace="common::logo(이메일인증)">
     </div>
     <!----------------------->
-    <div class="site-section margin-top-2" >
-        <div class="container" >
+    <div class="site-section margin-top-2">
+        <div class="container">
             <div class="row justify-content-center"><!--justify-content-center 추가-->
 
-                <div class="col-md-7"  >
-                    <div class="col-md-12 " >
-                        <h2 class="h3 mb-3 text-black  " >이메일인증</h2> <!--login logo 위치 수정-->
+                <div class="col-md-7">
+                    <div class="col-md-12 ">
+                        <h2 class="h3 mb-3 text-black  ">이메일인증</h2> <!--login logo 위치 수정-->
                     </div>
                     <form action="" method="post">
                         <input type="hidden" id="userId" th:value="${session.mbrId}">
                         <div class="p-3 p-lg-5 border">
 
 
-                            <div class="row align-items-sm-start justify-content-center align-items-center" >
+                            <div class="row align-items-sm-start justify-content-center align-items-center">
                                 <div class="col-md-8">
-                                    <label for="c_email" class="text-black">이메일<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="c_email" name="c_email" required onkeyup="onKeyUp('#valid_password');" >
-                                       <span id="valid_email" style="color: #ff0000;font-size: 10px;"></span>
+                                    <input type="text" class="form-control" id="c_email" name="c_email" required
+                                           disabled>
+                                    <span id="valid_email" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
 
-                                <div class="col-lg-4">
-                                    <span id="sendCertifyNum" onclick="goCertify()">인증번호 보내기</span>
+                                <div class="sendEmailBtn col-lg-4">
+                                    <span id="sendCertifyNum" onclick="sendEmail()">인증번호 보내기</span>
                                 </div>
                             </div>
 
-                            <div class="row align-items-sm-start justify-content-center align-items-center" >
+                            <div class="row align-items-sm-start justify-content-center align-items-center">
                                 <div class="col-md-8">
-                                    <input type="password" class="form-control" placeholder="인증번호를 입력하세요."
-                                           id="current_password" name="current_password"
-                                           required onkeyup="onKeyUp('#valid_current_password');">
+                                    <input type="text" id="inputKey" class="form-control" placeholder="인증번호를 입력하세요."
+                                           name="current_password"
+                                           required>
+                                    <input type="text" id="emailKey" value="">
                                     <span id="valid_current_password" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
 
-                                <div class="col-lg-4">
-                                    <input id="loginConfirm" type="button" class="border-0-btn btn btn-primary btn-lg btn-block" value="인증하기">
+                                <div class="doCertifyBtn col-lg-4">
+                                    <input id="loginConfirm" type="button" class="btn btn-primary btn-lg btn-block"
+                                           value="인증하기" onclick="goCertify()">
                                 </div>
                             </div>
 
@@ -84,12 +87,57 @@
         </div>
     </div>
 </div>
+<div id="loading" style="display: none"><img id="loading-image" src="/images/ajax-loader.gif" alt="전송중..." /></div>
+
 
 <style>
-    #sendCertifyNum{
+    .align-items-sm-start {
+        padding: 5px 0;
+    }
+
+    #sendCertifyNum {
         color: red;
         cursor: pointer;
     }
+
+    .sendEmailBtn {
+        height: 40px;
+        line-height: 40px;
+    }
+
+    .doCertifyBtn {
+        height: 43px;
+        padding-top: 5px;
+    }
+
+    #loginConfirm {
+        width: 105px;
+        line-height: 16px;
+        background: #5e0080;
+        border-style: none;
+    }
+
+    #loading {
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        position: fixed;
+        display: block;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+        text-align: center;
+    }
+
+    #loading-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 100;
+    }
+
+
 </style>
 </div>
 
@@ -106,35 +154,92 @@
 <script>
 
 
-    /*이메일 인증*/
-    function goCertify(){
+    /*멤버 정보*/
+    function getMemberDetail() {
+        var param = {
+            userId: $('#userId').val(),
 
-            var param ={
-                id : $('#c_email').val(),
-            };
+        };
+
+        $.ajax({
+            url: '/member/detail',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            console.log("data.memberDetail", data.memberDetail);
+            $('#c_email').val(data.memberDetail.mbrEmail);
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+            alert('ajax fail')
+        });
+
+    }
+
+    /*이메일 인증*/
+    function sendEmail() {
+        $('#loading').css('display','block');
+        var param = {
+            id: $('#userId').val(),
+        };
 
         $.ajax({
             url: '/info/certify',
             data: param,
             type: 'post',
-            dataType : 'json'
-        }).done(function(data){
-            if(data.resultCode == 200) {
-                alert(data.resultMsg);
+            dataType: 'json'
 
-            }else {
+        }).done(function (data) {
+            $('#loading').css('display','none');
+            if (data.resultCode == 200) {
+                popup('알람메세지',"인증번호가 전송되었습니다. 이메일을 확인해주세요.");
+                $('#emailKey').val(data.resultMsg);
+            } else {
                 alert(data.resultMsg);
                 return false;
             }
 
-            }).fail(function (data, textStatus, errorThrown){
-                console.log(textStatus);
-                alert('ajax fail')
-            });
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log('ajax fail',textStatus);
+        });
 
     }
 
+    function goCertify() {
+        if($('#inputKey').val()==""){
+            popup('알람메세지',"인증번호를 입력해주세요.");
+        }
+        else if ($('#inputKey').val() == $('#emailKey').val()) {
+            var param = {
+                userId: $('#userId').val(),
+            };
 
+            $.ajax({
+                url: '/certify/role/update',
+                data: param,
+                type: 'post',
+                dataType: 'json'
+            }).done(function (data) {
+                if (data.resultCode == 200) {
+                    popup('알람메세지',data.resultMsg,'/member/myinfo');
+                } else {
+                    popup('알람메세지',data.resultMsg);
+                    $('#inputKey').val('');
+                    return false;
+                }
+
+            }).fail(function (data, textStatus, errorThrown) {
+                console.log(textStatus);
+                alert('ajax fail')
+            });
+        } else {
+            popup('알람메세지',"인증에 실패하였습니다. 인증번호를 확인해주세요.");
+        }
+    }
+
+    $(document).ready(function () {
+        getMemberDetail();
+    });
 
 
 

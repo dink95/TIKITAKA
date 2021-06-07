@@ -602,6 +602,23 @@ function goCatDetail(catNo) {
 	location.href = '/product/list?catNo=' + catNo;
 }
 
+// 팝업창
+function popup(title,content,href){
+	$('.popupLayout').css('display','flex');
+	$('#popupTitle').text(title);
+	$('#popupContent').text(content);
+	$('#confirmBtn').click(function(){
+		if (href) {
+			location.href = href;
+			$('.popupLayout').css('display', 'none');
+		} else {
+			$('.popupLayout').css('display', 'none');
+		}
+	});
+}
+
+
+
 /**********************************************반응형******************************************/
 $('.mobile_search_icon').click(function(){
 	const mobile_search_toggle= $('.input-mobile-search_div');

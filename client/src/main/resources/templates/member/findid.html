@@ -43,7 +43,7 @@
     <div th:replace="common::mobile_search(findid)"></div>
 
     <!--replace logo-아이디찾기-->
-    <div class="bg-light py-3" th:replace="common::logo(findid)">
+    <div class="bg-light py-3" th:replace="common::logo(아이디찾기)">
     </div>
     <!-------------------------->
 
@@ -110,7 +110,11 @@
 </div>
 
 </div>
-
+<style>
+    .text-black{
+        font-weight: normal;
+    }
+</style>
 
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/jquery-ui.js"></script>
@@ -139,7 +143,15 @@
                 dataType : 'json'
             }).done(function(data){
                 if(data.resultCode == 200) {
-                    modal(data.resultMsg,'확인','findid')
+                    var visualIdNm =Math.ceil(data.resultMsg.length/1.5); console.log(visualIdNm);
+                    var hideIdNm = data.resultMsg.length-visualIdNm; console.log(hideIdNm);
+                    var visualId = data.resultMsg.substring(0,visualIdNm); console.log(visualId);
+                    var findId = visualId;
+                    for(var i=0; i<hideIdNm; i++){
+                        findId = findId +"*";
+                    }
+                    popup('아이디찾기',"회원님의 아이디는"+ " " +
+                        "[" + findId + "]" + " " + "입니다.");
                 }else {
                     $('#valid_findError').text('*'+""+data.resultMsg);
                     return false;
