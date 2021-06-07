@@ -33,4 +33,29 @@ public class ComplainServiceImp implements ComplainService{
     public List<ComplainDTO> selectListByReporter(String repo) {
         return mapper.selectListByReporter(repo);
     }
+
+    @Override
+    public List<ComplainDTO> selectAllComplains() {
+        return mapper.selectAllComplains();
+    }
+
+    @Override
+    public ComplainDTO selectComplainDetail(int compIdx) {
+        return mapper.selectComplainDetail(compIdx);
+    }
+
+    @Override
+    public List<ComplainDTO> selectListNotRead() {
+        return mapper.selectListNotRead();
+    }
+
+    @Override
+    public List<ComplainDTO> selectListAlreadyRead() {
+        return mapper.selectListAlreadyRead();
+    }
+
+    @Override
+    public int updateReadCheck(int compIdx) {
+        return mapper.updateReadCheck(compIdx);
+    }
 }

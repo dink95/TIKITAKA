@@ -83,7 +83,7 @@
             mbr_id = #{mbrId,jdbcType=VARCHAR}
     </select>
 
-    <update id="updateMember" parameterType="MemberDTO">
+    <update id="updateMemberPwd" parameterType="MemberDTO">
         UPDATE
             mbr
         SET

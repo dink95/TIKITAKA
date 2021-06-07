@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tiki.member.mapper.ManagerMapper">
+
+    <resultMap id="ManResultMap" type="ManagerDTO">
+        <result column="man_id" property="manId" jdbcType="VARCHAR"/>
+        <result column="man_pwd" property="manPwd" jdbcType="VARCHAR"/>
+        <result column="man_nm" property="manNm" jdbcType="VARCHAR"/>
+        <result column="man_email" property="manEmail" jdbcType="VARCHAR"/>
+        <result column="man_pnum" property="manPnum" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectManagerDetail" resultMap="ManResultMap" parameterType="String">
+        select *
+        from manager
+        where man_id = #{manId,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateManagerPassword" parameterType="ManagerDTO">
+        UPDATE
+            man
+        SET
+            man_pwd = #{manPwd,jdbcType=VARCHAR}
+        WHERE
+            man_id = #{manId,jdbcType=VARCHAR}
+
+    </update>
+
+
+</mapper>

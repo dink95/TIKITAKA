@@ -17,4 +17,35 @@
         delete from comp
         where comp_idx = #{compIdx, jdbcType=INTEGER}
     </delete>
+
+
+    <select id="selectAllComplains" resultType="ComplainDTO">
+        select *
+        from comp
+    </select>
+
+    <select id="selectComplainDetail" resultType="ComplainDTO" parameterType="int">
+        select *
+        from comp
+        where comp_idx = #{compIdx, jdbcType=INTEGER}
+    </select>
+
+    <select id="selectListNotRead" resultType="ComplainDTO">
+        select *
+        from comp
+        where read_check = false
+    </select>
+
+    <select id="selectListAlreadyRead" resultType="ComplainDTO">
+        select *
+        from comp
+        where read_check = true
+    </select>
+
+    <update id="updateReadCheck" parameterType="int">
+        update comp
+        set read_check = true
+        where comp_idx = #{compIdx, jdbcType=INTEGER}
+    </update>
+
 </mapper>

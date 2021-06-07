@@ -36,5 +36,27 @@ public class ComplainController {
     }
 
 
+    @GetMapping("/comp")
+    public List<ComplainDTO> selectAllComplains(){
+        return service.selectAllComplains();
+    }
+
+    @GetMapping("/comp/{idx}")
+    public ComplainDTO selectComplainDetailByIdx(@PathVariable("idx")int compIdx){
+        service.updateReadCheck(compIdx); // 읽음표시
+        return service.selectComplainDetail(compIdx);
+    }
+
+    @GetMapping("/comp/not")
+    public List<ComplainDTO> selectListNotReadYet(){
+        return service.selectListNotRead();
+    }
+
+    @GetMapping("/comp/already")
+    public List<ComplainDTO> selectListAlreadyRead(){
+        return service.selectListAlreadyRead();
+    }
+
+
 
 }
