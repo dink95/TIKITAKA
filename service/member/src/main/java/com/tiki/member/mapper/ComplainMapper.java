@@ -16,4 +16,11 @@ public interface ComplainMapper {
 
     List<ComplainDTO> selectListByReporter(String repo);
 
+    List<ComplainDTO> selectAllComplains();
+
+    ComplainDTO selectComplainDetail(int compIdx);
+
+    List<ComplainDTO> selectListNotRead();
+
+    List<ComplainDTO> selectListAlreadyRead();
 }
