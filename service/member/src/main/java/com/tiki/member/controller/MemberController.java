@@ -162,4 +162,9 @@ public class MemberController {
         return memberService.updateMemberInfo(memberDTO);
     }
 
+    @PatchMapping("/mbr/role")
+    public int updateEmailRole(@RequestBody MemberDTO memberDTO){
+        return memberService.updateRole(memberDTO);
+    }
+
 }
