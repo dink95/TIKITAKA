@@ -329,7 +329,7 @@ public class MemberController {
         } catch (Exception e) {
             e.printStackTrace();
             resultMap.put("resultCode", 500);
-            resultMap.put("resultMsg", "관리자에게 문의하세요");
+            resultMap.put("resultMsg", "실패하였습니다. 관리자에게 문의하세요");
         }
 
         return resultMap;
@@ -349,40 +349,49 @@ public class MemberController {
         return view;
     }
 
-//    @RequestMapping("/info/update")  /*개인정보 수정*/
-//    @ResponseBody
-//    public Map<String, Object> updateInfo(@RequestParam(value = "userId") String userId,
-//                                          @RequestParam(value = "userPwd") String userPwd) {
-//
-//        MemberDTO memberDTO = new MemberDTO();
-//
-//        Map<String, Object> resultMap = new HashMap<>();
-//        memberDTO.setMbrId(userId);
-//        memberDTO.setMbrPwd(userPwd);
-//
-//        int result = 0;
-//
-//        try {
-//
-//            result = memberService.updateMemberInfo(memberDTO);
-//
-//            if (result > 0) {
-//                resultMap.put("resultCode", 200);
-//                resultMap.put("resultMsg", "회원정보가 수정되었습니다.");
-//            } else {
-//                resultMap.put("resultCode", 400);
-//                resultMap.put("resultMsg", "회원정보 수정이 실패하였습니다. 관리자에게 문의하세요.");
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            resultMap.put("resultCode", 500);
-//            resultMap.put("resultMsg", "관리자에게 문의하세요");
-//        }
-//
-//        return resultMap;
-//    }
 
+    @RequestMapping("/info/update")  /*개인정보 수정*/
+    @ResponseBody
+    public Map<String, Object> updatePwd(@RequestParam(value = "userId") String userId,
+                                         @RequestParam(value = "userAddr") String userAddr,
+                                         @RequestParam(value = "userPhone") String userPhone) {
+
+        MemberDTO memberDTO = new MemberDTO();
+
+        Map<String, Object> resultMap = new HashMap<>();
+        memberDTO.setMbrId(userId);
+        memberDTO.setMbrAddr(userAddr);
+        memberDTO.setMbrPhone(userPhone);
+
+        int result = 0;
+
+        try {
+
+            result = memberService.updateMemberInfo(memberDTO);
+
+            if (result > 0) {
+                resultMap.put("resultCode", 200);
+                resultMap.put("resultMsg", "회원정보가 변경되었습니다. 다시 로그인해주세요");
+            } else {
+                resultMap.put("resultCode", 400);
+                resultMap.put("resultMsg", "회원정보 변경이 실패하였습니다. 관리자에게 문의하세요.");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("resultCode", 500);
+            resultMap.put("resultMsg", "실패하였습니다. 관리자에게 문의하세요");
+        }
+
+        return resultMap;
+    }
+
+    @RequestMapping(value = "/member/info/pwdconfirm")  /*비밀번호확인 페이지*/
+    public ModelAndView pwdconfirm() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("member/information/pwdconfirm");
+        return view;
+    }
 
     @RequestMapping(value = "/member/info/delete")  /*회원탈퇴 페이지*/
     public ModelAndView deleteinfo() {
@@ -448,15 +457,20 @@ public class MemberController {
         return resultMap;
     }
 
-    @RequestMapping("/certify/role/update")  /*이메일인증 roll 수정*/
+
+    @RequestMapping("/certify/role/update")  /*이메일인증 role 수정*/
     @ResponseBody
-    public Map<String, Object> updateInfo(@RequestParam(value = "id") String id) {
-        Map<String, Object> resultMap = new HashMap<>();
+    public Map<String, Object> updateRole(@RequestParam(value = "userId") String userId) {
 
         MemberDTO memberDTO = new MemberDTO();
-        memberDTO.setMbrId(id);
+
+        Map<String, Object> resultMap = new HashMap<>();
+        memberDTO.setMbrId(userId);
+
         int result = 0;
+
         try {
+
             result = memberService.updateMemberRole(memberDTO);
 
             if (result > 0) {
@@ -470,7 +484,7 @@ public class MemberController {
         } catch (Exception e) {
             e.printStackTrace();
             resultMap.put("resultCode", 500);
-            resultMap.put("resultMsg", "실패하였습니다. 관리자에게 문의하세요");
+            resultMap.put("resultMsg", "실패하였습니다. 관리자에게 문의하세요.");
         }
 
         return resultMap;

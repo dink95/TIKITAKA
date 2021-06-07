@@ -211,7 +211,7 @@
         }
         else if ($('#inputKey').val() == $('#emailKey').val()) {
             var param = {
-                id: $('#userId').val(),
+                userId: $('#userId').val(),
             };
 
             $.ajax({
@@ -221,9 +221,10 @@
                 dataType: 'json'
             }).done(function (data) {
                 if (data.resultCode == 200) {
-                    popup('알람메세지',data.resultMsg);
+                    popup('알람메세지',data.resultMsg,'/member/information/myinfo');
                 } else {
                     popup('알람메세지',data.resultMsg);
+                    $('#inputKey').val('');
                     return false;
                 }
 
