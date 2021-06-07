@@ -25,4 +25,6 @@ public interface MemberMapper {
     public int updateMemberPwd(MemberDTO dto);
 
     public int updateRole(MemberDTO dto);
+
+    public int updateMemberInfo(MemberDTO dto);
 }

@@ -101,4 +101,15 @@
             mbr_id = #{mbrId,jdbcType=VARCHAR}
     </update>
 
+
+    <update id="updateMemberInfo" parameterType="MemberDTO">
+        UPDATE
+            mbr
+        SET
+            mbr_addr = #{mbrAddr, jdbcType=VARCHAR},
+            mbr_phone =  #{mbrPhone, jdbcType=VARCHAR}
+        WHERE
+            mbr_id = #{mbrId,jdbcType=VARCHAR}
+    </update>
+
 </mapper>

@@ -58,4 +58,37 @@ public class ComplainService {
                 .block();
     }
 
+    public List<ComplainDTO> selectAllComplains(){
+        return webClient.get()
+                .uri("/comp")
+                .retrieve()
+                .bodyToMono(List.class) //반환정보
+                .block();
+
+    }
+
+    public ComplainDTO selectComplainDetailByIndex(int idx){
+        return webClient.get()
+                .uri("/comp/{idx}",idx)
+                .retrieve()
+                .bodyToMono(ComplainDTO.class) //반환정보
+                .block();
+    }
+
+    public List<ComplainDTO> selectListNotRead(){
+        return webClient.get()
+                .uri("/comp/not")
+                .retrieve()
+                .bodyToMono(List.class) //반환정보
+                .block();
+    }
+
+    public List<ComplainDTO> selectListAlreadyRead(){
+        return webClient.get()
+                .uri("/comp/already")
+                .retrieve()
+                .bodyToMono(List.class) //반환정보
+                .block();
+    }
+
 }

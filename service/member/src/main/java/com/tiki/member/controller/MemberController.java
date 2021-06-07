@@ -44,7 +44,7 @@ public class MemberController {
         simpleMessage.setSubject("TIKITAKA 이메일 인증");
         simpleMessage.setText("인증번호 : " + emailKey);
         simpleMessage.setTo(email);
-        simpleMessage.setFrom("movegun1027@gmail.com");
+        //simpleMessage.setFrom("movegun1027@gmail.com");
         javaMail.send(simpleMessage);
 
         return emailKey;
@@ -149,10 +149,17 @@ public class MemberController {
         return  memberService.findMemberId(memberDTO);
     }
 
+
+
     @PatchMapping("/mbr/password")
     public int updatePassword(@RequestBody MemberDTO memberDTO){
         memberDTO.setMbrPwd(passwordEncoder.encode(memberDTO.getMbrPwd()));
         return memberService.updateMemberPwd(memberDTO);
+    }
+
+    @PatchMapping("/mbr/info")
+    public int updateMemberInformation(@RequestBody MemberDTO memberDTO){
+        return memberService.updateMemberInfo(memberDTO);
     }
 
 }

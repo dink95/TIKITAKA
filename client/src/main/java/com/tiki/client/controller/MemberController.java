@@ -363,7 +363,7 @@ public class MemberController {
 
         try {
 
-            result= memberService.update(memberDTO);
+            result= memberService.updatePwd(memberDTO);
 
             if (result > 0) {
                 resultMap.put("resultCode", 200);

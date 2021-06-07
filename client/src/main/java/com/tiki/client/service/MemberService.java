@@ -114,5 +114,14 @@ public class MemberService {
                 .block();
     }
 
+    public int updateMemberInfo(MemberDTO memberDTO) {
+        return webClient.patch()
+                .uri("/mbr/info")
+                .body(Mono.just(memberDTO), MemberDTO.class)
+                .retrieve()
+                .bodyToMono(Integer.class) //반환정보
+                .block();
+    }
+
 
 }
