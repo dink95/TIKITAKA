@@ -53,9 +53,9 @@ public class MemberServiceImp implements MemberService{
     }
 
     @Override
-    public int updateMember(MemberDTO dto) { return mapper.updateMember(dto); }
+    public int updateMemberPwd(MemberDTO dto) {
+        return mapper.updateMemberPwd(dto);
+    }
 
-    @Override
-    public int updateRole(MemberDTO dto) { return mapper.updateRole(dto); }
-    =======
+    
 }
