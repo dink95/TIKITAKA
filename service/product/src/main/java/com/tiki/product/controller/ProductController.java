@@ -22,6 +22,45 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    // 상위 카테고리일때 마지막 카테고리 반환하는 함수
+    public int finishCatNo(int catNo) {
+
+        int finishNo = 0;
+        int[] highCatNo = {10, 20, 30, 40};
+        boolean check = false;
+
+        for(int i = 0; i < 4; i++){
+            if (catNo == highCatNo[i]) {
+                check = true;
+                break;
+            }
+        }
+
+        if(check) {
+            switch(catNo) {
+                case 10:
+                    finishNo = 19;
+                    break;
+                case 20:
+                    finishNo = 26;
+                    break;
+                case 30:
+                    finishNo = 36;
+                    break;
+                case 40:
+                    finishNo = 47;
+                    break;
+                default:
+                    System.out.println("잘못된 접근입니다.");
+            }
+        }
+        else {
+            finishNo = catNo;
+        }
+
+        return finishNo;
+    }
+
     // 상품 디테일 보기
     @GetMapping("/prd/{prodNo}")
     public ProductDTO selectProductByProdNo(@PathVariable("prodNo") int prodNo) {
@@ -43,8 +82,12 @@ public class ProductController {
                            @PathVariable("catNo") int catNo) {
 
         ProductDTO productDTO = new ProductDTO();
+
+        int finishNo = finishCatNo(catNo);
+
         productDTO.setProdNm(prodNm);
         productDTO.setCatNo(catNo);
+        productDTO.setNego(finishNo);
 
         List<ProductDTO> productList = productService.resultByNmCat(productDTO);
 
@@ -75,42 +118,9 @@ public class ProductController {
 
         List<ProductDTO> productList;
 
-        int[] highCatNo = {10, 20, 30, 40};
-        boolean check = true;
+        int finishNo = finishCatNo(catNo);
 
-        for(int i = 0; i < 4; i++){
-            if (catNo == highCatNo[i]) {
-                check = false;
-                break;
-            }
-        }
-
-        if(check) {
-            productList = productService.resultByCatNo(catNo, catNo);
-        }
-        else {
-            int finishNo = 0;
-
-            switch(catNo) {
-                case 10:
-                    finishNo = 19;
-                    break;
-                case 20:
-                    finishNo = 26;
-                    break;
-                case 30:
-                    finishNo = 36;
-                    break;
-                case 40:
-                    finishNo = 47;
-                    break;
-                default:
-                    System.out.println("잘못된 접근입니다.");
-            }
-
-            productList = productService.resultByCatNo(catNo, finishNo);
-
-        }
+        productList = productService.resultByCatNo(catNo, finishNo);
 
         if(productList == null) {
             System.out.println("에러가 나왔으니 확인바람");
@@ -150,6 +160,7 @@ public class ProductController {
         ,insertProdDTO.getProdCo(), insertProdDTO.getContent(), insertProdDTO.getImgCount());
 
         productService.insertProduct(productDTO);
+
         return  productService.selectProductNo(productDTO);
     }
 

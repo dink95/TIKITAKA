@@ -9,6 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Member;
 import java.util.Random;
 
 @Slf4j
@@ -24,11 +25,14 @@ public class MemberController {
     @Autowired
     public JavaMailSender javaMail;
 
-    @GetMapping("/mbr/{email}")
-    public void sendMail(@PathVariable("email") String email) {
+    @GetMapping("/mbr/emailrollcheck/{id}") // 이메일 보내기
+    public String sendMail(@PathVariable("id") String id) {
 
-        int leftLimit = 97; // a
-        int rightLimit = 122; // z
+        MemberDTO dto = memberService.selectMemberDetail(id);
+        String email = dto.getMbrEmail();
+
+        int leftLimit = 65; // A
+        int rightLimit = 90; // Z
         int stringLength = 5;
         Random random = new Random();
         String emailKey = random.ints(leftLimit, rightLimit + 1)
@@ -37,17 +41,30 @@ public class MemberController {
                 .toString();
 
         SimpleMailMessage simpleMessage = new SimpleMailMessage();
-        simpleMessage.setTo(email);
         simpleMessage.setSubject("TIKITAKA 이메일 인증");
         simpleMessage.setText("인증번호 : " + emailKey);
+        simpleMessage.setTo(email);
+        simpleMessage.setFrom("movegun1027@gmail.com");
+        javaMail.send(simpleMessage);
 
+        return emailKey;
+
+    }
+
+    @PatchMapping("/mbr/emailRoleUpdate/{id}") // 멤버 이메일 인증 업데이트
+    public int updateEmailRole(@PathVariable("id") String id){
+
+        MemberDTO dto = memberService.selectMemberDetail(id);
+
+        dto.setMbrRole(true);
+
+        return memberService.updateRole(dto);
     }
 
     @GetMapping("/mbr/{id}")
     public MemberDTO selectMemberById(@PathVariable("id") String id){
         return memberService.selectMemberDetail(id);
     }
-
 
     @GetMapping("/mbr/existence/id/{id}")
     public boolean existIdCheck(@PathVariable("id") String id){

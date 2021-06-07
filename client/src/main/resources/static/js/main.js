@@ -249,7 +249,7 @@ var arr = [["삽니다"],
 	["가구/인테리어","침실", "주방","거실", "DIY", "서재/사무용", "기타"],
 	["여가활동","등산", "캠핑", "골프", "헬스", "공연/티켓", "여행", "기타"],
 	["기타","반려동물용품", "차량용품", "출산/유아용품"]
-	];
+];
 
 
 function categoryChangeDetail(e) {
@@ -264,7 +264,6 @@ function categoryChangeDetail(e) {
 					$('#selectedDetail').val(j);
 				}
 			}
-
 			else if($('#selectedMain').val()=="passion"){
 				if (arr[1][j] == e.value) {
 					$('#selectedDetail').val(10 + j);
@@ -424,6 +423,14 @@ var len = $('input').val().length;
 $('input').focus();
 $('input')[0].setSelectionRange(len, len);
 
+/*새로고침 했을때 스크롤 제일 위로 이동*/
+window.onload = function() {
+	setTimeout (function () {
+		scrollTo(0,0);
+
+	},100);
+
+}
 /*스크롤 위로 이동*/
 function scroll_up() {
 	$("html, body").animate({scrollTop: 0}, "slow");
@@ -473,10 +480,158 @@ function historyBack(){
 	history.back();
 }
 
-function categoryMenuChange(){
-	if ( $('.categoryMenu').css('display') === 'none' ) {
-		$('.categoryMenu').css('display', 'flex');
-	}else{
-		$('.categoryMenu').css('display', 'none');
+/*카테고리 nav*/
+
+$('.category_popup').hover(function(){
+	const category_nav_toggle= $('.category_nav');
+
+	if(category_nav_toggle.css('display')==='none') {
+		category_nav_toggle.css('display','flex')
 	}
+	else {
+		category_nav_toggle.css('display','none')
 	}
+})
+
+$('.category_nav_main_item').hover(function(){
+	const category_nav_toggle= $('.category_nav');
+	category_nav_toggle.css('display','flex')
+})
+
+$('.category_nav_main_item1').hover(function(){
+	const category_nav_toggle= $('.category_nav_detail_item1');
+	if(category_nav_toggle.css('display')==='none') {
+		category_nav_toggle.css('display','flex')
+	}
+	else{
+		category_nav_toggle.css('display','none')
+	}
+})
+
+$('.category_nav_detail_item1').hover(function(){
+	const category_nav_toggle= $('.category_nav_detail_item1');
+	if(category_nav_toggle.css('display')==='none') {
+		category_nav_toggle.css('display','flex')
+	}
+	else{
+		category_nav_toggle.css('display','none')
+	}
+})
+
+$('.category_nav_main_item2').hover(function(){
+	const category_nav_toggle= $('.category_nav_detail_item2');
+	if(category_nav_toggle.css('display')==='none') {
+		category_nav_toggle.css('display','flex')
+	}
+	else {
+		category_nav_toggle.css('display','none')
+	}
+})
+
+$('.category_nav_detail_item2').hover(function(){
+	const category_nav_toggle= $('.category_nav_detail_item2');
+	if(category_nav_toggle.css('display')==='none') {
+		category_nav_toggle.css('display','flex')
+	}
+	else {
+		category_nav_toggle.css('display','none')
+	}
+})
+
+$('.category_nav_main_item3').hover(function(){
+	const category_nav_toggle= $('.category_nav_detail_item3');
+	if(category_nav_toggle.css('display')==='none') {
+		category_nav_toggle.css('display','flex')
+	}
+	else {
+		category_nav_toggle.css('display','none')
+	}
+})
+
+$('.category_nav_detail_item3').hover(function(){
+	const category_nav_toggle= $('.category_nav_detail_item3');
+	if(category_nav_toggle.css('display')==='none') {
+		category_nav_toggle.css('display','flex')
+	}
+	else{
+		category_nav_toggle.css('display','none')
+	}
+})
+
+$('.category_nav_main_item4').hover(function(){
+	const category_nav_toggle= $('.category_nav_detail_item4');
+	if(category_nav_toggle.css('display')==='none') {
+		category_nav_toggle.css('display','flex')
+	}
+	else {
+		category_nav_toggle.css('display','none')
+	}
+})
+
+$('.category_nav_detail_item4').hover(function(){
+	const category_nav_toggle= $('.category_nav_detail_item4');
+	if(category_nav_toggle.css('display')==='none') {
+		category_nav_toggle.css('display','flex')
+	}
+	else{
+		category_nav_toggle.css('display','none')
+	}
+})
+
+$('.category_nav_main_item5').hover(function(){
+	const category_nav_toggle= $('.category_nav_detail_item5');
+	if(category_nav_toggle.css('display')==='none') {
+		category_nav_toggle.css('display','flex')
+	}
+	else{
+		category_nav_toggle.css('display','none')
+	}
+})
+
+$('.category_nav_detail_item5').hover(function(){
+	const category_nav_toggle= $('.category_nav_detail_item5');
+	if(category_nav_toggle.css('display')==='none') {
+		category_nav_toggle.css('display','flex')
+	}
+	else{
+		category_nav_toggle.css('display','none')
+	}
+})
+//카테고리별 페이지
+function goCatDetail(catNo) {
+	location.href = '/product/list?catNo=' + catNo;
+}
+
+/**********************************************반응형******************************************/
+$('.mobile_search_icon').click(function(){
+	const mobile_search_toggle= $('.input-mobile-search_div');
+	mobile_search_toggle.animate({
+		top:'0px',
+	},300, 'swing');
+	mobile_search_toggle.css('position','fixed');
+
+})
+$('.input-mobile-search_other').click(function(){
+	const mobile_search_toggle = $('.input-mobile-search_div');
+	mobile_search_toggle.animate({
+		top: '-100vh',
+	}, 300, 'swing');
+	mobile_search_toggle.css('position', 'fixed');
+
+	$('.mobile_search_hide_text').css('display', 'flex');
+})
+$('.mobile_search_close_btn').click(function(){
+	const mobile_search_toggle= $('.input-mobile-search_div');
+	mobile_search_toggle.animate({
+		top:'-100vh',
+	},300, 'swing');
+	mobile_search_toggle.css('position','fixed');
+
+	$('.mobile_search_hide_text').css('display','flex');
+
+})
+
+/*모바일 버튼클릭 active*/
+$(document).on("touchstart", function(){ });
+
+/**********************************************************************************************/

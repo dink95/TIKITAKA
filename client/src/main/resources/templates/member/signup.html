@@ -38,6 +38,11 @@
         </nav>
         <!---------------------------------------------------------->
     </header>
+
+    <!--모바일 검색창-->
+    <div th:replace="common::mobile_search(signup)"></div>
+
+
     <!--replace logo-회원가입-->
     <div class="bg-light py-3" th:replace="common::logo(signup)">
     </div>
@@ -90,7 +95,7 @@
                             </div>
 
                             <span id="valid_infoCheck" style="color: #ff0000;font-size: 10px;"></span>
-                                <div class="form-group row">
+                            <div class="form-group row">
                                 <div class="col-md-12">
                                     <label for="id_check" class="text-black"><span class="text-danger" style="opacity: 0">*</span></label>
                                     <input type="hidden" id="isCheckedId" name="isCheckedId" value="">
@@ -180,6 +185,7 @@
 
 </div>
 
+
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/jquery-ui.js"></script>
 <script src="js/popper.min.js"></script>
@@ -191,6 +197,7 @@
 <script src="js/main.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+
 
     /*숫자 하이픈 자동*/
     function initEvent() {
@@ -344,7 +351,7 @@
     /*회원가입*/
     function goSignup() {
         if (validation()) {
-        var param = {
+            var param = {
                 mbrId:  $('#c_id').val(),
                 mbrPwd: $('#c_password').val(),
                 mbrNm : $('#c_name').val(),

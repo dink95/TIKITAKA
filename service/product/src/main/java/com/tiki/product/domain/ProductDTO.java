@@ -47,7 +47,7 @@ public class ProductDTO {
     /** 사진 개수 **/
     private int imgCount;
 
-    /** 판매 완료 체크 **/
+   //** 판매 완료 체크 **//
     private boolean prodFinish;
 
     public ProductDTO(String prodNm,int prodPrc, int catNo, String selId, String way, int nego, String prodCo, String content, int imgCount){

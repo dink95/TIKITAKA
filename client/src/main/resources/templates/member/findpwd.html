@@ -39,6 +39,10 @@
         <!---------------------------------------------------------->
     </header>
 
+    <!--모바일 검색창-->
+    <div th:replace="common::mobile_search(findpwd)"></div>
+
+
     <!--replace-logo-비번찾기-->
     <div class="bg-light py-3" th:replace="common::logo(findpwd)">
     </div>
@@ -163,6 +167,7 @@
 </div>
 
 </div>
+
 
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/jquery-ui.js"></script>

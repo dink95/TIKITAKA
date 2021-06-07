@@ -16,7 +16,7 @@
 		, prod_view
         , content
         , img_count
-        , prod_finish
+       , prod_finish
     </sql>
 
     <insert id="insertProduct" parameterType="ProductDTO">
@@ -121,7 +121,7 @@
         WHERE
             prod_nm LIKE concat('%',#{prodNm},'%')
         AND
-            cat_no = #{catNo}
+            cat_no BETWEEN #{catNo} AND #{nego}
     </select>
 
     <select id="resultByProdNm" parameterType="String" resultType="ProductDTO">
