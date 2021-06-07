@@ -221,7 +221,7 @@
                 dataType: 'json'
             }).done(function (data) {
                 if (data.resultCode == 200) {
-                    popup('알람메세지',data.resultMsg,'/member/information/myinfo');
+                    popup('알람메세지',data.resultMsg,'/member/myinfo');
                 } else {
                     popup('알람메세지',data.resultMsg);
                     $('#inputKey').val('');
