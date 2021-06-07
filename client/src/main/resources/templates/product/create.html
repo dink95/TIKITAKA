@@ -329,11 +329,11 @@
             var check_file_type = ['jpg', 'gif', 'png', 'jpeg'];
 
             if (check_file_type.indexOf(file_type) == -1) {
-                alert('이미지 파일만 선택할 수 있습니다.');
+                popup('알림메세지','이미지 파일만 선택할 수 있습니다.');
                 fileClear(obj);
                 break;
             } else if( obj.files.length>5){
-                alert('파일은 최대 5개까지 등록할 수 있습니다.');
+                popup('알림메세지','파일은 최대 5개까지 등록할 수 있습니다.');
                 fileClear(obj);
                 break;
 

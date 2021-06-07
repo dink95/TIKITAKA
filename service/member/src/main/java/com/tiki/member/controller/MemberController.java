@@ -44,7 +44,7 @@ public class MemberController {
         simpleMessage.setSubject("TIKITAKA 이메일 인증");
         simpleMessage.setText("인증번호 : " + emailKey);
         simpleMessage.setTo(email);
-        //simpleMessage.setFrom("movegun1027@gmail.com");
+        simpleMessage.setFrom("movegun1027@gmail.com");
         javaMail.send(simpleMessage);
 
         return emailKey;

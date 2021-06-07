@@ -374,9 +374,9 @@
                 dataType : 'json'
             }).done(function(data){
                 if(data.resultCode == 200) {
-                    modal(data.resultMsg,'확인','/');
+                    popup('회원가입',data.resultMsg,'/');
                 }else {
-                    alert(data.resultMsg);
+                    popup('알림메세지',data.resultMsg);
                     return false;
                 }
 

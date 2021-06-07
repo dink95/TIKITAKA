@@ -2,7 +2,26 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <!--공통 헤더-->
-<div class="site-navbar-top" th:fragment="header(header)"> <!--padding 수정 style-196-->
+
+
+<div class="site-navbar-top" th:fragment="header(header)">
+    <!--padding 수정 style-196-->
+    <!--팝업창-->
+    <div class="popupLayout">
+        <div class="popup">
+            <div class="popupTitleNav">
+                <span id="popupTitle"></span>
+            </div>
+            <div class="popupContentNav">
+                <span id="popupContent"></span>
+            </div>
+            <div class="popupConfirm">
+                <button id="confirmBtn">확인</button>
+            </div>
+        </div>
+    </div>
+
+
     <div class="container ">
         <div class="row align-items-center mobile_search_hide_text">
             <div class="col-6 col-md-3 order-1 order-md-1 text-left">
@@ -135,12 +154,18 @@
                     <div class="category_nav_main_item">
                         <ul>
                             <div class="category_main_title">전체 카테고리</div>
-                            <li class="category_nav_main_item1" onclick="goCatDetail(10)">패션<a class="category_next_icon"><i class="fas fa-chevron-right fa-1x"></i></a></li>
-                            <li class="category_nav_main_item2" onclick="goCatDetail(20)">디지털/가전<a class="category_next_icon"><i class="fas fa-chevron-right fa-1x"></i></a></li>
-                            <li class="category_nav_main_item3" onclick="goCatDetail(30)">가구/인테리어<a class="category_next_icon"><i class="fas fa-chevron-right fa-1x"></i></a></li>
-                            <li class="category_nav_main_item4" onclick="goCatDetail(40)">여가활동<a class="category_next_icon"><i class="fas fa-chevron-right fa-1x"></i></a></li>
-                            <li class="category_nav_main_item5" onclick="goCatDetail(50)">기타<a class="category_next_icon"><i class="fas fa-chevron-right fa-1x"></i></a></li>
-                            <li class="category_nav_main_item0" onclick="goCatDetail(0)">삽니다<a class="category_next_icon"><i class="fas fa-chevron-right fa-1x"></i></a></li>
+                            <li class="category_nav_main_item1" onclick="goCatDetail(10)">패션<a
+                                    class="category_next_icon"><i class="fas fa-chevron-right fa-1x"></i></a></li>
+                            <li class="category_nav_main_item2" onclick="goCatDetail(20)">디지털/가전<a
+                                    class="category_next_icon"><i class="fas fa-chevron-right fa-1x"></i></a></li>
+                            <li class="category_nav_main_item3" onclick="goCatDetail(30)">가구/인테리어<a
+                                    class="category_next_icon"><i class="fas fa-chevron-right fa-1x"></i></a></li>
+                            <li class="category_nav_main_item4" onclick="goCatDetail(40)">여가활동<a
+                                    class="category_next_icon"><i class="fas fa-chevron-right fa-1x"></i></a></li>
+                            <li class="category_nav_main_item5" onclick="goCatDetail(50)">기타<a
+                                    class="category_next_icon"><i class="fas fa-chevron-right fa-1x"></i></a></li>
+                            <li class="category_nav_main_item0" onclick="goCatDetail(0)">삽니다<a
+                                    class="category_next_icon"><i class="fas fa-chevron-right fa-1x"></i></a></li>
                         </ul>
                     </div>
                     <div class="category_nav_detail_item category_nav_detail_item1">

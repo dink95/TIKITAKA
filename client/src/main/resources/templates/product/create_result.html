@@ -5,36 +5,61 @@
     <title>TIKITAKA &ndash; </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="../css/style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <script src="../js/jquery-3.3.1.min.js"></script>
-    <script src="../js/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/jquery-ui.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/aos.css">
+    <link rel="stylesheet" href="/css/style.css">
 
 </head>
 
 <body>
+<div class="site-wrap">
+    <header class="site-navbar" role="banner">
+        <!--replace 헤더-->
+        <div class="site-navbar-top" th:replace="common::header(certifyEmail)">
+        </div>
+        <!------------->
+        <nav class="site-navigation text-right text-md-center" role="navigation"
+             th:replace="common::menu(certifyEmail)">
+        </nav>
+        <!---------------------------------------------------------->
+    </header>
+</div>
 <input type="hidden" id="resultCode" th:value="${resultCode}">
 <input type="hidden" id="prodNo" th:value="${prodNo}">
 </body>
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script src="../js/jquery-ui.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/aos.js"></script>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<script src="/js/main.js"></script>
 <script>
 
     function  showResult() {
         var resultCode = $('#resultCode').val();
         var prodNo = $('#prodNo').val();
         if(resultCode === 200 || resultCode === '200' ) {
-            alert('상품이 등록되었습니다.');
-            location.href ='/';
+            popup('알림메세지','상품이 등록되었습니다.','/');
         }
         else if(resultCode === 201 || resultCode === '201' ) {
-            alert('상품이 수정되었습니다.');
-            location.href='/member/myinfo';
+            popup('알림메세지','상품이 수정되었습니다.','/member/myinfo');
         }
         else if(resultCode === 202 || resultCode === '202' ) {
-            alert('신고내용이 접수되었습니다.');
-            location.href="/product/detail?prodNo=" + prodNo;
+            popup('알림메세지','신고내용이 접수되었습니다.',"/product/detail?prodNo=" + prodNo);
+
         }
         else  {
-            alert('실패하였습니다. 관리자에게 문의하세요.');
+            popup('알림메세지','실패하였습니다. 관리자에게 문의하세요.');
             history.back();
         }
 

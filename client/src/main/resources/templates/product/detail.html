@@ -212,6 +212,7 @@
 
         .ButtonNav > .btn {
             margin: 1%;
+            display: none;
         !important;
         }
 
@@ -372,10 +373,10 @@
             dataType: 'json'
         }).done(function (data) {
             if (data.resultCode == 200) {
-                alert('상품이 삭제되었습니다.');
+                popup('알림메세지','상품이 삭제되었습니다.');
                 location.href = '/member/myinfo'
             } else {
-                alert('삭제에 실패하였습니다. 관리자에게 문의하세요.');
+                popup('알림메세지','삭제에 실패하였습니다. 관리자에게 문의하세요.');
             }
         }).fail(function (textStatus) {
             console.log(textStatus);
@@ -437,11 +438,11 @@
     $('#query').val(searchParam('prodNo'));
 
     function buttonCheck(props) {
-        if (props == 1) {
-            $('.ButtonNav>input:nth-child(2n-1)').css('display', 'none');
-            $('.ButtonNav>a').css('display', 'none');
+        if (props != 1) {
+            $('.ButtonNav>input:nth-child(2n-1)').css('display', 'block');
+            $('.ButtonNav>a').css('display', 'block');
         } else {
-            $('.ButtonNav>input:nth-child(2n)').css('display', 'none');
+            $('.ButtonNav>input:nth-child(2n)').css('display', 'block');
         }
     }
 

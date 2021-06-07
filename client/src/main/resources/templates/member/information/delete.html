@@ -106,10 +106,9 @@
                 dataType : 'json'
             }).done(function(data){
                 if(data.resultCode == 200) {
-                    alert(data.resultMsg);
-                    location.href = '/logout';
+                    popup('회원탈퇴',data.resultMsg,'/logout');
                 }else {
-                    alert(data.resultMsg);
+                    popup('알람메세지',data.resultMsg);
                     return false;
                 }
 
