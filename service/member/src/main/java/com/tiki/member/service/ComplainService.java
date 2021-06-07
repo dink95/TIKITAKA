@@ -21,4 +21,7 @@ public interface ComplainService {
     List<ComplainDTO> selectListNotRead();
 
     List<ComplainDTO> selectListAlreadyRead();
+
+    int updateReadCheck(int compIdx);
+
 }

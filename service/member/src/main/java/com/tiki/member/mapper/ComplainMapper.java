@@ -23,4 +23,6 @@ public interface ComplainMapper {
     List<ComplainDTO> selectListNotRead();
 
     List<ComplainDTO> selectListAlreadyRead();
+
+    int updateReadCheck(int compIdx);
 }

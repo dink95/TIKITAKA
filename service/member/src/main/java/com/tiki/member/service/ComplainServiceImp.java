@@ -53,4 +53,9 @@ public class ComplainServiceImp implements ComplainService{
     public List<ComplainDTO> selectListAlreadyRead() {
         return mapper.selectListAlreadyRead();
     }
+
+    @Override
+    public int updateReadCheck(int compIdx) {
+        return mapper.updateReadCheck(compIdx);
+    }
 }

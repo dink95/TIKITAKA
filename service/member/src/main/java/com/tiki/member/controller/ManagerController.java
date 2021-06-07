@@ -34,6 +34,10 @@ public class ManagerController {
             return null;
         }
     }
+    @PatchMapping("/man")
+    public int updateManagerPassword(@RequestBody ManagerDTO managerDTO){
+        return service.updateManagerPassword(managerDTO);
+    }
 
 
 

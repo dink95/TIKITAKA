@@ -22,7 +22,7 @@ public interface MemberMapper {
 
     public String findMemberId(MemberDTO dto);
 
-    public int updateMember(MemberDTO dto);
+    public int updateMemberPwd(MemberDTO dto);
 
 
 }

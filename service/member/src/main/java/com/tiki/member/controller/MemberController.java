@@ -135,7 +135,7 @@ public class MemberController {
     @PatchMapping("/mbr/password")
     public int updatePassword(@RequestBody MemberDTO memberDTO){
         memberDTO.setMbrPwd(passwordEncoder.encode(memberDTO.getMbrPwd()));
-        return memberService.updateMember(memberDTO);
+        return memberService.updateMemberPwd(memberDTO);
     }
 
 }

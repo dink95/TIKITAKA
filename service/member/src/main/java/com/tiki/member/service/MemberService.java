@@ -20,7 +20,7 @@ public interface MemberService {
 
     public String existPwd(MemberDTO dto);
 
-    public int updateMember(MemberDTO dto);
+    public int updateMemberPwd(MemberDTO dto);
 
 
 }
