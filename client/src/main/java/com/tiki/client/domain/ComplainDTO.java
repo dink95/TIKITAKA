@@ -3,6 +3,8 @@ package com.tiki.client.domain;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class ComplainDTO {
@@ -12,5 +14,7 @@ public class ComplainDTO {
     String compCon;
     String spt;
     String repo;
+    LocalDateTime writingTime;
+    boolean readCheck;
 
 }

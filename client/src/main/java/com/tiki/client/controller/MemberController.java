@@ -213,7 +213,7 @@ public class MemberController {
         memberDTO.setMbrNm(userName);
         memberDTO.setMbrPhone(userPhone);
 
-        String mbrId = memberService.findid(memberDTO);
+        String mbrId = memberService.findId(memberDTO);
 
         try {
             if (mbrId != null) {
@@ -263,7 +263,7 @@ public class MemberController {
         Boolean exist = false;
 
         try {
-            exist= memberService.findpwd(userId, userName, userPhone);
+            exist= memberService.findPwd(userId, userName, userPhone);
             if (exist) {
                 resultMap.put("resultCode", 200);
                 resultMap.put("resultMsg", "ok");
@@ -315,7 +315,7 @@ public class MemberController {
 
         try {
 
-            result= memberService.update(memberDTO);
+            result= memberService.updatePwd(memberDTO);
 
             if (result > 0) {
                 resultMap.put("resultCode", 200);

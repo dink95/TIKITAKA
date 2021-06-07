@@ -51,7 +51,7 @@ public class MemberService {
                 .block();
     }
 
-    public String findid(MemberDTO memberDTO){
+    public String findId(MemberDTO memberDTO){
         return webClient.post()
                 .uri("/mbr/id")
                 .body(Mono.just(memberDTO), MemberDTO.class)
@@ -60,7 +60,7 @@ public class MemberService {
                 .block();
     }
 
-    public Boolean findpwd(String id, String name ,String phone){
+    public Boolean findPwd(String id, String name ,String phone){
         return webClient.get()
                 .uri("/mbr/{id}/{name}/{phone}",id,name,phone)
                 //.body(Mono.just(memberDTO), MemberDTO.class)
@@ -69,7 +69,7 @@ public class MemberService {
                 .block();
     }
 
-    public int update(MemberDTO memberDTO) {
+    public int updatePwd(MemberDTO memberDTO) {
         return webClient.patch()
                 .uri("/mbr/password")
                 .body(Mono.just(memberDTO), MemberDTO.class)
