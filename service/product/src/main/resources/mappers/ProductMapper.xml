@@ -122,6 +122,8 @@
             prod_nm LIKE concat('%',#{prodNm},'%')
         AND
             cat_no BETWEEN #{catNo} AND #{nego}
+        ORDER BY
+        wday DESC
     </select>
 
     <select id="resultByProdNm" parameterType="String" resultType="ProductDTO">
@@ -131,6 +133,8 @@
         prod
         WHERE
         prod_nm LIKE concat('%',#{prodNm},'%')
+        ORDER BY
+        wday DESC
     </select>
 
     <select id="resultById" parameterType="String" resultType="ProductDTO">
@@ -140,6 +144,8 @@
         prod
         WHERE
         sel_id = #{selId}
+        ORDER BY
+        wday DESC
     </select>
 
     <select id="resultByCatNo" parameterType="int" resultType="ProductDTO">
