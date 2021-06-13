@@ -2,6 +2,7 @@ package com.tiki.client.service;
 
 import com.tiki.client.domain.ComplainDTO;
 import com.tiki.client.domain.MemberDTO;
+import com.tiki.client.domain.paging.SearchDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -58,6 +59,16 @@ public class ComplainService {
                 .block();
     }
 
+
+    public int getTotalCount(SearchDTO searchDTO){
+        return webClient.post()
+                .uri("/comp/totalcount")
+                .body(Mono.just(searchDTO), SearchDTO.class)
+                .retrieve()
+                .bodyToMono(Integer.class)
+                .block();
+    }
+
     public List<ComplainDTO> selectAllComplains(){
         return webClient.get()
                 .uri("/comp")
@@ -66,6 +77,7 @@ public class ComplainService {
                 .block();
 
     }
+
 
     public ComplainDTO selectComplainDetailByIndex(int idx){
         return webClient.get()
@@ -90,5 +102,6 @@ public class ComplainService {
                 .bodyToMono(List.class) //반환정보
                 .block();
     }
+
 
 }

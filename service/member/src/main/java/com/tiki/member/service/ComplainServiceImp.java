@@ -1,6 +1,7 @@
 package com.tiki.member.service;
 
 import com.tiki.member.domain.ComplainDTO;
+import com.tiki.member.domain.paging.SearchDTO;
 import com.tiki.member.mapper.ComplainMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,9 @@ public class ComplainServiceImp implements ComplainService{
 
     @Autowired
     ComplainMapper mapper;
+
+    @Override
+    public int getTotalCount(SearchDTO searchDTO) { return mapper.getTotalCount(searchDTO); }
 
     @Override
     public int insertComplain(ComplainDTO complainDTO) {

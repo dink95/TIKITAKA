@@ -1,10 +1,13 @@
 package com.tiki.member.service;
 
 import com.tiki.member.domain.ComplainDTO;
+import com.tiki.member.domain.paging.SearchDTO;
 
 import java.util.List;
 
 public interface ComplainService {
+
+    int getTotalCount(SearchDTO searchDTO);
 
     int insertComplain(ComplainDTO complainDTO);
 

@@ -26,7 +26,7 @@ public class ManagerController {
     public String managerLogin(@RequestBody ManagerDTO managerDTO){
         ManagerDTO dto = service.selectManagerDetail(managerDTO.getManId());
 
-        if(dto!=null && passwordEncoder.matches(managerDTO.getManPwd(),dto.getManPwd())){
+        if(dto!=null && managerDTO.getManPwd().equals(dto.getManPwd())){
             return dto.getManId();
         }
         else

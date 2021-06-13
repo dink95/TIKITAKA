@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
@@ -46,8 +47,8 @@
                 <div class="col-md-7">
                     <div class="col-md-12 " style="display: flex; justify-content: space-between; align-items:flex-end;" >
                         <h2 class="h3 mb-3 text-black"><span id="login"/>Login</span></h2> <!--login logo 위치 수정-->
-                        <dt id="arrow_right"><a id="admin"style="font-size: 14px; color:#7972ea; cursor: pointer;">
-                            <span id="cont" onclick="adminCheck()">관리자로그인</span></a></dt>
+                        <a id="admin"style="font-size: 14px; color:#7972ea; cursor: pointer;">
+                            <span id="cont" onclick="adminCheck()" style="margin-right:5px;">관리자로그인</span><i class="fas fa-chevron-right fa-1x"></i></a>
                     </div>
 
                     <form name="loginform" action="login" method="post">
@@ -125,35 +126,61 @@
     /*로그인*/
     function goLogin(){
         $('#valid_loginError').text('');
-        if(validation()) {
+        if($('#checkAdmin').val()!=''){
+            //관리자로그인
+            if (validation()) {
+                var param = {
+                    manId: $('#c_id').val(),
+                    manPwd: $('#c_password').val(),
+                };
+                $.ajax({
+                    url: '/login/manager/process',
+                    data: param,
+                    type: 'post',
+                    dataType: 'json'
+                }).done(function (data) {
+                    if (data.resultCode == 200) {
+                        location.href = '/admin/complain/list';
+                    } else {
+                        popup('알림메세지','아이디 및 비밀번호 오류')
+                        return false;
+                    }
 
-            var param ={
-                userId : $('#c_id').val(),
-                userPw : $('#c_password').val(),
-            };
+                }).fail(function (data, textStatus, errorThrown) {
+                    console.log(textStatus);
+                });
+            }
+        }else {
+            if (validation()) {
+                var param = {
+                    userId: $('#c_id').val(),
+                    userPw: $('#c_password').val(),
+                };
 
-            $.ajax({
-                url: '/login/process',
-                data: param,
-                type: 'post',
-                dataType : 'json'
-            }).done(function(data){
-                if(data.resultCode == 200) {
-                    location.href ='/';
-                }else {
-                    $('#valid_loginError').text('* 가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.');
-                    return false;
-                }
+                $.ajax({
+                    url: '/login/process',
+                    data: param,
+                    type: 'post',
+                    dataType: 'json'
+                }).done(function (data) {
+                    if (data.resultCode == 200) {
+                        location.href = '/';
+                    } else {
+                        $('#valid_loginError').text('* 가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.');
+                        return false;
+                    }
 
-            }).fail(function (data, textStatus, errorThrown){
-                console.log(textStatus);
-            });
+                }).fail(function (data, textStatus, errorThrown) {
+                    console.log(textStatus);
+                });
+            }
         }
     }
 
     /*키 입력시 valid 메세지 삭제*/
     function onKeyUp(props){
         $(props).text('');
+        $(props).val('');
     }
 
     /*input valid 유효성*/
@@ -189,6 +216,8 @@
             $('#valid_id').text('');
             $('#valid_pw').text('');
             $('#signin').css('display', 'none');
+            onKeyUp('#c_id');
+            onKeyUp('#c_password');
 
         }else{
             $('#login').text('Login');
@@ -197,6 +226,8 @@
             $('#valid_id').text('');
             $('#valid_pw').text('');
             $('#signin').css('display', 'block');
+            onKeyUp('#c_id');
+            onKeyUp('#c_password');
         }
     }
 

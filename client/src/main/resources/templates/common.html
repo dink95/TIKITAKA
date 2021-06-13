@@ -90,7 +90,7 @@
 <div class="mobile_nav" th:fragment="mobile(menu)">
     <ul class="mobile_nav_item">
         <li th:classappend="${menu}=='home'? 'active' : ''"><a href="/"><i class="nav_icon fas fa-home fa-2x"></i></a>
-            <a href="/">Home</a></li>
+            <a href="/">HOME</a></li>
         <li th:classappend="${menu}=='product_list'? 'active' : ''">
             <a th:if="${session.mbrId == null}" href="/login"><i class="nav_icon fas fa-bars fa-2x"></i></i></a>
             <a th:if="${session.mbrId != null}" href="/product/list"><i class="nav_icon fas fa-bars fa-2x"></i></i></a>
@@ -119,21 +119,31 @@
     <!--메뉴 간격 수정 style-273-->
 
     <div class="container">
-        <ul class="site-menu js-clone-nav  d-md-block">
+        <ul class="site-menu  js-clone-nav  d-md-block" >
             <li th:classappend="${menu}=='complain_list'? 'menu_active' : ''">
                 <a href="/admin/complain/list">신고리스트</a>
             </li>
+            <li th:classappend="${menu}=='menu1'? 'menu_active' : ''">
+                <a ></a>
+            </li>
             <li th:classappend="${menu}=='menu2'? 'menu_active' : ''">
-                <a href="">menu2</a>
+                <a ></a>
             </li>
             <li th:classappend="${menu}=='menu3'? 'menu_active' : ''">
-                <a href="">menu3</a>
+                <a ></a>
             </li>
             <li th:classappend="${menu}=='menu4'? 'menu_active' : ''">
-                <a href="">menu4</a>
+                <a ></a>
             </li>
             <li th:classappend="${menu}=='menu5'? 'menu_active' : ''">
-                <a href="">menu5</a>
+                <a ></a>
+            <li>
+                <li style="padding:0;"><a style="padding:0;"><span class="sign-in-id-manager" th:text=" '관리자:' +' '+ ${session.managerId}"></span></a>
+                </li> <!--로그인 후-->
+                <li style="padding:0;">/&nbsp;&nbsp;</li>
+                <li style="padding:0;"><a href="/logout_manager" style="padding:0;"><span
+                        class="sign-in">&nbsp;&nbsp;로그아웃</span></a>
+                </li> <!--로그인 후-->
             </li>
         </ul>
     </div>

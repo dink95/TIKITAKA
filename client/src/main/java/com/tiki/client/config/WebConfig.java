@@ -36,7 +36,13 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/complain/index")
                 .excludePathPatterns("/main/**", "/webjars/**", "/dist/**", "/plugins/**", "/css/**")
                 .excludePathPatterns("/images/**", "/js/**", "/fonts", "/webfonts/**", "/scss/**");
+        registry.addInterceptor(new ProcessInterceptor_manager())
+                .addPathPatterns("/admin/complain/detail")
+                .addPathPatterns("/admin/complain/list")
+                .excludePathPatterns("/main/**", "/webjars/**", "/dist/**", "/plugins/**", "/css/**")
+                .excludePathPatterns("/images/**", "/js/**", "/fonts", "/webfonts/**", "/scss/**");
     }
+
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
