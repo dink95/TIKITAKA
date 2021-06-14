@@ -226,8 +226,6 @@ function categoryChange(e) {
 	if (e.value == "else") var d = detail_else;
 	else if (e.value == "buy") var d = detail_buy;
 
-	target.options.length = 0;
-
 	for (x in d) {
 		var opt = document.createElement("option");
 		opt.value = d[x];

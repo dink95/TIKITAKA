@@ -91,7 +91,7 @@
 <script src="/js/main.js"></script>
 <script>
 
-    /*개인정보 수정*/
+    /*개인정보 삭제*/
     function goDeleteMember(){
         if(validation()) {
 
@@ -172,7 +172,6 @@
 
         }).fail(function (data, textStatus, errorThrown){
             console.log(textStatus);
-            alert('ajax fail')
         });
 
     }

@@ -37,6 +37,7 @@ public class ProductController {
             result = productService.createProduct(productDTO);
             List<MultipartFile> fileList = multi.getFiles("file");
             String path = "c:/tmp/"+Integer.toString(result)+"/";
+           // String path = "/Users/gimmugyeong/tmp/" +Integer.toString(result)+"/";
             System.out.println(path);
             File dir = new File(path);
             if (!dir.isDirectory()) {

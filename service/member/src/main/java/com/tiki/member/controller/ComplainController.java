@@ -2,6 +2,7 @@ package com.tiki.member.controller;
 
 
 import com.tiki.member.domain.ComplainDTO;
+import com.tiki.member.domain.paging.SearchDTO;
 import com.tiki.member.service.ComplainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,8 @@ public class ComplainController {
         return service.selectListByReporter(repo);
     }
 
+    @PostMapping("/comp/totalcount")
+    public int getTotalCount(@RequestBody SearchDTO searchDTO){ return service.getTotalCount(searchDTO);}
 
     @GetMapping("/comp")
     public List<ComplainDTO> selectAllComplains(){

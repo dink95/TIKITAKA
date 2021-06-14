@@ -1,16 +1,31 @@
 package com.tiki.client.controller;
 
 import com.tiki.client.domain.ComplainDTO;
+import com.tiki.client.domain.MemberDTO;
+import com.tiki.client.domain.ProductDTO;
+import com.tiki.client.domain.paging.PagingDTO;
+import com.tiki.client.domain.paging.SearchDTO;
 import com.tiki.client.service.ComplainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @Controller
     public class ComplainController {
+
+
 
         @Autowired
         private ComplainService complainService;
@@ -43,5 +58,116 @@ import org.springframework.web.servlet.ModelAndView;
         return view;
     }
 
+    //신고리스트 페이징
+    @RequestMapping(value="admin/complain/list")
+    public ModelAndView compList(@ModelAttribute SearchDTO searchDTO){
+
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/complain/list");
+
+        List<ComplainDTO> compList = null;
+
+        try{
+            int totalCount = complainService.getTotalCount(searchDTO);
+            System.out.println("@@totalCount:" + totalCount);
+            //페이징 처리 객체를 선언한다.
+            PagingDTO pagingDTO = new PagingDTO();
+            //구해온 전체 리스트 개수를 페이지처리 객체에 넣는다.
+            pagingDTO.setTotalCount(totalCount);
+            //클라이언트에서 넘어온 이동할 페이지정보를 페이징처리 객체에 넣어준다
+            pagingDTO.setCurrentPage(searchDTO.getCurrentPage());
+
+            searchDTO.setStart(pagingDTO.getStartRow());
+            searchDTO.setEnd(pagingDTO.getCountPerPage());
+            System.out.println("@@start:" + searchDTO.getStart() + " " + "@@end:" + searchDTO.getEnd());
+
+            //페이지에 뿌릴 데이터를 가져온다.
+            compList = complainService.selectAllComplains();
+            view.addObject("currentPage", searchDTO.getCurrentPage());
+            view.addObject("pageHtml",pagingDTO.getPager());
+            view.addObject("compList",compList);
+
+            if(compList != null){
+                view.addObject("listSize", totalCount);
+            }else{
+                view.addObject("listSize",0);
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+
+        return view;
+    }
+
+    @RequestMapping("/comp/list")  /*신고 리스트 */
+    @ResponseBody
+    public Map<String, Object> productList(ComplainDTO complainDTO) {
+        Map<String, Object> resultMap = new HashMap<>();
+        List<ComplainDTO> list = null;
+
+        try {
+            list= complainService.selectAllComplains();
+            resultMap.put("compList", list);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return resultMap;
+    }
+
+    @GetMapping(value = "/admin/complain/detail") /*신고디테일 페이지*/
+    public ModelAndView detail() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/complain/detail");
+        return view;
+    }
+
+    @RequestMapping("/comp/detail") /*신고상세내용 조회*/
+    @ResponseBody
+    public Map<String, Object> CompDetailByIndex(@RequestParam(value = "compIdx") int compIdx) {
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            ComplainDTO complainDTO = complainService.selectComplainDetailByIndex(compIdx);
+            resultMap.put("compDetail", complainDTO);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("detail error");
+        }
+        return resultMap;
+    }
+
+    @RequestMapping("/comp/delete")  /*신고내용삭제*/
+    @ResponseBody
+    public Map<String, Object> deleteComp(@RequestParam(value = "compIdx") int compIdx) {
+
+        ComplainDTO complainDTO = new ComplainDTO();
+
+        Map<String, Object> resultMap = new HashMap<>();
+        complainDTO.setCompIdx(compIdx);
+
+        int result = 0;
+
+        try {
+
+            result = complainService.deleteComplain(compIdx);
+
+            if (result > 0) {
+                resultMap.put("resultCode", 200);
+                resultMap.put("resultMsg", "삭제완료");
+            } else {
+                resultMap.put("resultCode", 400);
+                resultMap.put("resultMsg", "삭제실패");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return resultMap;
+    }
 }
 

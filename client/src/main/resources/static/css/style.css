@@ -367,7 +367,7 @@ a:hover {
   padding: 10px 3% 0 16%; } !*메뉴 간격 수정*!*/
 .site-navbar .site-navigation .site-menu > li > a {
   padding: 10px 5px;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
   letter-spacing: .05em;
   color: #25262a;
   font-size: 17px;
@@ -1412,7 +1412,7 @@ figure > img {
 /*팝업창*/
 
 .popupLayout{
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   width: 100%;
   height: 100%;
@@ -1427,6 +1427,7 @@ figure > img {
   display: none;
 }
 .popup{
+  margin-top:18vh;
   width: 490px;
   height: 250px;
   position: fixed;
@@ -1482,7 +1483,71 @@ figure > img {
   border-style: none;
 }
 /*************/
+/* table */
+.tblBox {display:block; margin:0 0 20px 0; color:#6a74a7; border-radius:10px; box-shadow:0 0 10px rgba(115,133,220,0.08);}
 
+.tblType01 {width:100%; color:#6a74a7; border-radius:10px;}
+.tblType01 thead th {padding:10px 5px; color:#101d74; font-size:14px; font-weight:bold; text-align:center; vertical-align:middle; letter-spacing:-1px; border:none; background:#d8ddf3;}
+.tblType01 thead th:first-child {border-radius:10px 0 0 0;}
+.tblType01 thead th:last-child {border-radius:0 10px 0 0;}
+.tblType01 tbody td {padding:7px 5px; font-size:13px;vertical-align:middle;text-align:center; letter-spacing:-0.1px; background:#fff;}
+.tblType01 tbody tr:last-child td:first-child {border-bottom-left-radius:15px;}
+.tblType01 tbody tr:last-child td:last-child {border-bottom-right-radius:15px;}
+.tblType01 tbody td span.txt {display:inline-block;}
+.tblType01 tbody td span.preveal {display:inline-block; position:relative; width:26px; height:26px; margin:0 0 0 5px; color:#6a74a7; line-height:24px; border:1px solid rgba(57,60,81,0.2); border-radius:5px; transition:all 0.3s ease-out;}
+.tblType01 tbody td span.preveal .item {display:none; position:absolute; top:0; left:32px; width:150px; padding:7px 10px; color:#fff; border-radius:5px; word-break:keep-all; background:rgba(57,60,81,0.9);}
+.tblType01 tbody td span.preveal:hover {color:#607391; border:1px solid rgba(115,133,220,0.6); transition:all 0.3s ease-out;}
+.tblType01 tbody td span.preveal:hover .item {display:block;}
+
+.tblType01 tbody td .btn_tbl {display:inline-block; color:#fff; font-size:12px; line-height:28px; vertical-align:middle; border:none; border-radius:5px; background:#6a74a7; transition:all 0.3s ease-out; cursor:pointer; opacity:1.0;}
+.tblType01 tbody td .btn_tbl span {margin:-1px 5px 0 0; font-size:10px; vertical-align:middle; opacity:0.7;}
+.tblType01 tbody td .btn_tbl.active {color:#6a74a7; border:1px solid #6a74a7; border-radius:5px; background:#fff; transition:all 0.3s ease-out;}
+.tblType01 tbody td .btn_tbl:hover, .tblType01 tbody td .btn_tbl:focus {text-decoration:underline; opacity:1.0; transition:all 0.3s ease-out;}
+.tblType01 thead th:first-child {border-radius:3px 0 0 0;}
+.tblType01 thead th:last-child {border-radius:0 3px 0 0;}
+
+/* paging */
+.paging_wrap { display:block; overflow:hidden; text-align: center;}
+.paging { display: inline-block; margin:5px 0 0 0; }
+.paging a {margin:0 10px; color:#6a74a7; font-size:13px;}
+.paging strong {margin:0 10px; color:#5964ff; font-size:13px;}
+.paging a.btn_paging_first, .paging a.btn_paging_prev, .paging a.btn_paging_next, .paging a.btn_paging_end {margin:0;}
+.paging a span {display:inline-block; position:relative; width:26px; height:26px; color:#6a74a7; line-height:26px; border:1px solid rgba(115,133,220,0.2); border-radius:5px; background:#fff; transition:all 0.3s ease-out;}
+.paging a span em {display:none;}
+
+.paging_wrap .btnBox {}
+.paging_wrap .btnBox.left {float:left;}
+.paging_wrap .btnBox.right {float:right;}
+.paging_wrap .btnBox button {min-width:80px; height:34px; padding:0 15px; color:#fff; font-size:14px; font-weight:600; line-height:32px; letter-spacing:-1px; border:none; border-radius:5px; background:#6a74a7;}
+.paging_wrap .btnBox button.point {background:#5964ff;}
+.paging_wrap .btnBox span {margin:-1px 5px 0 0; font-size:12px; vertical-align:middle; opacity:0.5;}
+.paging_wrap .btnBox a {display:inline-block; min-width:80px; height:34px; padding:0 15px; color:#fff; font-size:14px; font-weight:600; line-height:32px; letter-spacing:-1px; border:none; border-radius:5px; background:#6a74a7;}
+.paging_wrap .btnBox a.point {background:#5964ff;}
+.paging_wrap .btnBox button:hover, .paging_wrap .btnBox button:focus {}
+
+.fa, .fas {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+.paging>a {
+  display: inline-block;
+  position: relative;
+  width: 26px;
+  height: 26px;
+   color: #6a74a7;
+   line-height: 26px;
+   border: 1px solid rgba(115,133,220,0.2);
+  border-radius: 5px;
+   background: #fff;
+   transition: all 0.3s ease-out;
+}
+
+.srchNum{
+  color: #000;
+}
+.tblType01>tbody>tr{
+  cursor: pointer;
+}
 /********************************반응형********************************/
 
 .site-wrap{
@@ -1617,6 +1682,12 @@ figure > img {
 .sign-in-id {
   color: #7971ea;
   font-size: 1rem;
+}
+.sign-in-id-manager{
+  color: #fff;
+}
+.sign-in-id-manager:hover{
+  color: #fff;
 }
 
 .site-navigation {

@@ -2,13 +2,12 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>TIKITAKA &ndash; 신고 상세내용 </title>
+    <title>TIKITAKA &ndash; 신고상세 </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
     <link rel="stylesheet" href="/fonts/icomoon/style.css">
-
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/magnific-popup.css">
     <link rel="stylesheet" href="/css/jquery-ui.css">
@@ -36,63 +35,76 @@
     <!--모바일 검색창-->
     <div th:replace="common::mobile_search(complain_detail)"></div>
 
-    <div class="bg-light py-3" th:replace="common::logo(신고상세내용)">
-    </div>
     <!----------------------->
     <div class="site-section margin-top-2">
-        <div class="container">
-            <table style="border: 1px solid #ddd;">
-                <thead style="border: 1px solid #ddd;">
-                <tr>
-                    <th>번호</th>
-                    <th>제목</th>
-                    <th>내용</th>
-                    <th>신고자</th>
-                    <th>용의자</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>욕</td>
-                    <td>욕했어요</td>
-                    <td>admin</td>
-                    <td>user</td>
-                    <td> <input tpye="button" class="border-0-btn btn btn-dark"
-                                value="보기" ></td>
-                </tr>
+        <div class="container table_container">
+            <div class="content">
+                <form id ="goDetailFrm" name="goDetailFrm" method="post">
+                    <div class="tblBox">
+                        <table class="tblType01" style="table-layout: fixed">
+                            <thead>
+                            <tr>
+                                <th id="compIdx"  scope="col" style="width: 1%;"></th>
+                                <th id="repo" scope="col" style="width: 5%; "></th>
+                                <th id="compNm" scope="col" style="width: 5%;"></th>
+                                <th id="writingDay" scope="col" style="width: 6%; "></th>
 
-                </tbody>
-            </table>
-            </td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                              <td colspan="4"  id="compCon" height=300
+                                  style="width: 5%; vertical-align: top;">
+                             </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" id="writingTime"  scope="col" style="width: 5%;"></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </form>
+            </div>
 
         </div>
     </div>
 
 
-
 </div>
 <style>
-    table{
-        width: 100%;
-    }
-    th{
-        padding: 0 20px;
-        text-align: center;
-        border-right:1px solid #ddd;
-    }
-    th:nth-child(6){
-        padding: 0;
-        width: 100px;
-    }
-    td{
-        border-right: 1px solid #ddd;
-        color: #000;
-    }
-    .btn{
-        width: 100px;
-    }
+.table_container{
+    display: flex;
+    justify-content: center;
+}
+.content{
+    width: 50%;
+}
+#compIdx{
+    text-align: left;
+    padding:0 10px;
+}
+#repo{
+    text-align: left;
+    color: red;
+    padding:0 10px;
+}
+#compCon{
+    text-align: left;
+    font-size: 18px;
+    padding:0 10px;
+    color: #000;
+}
+#writingDay{
+    font-weight: 14;
+    font-weight: lighter;
+    text-align: right;
+    padding:0 10px;
+}
+#writingTime{
+    text-align: right;
+}
 
 </style>
 
@@ -106,9 +118,51 @@
 <script src="/js/aos.js"></script>
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script src="/js/main.js"></script>
+
 <script>
+    function searchParam(key) {
+        return new URLSearchParams(location.search).get(key);
+    };
+
+
+    /*신고내용 정보*/
+    function getCompDetail() {
+
+        var param = {
+            compIdx: searchParam('compIdx'),
+        };
+
+        $.ajax({
+            url: '/comp/detail',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            console.log("data.complainDetail", data.compDetail);
+            $('#compIdx').text(data.compDetail.compIdx);
+            $('#compNm').text(data.compDetail.compNm);
+            $('#repo').text("ID:" +" " +data.compDetail.repo);
+            $('#spt').text("신고자:" + " " +data.compDetail.spt);
+            $('#writingDay').text(data.compDetail.writingTime.substring(0,10));
+            $('#writingTime').text(data.compDetail.writingTime.substring(12,22));
+            $('#compCon').text(data.compDetail.compCon);
+
+
+        }).fail(function (data, textStatus) {
+            console.log(textStatus);
+        });
+
+    }
+
+        $(document).ready(function () {
+            getCompDetail();
+        });
+
+
+
 
 </script>
+
 
 </body>
 </html>

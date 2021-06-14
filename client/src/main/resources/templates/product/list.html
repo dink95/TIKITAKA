@@ -181,6 +181,7 @@
                 $('#queryTextCatNm').text(" " + ">" +" " + data.categoryDTO.catNm);
                 if( $('#selectedDetail').val() == '') {
                     $('#selectCat').val(data.categoryDTO.catNo);
+                    $('#detailCatNm').text(" " + ">" + " " + '전체');
                 }else{
                     $('#selectCat').val( $('#selectedDetail').val());
                 }

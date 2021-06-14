@@ -1,12 +1,15 @@
 package com.tiki.member.mapper;
 
 import com.tiki.member.domain.ComplainDTO;
+import com.tiki.member.domain.paging.SearchDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
 public interface ComplainMapper {
+
+    int getTotalCount(SearchDTO searchDTO);
 
     int insertComplain(ComplainDTO complainDTO);
 

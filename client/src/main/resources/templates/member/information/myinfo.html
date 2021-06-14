@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
@@ -95,23 +96,19 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="container">
+
+        <div class="NavItemTitle">
+            <label class="text-black">판매상품
+                <span class="text-danger">*</span></label></div>
 
 
-            <div class="container">
-                <div class="NavContainer">
-                    <div class="NavItemTitle">
-                        <label class="text-black">판매상품
-                            <span class="text-danger">*</span></label></div>
-                </div>
-                <div class="NavContainer">
-                    <div class="gridContainer" style="">
-
-                    </div>
-                </div>
-            </div>
-
+        <div class="gridContainer" style="">
 
         </div>
+
     </div>
 </div>
 <!-- 모바일 메뉴-->
@@ -185,7 +182,7 @@
         border-radius: 25px;
     }
     .myinfoMainNav > div:nth-child(3)>button:focus {
-      outline: none;
+        outline: none;
     }
     .myinfoMainNav > div:nth-child(3)>button:nth-child(2) {
         color: red;
@@ -352,7 +349,7 @@
     });
 
     function goUpdateInfo() {
-        location.href = '/member/info/update';
+        location.href = '/member/info/pwdconfirm';
     }
 
     /*탈퇴 페이지 이동*/

@@ -23,10 +23,6 @@
 
 <div class="site-wrap">
     <header class="site-navbar" role="banner">
-        <!--replace 헤더-->
-        <div class="site-navbar-top" th:replace="common::header(complain_list)">
-        </div>
-        <!------------->
         <nav class="site-navigation text-right text-md-center" role="navigation"
              th:replace="common::adminmenu(complain_list)">
         </nav>
@@ -36,63 +32,73 @@
     <!--모바일 검색창-->
     <div th:replace="common::mobile_search(complain_list)"></div>
 
-    <div class="bg-light py-3" th:replace="common::logo(신고리스트)">
-    </div>
     <!----------------------->
     <div class="site-section margin-top-2">
         <div class="container">
-            <table style="border: 1px solid #ddd;">
-                <thead style="border: 1px solid #ddd;">
-                <tr>
-                    <th>번호</th>
-                    <th>제목</th>
-                    <th>내용</th>
-                    <th>신고자</th>
-                    <th>용의자</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>욕</td>
-                    <td>욕했어요</td>
-                    <td>admin</td>
-                    <td>user</td>
-                    <td> <input tpye="button" class="border-0-btn btn btn-dark"
-                                value="보기" onclick="goDetailComplain()"></td>
-                </tr>
+            <div class="content">
+                <form id ="goDetailFrm" name="goDetailFrm" method="post">
+                    <input type="hidden" id="currentPage" name="currentPage" th:value="${currentPage}">
+                    <!-- //.section -->
+                    <div class="tblTop">
+                        <div class="srchNum">총 <span th:text="${listSize}"></span>건의 신고 리스트</div>
+                    </div>
+                    <!-- .tblBox -->
+                    <div class="tblBox">
+                        <table class="tblType01" style="table-layout: fixed">
+                            <thead>
+                            <tr>
+                                <th scope="col" style="width: 5%;">번호</th>
+                                <th scope="col" style="width: 5%;">제목</th>
+                                <th scope="col" style="width: 10%;">용의자</th>
+                                <th scope="col" style="width: 10%;">신고자</th>
+                                <th scope="col" style="width: 10%;">날짜</th>
+                                <th scope="col" style="width: 10%;">확인여부</th>
+                                <th scope="col" style="width: 5%;"></th>
+                                <th scope="col" style="width: 5%;"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="cList, status :${compList}">
+                                <td th:text=" ${cList.compIdx}"></td>
+                                <td th:text=" ${cList.compNm}"></td>
+                                <td th:text=" ${cList.repo}"></td>
+                                <td th:text=" ${cList.spt}"></td>
+                                <td th:text=" ${#strings.substring(cList.writingTime,0,10)}"></td>
+                                <td th:if="${cList.readCheck}" style="color: #000;">읽음</td>
+                                <td th:unless="${cList.readCheck}"></td>
+                                <td>
+                                    <a th:href="@{/admin/complain/detail(compIdx=${cList.compIdx},time=${cList.writingTime})}">
+                                        상세보기
+                                    </a>
+                                </td>
+                                <td th:onclick="'javascript:goDelete('+ ${cList.compIdx} + ');'">삭제</td>
+                            </tr>
 
-                </tbody>
-            </table>
-        </td>
+                            <tr th:if="${listSize == 0}">
+                                <td colspan="8" scope="row">데이터가 없습니다.</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- //.tblBox -->
+                    <!-- .paging_wrap -->
+                    <div class="paging_wrap">
+                        <div class="paging" th:utext="${pageHtml}"></div>
+                    </div>
+                    <!-- //.paging_wrap -->
+                </form>
+            </div>
 
         </div>
     </div>
 
 
-
 </div>
 <style>
-    table{
-        width: 100%;
-    }
-    th{
-        padding: 0 20px;
-        text-align: center;
-        border-right:1px solid #ddd;
-    }
-    th:nth-child(6){
-        padding: 0;
-        width: 100px;
-    }
-    td{
-        border-right: 1px solid #ddd;
-        color: #000;
-    }
-    .btn{
-        width: 100px;
-    }
+tbody>tr>td:nth-child(8){
+    color: red;
+}
 
 </style>
 
@@ -108,10 +114,75 @@
 <script src="/js/main.js"></script>
 
 <script>
- function goDetailComplain(){
-     location.href = '/admin/complain/detail';
- }
+
+    //페이지 이동
+    function goPage(num){
+        $('#currentPage').val(num);
+        goSch();
+    }
+
+    function goSch() {
+        var mainFrm = $('#goDetailFrm');
+        mainFrm.attr('method',"post");
+        mainFrm.attr('action',"/bbs/list");
+        mainFrm.submit();
+    }
+
+    /*신고내용 리스트*/
+    function getCompList() {
+
+        $.ajax({
+            url: '/comp/list',
+            data: null,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            console.log("data.compList", data.compList);
+
+        }).fail(function (data, textStatus) {
+            console.log(textStatus);
+        });
+
+    }
+
+    $(document).ready(function () {
+        getCompList();
+    });
+
+
+    /*신고정보 삭제*/
+    function goDeleteComp(compIdx){
+            var param ={
+                compIdx :compIdx,
+            };
+
+            $.ajax({
+                url: '/comp/delete',
+                data: param,
+                type: 'post',
+                dataType : 'json'
+            }).done(function(data){
+                if(data.resultCode == 200) {
+                    popup('알림메세지',data.resultMsg,'/admin/complain/list');
+                }else {
+                    popup('알람메세지',data.resultMsg);
+                    return false;
+                }
+
+            }).fail(function (data, textStatus, errorThrown){
+                console.log(textStatus);
+            });
+    }
+
+    function goDelete(compIdx){
+        if (confirm("신고내용 삭제") == true) {    //확인
+            goDeleteComp(compIdx);
+        } else {   //취소
+            return false;
+        }
+    }
 </script>
+
 
 </body>
 </html>

@@ -69,7 +69,7 @@
                                     <input type="text" id="inputKey" class="form-control" placeholder="인증번호를 입력하세요."
                                            name="current_password"
                                            required>
-                                    <input type="text" id="emailKey" value="">
+                                    <input type="hidden" id="emailKey" value="">
                                     <span id="valid_current_password" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
 
@@ -171,7 +171,6 @@
             $('#c_email').val(data.memberDetail.mbrEmail);
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
-            alert('ajax fail')
         });
 
     }
@@ -230,7 +229,6 @@
 
             }).fail(function (data, textStatus, errorThrown) {
                 console.log(textStatus);
-                alert('ajax fail')
             });
         } else {
             popup('알람메세지',"인증에 실패하였습니다. 인증번호를 확인해주세요.");

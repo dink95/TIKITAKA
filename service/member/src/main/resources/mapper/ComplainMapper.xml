@@ -18,10 +18,19 @@
         where comp_idx = #{compIdx, jdbcType=INTEGER}
     </delete>
 
+    <select id="getTotalCount" parameterType="com.tiki.member.domain.paging.SearchDTO" resultType="int">
 
-    <select id="selectAllComplains" resultType="ComplainDTO">
+                select count(*) as cnt
+                from comp
+
+            </select>
+
+    <select id="selectAllComplains" parameterType="com.tiki.member.domain.paging.SearchDTO" resultType="ComplainDTO">
         select *
         from comp
+        order by comp_idx desc
+
+
     </select>
 
     <select id="selectComplainDetail" resultType="ComplainDTO" parameterType="int">
