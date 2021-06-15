@@ -146,7 +146,7 @@ public class ProductController {
     }
 
     // 판매완료 상품 업데이트
-    @PatchMapping("/prd/prodfinsh")
+    @PatchMapping("/prd/prodfinish")
     public int updateProductFinish(@RequestBody ProductDTO productDTO) {
         return productService.updateProductFinish(productDTO);
     }

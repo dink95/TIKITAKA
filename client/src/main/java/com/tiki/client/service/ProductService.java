@@ -94,5 +94,13 @@ public class ProductService {
                 .block();
     }
 
+    public int updateProductFinish(ProductDTO productDTO) {
+        return webClient.patch()
+                .uri("/prd/prodfinish")
+                .body(Mono.just(productDTO), ProductDTO.class)
+                .retrieve()
+                .bodyToMono(Integer.class) //반환정보
+                .block();
+    }
 
 }
