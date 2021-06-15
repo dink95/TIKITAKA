@@ -112,4 +112,29 @@
             mbr_id = #{mbrId,jdbcType=VARCHAR}
     </update>
 
+    <update id="updateMemberPoints" parameterType="MemberDTO">
+        UPDATE
+            mbr
+        SET
+            mbr_points= mbr_points+5
+        WHERE
+            mbr_id = #{mbrId,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateMemberGrade" parameterType="MemberDTO">
+        UPDATE
+            mbr
+        SET
+            <choose>
+                <when test="mbrPoints gte 500">mbr_grade='다이아'</when>
+                <when test="mbrPoints gte 300">mbr_grade='플레티넘'</when>
+                <when test="mbrPoints gte 100">mbr_grade='골드'</when>
+                <when test="mbrPoints gte 50">mbr_grade='실버'</when>
+                <when test="mbrPoints gte 5">mbr_grade='브론즈'</when>
+                <otherwise>mbr_grade='보통'</otherwise>
+            </choose>
+        WHERE
+            mbr_id = 'dink95'
+    </update>
+
 </mapper>

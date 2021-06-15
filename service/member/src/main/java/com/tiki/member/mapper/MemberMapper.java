@@ -27,4 +27,8 @@ public interface MemberMapper {
     public int updateRole(MemberDTO dto);
 
     public int updateMemberInfo(MemberDTO dto);
+
+    public int updateMemberPoints(MemberDTO memberDTO);
+
+    public int updateMemberGrade(MemberDTO dto);
 }

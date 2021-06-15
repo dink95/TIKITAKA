@@ -167,4 +167,13 @@ public class MemberController {
         return memberService.updateRole(memberDTO);
     }
 
+    @PatchMapping("/mbr/points")
+    public int updateMemberPoints(@RequestBody MemberDTO memberDTO){
+        return memberService.updateMemberPoints(memberDTO);
+    }
+
+    @PatchMapping("/mbr/grade")
+    public int updateMemberGrade(@RequestBody MemberDTO memberDTO){
+        return memberService.updateMemberGrade(memberDTO);
+    }
 }
