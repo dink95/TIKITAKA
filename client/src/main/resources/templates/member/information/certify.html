@@ -167,7 +167,6 @@
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            console.log("data.memberDetail", data.memberDetail);
             $('#c_email').val(data.memberDetail.mbrEmail);
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);

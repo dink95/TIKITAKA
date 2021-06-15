@@ -607,11 +607,17 @@ function popup(title,content,href){
 	$('#popupContent').text(content);
 	$('#confirmBtn').click(function(){
 		if (href) {
-			location.href = href;
-			$('.popupLayout').css('display', 'none');
-		} else {
-			$('.popupLayout').css('display', 'none');
-		}
+			if (href == 'back') {
+				history.back();
+			} else {
+				location.href = href;
+				$('.popupLayout').css('display', 'none');
+			}
+		} else
+			{
+				$('.popupLayout').css('display', 'none');
+			}
+
 	});
 }
 

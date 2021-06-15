@@ -122,6 +122,7 @@ public class MemberController {
         if (dto != null) {
             return dto.getMbrId();
         } else {
+            log.info("id not exit!!");
             return null;
         }
     }

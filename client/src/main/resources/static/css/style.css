@@ -375,7 +375,7 @@ a:hover {
 }
 
 .site-navbar .site-navigation .site-menu > li > a:hover {
-  color: #7971ea;
+  /*color: #7971ea;*/
 }
 
 .site-navbar .site-navigation .site-menu .has-children {

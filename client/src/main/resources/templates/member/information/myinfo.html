@@ -92,7 +92,7 @@
                         <span>점</span>
                     </div>
                     <div>
-                        <span onclick="goCertify()">이메일인증 ></span>
+                        <span id="emailCheck" onclick="goCertify()">이메일인증 ></span>
                     </div>
                 </div>
             </div>
@@ -215,14 +215,6 @@
         font-size: 14px;
     }
 
-    .NavContainer {
-        padding: 3% 3% 0 3%;
-    }
-
-    .NavContainer:not(:nth-child(2)) {
-        border: none;
-    }
-
     /*이미지리스트 css*/
     .block-4-image {
         margin: 0;
@@ -288,10 +280,26 @@
             dataType: 'json'
         }).done(function (data) {
             drawPrdList(data);
-            console.log(data);
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
         });
+    }
+
+    function getMbrInfo(){
+        param = {
+             userId:$('#p_id').text(),
+        }
+        $.ajax({
+            url:'/member/detail',
+            data:param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            if(data.memberDetail.mbrRole){
+                $('#emailCheck').text('이메일 인증을 완료하였습니다.');
+                $('#emailCheck').attr('onclick', '').unbind('click');
+            }
+        })
     }
 
     function drawPrdList(data) {
@@ -344,10 +352,6 @@
         location.href = '/product/detail?prodNo=' + prodNo;
     }
 
-    $(document).ready(function () {
-        getIdQueryList();
-    });
-
     function goUpdateInfo() {
         location.href = '/member/info/pwdconfirm';
     }
@@ -360,6 +364,11 @@
     function goCertify() {
         location.href = '/member/info/certify';
     }
+
+    $(document).ready(function () {
+        getIdQueryList();
+        getMbrInfo();
+    });
 </script>
 
 </body>
