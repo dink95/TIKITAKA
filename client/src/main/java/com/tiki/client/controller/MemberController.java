@@ -37,7 +37,6 @@ public class MemberController {
     public Map<String, Object> loginAccess(@RequestParam(value = "userId") String userId,
                                            @RequestParam(value = "userPw") String userPw,
                                            HttpServletRequest request) {
-        ModelAndView view = new ModelAndView();
         MemberDTO memberDTO = new MemberDTO();
 
         Map<String, Object> resultMap = new HashMap<>();
@@ -292,8 +291,6 @@ public class MemberController {
                 result = "/member/updatepwd";
             } else {
                 result = "/index";
-                model.addAttribute("modelCode", 400);
-                model.addAttribute("modelMsg", "올바른 접근이 아닙니다.");
             }
         } catch (Exception e) {
             result = "";

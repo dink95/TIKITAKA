@@ -36,8 +36,8 @@ public class ProductController {
         try {
             result = productService.createProduct(productDTO);
             List<MultipartFile> fileList = multi.getFiles("file");
-            String path = "c:/tmp/"+Integer.toString(result)+"/";
-           // String path = "/Users/gimmugyeong/tmp/" +Integer.toString(result)+"/";
+           //String path = "c:/tmp/"+Integer.toString(result)+"/";
+            String path = "/Users/gimmugyeong/tmp/" +Integer.toString(result)+"/";
             System.out.println(path);
             File dir = new File(path);
             if (!dir.isDirectory()) {
@@ -227,6 +227,28 @@ public class ProductController {
         }catch (Exception e) {
             e.printStackTrace();
             System.out.println("detail error");
+        }
+        return resultMap;
+    }
+
+    @RequestMapping("/product/prodfinish")  /*판매완료업데이트*/
+    @ResponseBody
+    public Map<String,Object> updateProdfinish(@RequestParam(value="selId") String selId,
+                                               @RequestParam(value="prodNo") int prodNo) {
+       HashMap<String,Object> resultMap = new HashMap<>();
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setSelId(selId);
+        productDTO.setProdNo(prodNo);
+        int result = 0;
+        try {
+            result = productService.updateProdfinish(productDTO);
+            if (result > 0) {
+                resultMap.put("resultCode", 200);
+            }else {
+                resultMap.put("resultCode", 400);
+            }
+        } catch (Exception e) {
+            resultMap.put("resultCode", 500);
         }
         return resultMap;
     }

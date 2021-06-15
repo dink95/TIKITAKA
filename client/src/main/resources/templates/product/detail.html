@@ -61,6 +61,7 @@
         <div class="container">
 
             <input type="hidden" id="p_id" th:value="${session.mbrId}">
+            <input type="hidden" id="prodNo" value="">
             <input type="hidden" id="query" value="">
             <input type="hidden" id="prodNm" value="">
             <input type="hidden" id="prodPrc" value="">
@@ -99,6 +100,9 @@
                                value="신고하기" onclick="goReport()">
                         <input type="button" class="border-0-btn btn btn-danger"
                                value="삭제하기" onclick="removeCheck()">
+                        <input type="hidden">
+                        <input type="button" class="border-0-btn btn btn-block"
+                               value="거래완료로 변경" onclick="goProdFinish()">
                     </div>
                 </div>
             </div>
@@ -284,7 +288,8 @@
             right: 10%;
             cursor: pointer;
         }
-        .img-fluid0{
+
+        .img-fluid0 {
             display: none;
             border-radius: 5px;
             max-height: 207.5px;
@@ -373,10 +378,10 @@
             dataType: 'json'
         }).done(function (data) {
             if (data.resultCode == 200) {
-                popup('알림메세지','상품이 삭제되었습니다.');
+                popup('알림메세지', '상품이 삭제되었습니다.');
                 location.href = '/member/myinfo'
             } else {
-                popup('알림메세지','삭제에 실패하였습니다. 관리자에게 문의하세요.');
+                popup('알림메세지', '삭제에 실패하였습니다. 관리자에게 문의하세요.');
             }
         }).fail(function (textStatus) {
             console.log(textStatus);
@@ -405,6 +410,7 @@
                 buttonCheck(0);
             }
             $('#detailWay').text(data.dataDetail.way);
+            $('#prodNo').val(data.dataDetail.prodNo);
             $('#prodNm').val(data.dataDetail.prodNm);
             $('#prodPrc').val(data.dataDetail.prodPrc);
             $('#catNo').val(data.dataDetail.catNo);
@@ -448,15 +454,9 @@
 
     function goRegist() {
         var prodNo = $("#query").val();
-        var prodNm = $('#prodNm').val();
-        var prodPrc = $('#prodPrc').val();
         var catNo = $('#catNo').val();
-        var way = $('#way').val();
-        var nego = $('#nego').val();
-        var prodCo = $('#prodCo').val();
-        var content = $('#prodContent').text();
         var imgCount = $('#imgCount').val();
-        location.href = "/product/update?prodNo=" + prodNo + '&prodNm=' + prodNm + '&prodPrc=' + prodPrc + '&catNo=' + catNo + '&way=' + way + '&nego=' + nego + '&prodCo=' + prodCo + '&content=' + content + '&imgCount=' + imgCount;
+        location.href = "/product/update?prodNo=" + prodNo + '&catNo=' + catNo + '&imgCount=' + imgCount;
     }
 
     function goReport() {
@@ -482,6 +482,26 @@
         $('#img_modal').css('display', 'none');
     }
 
+    function goProdFinish() {
+        param = {
+            prodNo: $('#prodNo').val(),
+            selId: $('#p_id').val(),
+        }
+        $.ajax({
+            url: '/product/prodfinish',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            if(data.resultCode == 200) {
+                console.log('판매완료');
+            }else{
+                console.log(data.resultCode);
+            }
+        }).fail(function (textStatus) {
+            console.log(textStatus);
+        });
+    }
 
 </script>
 

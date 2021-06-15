@@ -174,7 +174,7 @@
                         </div>
                     </div>
                 </div>
-                <input type="text" name="imgCount">
+                <input type="hidden" name="imgCount">
                 <span id="photoValue"></span>
                 <div class="NavContainer BtnNavContainer">
                     <div class="ButtonNav">
@@ -355,23 +355,43 @@
     }
 
 
-    $("#prodNoQuery").val(searchParam('prodNo'));
-    $('#p_title').val(searchParam('prodNm'));
-    $('input[name=prodPrc]').val(searchParam('prodPrc'));
-    $('input[name=catNo]').val(searchParam('catNo'));
-    if (searchParam('way') == '직거래') {
-        $("input:radio[name='way']:radio[value='직거래']").prop('checked', true);
-    } else {
-        $("input:radio[name='way']:radio[value='택배거래']").prop('checked', true);
+    /*정보*/
+    function getProductDetail() {
+
+        var param = {
+            prodNo:searchParam('prodNo'),
+        }
+
+        $.ajax({
+            url: '/product/detail.do',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            $("#p_title").val(data.dataDetail.prodNm);
+
+            $('input[name=prodPrc]').val(data.dataDetail.prodPrc);
+            $('input[name=catNo]').val(data.dataDetail.catNo);
+            if (data.dataDetail.way == '직거래') {
+                $("input:radio[name='way']:radio[value='직거래']").prop('checked', true);
+            } else {
+                $("input:radio[name='way']:radio[value='택배거래']").prop('checked', true);
+            }
+            if (data.dataDetail.nego == '1') {
+                $("input:checkbox[id='p_nego']").prop("checked", true);
+            }
+            $('input[name=prodCo]').val(data.dataDetail.prodCo);
+            $('textarea[name=content]').val(data.dataDetail.content);
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+
     }
-    if (searchParam('nego') == '1') {
-        $("input:checkbox[id='p_nego']").prop("checked", true);
-    }
-    $('input[name=prodCo]').val(searchParam('prodCo'));
-    $('textarea[name=content]').val(searchParam('content'));
+
 
     $(document).ready(function () {
         getCategory();
+        getProductDetail();
     });
 
 
