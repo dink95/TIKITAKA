@@ -8,4 +8,10 @@
         insert blist
         values(#{mbrId, jdbcType=VARCHAR})
     </insert>
+
+    <select id="selectAllBlackList" resultType="BlackListDTO">
+        select *
+        from
+            blist
+    </select>
 </mapper>
