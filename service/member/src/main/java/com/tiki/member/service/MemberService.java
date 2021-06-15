@@ -26,4 +26,8 @@ public interface MemberService {
 
     public int updateMemberInfo(MemberDTO dto);
 
+
+    public int updateMemberPoints(MemberDTO memberDTO);
+
+    public int updateMemberGrade(MemberDTO dto);
 }

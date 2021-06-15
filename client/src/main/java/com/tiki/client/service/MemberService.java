@@ -132,4 +132,22 @@ public class MemberService {
                 .block();
     }
 
+    public int updateMemberPoints(MemberDTO memberDTO){
+        return webClient.patch()
+                .uri("/mbr/points")
+                .body(Mono.just(memberDTO), MemberDTO.class)
+                .retrieve()
+                .bodyToMono(Integer.class) //반환정보
+                .block();
+    }
+
+    public int updateMemberGreade(MemberDTO memberDTO){
+        return webClient.patch()
+                .uri("/mbr/grade")
+                .body(Mono.just(memberDTO), MemberDTO.class)
+                .retrieve()
+                .bodyToMono(Integer.class) //반환정보
+                .block();
+    }
+
 }
