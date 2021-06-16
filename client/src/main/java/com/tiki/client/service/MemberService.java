@@ -141,7 +141,7 @@ public class MemberService {
                 .block();
     }
 
-    public int updateMemberGreade(MemberDTO memberDTO){
+    public int updateMemberGrade(MemberDTO memberDTO){
         return webClient.patch()
                 .uri("/mbr/grade")
                 .body(Mono.just(memberDTO), MemberDTO.class)

@@ -36,7 +36,7 @@
     <div class="site-section margin-top-2">
         <div class="container">
             <div class="content">
-                <form id ="goDetailFrm" name="goDetailFrm" method="post">
+                <form id="goDetailFrm" name="goDetailFrm">
                     <input type="hidden" id="currentPage" name="currentPage" th:value="${currentPage}">
                     <!-- //.section -->
                     <div class="tblTop">
@@ -65,7 +65,7 @@
                                 <td th:text=" ${cList.spt}"></td>
                                 <td th:text=" ${#strings.substring(cList.writingTime,0,10)}"></td>
                                 <td th:if="${cList.readCheck}" style="color: #000;">읽음</td>
-                                <td th:unless="${cList.readCheck}"></td>
+                                <td th:unless="${cList.readCheck}">안읽음</td>
                                 <td>
                                     <a th:href="@{/admin/complain/detail(compIdx=${cList.compIdx},time=${cList.writingTime})}">
                                         상세보기
@@ -96,9 +96,16 @@
 
 </div>
 <style>
-tbody>tr>td:nth-child(8){
-    color: red;
-}
+    tbody > tr {
+        font-weight: bold;
+        border-bottom: solid 1px #d8ddf3;
+    }
+    tbody > tr > td:nth-child(1) {
+        color: #000;
+    }
+    tbody > tr > td:nth-child(8) {
+        color: red;
+    }
 
 </style>
 
@@ -116,67 +123,47 @@ tbody>tr>td:nth-child(8){
 <script>
 
     //페이지 이동
-    function goPage(num){
+    function goPage(num) {
         $('#currentPage').val(num);
         goSch();
     }
 
     function goSch() {
         var mainFrm = $('#goDetailFrm');
-        mainFrm.attr('method',"post");
-        mainFrm.attr('action',"/bbs/list");
+        mainFrm.attr('method', "post");
+        mainFrm.attr('action',"/admin/complain/list");
         mainFrm.submit();
     }
 
-    /*신고내용 리스트*/
-    function getCompList() {
+
+    /*신고정보 삭제*/
+    function goDeleteComp(compIdx) {
+        var param = {
+            compIdx: compIdx,
+        };
 
         $.ajax({
-            url: '/comp/list',
-            data: null,
+            url: '/comp/delete',
+            data: param,
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            console.log("data.compList", data.compList);
+            if (data.resultCode == 200) {
+                popup('알림메세지', data.resultMsg, '/admin/complain/list');
+            } else {
+                popup('알람메세지', data.resultMsg);
+                return false;
+            }
 
-        }).fail(function (data, textStatus) {
+        }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
         });
-
     }
 
-    $(document).ready(function () {
-        getCompList();
-    });
-
-
-    /*신고정보 삭제*/
-    function goDeleteComp(compIdx){
-            var param ={
-                compIdx :compIdx,
-            };
-
-            $.ajax({
-                url: '/comp/delete',
-                data: param,
-                type: 'post',
-                dataType : 'json'
-            }).done(function(data){
-                if(data.resultCode == 200) {
-                    popup('알림메세지',data.resultMsg,'/admin/complain/list');
-                }else {
-                    popup('알람메세지',data.resultMsg);
-                    return false;
-                }
-
-            }).fail(function (data, textStatus, errorThrown){
-                console.log(textStatus);
-            });
-    }
-
-    function goDelete(compIdx){
+    function goDelete(compIdx) {
         if (confirm("신고내용 삭제") == true) {    //확인
             goDeleteComp(compIdx);
+            window.location.reload();
         } else {   //취소
             return false;
         }

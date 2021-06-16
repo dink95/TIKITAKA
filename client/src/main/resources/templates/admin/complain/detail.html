@@ -22,10 +22,7 @@
 
 <div class="site-wrap">
     <header class="site-navbar" role="banner">
-        <!--replace 헤더-->
-        <div class="site-navbar-top" th:replace="common::header(complain_detail)">
-        </div>
-        <!------------->
+
         <nav class="site-navigation text-right text-md-center" role="navigation"
              th:replace="common::adminmenu(complain_detail)">
         </nav>
@@ -127,7 +124,6 @@
 
     /*신고내용 정보*/
     function getCompDetail() {
-
         var param = {
             compIdx: searchParam('compIdx'),
         };

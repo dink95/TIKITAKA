@@ -14,7 +14,7 @@ public class ComplainDTO {
     String compCon;
     String spt;
     String repo;
-    LocalDateTime writingTime;
+    String writingTime;
     boolean readCheck;
 
 }

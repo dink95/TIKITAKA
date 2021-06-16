@@ -82,7 +82,7 @@ import java.util.Map;
             System.out.println("@@start:" + searchDTO.getStart() + " " + "@@end:" + searchDTO.getEnd());
 
             //페이지에 뿌릴 데이터를 가져온다.
-            compList = complainService.selectAllComplains();
+            compList = complainService.selectAllComplains(searchDTO);
             view.addObject("currentPage", searchDTO.getCurrentPage());
             view.addObject("pageHtml",pagingDTO.getPager());
             view.addObject("compList",compList);
@@ -101,22 +101,6 @@ import java.util.Map;
         return view;
     }
 
-    @RequestMapping("/comp/list")  /*신고 리스트 */
-    @ResponseBody
-    public Map<String, Object> productList(ComplainDTO complainDTO) {
-        Map<String, Object> resultMap = new HashMap<>();
-        List<ComplainDTO> list = null;
-
-        try {
-            list= complainService.selectAllComplains();
-            resultMap.put("compList", list);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return resultMap;
-    }
 
     @GetMapping(value = "/admin/complain/detail") /*신고디테일 페이지*/
     public ModelAndView detail() {
@@ -169,5 +153,47 @@ import java.util.Map;
 
         return resultMap;
     }
+
+    @RequestMapping("/complain/repo") /*용의자로 신고내용 조회*/
+    @ResponseBody
+        public ModelAndView compList(@RequestParam(value="repo") String repo){
+
+            ModelAndView view = new ModelAndView();
+            view.setViewName("admin/complain/list");
+            SearchDTO searchDTO =new SearchDTO();
+            List<ComplainDTO> compList = null;
+
+            try{
+                int totalCount = complainService.getTotalCount(searchDTO);
+                System.out.println("@@totalCount:" + totalCount);
+                //페이징 처리 객체를 선언한다.
+                PagingDTO pagingDTO = new PagingDTO();
+                //구해온 전체 리스트 개수를 페이지처리 객체에 넣는다.
+                pagingDTO.setTotalCount(totalCount);
+                //클라이언트에서 넘어온 이동할 페이지정보를 페이징처리 객체에 넣어준다
+                pagingDTO.setCurrentPage(searchDTO.getCurrentPage());
+
+                searchDTO.setStart(pagingDTO.getStartRow());
+                searchDTO.setEnd(pagingDTO.getCountPerPage());
+                System.out.println("@@start:" + searchDTO.getStart() + " " + "@@end:" + searchDTO.getEnd());
+
+                //페이지에 뿌릴 데이터를 가져온다.
+                compList = complainService.selectByRepo(repo);
+                view.addObject("currentPage", searchDTO.getCurrentPage());
+                view.addObject("pageHtml",pagingDTO.getPager());
+                view.addObject("compList",compList);
+
+                if(compList != null){
+                    view.addObject("listSize", totalCount);
+                }else{
+                    view.addObject("listSize",0);
+                }
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            return view;
+    }
+
 }
 

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>TIKITAKA &ndash; 등급기준</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="/fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/jquery-ui.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/aos.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+
+<div class="site-wrap">
+    <header class="site-navbar" role="banner">
+        <!--replace 헤더-->
+        <div class="site-navbar-top" th:replace="common::header(grade)">
+        </div>
+        <!------------->
+        <nav class="site-navigation text-right text-md-center" role="navigation"
+             th:replace="common::menu(grade)">
+        </nav>
+        <!---------------------------------------------------------->
+    </header>
+
+    <!--모바일 검색창-->
+    <div th:replace="common::mobile_search(grade)"></div>
+
+    <div class="site-section margin-top-2">
+        <div class="container">
+            <div class="titleContainer">
+                <h1>등급기준</h1>
+            </div>
+            <div class="gradeContainer">
+                <div class="grade common">일반</div>
+                <div class="grade bronze">브론즈</div>
+                <div class="grade silver">실버</div>
+                <div class="grade gold">골드</div>
+                <div class="grade platinum">플래티넘</div>
+                <div class="grade diamond">다이아</div>
+            </div>
+            <div class="pointContainer">
+                <div class="point" style="color:#000">0점</div>
+                <div class="point" style="color:#392f31">5점 이상</div>
+                <div class="point" style="color:#a9a9a9">50점 이상</div>
+                <div class="point" style="color:#d4af37">100점 이상</div>
+                <div class="point" style="color:#20b2aa">300점 이상</div>
+                <div class="point" style="color:#5f0080">500점 이상</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+
+    .titleContainer
+    {
+        margin:0 auto;
+        border-bottom: 1px solid #ddd;
+        width: 70%;
+       padding: 100px 0 35px 0;
+    }
+    h1{
+        color: #000;
+    }
+   .gradeContainer{
+       width: 80%;
+       margin:0 auto;
+       padding:50px 0 0 0;
+       display: flex;
+       justify-content: center;
+       align-items: flex-end;
+   }
+    .grade {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        width: 120px;
+        margin:0 5px;
+        border-top-left-radius:5px;
+        border-top-right-radius:5px;
+        color: #fff;
+    }
+    .pointContainer{
+
+        margin:0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .point{
+        font-size: 16px;
+        font-weight: bold;
+        width: 120px;
+        height: 100px;
+        margin:0 5px;
+    }
+    .common{
+        height: 30px;
+        border: 1px solid #000;
+        color: #000;
+    }
+    .bronze{
+        height: 40px;
+        border: 1px solid #392f31;
+        color: #392f31;
+    }
+    .silver{
+        height: 50px;
+        border: 1px solid #a9a9a9;
+        color: #a9a9a9;
+    }
+    .gold{
+        height: 60px;
+        border: 1px solid #d4af37;
+        color: #d4af37;
+    }
+    .platinum{
+        height: 70px;
+        border: 1px solid #20b2aa;
+        color: #20b2aa;
+    }
+    .diamond{
+        height: 100px;
+        border: 1px solid #5f0080;
+        color: #fff;
+        background: #5f0080;
+    }
+</style>
+
+
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/jquery-ui.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/aos.js"></script>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>
+
+

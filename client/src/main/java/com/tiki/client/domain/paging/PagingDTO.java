@@ -27,7 +27,7 @@ public class PagingDTO {
     private int startRowNumCurrentPage; 	//리스트 페이지의 No(단순 증가 번호).
 
     public PagingDTO() {
-        countPerPage = 10;  // 한페이지에 보여줄 개수  기본 10개 지정
+        countPerPage = 15;  // 한페이지에 보여줄 개수  기본 10개 지정
     }
 
     //생성자를 통해 한페이지에 보여줄 개수를 변경가능
@@ -35,16 +35,6 @@ public class PagingDTO {
         countPerPage = initVal;
     }
 
-    //setter 를 통해서 한페이지에 보여줄 개수를 지정가능
-
-    public void setCountPerPage(String rowsPerPage) {
-//          if(StringUtils.isBlank(rowsPerPage) || rowsPerPage.equals("0") ) {
-//               countPerPage = 10;
-//
-//         }else {
-              countPerPage = Integer.parseInt(rowsPerPage);
-
-    }
 
     //게시물이 없어 0일 경우, 1로 기본값 세팅.
     public void setTotalCount(int totalCount) {

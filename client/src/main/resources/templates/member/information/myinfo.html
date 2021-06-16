@@ -76,10 +76,10 @@
                         </label>
                     </div>
                     <div>
-                        <span id="p_grade">보통</span>
+                        <span id="p_grade"></span>
                     </div>
                     <div>
-                        <span id="p_grade_confirm">등급기준 ></span>
+                        <span id="p_grade_confirm" onclick="goGrade()">등급기준 ></span>
                     </div>
                 </div>
 
@@ -88,7 +88,7 @@
                         <label for="p_point" class="text-black">판매점수</label>
                     </div>
                     <div>
-                        <span id="p_point">0</span>
+                        <span id="p_point"></span>
                         <span>점</span>
                     </div>
                     <div>
@@ -296,10 +296,30 @@
             dataType: 'json'
         }).done(function (data) {
             if(data.memberDetail.mbrRole){
-                $('#emailCheck').text('이메일 인증을 완료하였습니다.');
-                $('#emailCheck').attr('onclick', '').unbind('click');
+                $('#emailCheck').text('이메일 인증 완료');
+                $("#emailCheck").attr('onclick', '').unbind('click');
+                $("#emailCheck").css('cursor', 'initial');
+
             }
-        })
+            updateGrade(data.memberDetail.mbrPoints);
+            $('#p_point').text(data.memberDetail.mbrPoints);
+            if(data.memberDetail.mbrPoints >499){
+                $('#p_grade').css('color','#5f0080');
+            }else if(data.memberDetail.mbrPoints >299){
+                $('#p_grade').css('color','#20b2aa');
+            }else if(data.memberDetail.mbrPoints >99){
+                $('#p_grade').css('color','#d4af37');
+            }else if(data.memberDetail.mbrPoints >49){
+                $('#p_grade').css('color','#a9a9a9');
+            }else if(data.memberDetail.mbrPoints > 4){
+                $('#p_grade').css("color","#392f31");
+            }else{
+                $('#p_grade').css("color","#000");
+            }
+
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
     }
 
     function drawPrdList(data) {
@@ -364,11 +384,46 @@
     function goCertify() {
         location.href = '/member/info/certify';
     }
+    function goGrade() {
+        location.href = '/grade';
+    }
 
     $(document).ready(function () {
         getIdQueryList();
         getMbrInfo();
     });
+
+    //등급 업데이트
+    function updateGrade(point) {
+        param = {
+            userId: $('#p_id').text(),
+            userPoint:point,
+        }
+        $.ajax({
+            url: '/member/update/grade',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            param = {
+                userId:$('#p_id').text(),
+            }
+            $.ajax({
+                url:'/member/detail',
+                data:param,
+                type: 'post',
+                dataType: 'json'
+            }).done(function (data) {
+                $('#p_grade').text(data.memberDetail.mbrGrade);
+            }).fail(function (data, textStatus, errorThrown) {
+                console.log(textStatus);
+            });
+            console.log(data.resultMsg);
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+    }
+
 </script>
 
 </body>

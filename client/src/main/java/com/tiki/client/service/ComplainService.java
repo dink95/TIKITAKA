@@ -23,7 +23,7 @@ public class ComplainService {
 
     public int insertComplain(ComplainDTO complainDTO){
         return webClient.post()
-                .uri("/comp")
+                .uri("/comp/insert")
                 .body(Mono.just(complainDTO), ComplainDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
@@ -69,9 +69,10 @@ public class ComplainService {
                 .block();
     }
 
-    public List<ComplainDTO> selectAllComplains(){
-        return webClient.get()
+    public List<ComplainDTO> selectAllComplains(SearchDTO searchDTO){
+        return webClient.post()
                 .uri("/comp")
+                .body(Mono.just(searchDTO), SearchDTO.class)
                 .retrieve()
                 .bodyToMono(List.class) //반환정보
                 .block();

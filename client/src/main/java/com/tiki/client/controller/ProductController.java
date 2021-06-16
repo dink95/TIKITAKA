@@ -244,11 +244,14 @@ public class ProductController {
             result = productService.updateProdfinish(productDTO);
             if (result > 0) {
                 resultMap.put("resultCode", 200);
+                resultMap.put("resultMsg", "판매완료");
             }else {
                 resultMap.put("resultCode", 400);
+                resultMap.put("resultMsg", "판매완료 400");
             }
         } catch (Exception e) {
             resultMap.put("resultCode", 500);
+            resultMap.put("resultMsg", "판매완료 500");
         }
         return resultMap;
     }

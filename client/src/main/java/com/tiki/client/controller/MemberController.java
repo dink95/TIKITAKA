@@ -45,10 +45,9 @@ public class MemberController {
         memberDTO.setMbrPwd(userPw);
 
         String mbrId = memberService.login(memberDTO);
-
         try {
             if (mbrId != null) {
-                request.getSession().setAttribute("mbrId", mbrId);
+                request.getSession().setAttribute("mbrId", mbrId );
                 resultMap.put("resultCode", 200);
                 resultMap.put("resultMsg", "OK");
             } else {
@@ -78,8 +77,8 @@ public class MemberController {
     @ResponseBody
     public Map<String, Object> memberDetail(@RequestParam(value = "userId") String userId) {
         Map<String, Object> resultMap = new HashMap<>();
+        MemberDTO memberDTO = memberService.Detail(userId);
         try {
-            MemberDTO memberDTO = memberService.Detail(userId);
             resultMap.put("memberDetail", memberDTO);
         } catch (Exception e) {
             e.printStackTrace();
@@ -486,6 +485,76 @@ public class MemberController {
 
         return resultMap;
     }
+
+    @RequestMapping("/member/update/point") //점수 업데이트
+    @ResponseBody
+    public Map<String,Object> updatePoint(@RequestParam(value = "userId") String userId){
+        MemberDTO memberDTO = new MemberDTO();
+        Map<String, Object> resultMap = new HashMap<>();
+        memberDTO.setMbrId(userId);
+
+        int result = 0;
+
+        try {
+
+            result = memberService.updateMemberPoints(memberDTO);
+
+            if (result > 0) {
+                resultMap.put("resultCode", 200);
+                resultMap.put("resultMsg","점수 업데이트");
+            } else {
+                resultMap.put("resultCode", 400);
+                resultMap.put("resultMsg","점수 업데이트 400");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("resultCode", 500);
+            resultMap.put("resultMsg","점수 업데이트 500");
+        }
+
+        return resultMap;
+    }
+
+    @RequestMapping("/member/update/grade") //등급 업데이트
+    @ResponseBody
+    public Map<String,Object> updateGrade(@RequestParam(value = "userId") String userId,
+                                            @RequestParam(value = "userPoint") int userPoint){
+        MemberDTO memberDTO = new MemberDTO();
+
+        Map<String, Object> resultMap = new HashMap<>();
+        memberDTO.setMbrId(userId);
+        memberDTO.setMbrPoints(userPoint);
+
+        int result = 0;
+
+        try {
+
+            result = memberService.updateMemberGrade(memberDTO);
+
+            if (result > 0) {
+                resultMap.put("resultCode", 200);
+                resultMap.put("resultMsg","등급 업데이트");
+            } else {
+                resultMap.put("resultCode", 400);
+                resultMap.put("resultMsg","등급 업데이트 400");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("resultCode", 500);
+            resultMap.put("resultMsg","등급 업데이트 500");
+        }
+
+        return resultMap;
+    }
+
+    @GetMapping(value = "/grade") /*등급기준 페이지*/
+    public ModelAndView grade() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("member/information/grade");
+        return view;
+    }
+
+
 
 
 }

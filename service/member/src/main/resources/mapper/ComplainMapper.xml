@@ -26,10 +26,16 @@
             </select>
 
     <select id="selectAllComplains" parameterType="com.tiki.member.domain.paging.SearchDTO" resultType="ComplainDTO">
-        select *
+        select       comp_idx  as compIdx,
+                     comp_nm as compNm,
+                     comp_con as compCon,
+                     spt as spt,
+                     repo as repo,
+                     DATE_FORMAT(writing_time, '%Y-%m-%d %H:%i:%s')  as writingTime,
+                    read_check as readCheck
         from comp
         order by comp_idx desc
-
+        LIMIT #{start}, #{end}
 
     </select>
 

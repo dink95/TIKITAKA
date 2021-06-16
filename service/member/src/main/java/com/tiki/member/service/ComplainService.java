@@ -17,7 +17,7 @@ public interface ComplainService {
 
     List<ComplainDTO> selectListByReporter(String repo);
 
-    List<ComplainDTO> selectAllComplains();
+    List<ComplainDTO> selectAllComplains(SearchDTO searchDTO);
 
     ComplainDTO selectComplainDetail(int compIdx);
 

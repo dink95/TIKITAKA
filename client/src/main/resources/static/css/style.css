@@ -1529,7 +1529,7 @@ figure > img {
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
 }
-.paging>a {
+.btn_paging_first, .btn_paging_prev, .btn_paging_next, .btn_paging_end {
   display: inline-block;
   position: relative;
   width: 26px;

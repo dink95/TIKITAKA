@@ -92,16 +92,16 @@
                         <p>조회수:&nbsp&nbsp<span id="detailView"></span></p>
                     </div>
                     <div class="aic3 ButtonNav">
-                        <input type="button" class="border-0-btn btn btn-primary"
+                        <input type="button" class="border-0-btn btn btn-primary" id="tradeProd"
                                value="거래하기" onclick="">
-                        <input type="button" class=" border-0-btn btn btn-info"
+                        <input type="button" class=" border-0-btn btn btn-info" id="updateProd"
                                value="수정하기" onclick="goRegist()">
                         <input tpye="button" class="border-0-btn btn btn-danger"
                                value="신고하기" onclick="goReport()">
                         <input type="button" class="border-0-btn btn btn-danger"
                                value="삭제하기" onclick="removeCheck()">
                         <input type="hidden">
-                        <input type="button" class="border-0-btn btn btn-block"
+                        <input type="button" class="border-0-btn btn btn-block" id="prodFinish"
                                value="거래완료로 변경" onclick="goProdFinish()">
                     </div>
                 </div>
@@ -294,6 +294,13 @@
             border-radius: 5px;
             max-height: 207.5px;
         }
+        .btn_finish{
+            border-style: none;
+            height: 50px;
+            padding: 6px 12px;
+            margin:1%;
+            width: 40%;
+        }
     </style>
 </div>
 </div>
@@ -346,6 +353,14 @@
         }).done(function (data) {
             drawPrdList(data);
             console.log("data.dataDetail", data.dataDetail);
+            if(data.dataDetail.prodFinish)
+            {
+                $('#prodFinish').css('display','none');
+                $('#updateProd').attr('class','btn_finish');
+                $('#updateProd').val('판매완료');
+                $('#updateProd').attr('onclick', '').unbind('click');
+
+            }
             getMemberDetail();
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
@@ -482,6 +497,7 @@
         $('#img_modal').css('display', 'none');
     }
 
+    // 거래완료 업데이트
     function goProdFinish() {
         param = {
             prodNo: $('#prodNo').val(),
@@ -493,15 +509,31 @@
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            if(data.resultCode == 200) {
-                console.log('판매완료');
-            }else{
-                console.log(data.resultCode);
-            }
+            //점수 업데이트
+            updatePoint($('#p_id').val());
+            popup('알림메세지','거래가 완료되었습니다.','/member/myinfo');
         }).fail(function (textStatus) {
             console.log(textStatus);
         });
     }
+
+    //점수 업데이트
+    function updatePoint(id){
+        param = {
+            userId: id,
+        }
+        $.ajax({
+            url: '/member/update/point',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            console.log(data.resultMsg);
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+    }
+
 
 </script>
 

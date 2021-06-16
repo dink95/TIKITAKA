@@ -36,9 +36,6 @@
     <!--모바일 검색창-->
     <div th:replace="common::mobile_search(certifyEmail)"></div>
 
-    <div class="bg-light py-3" th:replace="common::logo(이메일인증)">
-    </div>
-    <!----------------------->
     <div class="site-section margin-top-2">
         <div class="container">
             <div class="row justify-content-center"><!--justify-content-center 추가-->
@@ -158,7 +155,6 @@
     function getMemberDetail() {
         var param = {
             userId: $('#userId').val(),
-
         };
 
         $.ajax({
@@ -171,7 +167,6 @@
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
         });
-
     }
 
     /*이메일 인증*/
@@ -219,6 +214,7 @@
                 dataType: 'json'
             }).done(function (data) {
                 if (data.resultCode == 200) {
+                    updateMbrPoint();
                     popup('알람메세지',data.resultMsg,'/member/myinfo');
                 } else {
                     popup('알람메세지',data.resultMsg);
@@ -238,6 +234,21 @@
         getMemberDetail();
     });
 
+    function updateMbrPoint() {
+        param = {
+            userId: $('#userId').val(),
+        }
+        $.ajax({
+            url: '/member/update/point',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            console.log(data.resultMsg);
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+    }
 
 
 

@@ -16,7 +16,7 @@ public class ComplainController {
     private ComplainService service;
 
 
-    @PostMapping("/comp")
+    @PostMapping("/comp/insert")
     public int insertComplain(@RequestBody ComplainDTO complainDTO){
         return service.insertComplain(complainDTO);
     }
@@ -39,9 +39,9 @@ public class ComplainController {
     @PostMapping("/comp/totalcount")
     public int getTotalCount(@RequestBody SearchDTO searchDTO){ return service.getTotalCount(searchDTO);}
 
-    @GetMapping("/comp")
-    public List<ComplainDTO> selectAllComplains(){
-        return service.selectAllComplains();
+    @PostMapping("/comp")
+    public List<ComplainDTO> selectAllComplains(@RequestBody SearchDTO searchDTO){
+        return service.selectAllComplains(searchDTO);
     }
 
     @GetMapping("/comp/{idx}")

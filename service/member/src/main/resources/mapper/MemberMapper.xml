@@ -126,15 +126,15 @@
             mbr
         SET
             <choose>
-                <when test="mbrPoints gte 500">mbr_grade='다이아'</when>
-                <when test="mbrPoints gte 300">mbr_grade='플레티넘'</when>
-                <when test="mbrPoints gte 100">mbr_grade='골드'</when>
-                <when test="mbrPoints gte 50">mbr_grade='실버'</when>
-                <when test="mbrPoints gte 5">mbr_grade='브론즈'</when>
-                <otherwise>mbr_grade='보통'</otherwise>
+                <when test="mbrPoints gte 500">mbr_grade='Diamond'</when>
+                <when test="mbrPoints gte 300">mbr_grade='Platinum'</when>
+                <when test="mbrPoints gte 100">mbr_grade='Gold'</when>
+                <when test="mbrPoints gte 50">mbr_grade='Silver'</when>
+                <when test="mbrPoints gte 5">mbr_grade='Bronze'</when>
+                <otherwise>mbr_grade='일반'</otherwise>
             </choose>
         WHERE
-            mbr_id = 'dink95'
+            mbr_id = #{mbrId}
     </update>
 
 </mapper>

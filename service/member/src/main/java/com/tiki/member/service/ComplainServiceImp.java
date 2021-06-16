@@ -39,8 +39,8 @@ public class ComplainServiceImp implements ComplainService{
     }
 
     @Override
-    public List<ComplainDTO> selectAllComplains() {
-        return mapper.selectAllComplains();
+    public List<ComplainDTO> selectAllComplains(SearchDTO searchDTO) {
+        return mapper.selectAllComplains(searchDTO);
     }
 
     @Override

@@ -609,6 +609,8 @@ function popup(title,content,href){
 		if (href) {
 			if (href == 'back') {
 				history.back();
+			} else if(href == 'reload'){
+				window.location.reload()
 			} else {
 				location.href = href;
 				$('.popupLayout').css('display', 'none');
