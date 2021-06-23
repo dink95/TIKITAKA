@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
@@ -62,10 +61,12 @@
                     </div>
                     <div>
                         <button onclick="goUpdateInfo()">
-                            개인정보수정</button>
+                            개인정보수정
+                        </button>
 
                         <button onclick="removeCheck()">
-                            탈퇴하기</button>
+                            탈퇴하기
+                        </button>
 
                     </div>
                 </div>
@@ -79,7 +80,7 @@
                         <span id="p_grade"></span>
                     </div>
                     <div>
-                        <span id="p_grade_confirm" onclick="goGrade()">등급기준 ></span>
+                        <span  class="font-weight-normal" id="p_grade_confirm" onclick="goGrade()">등급기준 ></span>
                     </div>
                 </div>
 
@@ -92,19 +93,22 @@
                         <span>점</span>
                     </div>
                     <div>
-                        <span id="emailCheck" onclick="goCertify()">이메일인증 ></span>
+                        <span class="font-weight-normal" id="emailCheck" onclick="goCertify()">이메일인증 ></span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="container">
-
-        <div class="NavItemTitle">
-            <label class="text-black">판매상품
-                <span class="text-danger">*</span></label></div>
-
-
+        <div class="prodContainer">
+            <div class="prod myProd" onclick="finishCheck(0)">
+                판매중
+            </div>
+            <div class="prod finishProd" onclick="finishCheck(1)">
+                판매완료
+            </div>
+        </div>
+        <input id="finishCheck" type="hidden" value="0">
         <div class="gridContainer" style="">
 
         </div>
@@ -146,11 +150,11 @@
     }
 
     .myinfoMainNav {
-        width: 30%;
+        width: 33.33%;
     }
 
     .myinfoSubNav {
-        width: 30%;
+        width: 33.33%;
     }
 
     .myinfoMainNav > div:nth-child(1) {
@@ -174,17 +178,20 @@
         justify-content: space-around;
         border-radius: 25px;
     }
-    .myinfoMainNav > div:nth-child(3)>button {
+
+    .myinfoMainNav > div:nth-child(3) > button {
         border-style: none;
         font-size: 14px;
         font-weight: normal;
-        padding:5px 30px;
+        padding: 5px 30px;
         border-radius: 25px;
     }
-    .myinfoMainNav > div:nth-child(3)>button:focus {
+
+    .myinfoMainNav > div:nth-child(3) > button:focus {
         outline: none;
     }
-    .myinfoMainNav > div:nth-child(3)>button:nth-child(2) {
+
+    .myinfoMainNav > div:nth-child(3) > button:nth-child(2) {
         color: red;
     }
 
@@ -236,7 +243,6 @@
         padding: 10px 0;
     }
 
-
     p {
         margin: 0;
         color: #000;
@@ -264,38 +270,92 @@
         display: flex;
         justify-content: flex-start;
     }
-
+    .prodContainer{
+        display: flex;
+        justify-content: flex-start;
+    }
+    .myProd{
+        font-weight: normal;
+        border-bottom: 1px solid black;
+        color: #000;
+    }
+    .finishProd{
+        color: #000;
+        font-weight: lighter;
+    }
+    .prod {
+        margin-bottom: 10px;
+        width: 100px;
+        text-align: center;
+        padding: 10px 0;
+        cursor: pointer;
+    }
 </style>
 
 <script>
 
+    function finishCheck(props) {
+        $('#finishCheck').val(props);
+        getIdQueryList();
+        if ($('#finishCheck').val() == 0) {
+            $('.myProd').css('border-bottom', '1px solid black');
+            $('.myProd').css('color', 'black');
+            $('.myProd').css('font-weight','normal');
+            $('.finishProd').css('border-bottom', 'none');
+            $('.finishProd').css('font-weight','lighter');
+        } else {
+            $('.finishProd').css('border-bottom', '1px solid black');
+            $('.finishProd').css('color', 'black');
+            $('.finishProd').css('font-weight','normal');
+            $('.myProd').css('border-bottom', 'none');
+            $('.myProd').css('font-weight','lighter');
+        }
+    }
+
     function getIdQueryList() {
+        if($('#finishCheck').val() == 0) {
+            param = {
+                selId: $('#p_id').text(),
+            }
+            $.ajax({
+                url: '/product/list.selId',
+                data: param,
+                type: 'post',
+                dataType: 'json'
+            }).done(function (data) {
+                drawPrdList(data);
+            }).fail(function (data, textStatus, errorThrown) {
+                console.log(textStatus);
+            });
+        }else{
+            param = {
+                selId: $('#p_id').text(),
+            }
+            $.ajax({
+                url: '/product/finish/list.selId',
+                data: param,
+                type: 'post',
+                dataType: 'json'
+            }).done(function (data) {
+                drawPrdList(data);
+            }).fail(function (data, textStatus, errorThrown) {
+                console.log(textStatus);
+            });
+
+        }
+    }
+
+    function getMbrInfo() {
         param = {
-            selId: $('#p_id').text(),
+            userId: $('#p_id').text(),
         }
         $.ajax({
-            url: '/product/list.selId',
+            url: '/member/detail',
             data: param,
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            drawPrdList(data);
-        }).fail(function (data, textStatus, errorThrown) {
-            console.log(textStatus);
-        });
-    }
-
-    function getMbrInfo(){
-        param = {
-             userId:$('#p_id').text(),
-        }
-        $.ajax({
-            url:'/member/detail',
-            data:param,
-            type: 'post',
-            dataType: 'json'
-        }).done(function (data) {
-            if(data.memberDetail.mbrRole){
+            if (data.memberDetail.mbrRole) {
                 $('#emailCheck').text('이메일 인증 완료');
                 $("#emailCheck").attr('onclick', '').unbind('click');
                 $("#emailCheck").css('cursor', 'initial');
@@ -303,18 +363,18 @@
             }
             updateGrade(data.memberDetail.mbrPoints);
             $('#p_point').text(data.memberDetail.mbrPoints);
-            if(data.memberDetail.mbrPoints >499){
-                $('#p_grade').css('color','#5f0080');
-            }else if(data.memberDetail.mbrPoints >299){
-                $('#p_grade').css('color','#20b2aa');
-            }else if(data.memberDetail.mbrPoints >99){
-                $('#p_grade').css('color','#d4af37');
-            }else if(data.memberDetail.mbrPoints >49){
-                $('#p_grade').css('color','#a9a9a9');
-            }else if(data.memberDetail.mbrPoints > 4){
-                $('#p_grade').css("color","#392f31");
-            }else{
-                $('#p_grade').css("color","#000");
+            if (data.memberDetail.mbrPoints > 499) {
+                $('#p_grade').css('color', '#5f0080');
+            } else if (data.memberDetail.mbrPoints > 299) {
+                $('#p_grade').css('color', '#20b2aa');
+            } else if (data.memberDetail.mbrPoints > 99) {
+                $('#p_grade').css('color', '#d4af37');
+            } else if (data.memberDetail.mbrPoints > 49) {
+                $('#p_grade').css('color', '#a9a9a9');
+            } else if (data.memberDetail.mbrPoints > 4) {
+                $('#p_grade').css("color", "#392f31");
+            } else {
+                $('#p_grade').css("color", "#000");
             }
 
         }).fail(function (data, textStatus, errorThrown) {
@@ -323,6 +383,7 @@
     }
 
     function drawPrdList(data) {
+
         console.log("@@product data", data);
 
         if (typeof data.dataQueryList !== 'undefined' && data.dataQueryList.length > 0) {
@@ -351,7 +412,7 @@
                 contents += '                    <h3 class="ItemName"><a href="#"  onclick="goDetail(' + obj.prodNo + ')">' + textLengthOverCut(obj.prodNm, 11, '...') + ' </a></h3>';
                 contents += '                    <div class=priceContent>';
                 contents += '                    <p class="text-primary font-weight-bold">' + obj.prodPrc + '원</p>';
-                contents += '                    <span>' + wday + '</span>';
+                contents += '                    <span class="font-weight-normal">' + wday + '</span>';
                 contents += '                    </div>';
                 contents += '                </div>';
                 contents += '            </a>';
@@ -363,6 +424,8 @@
                 container.append(contents);
             })
 
+        }else{
+            $('.gridContainer').empty();
         }
     }
 
@@ -384,6 +447,7 @@
     function goCertify() {
         location.href = '/member/info/certify';
     }
+
     function goGrade() {
         location.href = '/grade';
     }
@@ -397,7 +461,7 @@
     function updateGrade(point) {
         param = {
             userId: $('#p_id').text(),
-            userPoint:point,
+            userPoint: point,
         }
         $.ajax({
             url: '/member/update/grade',
@@ -406,11 +470,11 @@
             dataType: 'json'
         }).done(function (data) {
             param = {
-                userId:$('#p_id').text(),
+                userId: $('#p_id').text(),
             }
             $.ajax({
-                url:'/member/detail',
-                data:param,
+                url: '/member/detail',
+                data: param,
                 type: 'post',
                 dataType: 'json'
             }).done(function (data) {

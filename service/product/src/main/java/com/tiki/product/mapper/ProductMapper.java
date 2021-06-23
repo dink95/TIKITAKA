@@ -30,6 +30,8 @@ public interface ProductMapper {
 
     public List<ProductDTO> resultById(String selId);
 
+    public List<ProductDTO> resultByIdFinish(String selId);
+
     public List<ProductDTO> resultByCatNo(@Param("firstNo") int firstNo, @Param("lastNo") int lastNo);
 
     public int selectProductTotalCount();

@@ -246,26 +246,49 @@
     }
 
     function getProductList() {
-        param = {
-            prodNm:$('#prodNm').val(),
-            catNo:$('#selectCat').val()
-        }
-        $.ajax({
-            url: '/product/list.query',
-            data: param,
-            type: 'post',
-            dataType: 'json'
-        }).done(function (data) {
-            if(data.dataQueryList.length == 0){
-                $('#queryTextProdNm').text('"' + $('#prodNm').val() + '"' + "검색결과가 없습니다.");
-            }else {
-                $('#queryTextProdNm').text('"' + $('#prodNm').val() + '"' + "검색결과");
-                drawPrdList(data);
-                console.log(data);
+        if($('#selectCat').val() == '')
+        {
+            param = {
+                prodNm:$('#prodNm').val(),
             }
-        }).fail(function (data, textStatus, errorThrown) {
-            console.log(textStatus);
-        });
+            $.ajax({
+                url: '/product/list.prodNm',
+                data: param,
+                type: 'post',
+                dataType: 'json'
+            }).done(function (data) {
+                if(data.dataQueryList.length == 0){
+                    $('#queryTextProdNm').text('"' + searchParam('prodNm')+ '"' + ' ' + "검색결과가 없습니다.");
+                }else {
+                    $('#queryTextProdNm').text('"' + $('#prodNm').val() + '"' + "검색결과");
+                    drawPrdList(data);
+                    console.log(data);
+                }
+            }).fail(function (data, textStatus, errorThrown) {
+                console.log(textStatus);
+            });
+        }else {
+            param = {
+                prodNm: $('#prodNm').val(),
+                catNo: $('#selectCat').val()
+            }
+            $.ajax({
+                url: '/product/list.query',
+                data: param,
+                type: 'post',
+                dataType: 'json'
+            }).done(function (data) {
+                if (data.dataQueryList.length == 0) {
+                    $('#queryTextProdNm').text('"' + $('#prodNm').val() + '"' + "검색결과가 없습니다.");
+                } else {
+                    $('#queryTextProdNm').text('"' + $('#prodNm').val() + '"' + "검색결과");
+                    drawPrdList(data);
+                    console.log(data);
+                }
+            }).fail(function (data, textStatus, errorThrown) {
+                console.log(textStatus);
+            });
+        }
     }
 
     function drawPrdList(data) {
@@ -295,7 +318,7 @@
                 contents += '                    <h3 class="ItemName"><a href="#" onclick="goDetail(' + obj.prodNo + ')">' + textLengthOverCut(obj.prodNm,11,'...') + '</a></h3>';
                 contents += '                    <div class=priceContent>';
                 contents += '                    <p class="text-primary font-weight-bold">' + obj.prodPrc + '</p>';
-                contents += '                    <span>' + wday + '</span>';
+                contents += '                    <span class="font-weight-normal">' + wday + '</span>';
                 contents += '                    </div>';
                 contents += '                </div>';
                 contents += '            </a>';

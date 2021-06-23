@@ -208,6 +208,23 @@ public class ProductController {
         return resultMap;
     }
 
+    @RequestMapping("/product/finish/list.selId")  /*상품 아이디 검색 리스트(판매완료) */
+    @ResponseBody
+    public Map<String,Object> IdQuerytListFinish(@RequestParam(value = "selId") String selId) {
+        Map<String,Object> resultMap = new HashMap<>();
+        List<Object> list = null;
+        System.out.println(selId);
+        try {
+            list= productService.productQuerySelIdListFinish(selId);
+            System.out.println("@QueryList"+ list);
+            resultMap.put("dataQueryList", list);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+
 
     @GetMapping(value = "/product/detail") /*상품 상세 페이지*/
     public ModelAndView detail() {

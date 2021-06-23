@@ -37,8 +37,15 @@
 
 
   <div class="site-section block-3 site-blocks-2 bg-light" style="opacity: .99;">
+
     <!--상품사진-->
     <div class="container">
+      <div class="prodContainer">
+        <div class="prod" onclick="finishCheck(0)">
+          오늘의 상품
+        </div>
+
+      </div>
       <div class="gridContainer">
 
       </div>
@@ -88,7 +95,23 @@
     align-items: center;
     margin: 20px 10px 0 20px;
   }
-
+  .prodContainer{
+    display: flex;
+    justify-content: flex-start;
+    border-bottom: 1px solid #ddd;
+    margin-bottom:30px;
+  }
+  .prod {
+    color: #000;
+    margin-bottom: 10px;
+    width: 200px;
+    text-align: center;
+    padding: 10px 0;
+    font-weight: normal;
+    cursor: pointer;
+    font-size: 25px;
+    text-align: left;
+  }
   /*****************/
 
 </style>
@@ -160,7 +183,7 @@
         contents += '                    <h3 class="ItemName"><a href="#"  onclick="goDetail(' + obj.prodNo + ')">' + textLengthOverCut(obj.prodNm, 11, '...') + ' </a></h3>';
         contents += '                    <div class=priceContent>';
         contents += '                    <p class="text-primary font-weight-bold">' + obj.prodPrc + '원</p>';
-        contents += '                    <span>' + wday + '</span>';
+        contents += '                    <span class="font-weight-normal">' + wday + '</span>';
         contents += '                    </div>';
         contents += '                </div>';
         contents += '            </a>';

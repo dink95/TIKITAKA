@@ -112,6 +112,14 @@ public class ProductController {
         return productList;
     }
 
+    // 검색 결과 보기 판매자 이름으로(판매완료)
+    @GetMapping(value = "/prd/result/selId/finish/{selId}")
+    public List resultSelIdListFinish(@PathVariable("selId") String selId) {
+        List<ProductDTO> productList = productService.resultByIdFinish(selId);
+
+        return productList;
+    }
+
     // 검색 결과 보기 카테코리 번호로
     @GetMapping(value = "/prd/result/catNo/{catNo}")
     public List resultList(@PathVariable("catNo") int catNo) {

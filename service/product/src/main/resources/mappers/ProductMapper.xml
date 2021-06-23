@@ -122,6 +122,8 @@
             prod_nm LIKE concat('%',#{prodNm},'%')
         AND
             cat_no BETWEEN #{catNo} AND #{nego}
+        AND NOT
+        prod_finish = true
         ORDER BY
         wday DESC
     </select>
@@ -133,6 +135,8 @@
         prod
         WHERE
         prod_nm LIKE concat('%',#{prodNm},'%')
+        AND NOT
+        prod_finish = true
         ORDER BY
         wday DESC
     </select>
@@ -144,6 +148,21 @@
         prod
         WHERE
         sel_id = #{selId}
+        AND NOT
+        prod_finish = true
+        ORDER BY
+        wday DESC
+    </select>
+
+    <select id="resultByIdFinish" parameterType="String" resultType="ProductDTO">
+        SELECT
+        <include refid="productColumns" />
+        FROM
+        prod
+        WHERE
+        sel_id = #{selId}
+        AND
+        prod_finish = true
         ORDER BY
         wday DESC
     </select>
@@ -155,6 +174,8 @@
             prod
         WHERE
             cat_no BETWEEN #{firstNo} AND #{lastNo}
+        AND NOT
+        prod_finish = true
         ORDER BY
             wday DESC
     </select>

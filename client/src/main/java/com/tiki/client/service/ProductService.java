@@ -70,9 +70,18 @@ public class ProductService {
                 .block();
     }
 
+    //판매중
     public List productQuerySelIdList(String selId) throws Exception {
         return webClient.get()
                 .uri("/prd/result/selId/{selId}",selId)
+                .retrieve()
+                .bodyToMono(List.class) //반환정보
+                .block();
+    }
+    //판매완료
+    public List productQuerySelIdListFinish(String selId) throws Exception {
+        return webClient.get()
+                .uri("/prd/result/selId/finish/{selId}",selId)
                 .retrieve()
                 .bodyToMono(List.class) //반환정보
                 .block();

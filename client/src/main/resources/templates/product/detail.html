@@ -19,14 +19,6 @@
 </head>
 
 <body>
-
-<div id="img_modal">
-    <img id="img_modal_content" src="" alt="">
-    <a id="img_close_button" onclick="closeModalImg()"><i class="fas fa-times fa-1x"></i></a>
-
-</div>
-
-
 <div class="site-wrap">
     <header class="site-navbar" role="banner">
         <!--replace 헤더-->
@@ -45,16 +37,6 @@
     <!--모바일 검색창-->
     <div th:replace="common::mobile_search(home)"></div>
 
-    <div class="bg-light py-3" th:fragment="logo(logo)">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 mb-0"><a href="/">Home</a> /</span>
-                    <span class="text-black" id="selNmLogo"></span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!------------------------->
     <div class="site-section margin-top-2">
         <div class="col-md-12 mb-0"></div>
 

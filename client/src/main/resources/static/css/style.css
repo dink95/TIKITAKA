@@ -355,6 +355,7 @@ a:hover {
 
 .site-navbar .site-navigation .site-menu > li {
   display: inline-block;
+  font-weight: 400;
   padding: 0 2%;
 }
 
@@ -1127,25 +1128,7 @@ option[value=""][disabled] {
   display: none;
 }
 
-.search-bar-container {
 
-}
-
-.search-bar-container .category-box {
-
-
-}
-
-.category-box > .category {
-  padding: 0;
-  border: 1px solid #eee8e8;
-  border-radius: 50px;
-
-}
-
-.select-category {
-
-}
 
 .category {
   border: 1px solid #ddd;
@@ -1548,6 +1531,14 @@ figure > img {
 .tblType01>tbody>tr{
   cursor: pointer;
 }
+#svg{
+  color: #fff;
+}
+#svg + a >span{
+  vertical-align: bottom;
+  font-size: 15px;
+  color: #fff;
+}
 /********************************반응형********************************/
 
 .site-wrap{
@@ -1574,6 +1565,7 @@ figure > img {
 
 .menu_active {
   border-bottom: 3px solid #fff;
+
 }
 
 /*!*모바일 메뉴바*!*/
@@ -1710,23 +1702,22 @@ figure > img {
 .category_nav {
   position: fixed;
   /* top:165px;*/
-  border: 1px solid #ddd;
+  border: 1px solid #f7f7f7;
   z-index: 20;
   justify-content:space-between;
   align-items: center;
   background: #fff;
   display: none;
+  background: #f7f7f7;
 }
 
 .category_nav_main_item{
-  border-right: 1px solid #ddd;
-  height: 300px;
+  background: #fff;
+  height: 500px;
+  font-size: 15px;
+  width: 140px;
+}
 
-}
-.category_main_title{
-  border-bottom: 1px solid #ddd;
-  color: #5f0080;
-}
 .category_nav_main_item > ul{
   list-style: none;
   padding:0;
@@ -1735,40 +1726,40 @@ figure > img {
   text-align: left;!important;
   color: #000;
   cursor: pointer;
-  margin:5px 0;
+  padding:10px;
 }
 
 .category_nav_main_item > ul > li:hover{
   color: #5f0080;
 }
-.category_nav_main_item > ul > li > a >svg{
-  display: none;
+
+.category_nav_detail_item{
+  background: #f7f7f7;
+  font-size: 15px;
+
 }
-
-
 .category_nav_detail_item0,
 .category_nav_detail_item1,
 .category_nav_detail_item2,
 .category_nav_detail_item3,
 .category_nav_detail_item4,
 .category_nav_detail_item5{
+  width: 0;
   display: none;
+}
 
-}
-.category_detail_title{
-  border-bottom: 1px solid #ddd;
-  color: #5f0080;
-}
 .category_nav_detail_item > ul{
   list-style: none;
   padding:0;
-  height: 300px;
-  width: 105px;
+  height: 500px;
+  display: none;
+
 }
 .category_nav_detail_item > ul > li{
   text-align: left;!important;
   color: #000;
   cursor: pointer;
+  padding:10px;
 }
 
 .category_nav_detail_item > ul > li:hover{
