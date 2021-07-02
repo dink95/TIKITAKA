@@ -94,6 +94,42 @@ public class ProductController {
         return productList;
     }
 
+    // 검색 결과 보기 높은 가격순
+    @GetMapping(value = "/prd/result/highprice/{prodNm}/{catNo}")
+    public List resultListHighPrice(@PathVariable("prodNm") String prodNm,
+                           @PathVariable("catNo") int catNo) {
+
+        ProductDTO productDTO = new ProductDTO();
+
+        int finishNo = finishCatNo(catNo);
+
+        productDTO.setProdNm(prodNm);
+        productDTO.setCatNo(catNo);
+        productDTO.setNego(finishNo);
+
+        List<ProductDTO> productList = productService.resultByNmCatHighPrice(productDTO);
+
+        return productList;
+    }
+
+    // 검색 결과 보기 낮은 가격순
+    @GetMapping(value = "/prd/result/lowprice/{prodNm}/{catNo}")
+    public List resultListLowPrice(@PathVariable("prodNm") String prodNm,
+                           @PathVariable("catNo") int catNo) {
+
+        ProductDTO productDTO = new ProductDTO();
+
+        int finishNo = finishCatNo(catNo);
+
+        productDTO.setProdNm(prodNm);
+        productDTO.setCatNo(catNo);
+        productDTO.setNego(finishNo);
+
+        List<ProductDTO> productList = productService.resultByNmCatLowPrice(productDTO);
+
+        return productList;
+    }
+
     // 검색 결과 보기 상품 이름으로
     @GetMapping(value = "/prd/result/prodNm/{prodNm}")
     public List resultProdNameList(@PathVariable("prodNm") String prodNm) {
@@ -104,10 +140,39 @@ public class ProductController {
         return productList;
     }
 
+    // 검색 결과 보기 상품 이름으로 높은 가격순
+    @GetMapping(value = "/prd/result/prodNm/highPrice/{prodNm}")
+    public List resultProdNameListHighPrice(@PathVariable("prodNm") String prodNm) {
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setProdNm(prodNm);
+        List<ProductDTO> productList = productService.resultByProdNmHighPrice(prodNm);
+
+        return productList;
+    }
+
+    // 검색 결과 보기 상품 이름으로 낮은 가격순
+    @GetMapping(value = "/prd/result/prodNm/lowPrice/{prodNm}")
+    public List resultProdNameListLowPrice(@PathVariable("prodNm") String prodNm) {
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setProdNm(prodNm);
+        List<ProductDTO> productList = productService.resultByProdNmLowPrice(prodNm);
+
+        return productList;
+    }
+
+
     // 검색 결과 보기 판매자 이름으로
     @GetMapping(value = "/prd/result/selId/{selId}")
     public List resultSelIdList(@PathVariable("selId") String selId) {
         List<ProductDTO> productList = productService.resultById(selId);
+
+        return productList;
+    }
+
+    // 검색 결과 보기 판매자 이름으로(판매완료)
+    @GetMapping(value = "/prd/result/selId/finish/{selId}")
+    public List resultSelIdListFinish(@PathVariable("selId") String selId) {
+        List<ProductDTO> productList = productService.resultByIdFinish(selId);
 
         return productList;
     }
@@ -121,6 +186,40 @@ public class ProductController {
         int finishNo = finishCatNo(catNo);
 
         productList = productService.resultByCatNo(catNo, finishNo);
+
+        if(productList == null) {
+            System.out.println("에러가 나왔으니 확인바람");
+        }
+
+        return productList;
+    }
+
+    // 검색 결과 보기 카테코리 번호로 높은 가격순
+    @GetMapping(value = "/prd/result/catNo/highPrice/{catNo}")
+    public List resultListHighPrice(@PathVariable("catNo") int catNo) {
+
+        List<ProductDTO> productList;
+
+        int finishNo = finishCatNo(catNo);
+
+        productList = productService.resultByCatNoHighPrice(catNo, finishNo);
+
+        if(productList == null) {
+            System.out.println("에러가 나왔으니 확인바람");
+        }
+
+        return productList;
+    }
+
+    // 검색 결과 보기 카테코리 번호로 높은 가격순
+    @GetMapping(value = "/prd/result/catNo/lowPrice/{catNo}")
+    public List resultListLowPrice(@PathVariable("catNo") int catNo) {
+
+        List<ProductDTO> productList;
+
+        int finishNo = finishCatNo(catNo);
+
+        productList = productService.resultByCatNoLowPrice(catNo, finishNo);
 
         if(productList == null) {
             System.out.println("에러가 나왔으니 확인바람");

@@ -6,6 +6,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.List;
+
 @Service("CategoryService")
 public class CategoryService {
 
@@ -20,6 +22,14 @@ public class CategoryService {
                 .uri("/cat/{catNo}", catNo)
                 .retrieve()
                 .bodyToMono(CategoryDTO.class) //반환정보
+                .block();
+    }
+
+    public List<CategoryDTO> getAllCategory(CategoryDTO categoryDTO) {
+        return webClient.get()
+                .uri("/cat/list")
+                .retrieve()
+                .bodyToMono(List.class) //반환정보
                 .block();
     }
 }

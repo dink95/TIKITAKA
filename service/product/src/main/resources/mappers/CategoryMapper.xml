@@ -40,7 +40,7 @@
         FROM
             cat
         ORDER BY
-            cat_nm ASC
+            cat_no ASC
     </select>
 
     <select id="selectCategoryTotalCount" parameterType="CategoryDTO" resultType="int">

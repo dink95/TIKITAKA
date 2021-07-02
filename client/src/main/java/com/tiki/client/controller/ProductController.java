@@ -83,7 +83,7 @@ public class ProductController {
             if (result > 0) {
                 view.addObject("resultCode", 201);
             }else {
-                view.addObject("resultCode", 500);
+                view.addObject("resultCode", 400);
             }
         } catch (Exception e) {
             view.addObject("resultCode", 500);
@@ -156,6 +156,40 @@ public class ProductController {
         return resultMap;
     }
 
+    @RequestMapping("/product/highprice/list.query")  /*상품 검색 리스트 높은 가격순*/
+    @ResponseBody
+    public Map<String,Object> producQuerytListHighPrice(@RequestParam(value = "prodNm") String prodNm, @RequestParam(value = "catNo") Integer catNo) {
+        Map<String,Object> resultMap = new HashMap<>();
+        List<Object> list = null;
+
+        try {
+            list= productService.productQuerytListHighPrice(prodNm, catNo);
+            System.out.println("@QueryList"+ list);
+            resultMap.put("dataQueryList", list);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+
+    @RequestMapping("/product/lowprice/list.query")  /*상품 검색 리스트 낮은 가격순*/
+    @ResponseBody
+    public Map<String,Object> producQuerytListLowPrice(@RequestParam(value = "prodNm") String prodNm, @RequestParam(value = "catNo") Integer catNo) {
+        Map<String,Object> resultMap = new HashMap<>();
+        List<Object> list = null;
+
+        try {
+            list= productService.productQuerytListLowPrice(prodNm, catNo);
+            System.out.println("@QueryList"+ list);
+            resultMap.put("dataQueryList", list);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+
     @RequestMapping("/product/list.prodNm")  /*상품이름 검색 리스트 */
     @ResponseBody
     public Map<String,Object> ProdNmQueryList(@RequestParam(value = "prodNm") String prodNm) {
@@ -165,6 +199,38 @@ public class ProductController {
         try {
             list= productService.productQueryProdNmList(prodNm);
             System.out.println("@QueryList"+ list);
+            resultMap.put("dataQueryList", list);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+
+    @RequestMapping("/product/highprice/list.prodNm")  /*상품이름 검색 리스트 높은 가격순 */
+    @ResponseBody
+    public Map<String,Object> ProdNmQueryListHighPrice(@RequestParam(value = "prodNm") String prodNm) {
+        Map<String,Object> resultMap = new HashMap<>();
+        List<Object> list = null;
+        System.out.println(prodNm);
+        try {
+            list= productService.productQueryProdNmListHighPrice(prodNm);
+            resultMap.put("dataQueryList", list);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+
+    @RequestMapping("/product/lowprice/list.prodNm")  /*상품이름 검색 리스트 낮은 가격순 */
+    @ResponseBody
+    public Map<String,Object> ProdNmQueryListLowPrice(@RequestParam(value = "prodNm") String prodNm) {
+        Map<String,Object> resultMap = new HashMap<>();
+        List<Object> list = null;
+        System.out.println(prodNm);
+        try {
+            list= productService.productQueryProdNmListLowPrice(prodNm);
             resultMap.put("dataQueryList", list);
 
         } catch (Exception e) {
@@ -191,6 +257,40 @@ public class ProductController {
         return resultMap;
     }
 
+    @RequestMapping("/product/highprice/list.category")  /*상품 카테고리 검색 리스트 높은 가격순 */
+    @ResponseBody
+    public Map<String,Object> CatQuerytListHighPrice(@RequestParam(value = "catNo") Integer catNo) {
+        Map<String,Object> resultMap = new HashMap<>();
+        List<Object> list = null;
+        System.out.println(catNo);
+        try {
+            list= productService.productQueryCatNoListHighPrice(catNo);
+            System.out.println("@QueryList"+ list);
+            resultMap.put("dataQueryList", list);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+
+    @RequestMapping("/product/lowprice/list.category")  /*상품 카테고리 검색 리스트 낮은 가격순 */
+    @ResponseBody
+    public Map<String,Object> CatQuerytListlowPrice(@RequestParam(value = "catNo") Integer catNo) {
+        Map<String,Object> resultMap = new HashMap<>();
+        List<Object> list = null;
+        System.out.println(catNo);
+        try {
+            list= productService.productQueryCatNoListLowPrice(catNo);
+            System.out.println("@QueryList"+ list);
+            resultMap.put("dataQueryList", list);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+
     @RequestMapping("/product/list.selId")  /*상품 아이디 검색 리스트 */
     @ResponseBody
     public Map<String,Object> IdQuerytList(@RequestParam(value = "selId") String selId) {
@@ -199,6 +299,23 @@ public class ProductController {
         System.out.println(selId);
         try {
             list= productService.productQuerySelIdList(selId);
+            System.out.println("@QueryList"+ list);
+            resultMap.put("dataQueryList", list);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+
+    @RequestMapping("/product/finish/list.selId")  /*상품 아이디 검색 리스트(판매완료) */
+    @ResponseBody
+    public Map<String,Object> IdQuerytListFinish(@RequestParam(value = "selId") String selId) {
+        Map<String,Object> resultMap = new HashMap<>();
+        List<Object> list = null;
+        System.out.println(selId);
+        try {
+            list= productService.productQuerySelIdListFinish(selId);
             System.out.println("@QueryList"+ list);
             resultMap.put("dataQueryList", list);
 

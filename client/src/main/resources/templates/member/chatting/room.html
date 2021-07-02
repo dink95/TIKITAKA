@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>TIKITAKA &ndash; 채팅 리스트 </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="preconnect" href="/https://fonts.gstatic.com">
+    <link rel="stylesheet" href="/https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="/fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/icon.css">
+</head>
+<body>
+
+<div class="site-wrap">
+    <div class="chattingRoomContainer">
+        <div class="chattingRoomTitle bb-1-p d-flex-j-a-center padding-top-bottom-5">
+            <span class="font-weight-normal font-20 text-black">채팅 리스트</span>
+        </div>
+        <ul class="chattingListNav">
+            <li  onclick="goChat(1)">
+                <span>채팅1</span>
+            </li>
+            <li onclick="goChat(2)"><span>채팅2</span></li>
+            <li onclick="goChat(3)"><span>채팅3</span></li>
+            <li onclick="goChat(4)"><span>채팅4</span></li>
+            <li onclick="goChat(5)"><span>채팅5</span></li>
+            <li onclick="goChat(6)"><span>채팅6</span></li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    .chattingRoomContainer {
+        width: 400px;
+        height: 700px;
+    }
+    .chattingListNav{
+        padding: 0;
+        margin: 0;
+    }
+    .chattingListNav > li {
+        width: 100%;
+        height: 80px;
+        border-bottom: 1px solid #ddd;
+    }
+</style>
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/jquery-ui.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/aos.js"></script>
+<script src="/https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<script src="/js/main.js"></script>
+<script>
+    // function goChat(props){
+    // window.open('/member/chatting/chat?chatNo='+props+'' ,'채팅방 대화창','toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=100,left=600');
+    // }
+
+    var newName, n=0;
+
+    //팝업 창 제목 만들기 함수(다중 팝업을 위한..)
+    function newWindow(value)
+    {
+        n = n + 1;
+        newName = value + n;
+    }
+
+    function goChat(props)
+    {
+         var top = Math.random()*100 + 100;
+         var left = Math.random()*100 + 600;
+        newWindow("MyWindow");
+        window.open('/member/chatting/chat?chatNo='+props+'', newName,
+            'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top='+top+',left='+left+'');
+    }
+</script>
+</body>
+</html>

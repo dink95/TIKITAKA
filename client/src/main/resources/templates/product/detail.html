@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="../css/owl.theme.default.min.css">
     <link rel="stylesheet" href="../css/aos.css">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/icon.css">
 </head>
 
 <body>
@@ -25,7 +26,6 @@
     <a id="img_close_button" onclick="closeModalImg()"><i class="fas fa-times fa-1x"></i></a>
 
 </div>
-
 
 <div class="site-wrap">
     <header class="site-navbar" role="banner">
@@ -45,16 +45,6 @@
     <!--모바일 검색창-->
     <div th:replace="common::mobile_search(home)"></div>
 
-    <div class="bg-light py-3" th:fragment="logo(logo)">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 mb-0"><a href="/">Home</a> /</span>
-                    <span class="text-black" id="selNmLogo"></span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!------------------------->
     <div class="site-section margin-top-2">
         <div class="col-md-12 mb-0"></div>
 
@@ -81,7 +71,7 @@
                         <h1 id="detailName"></h1>
                         <div style="display:flex; justify-content: space-between;">
                             <div><h1 id="detailPrice"></h1><span>원</span></div>
-                            <span id="wday" text="" style="line-height: 56px;"></span>
+                            <span id="wday" class="text-black" text="" style="line-height: 56px;"></span>
                         </div>
                     </div>
                     <div class="aic2">
@@ -92,16 +82,16 @@
                         <p>조회수:&nbsp&nbsp<span id="detailView"></span></p>
                     </div>
                     <div class="aic3 ButtonNav">
-                        <input type="button" class="border-0-btn btn btn-primary" id="tradeProd"
+                        <input  class=" btn btn-primary" id="tradeProd"
                                value="거래하기" onclick="">
-                        <input type="button" class=" border-0-btn btn btn-info" id="updateProd"
+                        <input class="  btn btn-primary" id="updateProd"
                                value="수정하기" onclick="goRegist()">
-                        <input tpye="button" class="border-0-btn btn btn-danger"
+                        <input  class=" btn btn-danger"
                                value="신고하기" onclick="goReport()">
-                        <input type="button" class="border-0-btn btn btn-danger"
+                        <input  class=" btn btn-danger" id="deleteProd"
                                value="삭제하기" onclick="removeCheck()">
                         <input type="hidden">
-                        <input type="button" class="border-0-btn btn btn-block" id="prodFinish"
+                        <input  class="btn btn-dark" id="prodFinish"
                                value="거래완료로 변경" onclick="goProdFinish()">
                     </div>
                 </div>
@@ -189,7 +179,7 @@
                         class="text-danger">*</span></div>
                 <div class="col-12 col-md-12 order-2 order-md-2  text-left">
                     <div class="p_content" style="border: 1px solid #ddd; height: 300px;">
-                        <span id="prodContent"></span>
+                        <span id="prodContent"class="font-weight-normal"></span>
                     </div>
                 </div>
             </div>
@@ -211,13 +201,19 @@
         }
 
         .ButtonNav {
+            display: flex;
+            justify-content: flex-start;
             padding: 10% 0;
         }
 
         .ButtonNav > .btn {
+            border-radius: 2px;
+            width: 30%;
+            font-weight: normal;
             margin: 1%;
-            display: none;
-        !important;
+            display: none;!important;
+            font-size: 16px;
+            letter-spacing: 0;
         }
 
         #detailName {
@@ -296,11 +292,21 @@
         }
         .btn_finish{
             border-style: none;
-            height: 50px;
             padding: 6px 12px;
             margin:1%;
-            width: 40%;
+            width: 30%;
+            background: #ddd;
+            color: #000;
+            font-weight: normal;
+            border-radius: 2px;
+            text-align: center;
         }
+
+
+        p ,label{
+            font-weight: normal;
+        }
+
     </style>
 </div>
 </div>
@@ -315,13 +321,12 @@
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script src="../js/main.js"></script>
 <script>
-
+    $('#loading').css('display', 'block');
     /*멤버정보*/
     function getMemberDetail() {
         var param = {
             userId: $('#selId').text(),
         }
-
         $.ajax({
             url: '/member/detail',
             data: param,
@@ -340,7 +345,6 @@
 
     /*정보*/
     function getProductDetail() {
-
         var param = {
             prodNo: $('#query').val(),
         }
@@ -356,12 +360,13 @@
             if(data.dataDetail.prodFinish)
             {
                 $('#prodFinish').css('display','none');
-                $('#updateProd').attr('class','btn_finish');
+                $('#updateProd').attr('class','btn_finish ');
                 $('#updateProd').val('판매완료');
                 $('#updateProd').attr('onclick', '').unbind('click');
 
             }
             getMemberDetail();
+
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
         });
@@ -533,6 +538,10 @@
             console.log(textStatus);
         });
     }
+
+    $('#loading').css('display','block');
+    $(window).on('load', function(){ $('#loading').css('display','none')});
+
 
 
 </script>

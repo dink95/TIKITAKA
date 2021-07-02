@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="css/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/icon.css">
 </head>
 
 <body>
@@ -57,7 +58,8 @@
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <label for="c_name" class="text-black">이름<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="c_name" name="c_name" placeholder="" required onkeyup="onKeyUp('#valid_name');">
+                                    <input type="text" class="form-control" id="c_name" name="c_name" placeholder="" required
+                                           onkeyup="onKeyUp('#valid_name'); enterkey(goFindpwd);">
                                     <span id="valid_name" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
                             </div>
@@ -66,7 +68,8 @@
                                 <div class="col-md-12">
                                     <label for="c_id" class="text-black">id<span
                                             class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="c_id" name="c_id" placeholder="" required onkeyup="onKeyUp('#valid_id');">
+                                    <input type="text" class="form-control" id="c_id" name="c_id" placeholder="" required
+                                           onkeyup="onKeyUp('#valid_id'); enterkey(goFindpwd);">
                                     <span id="valid_id" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
                             </div>
@@ -76,7 +79,7 @@
                                     <label for="c_phone" class="text-black">전화번호 <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="c_phone" name="c_phone" value="010-"
                                            required pattern="[0-1]{2,3}-[0-9]{3,4}-[0-9]{3,4}"
-                                           maxlength="13" onkeyup="onKeyUp('#valid_phone');">
+                                           maxlength="13" onkeyup="onKeyUp('#valid_phone'); enterkey(goFindpwd);">
                                     <span id="valid_phone" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
                             </div>
@@ -94,7 +97,7 @@
                                 <div class="site-top-icons ">
                                     <ul >
 
-                                        <li><a href="login"><span class="sign in">로그인페이지</span></a></li>
+                                        <li><a href="login"><span class="sign in font-weight-normal">로그인페이지</span></a></li>
                                         <!--로그인-->
                                     </ul>
                                 </div>
@@ -109,57 +112,7 @@
         </div>
     </div>
 </div>
-<div id="Update" class="site-section margin-top-2" style="display:none" >
-    <div class="container" >
-        <div class="row justify-content-center"><!--justify-content-center 추가-->
 
-            <div class="col-md-7"  >
-                <div class="col-md-12 " >
-                    <h2 class="h3 mb-3 text-black  " >비밀번호 변경</h2> <!--login logo 위치 수정-->
-                </div>
-                <form action="" method="post">
-
-                    <div class="p-3 p-lg-5 border">
-
-                        <div class="form-group row">
-                            <div class="col-md-12">
-                                <label for="c_password" class="text-black">새로운 비밀번호<span class="text-danger">*</span></label>
-                                <input type="password" class="form-control" id="c_password" name="c_password" required onkeyup="onKeyUp('#valid_password');">
-                                <span id="valid_password" style="color: #ff0000;font-size: 10px;"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-12">
-                                <label for="c_pwd_re" class="text-black">비밀번호 확인<span class="text-danger">*</span></label>
-                                <input type="password" class="form-control" id="c_pwd_re" name="c_pwd_re" required onkeyup="onKeyUp('#valid_password_c');">
-                                <span id="valid_password_c" style="color: #ff0000;font-size: 10px;"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-lg-12">
-                                <input id="loginConfirm" type="button" class="btn btn-primary btn-lg btn-block" value="비밀번호 변경" onclick="goUpdate()">
-                            </div>
-                        </div>
-                        <div class="site-navbar row justify-content-end " role="banner">
-                            <!-- row, justify-content-end class 추가-->
-
-                            <div class="site-top-icons ">
-                                <ul>
-                                    <li><a href="login"> <span class="sign up">로그인페이지</span></a></li>
-                                    <!--회원가입-->
-                                </ul>
-                            </div>
-
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-    </div>
-</div>
 
 </div>
 

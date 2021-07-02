@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/css/owl.theme.default.min.css">
     <link rel="stylesheet" href="/css/aos.css">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/icon.css">
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 
@@ -36,9 +37,7 @@
     <!--모바일 검색창-->
     <div th:replace="common::mobile_search(updatainfo)"></div>
 
-    <div class="bg-light py-3" th:replace="common::logo(개인정보수정)">
-    </div>
-    <!----------------------->
+
     <div class="site-section margin-top-2" >
         <div class="container" >
             <div class="row justify-content-center"><!--justify-content-center 추가-->
@@ -364,6 +363,10 @@
         element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
         element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
     }
+
+
+    $('#loading').css('display','block');
+    $(window).on('load', function(){ $('#loading').css('display','none')});
 
 
 </script>

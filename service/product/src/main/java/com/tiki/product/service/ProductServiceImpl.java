@@ -77,6 +77,34 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<ProductDTO> resultByNmCatHighPrice(ProductDTO params) {
+
+        List<ProductDTO> productList = Collections.emptyList();
+
+        int productTotalCount = productMapper.selectProductTotalCount();
+
+        if (productTotalCount > 0) {
+            productList = productMapper.resultByNmCatHighPrice(params);
+        }
+
+        return productList;
+    }
+
+    @Override
+    public List<ProductDTO> resultByNmCatLowPrice(ProductDTO params) {
+
+        List<ProductDTO> productList = Collections.emptyList();
+
+        int productTotalCount = productMapper.selectProductTotalCount();
+
+        if (productTotalCount > 0) {
+            productList = productMapper.resultByNmCatLowPrice(params);
+        }
+
+        return productList;
+    }
+
+    @Override
     public List<ProductDTO> resultByProdNm(String prodNm) {
 
         List<ProductDTO> productList = Collections.emptyList();
@@ -85,6 +113,34 @@ public class ProductServiceImpl implements ProductService {
 
         if (productTotalCount > 0) {
             productList = productMapper.resultByProdNm(prodNm);
+        }
+
+        return productList;
+    }
+
+    @Override
+    public List<ProductDTO> resultByProdNmHighPrice(String prodNm) {
+
+        List<ProductDTO> productList = Collections.emptyList();
+
+        int productTotalCount = productMapper.selectProductTotalCount();
+
+        if (productTotalCount > 0) {
+            productList = productMapper.resultByProdNmHighPrice(prodNm);
+        }
+
+        return productList;
+    }
+
+    @Override
+    public List<ProductDTO> resultByProdNmLowPrice(String prodNm) {
+
+        List<ProductDTO> productList = Collections.emptyList();
+
+        int productTotalCount = productMapper.selectProductTotalCount();
+
+        if (productTotalCount > 0) {
+            productList = productMapper.resultByProdNmLowPrice(prodNm);
         }
 
         return productList;
@@ -105,6 +161,20 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<ProductDTO> resultByIdFinish(String catNm) {
+
+        List<ProductDTO> productList = Collections.emptyList();
+
+        int productTotalCount = productMapper.selectProductTotalCount();
+
+        if (productTotalCount > 0) {
+            productList = productMapper.resultByIdFinish(catNm);
+        }
+
+        return productList;
+    }
+
+    @Override
     public List<ProductDTO> resultByCatNo(@Param("firstNo") int firstNo, @Param("lastNo") int lastNo) {
 
         List<ProductDTO> productList = Collections.emptyList();
@@ -113,6 +183,34 @@ public class ProductServiceImpl implements ProductService {
 
         if (productTotalCount > 0) {
             productList = productMapper.resultByCatNo(firstNo, lastNo);
+        }
+
+        return productList;
+    }
+
+    @Override
+    public List<ProductDTO> resultByCatNoHighPrice(@Param("firstNo") int firstNo, @Param("lastNo") int lastNo) {
+
+        List<ProductDTO> productList = Collections.emptyList();
+
+        int productTotalCount = productMapper.selectProductTotalCount();
+
+        if (productTotalCount > 0) {
+            productList = productMapper.resultByCatNoHighPrice(firstNo, lastNo);
+        }
+
+        return productList;
+    }
+
+    @Override
+    public List<ProductDTO> resultByCatNoLowPrice(@Param("firstNo") int firstNo, @Param("lastNo") int lastNo) {
+
+        List<ProductDTO> productList = Collections.emptyList();
+
+        int productTotalCount = productMapper.selectProductTotalCount();
+
+        if (productTotalCount > 0) {
+            productList = productMapper.resultByCatNoLowPrice(firstNo, lastNo);
         }
 
         return productList;

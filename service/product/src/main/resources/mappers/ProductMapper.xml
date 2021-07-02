@@ -122,9 +122,42 @@
             prod_nm LIKE concat('%',#{prodNm},'%')
         AND
             cat_no BETWEEN #{catNo} AND #{nego}
+        AND NOT
+        prod_finish = true
         ORDER BY
         wday DESC
     </select>
+
+    <select id="resultByNmCatHighPrice" parameterType="ProductDTO" resultType="ProductDTO">
+        SELECT
+        <include refid="productColumns" />
+        FROM
+        prod
+        WHERE
+        prod_nm LIKE concat('%',#{prodNm},'%')
+        AND
+        cat_no BETWEEN #{catNo} AND #{nego}
+        AND NOT
+        prod_finish = true
+        ORDER BY
+        prod_prc DESC
+    </select>
+
+    <select id="resultByNmCatLowPrice" parameterType="ProductDTO" resultType="ProductDTO">
+        SELECT
+        <include refid="productColumns" />
+        FROM
+        prod
+        WHERE
+        prod_nm LIKE concat('%',#{prodNm},'%')
+        AND
+        cat_no BETWEEN #{catNo} AND #{nego}
+        AND NOT
+        prod_finish = true
+        ORDER BY
+        prod_prc ASC
+    </select>
+
 
     <select id="resultByProdNm" parameterType="String" resultType="ProductDTO">
         SELECT
@@ -133,8 +166,37 @@
         prod
         WHERE
         prod_nm LIKE concat('%',#{prodNm},'%')
+        AND NOT
+        prod_finish = true
         ORDER BY
         wday DESC
+    </select>
+
+    <select id="resultByProdNmHighPrice" parameterType="String" resultType="ProductDTO">
+        SELECT
+        <include refid="productColumns" />
+        FROM
+        prod
+        WHERE
+        prod_nm LIKE concat('%',#{prodNm},'%')
+        AND NOT
+        prod_finish = true
+        ORDER BY
+        prod_prc DESC
+    </select>
+
+    <select id="resultByProdNmLowPrice" parameterType="String" resultType="ProductDTO">
+        SELECT
+        <include refid="productColumns" />
+        FROM
+        prod
+        WHERE
+        prod_nm LIKE concat('%',#{prodNm},'%')
+        AND NOT
+        prod_finish = true
+        ORDER BY
+        prod_prc ASC
+
     </select>
 
     <select id="resultById" parameterType="String" resultType="ProductDTO">
@@ -144,6 +206,21 @@
         prod
         WHERE
         sel_id = #{selId}
+        AND NOT
+        prod_finish = true
+        ORDER BY
+        wday DESC
+    </select>
+
+    <select id="resultByIdFinish" parameterType="String" resultType="ProductDTO">
+        SELECT
+        <include refid="productColumns" />
+        FROM
+        prod
+        WHERE
+        sel_id = #{selId}
+        AND
+        prod_finish = true
         ORDER BY
         wday DESC
     </select>
@@ -155,8 +232,36 @@
             prod
         WHERE
             cat_no BETWEEN #{firstNo} AND #{lastNo}
+        AND NOT
+        prod_finish = true
         ORDER BY
             wday DESC
+    </select>
+
+    <select id="resultByCatNoHighPrice" parameterType="int" resultType="ProductDTO">
+        SELECT
+        <include refid="productColumns" />
+        FROM
+        prod
+        WHERE
+        cat_no BETWEEN #{firstNo} AND #{lastNo}
+        AND NOT
+        prod_finish = true
+        ORDER BY
+        prod_prc DESC
+    </select>
+
+    <select id="resultByCatNoLowPrice" parameterType="int" resultType="ProductDTO">
+        SELECT
+        <include refid="productColumns" />
+        FROM
+        prod
+        WHERE
+        cat_no BETWEEN #{firstNo} AND #{lastNo}
+        AND NOT
+        prod_finish = true
+        ORDER BY
+        prod_prc ASC
     </select>
 
     <select id="selectProductTotalCount" parameterType="ProductDTO" resultType="int">
