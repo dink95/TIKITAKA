@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>채팅</title>
+</head>
+<body>
+
+<span>채팅방</span>
+<span class="chatNo"></span>
+</body>
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/main.js"></script>
+<script>
+    function searchParam(key) {
+        return new URLSearchParams(location.search).get(key);
+    };
+    var chatNo = searchParam('chatNo');
+    $('.chatNo').text(chatNo);
+</script>
+</html>

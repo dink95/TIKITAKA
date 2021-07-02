@@ -16,14 +16,14 @@
     <link rel="stylesheet" href="../css/owl.theme.default.min.css">
     <link rel="stylesheet" href="../css/aos.css">
     <link rel="stylesheet" href="../css/style.css">
-
+    <link rel="stylesheet" href="../css/icon.css">
 
 </head>
 
 <body>
 
 
-<div class="site-wrap">
+<div class="site-wrap" >
     <header class="site-navbar" role="banner">
         <!--replace 헤더-->
         <div class="site-navbar-top" th:replace="common::header(product_list)">
@@ -40,37 +40,80 @@
     <!--모바일 검색창-->
     <div th:replace="common::mobile_search(product_list)"></div>
 
+    <input type="hidden" id="selectCat" value="">
+    <input type="hidden" id="prodNm" value="">
 
-    <!--replace logo-login-->
-    <div class="bg-light py-3" th:fragment="logo(logo)">
+    <!------------------------->
+    <div class="site-section block-3 site-blocks-2 bg-light">
         <div class="container">
-            <div class="row">
-                <div class="col-md-12 mb-0"><a href="/"> 카테고리 </a></span>
-                    <span class="text-black" id="queryTextCatNm" ></span>
-                    <span id="detailCatNm"></span>
+            <form id="innerSearchForm" action="/product/list" class="site-block-top-search input-search">
+                <input id="innerSearch" type="text" name="prodNm" class="form-control input-search" placeholder="">
+                <span type="submit" class="icon icon-search2"></span>
+                <button type="submit" class="btn btn-primary br-0">
+                    <span class="font-14 font-weight-normal">검색</span></button>
+            </form>
+            <div class="categoryNav" style="position:relative;">
+                <div class="mainCategoryTextNav gridNav">
 
-                    <!--search box div-->
-                    <div id="form" class="site-block-top-search input-search" style="margin:0 10px; width: 20%; display: inline-block; min-width: 220px;">
-                        <input type="hidden" id="selectedMain" value="">
-                        <input type="hidden" id="selectedDetail" value="">
-                        <input type="hidden" id="selectCat" value="">
-                        <input type="text" class="form-control border-0 input-search" placeholder="Search"
-                               id="prodNm" style="height: 30px;">
-                        <span type="submit" class="icon icon-search2" ></span>
+                </div>
+                <div class="detailCategoryTextNav gridNav">
+
+                </div>
+                <div class="underLine"></div>
+            </div>
+            <div class="queryTextNav">
+            <div style="display:flex; justify-content: center;">
+                <div class="conditionNav mainCategoryConditionNav">
+                    <div class="conditionTitle mainCategoryConditionTitle" onclick="getCondition('mainCategory')">
+                        <span class="text-black font-weight-normal">전체 카테고리</span>
+                        <img class="arrowDownIcon mainCategoryArrowDownIcon" src="/icons/arrowDown.svg" alt=""/>
+                    </div>
+
+                    <div class="conditionMenu mainCategoryConditionMenu">
+
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!------------------------->
-    <div style="padding-top:10px">
-        <div class="container">
-            <h1 class="text-black" id="queryTextProdNm" ></h1>
-            <!--검색바 중간 삽입-->
-            <div class="search-bar-container">
-                <!------------------------------------------------------------------------------->
-                <div class="gridContainer">
+
+                <div class="conditionNav detailCategoryConditionNav">
+                    <div class="conditionTitle detailCategoryConditionTitle" onclick="getCondition('detailCategory')">
+                        <span class="text-black font-weight-normal">전체</span>
+                        <img class="arrowDownIcon detailCategoryArrowDownIcon" src="/icons/arrowDown.svg" alt=""/>
+                        </svg>
+                    </div>
+
+                    <div class="conditionMenu detailCategoryConditionMenu">
+
+                    </div>
                 </div>
+                <div>
+                    <span class="text-black" id="queryTextProdNm"></span>
+                    <span class="font-weight-normal text-black">검색 결과</span>
+
+                    <span class="font-weight-light queryTextCount font-14">0</span>
+                    <span class="font-weight-normal font-14">개</span>
+                </div>
+            </div>
+
+
+
+
+                <div class="conditionNav orderConditionNav" >
+                    <div class="conditionTitle orderConditionTitle" onclick="getCondition('order')">
+                        <span class="text-black font-weight-normal">최근 날짜순</span>
+                        <img class="arrowDownIcon orderArrowDownIcon" src="/icons/arrowDown.svg" alt=""/>
+                    </div>
+
+                    <div class="conditionMenu orderConditionMenu">
+                        <span id="latestDay" class="text-black font-weight-normal">최근 날짜순</span>
+                        <span id="lowPrice" class="text-black font-weight-normal">낮은 가격순</span>
+                        <span id="highPrice" class="text-black font-weight-normal">높은 가격순</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="gridContainer">
+                <span id="noProduct"></span>
             </div>
         </div>
     </div>
@@ -80,9 +123,146 @@
 <div th:replace="common::mobile(product_list)"></div>
 
 <style>
-    .form-control.border-0.input-search{
-        border-style: none;
+
+    .conditionTitle {
+        cursor: pointer;
+        text-align: right;
+        width: 110px;
     }
+    .mainCategoryConditionTitle{
+        margin:0 20px;
+    }
+    .detailCategoryConditionTitle{
+        margin-right:20px;
+    }
+    .conditionTitle > span {
+        font-size: 13px;
+    }
+    .conditionMenu {
+        border-top: 2px solid #5f0080;
+        text-align: right;
+        background: #fff;
+        box-shadow: 0 2px 4px rgb(0, 0, 0, .3);
+        display: none;
+        cursor: pointer;
+        position: absolute;
+        width: 110px;
+    }
+    .orderConditionTitle{
+        width: 90px;
+    }
+    .orderConditionMenu{
+        width: 90px;
+    }
+    .mainCategoryConditionMenu{
+        margin:10px 20px 0 20px;
+    }
+    .detailCategoryConditionMenu{
+        margin-top:10px;
+    }
+    .detailCategoryConditionNav{
+        display:none ;
+    }
+
+    .mainCategoryConditionTitle, .detailCategoryConditionTitle{
+        display: none;
+        width: 110px;
+        padding:0 10px;
+        background: #fff;
+        box-shadow: 0 2px 4px rgb(0, 0, 0, .3);
+    }
+
+
+    .conditionMenu > span {
+        display: block;
+        padding: 10px 10px 10px 0;
+        font-size: 13px;
+    }
+
+    .conditionMenu > span:hover {
+        color: #5f0080;
+    }
+
+
+
+    .mainCategoryTextNav {
+        display: flex;
+        justify-content: flex-start;
+        margin-left:1%;
+
+    }
+
+    .detailCategoryTextNav {
+        /*display: grid;*/
+        /*grid-template-columns: repeat(auto-fill, minmax(80px, auto));*/
+        white-space: nowrap;
+        overflow: auto;
+        position: relative;
+
+    }
+    .detailCategoryTextNav > span {
+        display: inline-block;
+        padding: 10px 10px 5px 10px;
+        text-align: center;
+        border-bottom: 1px solid #e5e3e3;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: normal;
+        width: 80px;
+
+    }
+    .detailCategoryTextNav > span:nth-child(1) {
+        color: #5f0080;
+    }
+
+    .underLine {
+        display: none;
+        margin-right: 100%;
+        white-space: nowrap;
+        overflow: auto;
+        width: 80px;
+        background-color: #5f0080;
+        height: 1px;
+        margin-top: -1px;
+        position: absolute;
+        float: left;
+    }
+
+
+    .categoryTextNav > span {
+        display: inline-block;
+        font-size: 16px;
+        padding: 10px 10px;
+        color: #000;
+        font-weight: normal;
+    }
+
+
+    .mainCategoryTextNav > span {
+        display: inline-block;
+        padding: 7px 10px 5px 5px;
+        text-align: center;
+        cursor: pointer;
+        color: #5f0080;
+        font-size: 15px;
+        font-weight: normal;
+    }
+
+    
+    .queryTextNav {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 0;
+        border-bottom: 1px solid #e5e3e3;
+        margin: 20px 0;
+    }
+
+    #queryTextProdNm {
+        font-size: 17px;
+        font-weight: normal;
+        color: #5f0080;
+    }
+
     /*이미지리스트 css*/
     .block-4-image {
         margin: 0;
@@ -107,16 +287,13 @@
         display: flex;
         justify-content: flex-start;
     }
-    .ItemName>a {
+
+    .ItemName > a {
         text-align: left;
     }
+
     p {
         margin: 0;
-    }
-
-    span {
-        font-size: 14px;
-        color: #000;
     }
 
     .priceContent {
@@ -125,8 +302,29 @@
         align-items: center;
         margin: 20px 10px 0 20px;
     }
-    .gridItem{
+
+    .gridItem {
         max-width: 225px;
+    }
+
+    .categoryIcon2{
+    filter:invert(15%) sepia(73%) saturate(2372%) hue-rotate(270deg) brightness(98%) contrast(132%);
+    }
+
+
+    #innerSearchForm{
+        display: none;
+        width: 50%;
+        min-width: 500px;
+        margin: 0 auto;
+    }
+    #innerSearch{
+        border: 1px solid #5f0080;
+        border-radius: 0;
+    }
+    #innerSearchForm > button{
+
+        margin: 1px 0px 1px 15px;
     }
 
     /*****************/
@@ -142,18 +340,342 @@
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script>
 
-    $('#form').keypress(function(e){
-        if(e.keyCode ===13){
-            getProductList();
+    //상품 조건으로 조회 토글
+    function getCondition(props) {
+
+        var conditionMenu = $('.' + props +'ConditionMenu');
+        var conditionTitle = $('.' +props+'ConditionTitle').children('span');
+        var fas =  $('.' + props +'ConditionTitle').children('img');
+        var fasOther = $('.conditionTitle').not($('.' + props +'ConditionTitle')).children('img');
+        var conditionTitleOther =$('.conditionTitle').not ($('.' +props+'ConditionTitle')).children('span');
+        if (conditionMenu.css('display') == 'none') {
+            conditionMenu.not($('.conditionMenu').css('display','none'));
+            conditionMenu.css('display', 'block');
+            conditionTitle.css('color', '#5f0080');
+            conditionTitleOther.css('color','#000');
+            fas.attr("src","/icons/arrowUp.svg");
+            fasOther.attr("src","/icons/arrowDown.svg");
+        } else {
+            conditionMenu.css('display', 'none');
+            conditionTitle.css('color', '#000');
+            fas.attr("src","/icons/arrowDown.svg");
+        }
+    }
+
+    //조건 메뉴 클릭 순서
+    $('.orderConditionMenu').children('span').click(function () {
+        var conditionMenu = $('.orderConditionMenu');
+        var conditionMenuText = $(this).text();
+        var conditionMenuId = $(this).attr('id');
+        var fas = $('.orderConditionTitle').children('img');
+        var conditionTitle = $('.orderConditionTitle').children('span');
+        conditionTitle.text(conditionMenuText);
+        conditionMenu.css('display', 'none');
+        conditionTitle.css('color', '#000');
+        fas.attr("src","/icons/arrowDown.svg");
+        if (searchParam('catNo')) {
+            f_obj_cat['f_run_cat_' + conditionMenuId]();
+        } else {
+            f_obj_prodNm['f_run_prodNm_' + conditionMenuId]();
         }
     });
 
-    /*카테고리 이름*/
-    function getCategory() {
+    //조건별 검색 함수 객체
+    var f_obj_cat = {
+        //카테고리별 최근 날짜순
 
-        param = {
-            catNo: searchParam('catNo'),
+        f_run_cat_latestDay: function (props) {
+            $('#loading').css('display','block');
+            if(props){
+                param ={
+                    catNo:props,
+                }
+            }else {
+                param = {
+                    catNo: searchParam('catNo'),
+                }
+            }
+            $.ajax({
+                url: '/product/list.category',
+                data: param,
+                type: 'post',
+                dataType: 'json'
+            }).done(function (data) {
+                drawPrdList(data);
+                console.log(data);
+                $('#loading').css('display','none');
+            }).fail(function (data, textStatus, errorThrown) {
+                console.log(textStatus);
+                $('#loading').css('display','none');
+            });
+
+        },
+
+        //카테고리 검색 높은 가격순
+        f_run_cat_highPrice: function () {
+            
+            param = {
+                catNo: searchParam('catNo'),
+            }
+            $.ajax({
+                url: '/product/highprice/list.category',
+                data: param,
+                type: 'post',
+                dataType: 'json'
+            }).done(function (data) {
+
+                drawPrdList(data);
+                console.log(data);
+            }).fail(function (data, textStatus, errorThrown) {
+                console.log(textStatus);
+            });
+        },
+
+
+        //카테고라 검색 낮은 가격순
+        f_run_cat_lowPrice: function () {
+            
+            param = {
+                catNo: searchParam('catNo'),
+            }
+            $.ajax({
+                url: '/product/lowprice/list.category',
+                data: param,
+                type: 'post',
+                dataType: 'json'
+            }).done(function (data) {
+                drawPrdList(data);
+                console.log(data);
+            }).fail(function (data, textStatus, errorThrown) {
+                console.log(textStatus);
+            });
+        },
+    };
+
+    var f_obj_prodNm = {
+        //검색어, 카테고리별 최근 날짜순
+        f_run_prodNm_latestDay: function () {
+            
+            if ($('#selectCat').val() == '') {
+                param = {
+                    prodNm: $('#prodNm').val(),
+                }
+                $.ajax({
+                    url: '/product/list.prodNm',
+                    data: param,
+                    type: 'post',
+                    dataType: 'json'
+                }).done(function (data) {
+
+                    $('#queryTextProdNm').text('"' + searchParam('prodNm') + '"');
+                    drawPrdList(data);
+                    console.log(data);
+                }).fail(function (data, textStatus, errorThrown) {
+                    console.log(textStatus);
+                });
+            } else {
+                param = {
+                    prodNm: $('#prodNm').val(),
+                    catNo: $('#selectCat').val()
+                }
+                $.ajax({
+                    url: '/product/list.query',
+                    data: param,
+                    type: 'post',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $('#queryTextProdNm').text('"' + $('#prodNm').val() + '"');
+                    drawPrdList(data);
+                    console.log(data);
+
+                }).fail(function (data, textStatus, errorThrown) {
+                    console.log(textStatus);
+                });
+            }
+        },
+
+        //검색어, 카테고리 검색 높은 가격순
+        f_run_prodNm_highPrice: function () {
+            
+            if ($('#selectCat').val() == '') {
+                param = {
+                    prodNm: $('#prodNm').val(),
+                }
+                $.ajax({
+                    url: '/product/highprice/list.prodNm',
+                    data: param,
+                    type: 'post',
+                    dataType: 'json'
+                }).done(function (data) {
+
+                    if (data.dataQueryList.length == 0) {
+                        $('#queryTextProdNm').text('"' + searchParam('prodNm') + '"');
+                    } else {
+                        $('#queryTextProdNm').text('"' + $('#prodNm').val() + '"');
+                        drawPrdList(data);
+                        console.log(data);
+                    }
+                }).fail(function (data, textStatus, errorThrown) {
+                    console.log(textStatus);
+                });
+            } else {
+                param = {
+                    prodNm: $('#prodNm').val(),
+                    catNo: $('#selectCat').val()
+                }
+                $.ajax({
+                    url: '/product/highprice/list.query',
+                    data: param,
+                    type: 'post',
+                    dataType: 'json'
+                }).done(function (data) {
+
+                    $('#queryTextProdNm').text('"' + $('#prodNm').val() + '"');
+                    drawPrdList(data);
+                    console.log(data);
+
+                }).fail(function (data, textStatus, errorThrown) {
+                    console.log(textStatus);
+                });
+            }
+        },
+
+
+        //검색어, 카테고라 검색 낮은 가격순
+        f_run_prodNm_lowPrice: function () {
+            if ($('#selectCat').val() == '') {
+                param = {
+                    prodNm: $('#prodNm').val(),
+                }
+                $.ajax({
+                    url: '/product/lowprice/list.prodNm',
+                    data: param,
+                    type: 'post',
+                    dataType: 'json'
+                }).done(function (data) {
+
+                    if (data.dataQueryList.length == 0) {
+                        $('#queryTextProdNm').text('"' + searchParam('prodNm') + '"');
+                    } else {
+                        $('#queryTextProdNm').text('"' + $('#prodNm').val() + '"');
+                        drawPrdList(data);
+                        console.log(data);
+                    }
+                }).fail(function (data, textStatus, errorThrown) {
+                    console.log(textStatus);
+                });
+            } else {
+                param = {
+                    prodNm: $('#prodNm').val(),
+                    catNo: $('#selectCat').val()
+                }
+                $.ajax({
+                    url: '/product/lowprice/list.query',
+                    data: param,
+                    type: 'post',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $('#queryTextProdNm').text('"' + $('#prodNm').val() + '"');
+                    drawPrdList(data);
+                    console.log(data);
+
+                }).fail(function (data, textStatus, errorThrown) {
+                    console.log(textStatus);
+                });
+            }
         }
+    }
+
+
+    function searchParam(key) {
+        return new URLSearchParams(location.search).get(key);
+    };
+
+
+    //상품 검색시
+    if (searchParam('prodNm')) {
+        $('#allCatText').text('전체 카테고리');
+        $('#prodNm').val(searchParam('prodNm'));
+        $('#queryTextProdNm').text('"' + searchParam('prodNm') + '"');
+        $('#selectCat').val(searchParam('catNo'));
+    }
+
+    //카테고리 검색시
+    if (searchParam('catNo')) {
+        $('#selectCat').val(searchParam('catNo'));
+        goSelectMainQuery(searchParam('catNo'));
+    }
+
+    //메인 카테고리 반응
+    function goSelectMainQuery(props) {
+        if (searchParam('prodNm')) {
+
+            $('.detailCategoryTextNav').css('display','none');
+            var fas = $('.mainCategoryConditionTitle').children('img');
+            fas.attr("src","/icons/arrowDown.svg");
+            $(' .detailCategoryConditionNav').css('display','block');
+            $(' .detailCategoryConditionTitle').children('span').text('전체');
+            $(' .orderConditionTitle').children('span').text('최근 날짜순');
+            var conditionMenu = $('.mainCategoryConditionMenu');
+            var conditionMenuText = $('#' +props).text();
+            var conditionTitle = $('.mainCategoryConditionTitle').children('span');
+            conditionTitle.text(conditionMenuText);
+            conditionMenu.css('display', 'none');
+            conditionTitle.css('color', '#000');
+
+             $('#selectCat').val(props);
+
+            f_obj_prodNm['f_run_prodNm_latestDay']();
+            getAllCategory(props);
+        } else {
+            $('.mainCategoryConditionNav').css('display','none');
+            $('.categoryNav').css('display','block');
+            getCategory();
+        }
+    }
+
+
+    //세부 카테고리 반응
+    function goSelectDetailQuery(props) {
+        if (searchParam('prodNm')) {
+            var fas = $('.detailCategoryConditionTitle').children('img');
+            fas.attr("src","/icons/arrowDown.svg");
+            $(' .orderConditionTitle').children('span').text('최근 날짜순');
+            var conditionMenu = $('.detailCategoryConditionMenu');
+            var conditionMenuText = $('#' +props).text();
+            var fas = $('.detailCategoryConditionTitle').children('svg');
+            var conditionTitle = $('.detailCategoryConditionTitle').children('span');
+            conditionTitle.text(conditionMenuText);
+            conditionMenu.css('display', 'none');
+            conditionTitle.css('color', '#000');
+            fas.removeClass("fa-chevron-up");
+            fas.addClass('fa-chevron-down');
+
+            $('#selectCat').val(props);
+            f_obj_prodNm['f_run_prodNm_latestDay']();
+
+        } else {
+          // location.href='/product/list?catNo=' + props;
+            f_obj_cat['f_run_cat_latestDay'](props);
+        }
+    }
+
+
+    /*카테고리 이름*/
+    function getCategory(props,width) {
+            if(props){
+                param = {
+                    catNo: props,
+                }
+                console.log(props);
+                $('.underLine').animate({'left':width },500);
+                $('#' +props).css('color','#5f0080');
+                $('.detailCategoryTextNav').children('span').not($('#' +props)).css('color','#000');
+            }else {
+                param = {
+                    catNo: searchParam('catNo'),
+                }
+            }
 
         $.ajax({
             url: '/category/get',
@@ -162,147 +684,59 @@
             dataType: 'json'
         }).done(function (data) {
             console.log("@@data.categoryDTO", data.categoryDTO);
-            if(data.categoryDTO.catNo % 10 != 0)
-            {
-                $('#detailCatNm').text(" " + ">" + " " + data.categoryDTO.catNm);
-                $('#selectedDetail').val(data.categoryDTO.catNo);
-                console.log(Math.floor(data.categoryDTO.catNo / 10) * 10);
+            drawMainCategoryName(data);
+            if (data.categoryDTO.catNo % 10 == 0) {
+                $('#queryTextProdNm').text(data.categoryDTO.catNm + " 〉 " + '전체');
+            } else {
+                var mainCatNum = parseInt((data.categoryDTO.catNo / 10)) * 10;
+                var mainCatText = $('#mc' + mainCatNum).text();
+                $('#queryTextProdNm').text(mainCatText + " 〉 " + data.categoryDTO.catNm);
             }
-            Mainparam = {
-                catNo: Math.floor(data.categoryDTO.catNo / 10) * 10,
-            }
-
-            $.ajax({
-                url: '/category/get',
-                data: Mainparam,
-                type: 'post',
-                dataType: 'json'
-            }).done(function (data) {
-                $('#queryTextCatNm').text(" " + ">" +" " + data.categoryDTO.catNm);
-                if( $('#selectedDetail').val() == '') {
-                    $('#selectCat').val(data.categoryDTO.catNo);
-                    $('#detailCatNm').text(" " + ">" + " " + '전체');
-                }else{
-                    $('#selectCat').val( $('#selectedDetail').val());
-                }
-            }).fail(function (data, textStatus, errorThrown) {
-                console.log(textStatus);
-
-
-            });
-
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
 
-
         });
+
     }
 
-    function searchParam(key) {
-        return new URLSearchParams(location.search).get(key);
-    };
-    if(searchParam('prodNm')){
-        $('#queryTextCatNm').text(" "+ ">" + " "+ "전체");
-        $('#queryTextProdNm').text('"' + searchParam('prodNm') + '"' + "검색결과" );
-    }
 
-    function getProdNmQueryList(){
-        param = {
-            prodNm:searchParam('prodNm'),
-        }
+    //모든 카테고리 리스트 조회
+    function getAllCategory(props) {
         $.ajax({
-            url: '/product/list.prodNm',
-            data: param,
+            url: '/category/list',
+            data: null,
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            if(data.dataQueryList.length == 0){
-                $('#queryTextProdNm').text('"' + searchParam('prodNm')+ '"' + ' ' + "검색결과가 없습니다.");
-            }else {
-                drawPrdList(data);
-                console.log(data);
+            drawDetailList2(data,searchParam('catNo'));
+            console.log("@@data.allcatList", data.allcatList);
+            if (props) {
+                drawDetailList(data, props);
+            } else {
+                drawCatList(data);
             }
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
+
         });
     }
 
-    function getCatQueryList(){
 
-        param = {
-            catNo:searchParam('catNo'),
-        }
-        $.ajax({
-            url: '/product/list.category',
-            data: param,
-            type: 'post',
-            dataType: 'json'
-        }).done(function (data) {
-            drawPrdList(data);
-            console.log(data);
-        }).fail(function (data, textStatus, errorThrown) {
-            console.log(textStatus);
-        });
-    }
-
-    function getProductList() {
-        if($('#selectCat').val() == '')
-        {
-            param = {
-                prodNm:$('#prodNm').val(),
-            }
-            $.ajax({
-                url: '/product/list.prodNm',
-                data: param,
-                type: 'post',
-                dataType: 'json'
-            }).done(function (data) {
-                if(data.dataQueryList.length == 0){
-                    $('#queryTextProdNm').text('"' + searchParam('prodNm')+ '"' + ' ' + "검색결과가 없습니다.");
-                }else {
-                    $('#queryTextProdNm').text('"' + $('#prodNm').val() + '"' + "검색결과");
-                    drawPrdList(data);
-                    console.log(data);
-                }
-            }).fail(function (data, textStatus, errorThrown) {
-                console.log(textStatus);
-            });
-        }else {
-            param = {
-                prodNm: $('#prodNm').val(),
-                catNo: $('#selectCat').val()
-            }
-            $.ajax({
-                url: '/product/list.query',
-                data: param,
-                type: 'post',
-                dataType: 'json'
-            }).done(function (data) {
-                if (data.dataQueryList.length == 0) {
-                    $('#queryTextProdNm').text('"' + $('#prodNm').val() + '"' + "검색결과가 없습니다.");
-                } else {
-                    $('#queryTextProdNm').text('"' + $('#prodNm').val() + '"' + "검색결과");
-                    drawPrdList(data);
-                    console.log(data);
-                }
-            }).fail(function (data, textStatus, errorThrown) {
-                console.log(textStatus);
-            });
-        }
-    }
-
+    //상품 리스트 그리기
     function drawPrdList(data) {
-        console.log("@query data",data);
-        if (typeof data.dataQueryList!== 'undefined' &&  data.dataQueryList.length > 0) {
-            var container = $('.gridContainer');
+        console.log("@query data", data);
+        var container = $('.gridContainer');
+        $('.queryTextCount').text(data.dataQueryList.length);
+        if (typeof data.dataQueryList !== 'undefined' && data.dataQueryList.length > 0) {
             container.empty();
             var contents = '';
             var imgPath = '';
-            $.each( data.dataQueryList, function (index, obj) {
-                console.log("@query data prodNo",obj.prodNo);
+
+            $.each(data.dataQueryList, function (index, obj) {
+                console.log("@query data prodNo", obj.prodNo);
                 // 매번 컨텐츠가 달라야하니 초기화
                 contents = '';
-                var wday=timeForToday(obj.wday);
+                var wday = timeForToday(obj.wday);
                 //이미지경로를 미리 만들어놓는다.
                 imgPath = '/istatic/images/' + obj.prodNo + '/1.jpg';
 
@@ -315,7 +749,7 @@
                 contents += '                    <img src="' + imgPath + '"  alt="Image placeholder"  class="img-fluid" style="width: 100%; height: 193.53px;">';
                 contents += '                </figure>';
                 contents += '                <div class="block-4-text">';
-                contents += '                    <h3 class="ItemName"><a href="#" onclick="goDetail(' + obj.prodNo + ')">' + textLengthOverCut(obj.prodNm,11,'...') + '</a></h3>';
+                contents += '                    <h3 class="ItemName"><a href="#" onclick="goDetail(' + obj.prodNo + ')">' + textLengthOverCut(obj.prodNm, 11, '...') + '</a></h3>';
                 contents += '                    <div class=priceContent>';
                 contents += '                    <p class="text-primary font-weight-bold">' + obj.prodPrc + '</p>';
                 contents += '                    <span class="font-weight-normal">' + wday + '</span>';
@@ -328,31 +762,149 @@
 
                 //그리드에 삽입
                 container.append(contents)
+
             })
+
+
+        } else {
+            container.empty();
+            contents = '<span>검색된 상품이 없습니다.</span>';
+            container.append(contents);
 
         }
 
     }
+
+    //메인 카테고리 토글 리스트 그리기
+    function drawCatList(data) {
+        var mainCategoryConditionNav = $('.mainCategoryConditionMenu');
+        if (typeof data.allcatList !== 'undefined' && data.allcatList.length > 0) {
+            mainCategoryConditionNav.empty();
+            var contents2 = '';
+            var count = 0;
+            $.each(data.allcatList, function (index, obj) {
+                if (obj.catNo % 10 == 0) {
+                    contents2 = '';
+                    contents2 += '<span id="' + obj.catNo + '"  class="text-black font-weight-normal" onclick="goSelectMainQuery(' + obj.catNo + ')">' + obj.catNm + '</span>'
+                    mainCategoryConditionNav.append(contents2);
+                    count += 1;
+                }
+            })
+        }
+    }
+
+    //메인 카테고리 이름 아이콘 그리기
+    function drawMainCategoryName(data){
+        var container = $('.mainCategoryTextNav');
+        container.empty();
+        var mainCategoryNumber = parseInt(data.categoryDTO.catNo /10) *10;
+        var iconNumber = parseInt(data.categoryDTO.catNo/10-1);
+        var iconArr = ['fashionIcon.svg','digitalIcon.svg','furnitureIcon.svg','leisureIcon.svg','etcIcon.svg','buyIcon.svg']
+        param = {
+            catNo: mainCategoryNumber
+        }
+        $.ajax({
+            url: '/category/get',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            contents = '';
+            contents +='<img class="categoryIcon2" src="/icons/'+iconArr[iconNumber]+'" alt=""/>';
+            contents += '<span>'+data.categoryDTO.catNm+'</span>';
+            container.append(contents);
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+
+        });
+
+
+
+    }
+
+    //세부 카테고리 토글 리스트 그리기
+    function drawDetailList(data, props) {
+        var detailContainer2 = $('.detailCategoryConditionMenu');
+        if (typeof data.allcatList !== 'undefined' && data.allcatList.length > 0) {
+            detailContainer2.empty();
+            var contents2 = '';
+            $.each(data.allcatList, function (index, obj) {
+                if (obj.catNo > props && obj.catNo < props + 10) {
+                    contents2= '';
+                    contents2 += '<span id="' + obj.catNo + '"  class="text-black font-weight-normal" onclick="goSelectDetailQuery(' + obj.catNo + ')">' + obj.catNm + '</span>'
+                    //그리드에 삽입
+                    detailContainer2.append(contents2);
+                }
+            })
+        }
+    }
+
+
+    //세부 카테고리 리스트 그리기
+    function drawDetailList2(data, props) {
+        var detailContainer = $('.detailCategoryTextNav');
+        if (typeof data.allcatList !== 'undefined' && data.allcatList.length > 0) {
+            detailContainer.empty();
+            var contents = '';
+            if(searchParam('catNo')) {
+                var width = 0;
+                detailContainer.append('<span id="' + parseInt(props / 10) * 10 + '"  class="text-black font-weight-normal" onclick="goSelectDetailQuery(' + parseInt(props / 10) * 10 + ');  getCategory(' +  parseInt(props / 10) * 10 + ', '+width+')">전체보기</span>')
+            }
+                $.each(data.allcatList, function (index, obj) {
+                if (obj.catNo>parseInt(props/10)*10 && obj.catNo < parseInt(props/10)*10 +10) {
+                    width += 80;
+                    contents = '';
+                    contents += '<span id="' + obj.catNo + '"  class="text-black font-weight-normal" onclick="goSelectDetailQuery(' + obj.catNo + '); getCategory(' + obj.catNo + ','+ width +')">' + obj.catNm + '</span>'
+                    //그리드에 삽입
+                    detailContainer.append(contents);
+                }
+
+            })
+        }
+        // $('#' +searchParam('catNo')).removeClass('text-black');
+        // $('#' +searchParam('catNo')).addClass('active-color-purple');
+        // $('#' +searchParam('catNo')).css('border-bottom','1px solid #5f0080');
+        // console.log($('.detailCategoryTextNav').innerWidth());
+        // console.log(document.body.offsetWidth);
+        // console.log($('#13').innerWidth());
+
+    }
+
 
     //상세페이지
     function goDetail(prodNo) {
         location.href = '/product/detail?prodNo=' + prodNo;
     }
 
+    //파라미터 조회
+    if (searchParam('prodNm')) {
+        f_obj_prodNm['f_run_prodNm_latestDay']();
+        $('.conditionTitle').css('display','block');
+        $('#innerSearchForm').css('display','flex');
 
-    if(searchParam('prodNm')) {
-        getProdNmQueryList();
-    }
-    else if(searchParam('catNo')) {
-        getCatQueryList();
+    } else if (searchParam('catNo')) {
+        f_obj_cat['f_run_cat_latestDay']();
+        $('.underLine').css('display','block');
+
     }
 
+
+    //페이지 로딩시 카테고리 조회
     $(document).ready(function () {
-        getCategory();
+        getAllCategory();
+        $('#innerSearch').val(searchParam('prodNm'));
+
     });
+
+    $('#loading').css('display','block')
+    $(window).on('load', function(){ $('#loading').css('display','none')});
+
+
+
 
 
 </script>
+
 
 </body>
 </html>

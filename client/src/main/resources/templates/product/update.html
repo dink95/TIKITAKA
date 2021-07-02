@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 
 <head>
-    <title>TIKITAKA &ndash; 상품등록 </title>
+    <title>TIKITAKA &ndash; 상품수정 </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="../css/owl.theme.default.min.css">
     <link rel="stylesheet" href="../css/aos.css">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/icon.css">
 </head>
 
 <body>
@@ -29,72 +30,53 @@
 
 <div class="site-wrap">
     <header class="site-navbar" role="banner">
+
         <!--replace 헤더-->
-        <div class="site-navbar-top" th:replace="common::header(product_update)">
+        <div class="site-navbar-top" th:replace="common::header(product_create)">
         </div>
         <!------------->
         <!--replace-login-------------------------------->
 
         <nav class="site-navigation text-right text-md-center" role="navigation"
-             th:replace="common::menu(product_update)">
+             th:replace="common::menu(product_create)">
         </nav>
         <!----------------------------------------------------------->
     </header>
-    <!--replace logo-login-->
-    <div class="bg-light py-3" th:replace="common::logo(product_update)">
-    </div>
-    <!------------------------->
-    <div class="site-section margin-top-2"><!--margin class-->
+
+    <!--모바일 검색창-->
+    <div th:replace="common::mobile_search(product_create)"></div>
+
+
+    <div class="site-section "><!--margin class-->
         <div class="container">
+
             <form action="/product/update.do" method="post" enctype="multipart/form-data"
                   onsubmit="return Validation()">
                 <input type="hidden" id="p_id" name="selId" th:value="${session.mbrId}">
                 <input type="hidden" id="prodNo" name="prodNo">
-                <div class="row align-items-sm-start justify-content-center">
-                    <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
-                        <label class="text-black">카테고리
-                            <span class="text-danger">*</span></label>
-                        <!-- <img src="/istatic/images/shose/sho1.jpg"/>-->
-                    </div>
+                <div class="text-black font-25 font-weight-normal bb-1-p padding-all-30 row"> 상품수정</div>
 
-
-                    <div class="col-12 col-md-4 order-2 order-md-2  text-left text-lg-center">
-                        <div class="category">
-                            <select onchange="categoryChange(this)" name="category"
-                                    class="form-control border-0 select-category font-14">
-                                <option id="MainCatNm" class="form-control border-0 font-14" value="" disabled
-                                        selected>메인 카테고리
-                                </option>
-                                <option class="form-control border-0 font-14" value="buy">삽니다</option>
-                                <option class="form-control border-0 font-14" value="passion">패션</option>
-                                <option class="form-control border-0 font-14" value="digital">디지털/가전</option>
-                                <option class="form-control border-0 font-14" value="interior">가구/인테리어</option>
-                                <option class="form-control border-0 font-14" value="leisure">여가활동</option>
-                                <option class="form-control border-0 font-14" value="else">기타</option>
-                                <option class="form-control border-0 font-14" value="buy">삽니다</option>
-                            </select>
-                            <input type="hidden" id="selectedMain" value="">
+                <input class="form-control-file" onchange="chk_file_type(this)" type="file" name="file" id="file"
+                       accept="image/jpeg,image/gif,image/png" multiple="multiple"/>
+                <div class=" row align-items-sm-start justify-content-center" >
+                    <div class=" col-12 col-md-2 order-1 order-md-1 text-left text-lg-center" style="text-align: left">
+                        <label for="file" class="text-black">사진</label>
+                        <span class="text-danger">*</span></div>
+                    <div class="imgs_wrap NavItem col-12 col-md-7 order-2 order-md-2  text-left text-lg-left fileGridContainer " id="imgDiv">
+                        <span class ="valid text-black font-10" id="valid_p_file" ></span>
+                        <div class="photoContainer margin-left-right-15"><i class="fas fa-camera fa-2x"></i>
+                            <span id="fileCount">(0/5)</span>
                         </div>
                     </div>
+                    <span id="photoValue"></span>
 
-                    <div class="col-12 col-md-4 order-3 order-md-3  text-left text-lg-left">
-                        <div class="category">
-                            <select onchange="categoryChangeDetail(this)" name="detail" id="detail"
-                                    class="form-control border-0 select-category font-14"
-                                    disabled='true'>
-                                <option id="detailCatNm" class="form-control border-0 font-14" value="" disabled
-                                        selected>
-                                    세부 카테고리
-                                </option>
-                            </select>
-
-                            <input type="hidden" id="selectedDetail" name="catNo" value="">
-                        </div>
-                        <span class="valid" id="valid_p_category"></span>
+                    <input type="hidden" name="imgCount">
+                    <div style="display:flex; justify-content: flex-end;" class="imgs_wrap  col-12 col-md-1 order-2 order-md-2  text-left text-lg-left fileGridContainer">
+                        <div class="pre_btn cursor-pointer" onclick="removeImg()">
+                            <img class="crossCircleIcon" src="/icons/crossCircleIcon.svg"/> </div>
                     </div>
+
                 </div>
-
-
 
                 <div class="row align-items-sm-start justify-content-center">
                     <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
@@ -102,15 +84,88 @@
                             <span class="text-danger">*</span></label>
                     </div>
                     <div class="col-12 col-md-8 order-2 order-md-2  text-left text-lg-left">
-                        <input type="text" size="100" class="form-control" id="p_title" name="prodNm" maxlength="20"
+                        <input type="text" size="100" class="form-control" id="p_title" name="prodNm" maxlength="60"
                                onkeyup="onKeyUp('#valid_p_title');">
-                        <span class="valid" id="valid_p_title" ></span>
+                        <span class="valid text-black font-10" id="valid_p_title"></span>
                     </div>
                     <div class="col-12 col-md-10 order-2 order-md-2 text-right text-lg-right">
                         <span id="title_count"></span>
                     </div>
                 </div>
 
+                <div class="row align-items-sm-start justify-content-center">
+                    <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
+                        <label class="text-black">카테고리
+                            <span class="text-danger">*</span></label>
+                        <!-- <img src="/istatic/images/shose/sho1.jpg"/>-->
+                    </div>
+
+                    <div class="col-12 col-md-4 order-2 order-md-2  text-left text-lg-center">
+                        <div class="conditionNav mainCategoryConditionNav">
+                            <div class="conditionTitle mainCategoryConditionTitle"
+                                 onclick="getCondition('mainCategory')">
+                                <span id="MainCatNm" class="text-black font-weight-normal">전체 카테고리</span>
+                                <img class="arrowDownIcon mainCategoryArrowDownIcon" src="/icons/arrowDown.svg" alt=""/>
+                            </div>
+
+                            <div class="conditionMenu mainCategoryConditionMenu">
+
+                            </div>
+                            <input type="hidden" id="mainSelectCat" value="">
+                        </div>
+
+                    </div>
+
+                    <div class="col-12 col-md-4 order-3 order-md-3  text-left text-lg-left">
+                        <div class="conditionNav detailCategoryConditionNav">
+                            <div class="conditionTitle detailCategoryConditionTitle"
+                                 onclick="getCondition('detailCategory')">
+                                <span id="DetailCatNm" class="text-black font-weight-normal">세부 카테고리</span>
+                                <img class="arrowDownIcon detailCategoryArrowDownIcon" src="/icons/arrowDown.svg"
+                                     alt=""/>
+                                </svg>
+                            </div>
+
+                            <div class="conditionMenu detailCategoryConditionMenu">
+
+                            </div>
+                            <input type="hidden" id="selectCat" name="catNo" value="">
+                        </div>
+                        <span class="valid" id="valid_p_category"></span>
+                    </div>
+
+
+                </div>
+
+
+                <div class="row align-items-sm-start justify-content-center text-black">
+                    <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
+                        <label for="p_price" class="text-black">가격
+                            <span class="text-danger">*</span></label></div>
+                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-left">
+                        <input type="number" class="form-control" id="p_price" name="prodPrc"
+                               onkeyup="onKeyUp('#valid_p_price');">
+                        <span class="valid text-black font-10" id="valid_p_price" ></span>
+                    </div>
+                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-left">
+                        <input class="margin-right-5" type="checkbox" id="p_nego" onclick="getCheckboxValue(event)"><span class="font-14">가격협의 가능</span>
+                        <input type="hidden" id="nego" name="nego" value="0">
+                    </div>
+                </div>
+
+                <div class="row align-items-sm-start justify-content-center text-black">
+                    <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
+                        <label class="text-black">거래방법</label>
+                        <span class="text-danger">*</span>
+                    </div>
+                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-left">
+                        <input class="margin-right-5" type="radio" name="way" value="직거래" checked><span class="font-14">직거래</span>
+                    </div>
+                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-left">
+                        <input class="margin-right-5" type="radio" name="way" value="택배거래"><span class="font-14">택배거래</span>
+                    </div>
+                    <span class="valid text-black font-10" id="valid_p_method" ></span>
+                </div>
 
                 <div class="row align-items-sm-start justify-content-center">
                     <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
@@ -119,37 +174,8 @@
                     <div class="col-12 col-md-8 order-2 order-md-2  text-left text-lg-left">
                     <textarea class="form-control" id="p_content" name="content" cols="100" rows="10"
                               style="width:100%;" onkeyup="onKeyUp('#valid_p_content');"></textarea>
-                        <span class="valid" id="valid_p_content" ></span>
+                        <span class="valid text-black font-10" id="valid_p_content" ></span>
                     </div>
-                </div>
-
-                <div class="row align-items-sm-start justify-content-center">
-                    <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
-                        <label for="p_price" class="text-black">가격
-                            <span class="text-danger">*</span></label></div>
-                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-center">
-                        <input type="number" class="form-control" id="p_price" name="prodPrc"
-                               onkeyup="onKeyUp('#valid_p_price');">
-                        <span class="valid" id="valid_p_price" ></span>
-                    </div>
-                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-left">
-                        <input type="checkbox" id="p_nego" onclick="getCheckboxValue(event)">가격협의 가능
-                        <input type="hidden" id="nego" name="nego" value="0">
-                    </div>
-                </div>
-
-                <div class="row align-items-sm-start justify-content-center">
-                    <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
-                        <label class="text-black">거래방법</label>
-                        <span class="text-danger">*</span>
-                    </div>
-                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-left">
-                        <input type="radio" name="way" value="직거래" checked>직거래
-                    </div>
-                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-left">
-                        <input type="radio" name="way" value="택배거래">택배거래
-                    </div>
-                    <span class="valid" id="valid_p_method" ></span>
                 </div>
 
                 <div class="row align-items-sm-start justify-content-center">
@@ -161,21 +187,6 @@
                                placeholder="상품코드가 필요한 물품의 경우 입력해주세요."></div>
                 </div>
 
-
-                <input class="form-control-file" onchange="chk_file_type(this)" type="file" name="file" id="file"
-                       accept="image/jpeg,image/gif,image/png" multiple="multiple"/>
-                <div class="NavContainer" style=" display: block;">
-                    <div class="NavItemTitle">
-                        <label for="file" class="text-black">사진</label>
-                        <span class="text-danger">*</span></div>
-                    <div class="imgs_wrap NavItem fileGridContainer" id="imgDiv">
-                        <div class="photoContainer"><i class="fas fa-camera fa-2x"></i>
-                            <span id="fileCount">(0/5)</span>
-                        </div>
-                    </div>
-                </div>
-                <input type="hidden" name="imgCount">
-                <span id="photoValue"></span>
                 <div class="NavContainer BtnNavContainer">
                     <div class="ButtonNav">
                         <input type="submit" class="border-0-btn btn btn-primary" value="수정하기">
@@ -183,28 +194,82 @@
                     </div>
                 </div>
                 <div class="NavContainer PreBtnContainer">
-                    <a onclick="goPre()" style="cursor: pointer;">주의사항</a>
+                    <a class="cursor-pointer" onclick="goPre()">주의사항</a>
                 </div>
             </form>
         </div>
     </div>
-    <a id="arrow_up" class="scroll_up" onclick="scroll_up()"> </a>
+</div>
+<a id="arrow_up" class="scroll_up" onclick="scroll_up()"> </a>
 
 </div>
 
 
 <style>
 
+    .conditionTitle {
+        cursor: pointer;
+        text-align: right;
+        width: 100%;
+        height: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+    }
+
+    .conditionTitle > span {
+        font-size: 14px;
+        margin-right: 10px;
+
+    }
+    .conditionMenu {
+        width: 90%;
+        border-top: 2px solid #5f0080;
+        text-align: left;
+        background: #fff;
+        box-shadow: 0 2px 4px rgb(0, 0, 0, .3);
+        display: none;
+        cursor: pointer;
+        position: absolute;
+        flex: 1;
+        z-index: 10000;
+    }
+
+    .mainCategoryConditionMenu{
+        margin:10px auto;
+    }
+    .detailCategoryConditionMenu{
+        margin:10px auto;
+    }
+
+    .mainCategoryConditionTitle, .detailCategoryConditionTitle{
+        padding:0 10px;
+        background: #fff;
+        box-shadow: 0 2px 4px rgb(0, 0, 0, .3);
+    }
+
+
+    .conditionMenu > span {
+        display: block;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .conditionMenu > span:hover {
+        color: #5f0080;
+    }
+
+
     #file {
         display: none;
     }
 
-    img {
+    .creat_img {
         width: 150px;
         height: 150px;
-        margin-left: 1%;
-    }
 
+    }
     .imgs_wrap {
         padding: 0px;
     }
@@ -219,9 +284,12 @@
         padding: 30px;
         border-bottom: 1px solid #ddd;
     }
-    .valid{
-        color: #ff0000;font-size: 10px;
+
+    .valid {
+        color: #ff0000;
+        font-size: 10px;
     }
+
 
 </style>
 
@@ -236,6 +304,126 @@
 
 <script src="../js/main.js"></script>
 <script>
+    //모든 카테고리 리스트 조회
+    function getAllCategory(props) {
+        $.ajax({
+            url: '/category/list',
+            data: null,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            console.log("@@data.allcatList", data.allcatList);
+            if (props) {
+                drawDetailList(data, props);
+            } else {
+                drawCatList(data);
+            }
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+
+        });
+    }
+
+    //메인 카테고리 토글 리스트 그리기
+    function drawCatList(data) {
+        var mainCategoryConditionNav = $('.mainCategoryConditionMenu');
+        if (typeof data.allcatList !== 'undefined' && data.allcatList.length > 0) {
+            mainCategoryConditionNav.empty();
+            var contents2 = '';
+            var count = 0;
+            $.each(data.allcatList, function (index, obj) {
+                if (obj.catNo % 10 == 0) {
+                    contents2 = '';
+                    contents2 += '<span id="' + obj.catNo + '"  class="text-black font-weight-normal" onclick="goSelectMainQuery(' + obj.catNo + ')">' + obj.catNm + '</span>'
+                    mainCategoryConditionNav.append(contents2);
+                    count += 1;
+                }
+            })
+        }
+    }
+
+    //메인 카테고리 반응
+    function goSelectMainQuery(props) {
+        $('#selectCat').val('');
+        $('#valid_p_category').text('');
+        $('.detailCategoryTextNav').css('display','none');
+        var fas = $('.mainCategoryConditionTitle').children('img');
+        fas.attr("src","/icons/arrowDown.svg");
+        $(' .detailCategoryConditionNav').css('display','block');
+        $(' .detailCategoryConditionTitle').children('span').text('세부 카테고리');
+        var conditionMenu = $('.mainCategoryConditionMenu');
+        var conditionMenuText = $('#' +props).text();
+        var conditionTitle = $('.mainCategoryConditionTitle').children('span');
+        conditionTitle.text(conditionMenuText);
+        conditionMenu.css('display', 'none');
+        conditionTitle.css('color', '#000');
+        $('#mainSelectCat').val(props);
+        getAllCategory(props);
+        $('.categoryNav').css('display','block');
+
+
+    }
+
+    //상품 조건으로 조회 토글
+    function getCondition(props) {
+        var conditionMenu = $('.' + props +'ConditionMenu');
+        var conditionTitle = $('.' +props+'ConditionTitle').children('span');
+        var fas =  $('.' + props +'ConditionTitle').children('img');
+        var fasOther = $('.conditionTitle').not($('.' + props +'ConditionTitle')).children('img');
+        var conditionTitleOther =$('.conditionTitle').not ($('.' +props+'ConditionTitle')).children('span');
+        if (conditionMenu.css('display') == 'none') {
+            conditionMenu.not($('.conditionMenu').css('display','none'));
+            conditionMenu.css('display', 'block');
+            conditionTitle.css('color', '#5f0080');
+            conditionTitleOther.css('color','#000');
+            fas.attr("src","/icons/arrowUp.svg");
+            fasOther.attr("src","/icons/arrowDown.svg");
+        } else {
+            conditionMenu.css('display', 'none');
+            conditionTitle.css('color', '#000');
+            fas.attr("src","/icons/arrowDown.svg");
+        }
+    }
+
+    //세부 카테고리 반응
+    function goSelectDetailQuery(props) {
+        $('#valid_p_category').text('');
+        var fas = $('.detailCategoryConditionTitle').children('img');
+        fas.attr("src","/icons/arrowDown.svg");
+        $(' .orderConditionTitle').children('span').text('최근 날짜순');
+        var conditionMenu = $('.detailCategoryConditionMenu');
+        var conditionMenuText = $('#' +props).text();
+        var conditionTitle = $('.detailCategoryConditionTitle').children('span');
+        conditionTitle.text(conditionMenuText);
+        conditionMenu.css('display', 'none');
+        conditionTitle.css('color', '#000');
+        $('#selectCat').val(props);
+    }
+
+    //세부 카테고리 토글 리스트 그리기
+    function drawDetailList(data, props) {
+        var detailContainer2 = $('.detailCategoryConditionMenu');
+        if (typeof data.allcatList !== 'undefined' && data.allcatList.length > 0) {
+            detailContainer2.empty();
+            var contents2 = '';
+            $.each(data.allcatList, function (index, obj) {
+                if(obj.catNo !=60) {
+                    if (obj.catNo > props && obj.catNo < props + 10) {
+                        contents2 = '';
+                        contents2 += '<span id="' + obj.catNo + '"  class="text-black font-weight-normal" onclick="goSelectDetailQuery(' + obj.catNo + ')">' + obj.catNm + '</span>'
+                        //그리드에 삽입
+                        detailContainer2.append(contents2);
+                    }
+                }else{
+                    contents2 = '';
+                    contents2 += '<span id="' + obj.catNo + '"  class="text-black font-weight-normal" onclick="goSelectDetailQuery(' + obj.catNo + ')">' + obj.catNm + '</span>'
+                    //그리드에 삽입
+                    detailContainer2.append(contents2);
+                }
+            })
+        }
+    }
+
 
     function getCheckboxValue(event) {
         var result = 0;
@@ -250,7 +438,7 @@
     function Validation() {
         var result = true;
 
-        if ($('#selectedDetail').val() == '') {
+        if ($('#selectCat').val() == '') {
             $('#valid_p_category').text("*카테고리는 필수 선택 사항입니다.");
             result = false;
         }
@@ -267,6 +455,10 @@
             $('#valid_p_price').text("*가격은 필수 입력 사항입니다.");
             result = false;
         }
+        if ($('input[name=imgCount]').val() == 0) {
+            $('#valid_p_file').text("*사진을 등록해주세요.");
+            result = false;
+        }
         return result;
     }
 
@@ -279,7 +471,9 @@
     });
 
     function goPre() {
-        pre_modal('주의사항', '확인');
+        popup('주의사항', '주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.' +
+            '주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.' +
+            '주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.');
     }
 
     function upload() {
@@ -296,64 +490,31 @@
         $(props).text('');
     }
 
-    $('input[name=imgCount]').val(searchParam('imgCount'));
-    $('input[name=prodNo]').val(searchParam('prodNo'));
-    for (var i = 1; i < parseInt(searchParam('imgCount'))+1; i++) {
 
-        var imgDiv = $('#imgDiv')
-        var imgTag = $('<img/>');
-        var imgPath = '/istatic/images/' + searchParam('prodNo') + '/' + i + '.jpg';
-        imgTag.attr('id', 'img_file');
-        imgTag.attr("src", imgPath);
-        imgDiv.append(imgTag);
+    function removeImg() {
+        fileCount = 0;
+        $('#fileCount').text('(0/5)')
+        $('img').remove();
+        fileClear('#file');
+        $('input[name=imgCount]').val(0);
+
     }
 
-
-    function searchParam(key) {
-        return new URLSearchParams(location.search).get(key);
-    };
-
-    function getCategory() {
-
+    function getMbrInfo() {
         param = {
-            catNo: searchParam('catNo'),
+            userId: $('#p_id').val(),
         }
-
         $.ajax({
-            url: '/category/get',
+            url: '/member/detail',
             data: param,
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            console.log("@@data.categoryDTO", data.categoryDTO);
-            $('#detailCatNm').text(data.categoryDTO.catNm);
-            console.log(Math.floor(data.categoryDTO.catNo / 10) * 10);
-
-            Mainparam = {
-                catNo: Math.floor(data.categoryDTO.catNo / 10) * 10,
+            if (!data.memberDetail.mbrRole) {
+                popup('알림메세지', '상품을 등록하시려면 이메일인증을 완료해주세요!', 'back');
             }
-
-            $.ajax({
-                url: '/category/get',
-                data: Mainparam,
-                type: 'post',
-                dataType: 'json'
-            }).done(function (data) {
-                $('#MainCatNm').text(data.categoryDTO.catNm);
-                console.log("@@mainCatNm", data.categoryDTO.catNm)
-            }).fail(function (data, textStatus, errorThrown) {
-                console.log(textStatus);
-
-
-            });
-
-        }).fail(function (data, textStatus, errorThrown) {
-            console.log(textStatus);
-
-
-        });
+        })
     }
-
 
     /*정보*/
     function getProductDetail() {
@@ -388,12 +549,74 @@
 
     }
 
+    function getCategory() {
+
+        param = {
+            catNo: searchParam('catNo'),
+        }
+
+        $.ajax({
+            url: '/category/get',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            console.log("@@data.categoryDTO", data.categoryDTO);
+            $('#DetailCatNm').text(data.categoryDTO.catNm);
+            console.log(Math.floor(data.categoryDTO.catNo / 10) * 10);
+
+            Mainparam = {
+                catNo: Math.floor(data.categoryDTO.catNo / 10) * 10,
+            }
+
+            $.ajax({
+                url: '/category/get',
+                data: Mainparam,
+                type: 'post',
+                dataType: 'json'
+            }).done(function (data) {
+                $('#MainCatNm').text(data.categoryDTO.catNm);
+                console.log("@@mainCatNm", data.categoryDTO.catNm)
+            }).fail(function (data, textStatus, errorThrown) {
+                console.log(textStatus);
+
+
+            });
+
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+
+
+        });
+    }
+
+
+    $('input[name=imgCount]').val(searchParam('imgCount'));
+    $('input[name=prodNo]').val(searchParam('prodNo'));
+    for (var i = 1; i < parseInt(searchParam('imgCount'))+1; i++) {
+
+        var imgDiv = $('#imgDiv')
+        var imgTag = $('<img class="margin-left-right-15 creat_img"/>');
+        var imgPath = '/istatic/images/' + searchParam('prodNo') + '/' + i + '.jpg';
+        imgTag.attr('id', 'img_file');
+        imgTag.attr("src", imgPath);
+        imgDiv.append(imgTag);
+    }
+
+    function searchParam(key) {
+        return new URLSearchParams(location.search).get(key);
+    };
 
     $(document).ready(function () {
         getCategory();
+        getMbrInfo();
+        getAllCategory();
         getProductDetail();
     });
 
+
+    $('#loading').css('display','block');
+    $(window).on('load', function(){ $('#loading').css('display','none')});
 
 </script>
 

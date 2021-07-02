@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="css/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/icon.css">
 </head>
 
 <body>
@@ -58,7 +59,8 @@
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <label for="c_password" class="text-black">새로운 비밀번호<span class="text-danger">*</span></label>
-                                    <input type="password" class="form-control" id="c_password" name="c_password" required onkeyup="onKeyUp('#valid_password');">
+                                    <input type="password" class="form-control" id="c_password" name="c_password" required
+                                           onkeyup="onKeyUp('#valid_password'); enterkey(goUpdate);">
                                     <span id="valid_password" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
                             </div>
@@ -66,7 +68,8 @@
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <label for="c_pwd_re" class="text-black">비밀번호 확인<span class="text-danger">*</span></label>
-                                    <input type="password" class="form-control" id="c_pwd_re" name="c_pwd_re" required onkeyup="onKeyUp('#valid_password_c');">
+                                    <input type="password" class="form-control" id="c_pwd_re" name="c_pwd_re" required
+                                           onkeyup="onKeyUp('#valid_password_c'); enterkey(goUpdate);">
                                     <span id="valid_password_c" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
                             </div>

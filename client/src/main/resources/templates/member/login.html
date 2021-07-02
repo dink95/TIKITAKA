@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="css/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/icon.css">
 </head>
 
 <body>
@@ -49,7 +50,7 @@
                         <h2 class="h3 mb-3 text-black"><span id="login"/>Login</span></h2> <!--login logo 위치 수정-->
                         <a id="admin"style="font-size: 14px; color:#7972ea; cursor: pointer;">
                             <span id="cont" onclick="adminCheck()" style="margin-right:5px;">
-                                관리자로그인</span><i class="fas fa-chevron-right fa-1x font-weight-normal"></i></a>
+                                관리자로그인</span><i class="fas fa-chevron-right fa-1x font-weight-normal" style="width: 7px;"></i></a>
                     </div>
 
                     <form name="loginform" action="login" method="post">
@@ -61,7 +62,8 @@
                                     <label for="c_id" class="text-black">id<span
                                             class="text-danger">*</span></label>
                                     <input type="hidden" id="checkAdmin" name="checkAdmin" value="">
-                                    <input type="text"  class="form-control" id="c_id" name="c_id" required onkeyup="onKeyUp('#valid_id');" >
+                                    <input type="text"  class="form-control"
+                                           id="c_id" name="c_id" required onkeyup="onKeyUp('#valid_id'); enterkey(goLogin);">
                                     <span id="valid_id" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
                             </div>
@@ -71,7 +73,7 @@
                                     <label for="c_password" class="text-black">password <span
                                             class="text-danger">*</span></label>
                                     <input type="password" class="form-control" id="c_password" name="c_password"
-                                           required onkeyup="onKeyUp('#valid_pw');" >
+                                           required onkeyup="onKeyUp('#valid_pw'); enterkey(goLogin);" >
                                     <span id="valid_pw" style="color: red;font-size: 10px;"></span>
                                 </div>
                             </div>
@@ -81,7 +83,7 @@
                             <div class="form-group row">
                                 <div class="col-lg-12">
                                     <input  type="button" class="btn btn-primary btn-lg btn-block"
-                                            value="LogIn" onclick="goLogin()" >
+                                            value="LogIn" onclick="goLogin()">
                                 </div>
                             </div>
 
@@ -124,6 +126,7 @@
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script src="js/main.js"></script>
 <script>
+
     /*로그인*/
     function goLogin(){
         $('#valid_loginError').text('');

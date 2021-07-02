@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="css/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/icon.css">
 </head>
 
 <body>
@@ -92,7 +93,7 @@
                                     <input type="hidden" id="isCheckedPhone" name="isCheckedPhone" value="">
                                     <input type="hidden" id="isCheckedEmail" name="isCheckedEmail" value="">
 
-                                    <input type="button" class="form-control btn btn-primary btn-lg btn-block" id="id_check" name="id_check"
+                                    <input type="button" class=" btn btn-primary  btn-block" id="id_check" name="id_check"
                                            value="중복 확인&nbsp;"
                                            required onclick="goIdCheck();"
                                     ><br/>
@@ -117,7 +118,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label  class="text-black"><span class="text-danger" style="opacity: 0">*</span></label>
-                                    <input type="button" class="form-control btn btn-primary btn-lg btn-block" value="우편번호 찾기&nbsp;"
+                                    <input type="button" class=" btn btn-primary btn-lg btn-block" value="우편번호 찾기&nbsp;"
                                            required onclick="sample2_execDaumPostcode()"><br/>
                                 </div>
                             </div>
@@ -449,6 +450,9 @@
 
     }
 
+
+    $('#loading').css('display','block');
+    $(window).on('load', function(){ $('#loading').css('display','none')});
 
 
 </script>

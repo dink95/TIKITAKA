@@ -62,9 +62,41 @@ public class ProductService {
                 .block();
     }
 
+    public List productQuerytListHighPrice(String prodNm, Integer catNo) throws Exception {
+        return webClient.get()
+                .uri("/prd/result/highprice/{prodNm}/{catNo}",prodNm,catNo)
+                .retrieve()
+                .bodyToMono(List.class) //반환정보
+                .block();
+    }
+
+    public List productQuerytListLowPrice(String prodNm, Integer catNo) throws Exception {
+        return webClient.get()
+                .uri("/prd/result/lowprice/{prodNm}/{catNo}",prodNm,catNo)
+                .retrieve()
+                .bodyToMono(List.class) //반환정보
+                .block();
+    }
+
     public List productQueryProdNmList(String prodNm) throws Exception {
         return webClient.get()
                 .uri("/prd/result/prodNm/{prodNm}",prodNm)
+                .retrieve()
+                .bodyToMono(List.class) //반환정보
+                .block();
+    }
+
+    public List productQueryProdNmListHighPrice(String prodNm) throws Exception {
+        return webClient.get()
+                .uri("/prd/result/prodNm/highPrice/{prodNm}",prodNm)
+                .retrieve()
+                .bodyToMono(List.class) //반환정보
+                .block();
+    }
+
+    public List productQueryProdNmListLowPrice(String prodNm) throws Exception {
+        return webClient.get()
+                .uri("/prd/result/prodNm/lowPrice/{prodNm}",prodNm)
                 .retrieve()
                 .bodyToMono(List.class) //반환정보
                 .block();
@@ -90,6 +122,22 @@ public class ProductService {
     public List productQueryCatNoList(Integer catNo) throws Exception {
         return webClient.get()
                 .uri("/prd/result/catNo/{catNo}",catNo)
+                .retrieve()
+                .bodyToMono(List.class) //반환정보
+                .block();
+    }
+
+    public List productQueryCatNoListHighPrice(Integer catNo) throws Exception {
+        return webClient.get()
+                .uri("/prd/result/catNo/highPrice/{catNo}",catNo)
+                .retrieve()
+                .bodyToMono(List.class) //반환정보
+                .block();
+    }
+
+    public List productQueryCatNoListLowPrice(Integer catNo) throws Exception {
+        return webClient.get()
+                .uri("/prd/result/catNo/lowPrice/{catNo}",catNo)
                 .retrieve()
                 .bodyToMono(List.class) //반환정보
                 .block();

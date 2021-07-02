@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="css/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/icon.css">
 </head>
 
 <body>
@@ -57,7 +58,8 @@
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <label for="c_name" class="text-black">이름<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="c_name" name="c_name" placeholder="" required onkeyup="onKeyUp('#valid_name');">
+                                    <input type="text" class="form-control" id="c_name" name="c_name" placeholder=""
+                                           required onkeyup="onKeyUp('#valid_name'); enterkey(goFindid);">
                                     <span id="valid_name" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
                             </div>
@@ -68,7 +70,7 @@
                                     <label for="c_phone" class="text-black">전화번호 <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="c_phone" name="c_phone" value="010-"
                                            required pattern="[0-1]{2,3}-[0-9]{3,4}-[0-9]{3,4}"
-                                           maxlength="13" onkeyup="onKeyUp('#valid_phone');">
+                                           maxlength="13" onkeyup="onKeyUp('#valid_phone'); enterkey(goFindid);">
                                     <span id="valid_phone" style="color: #ff0000;font-size: 10px;"></span>
                                 </div>
                             </div>

@@ -5,7 +5,6 @@
   <title>TIKITAKA &ndash; 홈 </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
   <link rel="stylesheet" href="fonts/icomoon/style.css">
@@ -16,9 +15,10 @@
   <link rel="stylesheet" href="css/owl.theme.default.min.css">
   <link rel="stylesheet" href="css/aos.css">
   <link rel="stylesheet" href="../css/style.css">
-
-
+  <link rel="stylesheet" href="../css/icon.css">
 </head>
+
+
 
 <body>
 <div class="site-wrap">
@@ -100,6 +100,7 @@
     justify-content: flex-start;
     border-bottom: 1px solid #ddd;
     margin-bottom:30px;
+    padding:0 30px;
   }
   .prod {
     color: #000;
@@ -145,6 +146,7 @@
       dataType: 'json'
     }).done(function (data) {
       drawPrdList(data);
+
 
     }).fail(function (data, textStatus, errorThrown) {
       console.log(textStatus);
@@ -194,7 +196,6 @@
         //그리드에 삽입
         container.append(contents);
       })
-
     }
   }
 
@@ -206,6 +207,10 @@
   $(document).ready(function () {
     getProductList();
   });
+
+  $('#loading').css('display','block');
+  $(window).on('load', function(){ $('#loading').css('display','none')});
+
 
 </script>
 

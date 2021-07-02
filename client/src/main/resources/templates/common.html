@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+
 <!--공통 헤더-->
 <div class="site-navbar-top" th:fragment="header(header)">
     <!--padding 수정 style-196-->
@@ -19,14 +20,19 @@
         </div>
     </div>
 
+<!--    로딩창-->
+    <div id="loading" style="display: none">
+        <img id="loading-image" src="/images/ajax-loader.gif" alt="전송중..." />
+    </div>
 
-    <div class="container ">
+
+    <div class="container">
         <div class="row align-items-center mobile_search_hide_text">
             <div class="col-6 col-md-3 order-1 order-md-1 text-left">
                 <div class="site-logo">
                     <a href="/" class="js-logo-clone">
 
-                        <img class="logo_img" src="/images/TIKITAKA2.png" alt="">
+                        <img class="logo_img" src="/images/TIKITAK4.png" alt="">
                     </a><!--로고크기 style-202-->
                     <a style="display:flex; justify-content: center; align-items: center;">
                         <span class="mobile_search_icon icon icon-search2"></span></a>
@@ -35,7 +41,7 @@
 
             <div class="col-12 col-md-6 order-3 order-md-2  text-center">
                 <form action="/product/list" class="site-block-top-search input-search">
-                    <input type="text" name="prodNm" class="form-control input-search" placeholder="Search">
+                    <input type="text" name="prodNm" class="form-control input-search" placeholder="원하는 상품을 검색해보세요">
                     <span type="submit" class="icon icon-search2"></span>
                 </form>
 
@@ -74,39 +80,85 @@
 <!--모바일 검색창-->
 <div class=" input-mobile-search_div" th:fragment="mobile_search(header)">
     <div class="input-mobile-search_nav">
+        <div class="mobile_search_close_btn"><img class="arrowLeftIcon" src="/icons/arrowLeft2.svg" alt="" /></div>
         <form action="/product/list" class="site-block-top-search input-mobile-search">
-            <input type="text" name="prodNm" class="form-control " placeholder="Search">
+            <input type="text" name="prodNm" class="form-control " placeholder="원하는 상품을 검색해보세요"/>
             <span type="submit" class="icon icon-search2"></span>
         </form>
-        <span class="mobile_search_close_btn">닫기</span>
+
     </div>
     <div class="input-mobile-search_content"></div>
-    <div class="input-mobile-search_other"></div>
 </div>
 
 <!--공통 모바일 메뉴바-->
 <div class="mobile_nav" th:fragment="mobile(menu)">
     <ul class="mobile_nav_item">
-        <li th:classappend="${menu}=='home'? 'active' : ''"><a href="/"><i class="nav_icon fas fa-home fa-2x"></i></a>
+        <li th:classappend="${menu}=='home'? 'active' : ''"><a href="/">
+            <svg id="svg"
+                 xmlns="http://www.w3.org/2000/svg" width="21" height="16" fill="currentColor" class="bi bi-house"
+                 viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                <path fill-rule="evenodd"
+                      d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+            </svg>
+        </a>
             <a href="/">HOME</a></li>
+
         <li th:classappend="${menu}=='product_list'? 'active' : ''">
-            <a th:if="${session.mbrId == null}" href="/login"><i class="nav_icon fas fa-bars fa-2x"></i></i></a>
-            <a th:if="${session.mbrId != null}" href="/product/list"><i class="nav_icon fas fa-bars fa-2x"></i></i></a>
-            <a th:if="${session.mbrId == null}" href="/login">카테고리</a>
-            <a th:if="${session.mbrId != null}" href="/product/list">카테고리</a></li>
+            <a >
+                <svg id="svg"
+                     xmlns="http://www.w3.org/2000/svg" width="25" height="20" fill="currentColor" class="bi bi-list"
+                     viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                </svg>
+            </a>
+            <a class="cate_a">카테고리</a></li>
+
         <li th:classappend="${menu}=='product_create'? 'active' : ''">
-            <a th:if="${session.mbrId == null}" href="/login"><i class="nav_icon fas fa-plus fa-2x"></i></a>
-            <a th:if="${session.mbrId != null}" href="/product/create"><i class="nav_icon fas fa-plus fa-2x"></i></a>
-            <a th:if="${session.mbrId == null}" href="/login">상품등록</a>
-            <a th:if="${session.mbrId != null}" href="/product/create">상품등록</a></li>
+            <a th:if="${session.mbrId == null}" href="/login">
+                <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="33" height="28" fill="currentColor"
+                     class="bi bi-plus" viewBox="0 0 16 16">
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg>
+            </a>
+            <a th:if="${session.mbrId != null}" href="/product/create">
+                <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="33" height="28" fill="currentColor"
+                     class="bi bi-plus" viewBox="0 0 16 16">
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg>
+            </a>
+            <a th:if="${session.mbrId == null}" href="/login">판매하기</a>
+            <a th:if="${session.mbrId != null}" href="/product/create">판매하기</a></li>
         <li th:classappend="${menu}=='menu4'? 'active' : ''">
-            <a th:if="${session.mbrId == null}" href="login"><i class="nav_icon far fa-comments fa-2x"></i></a>
-            <a th:if="${session.mbrId != null}" href="#"><i class="nav_icon far fa-comments fa-2x"></i></a>
+            <a th:if="${session.mbrId == null}" href="login">
+                <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor"
+                     class="bi bi-chat" viewBox="0 0 16 16">
+                    <path d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"/>
+                </svg>
+            </a>
+            <a th:if="${session.mbrId != null}" href="/member/chatting/room" target='_blank'>
+                <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor"
+                     class="bi bi-chat" viewBox="0 0 16 16">
+                    <path d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"/>
+                </svg>
+            </a>
             <a th:if="${session.mbrId == null}" href="login">채팅</a>
-            <a th:if="${session.mbrId != null}" href="#">채팅</a></li>
+            <a th:if="${session.mbrId != null}" href="/member/chatting/room" target='_blank'>채팅</a></li>
         <li th:classappend="${menu}=='myinfo'? 'active' : ''">
-            <a th:if="${session.mbrId == null}" href="login"><i class="nav_icon far fa-user fa-2x"></i></a>
-            <a th:if="${session.mbrId != null}" href="/member/myinfo"><i class="nav_icon far fa-user fa-2x"></i></i></a>
+            <a th:if="${session.mbrId == null}" href="login">
+                <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="25" height="20" fill="currentColor"
+                     class="bi bi-person" viewBox="0 0 16 16">
+                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                </svg>
+            </a>
+            <a th:if="${session.mbrId != null}" href="/member/myinfo">
+                <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="25" height="20" fill="currentColor"
+                     class="bi bi-person" viewBox="0 0 16 16">
+                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                </svg>
+            </a>
             <a th:if="${session.mbrId == null}" href="login">내정보</a>
             <a th:if="${session.mbrId != null}" href="/member/myinfo">내정보</a></li>
     </ul>
@@ -152,104 +204,125 @@
     <!--메뉴 간격 수정 style-273-->
     <div>
         <ul class="site-menu js-clone-nav  d-md-block justify-content-end">
-                <li th:classappend="${menu}=='home'? 'menu_active' : ''">
-                    <svg id="svg"
-                         xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
-                        <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
-                    </svg>
-                    <a href="/"><span>Home</span></a>
-                </li>
+            <li th:classappend="${menu}=='home'? 'menu_active' : ''">
+                <svg id="svg"
+                     xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house"
+                     viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                    <path fill-rule="evenodd"
+                          d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+                </svg>
+                <a href="/"><span>Home</span></a>
+            </li>
 
-                <li class="category_popup" th:classappend="${menu}=='product_list'? 'menu_active' : ''">
+            <li class="category_popup" th:classappend="${menu}=='product_list'? 'menu_active' : ''">
 
-                    <svg id="svg"
-                            xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-                    </svg>
-                    <a><span>카테고리</span></a>
-                    <!--공통 카테고리 nav-->
-                    <div class="category_nav" th:fragment="category(menu)">
-                        <div class="category_nav_main_item font-weight-normal">
-                            <ul>
-                                <li class="category_nav_main_item1" onclick="goCatDetail(10)">패션</li>
-                                <li class="category_nav_main_item2" onclick="goCatDetail(20)">디지털∙가전</li>
-                                <li class="category_nav_main_item3" onclick="goCatDetail(30)">가구∙인테리어</li>
-                                <li class="category_nav_main_item4" onclick="goCatDetail(40)">여가활동</li>
-                                <li class="category_nav_main_item5" onclick="goCatDetail(50)">기타</li>
-                                <li class="category_nav_main_item0" onclick="goCatDetail(0)">삽니다</li>
-                            </ul>
-                        </div>
-                        <div class="category_nav_detail_item category_nav_detail_item1 font-weight-normal">
-                            <ul>
-                                <li onclick="goCatDetail(11)">남성의류</li>
-                                <li onclick="goCatDetail(12)">여성의류</li>
-                                <li onclick="goCatDetail(13)">아동의류</li>
-                                <li onclick="goCatDetail(14)">가방</li>
-                                <li onclick="goCatDetail(15)">신발</li>
-                                <li onclick="goCatDetail(16)">모자</li>
-                                <li onclick="goCatDetail(17)">액세서리</li>
-                                <li onclick="goCatDetail(18)">화장품</li>
-                                <li onclick="goCatDetail(19)">기타</li>
-                            </ul>
-                        </div>
-                        <div class="category_nav_detail_item category_nav_detail_item2 font-weight-normal">
-                            <ul>
-                                <li onclick="goCatDetail(21)">pc∙노트북</li>
-                                <li onclick="goCatDetail(22)">휴대폰∙태블릿</li>
-                                <li onclick="goCatDetail(23)">카메라</li>
-                                <li onclick="goCatDetail(24)">게임</li>
-                                <li onclick="goCatDetail(25)">기타</li>
-                            </ul>
-                        </div>
-                        <div class="category_nav_detail_item category_nav_detail_item3 font-weight-normal">
-                            <ul>
-                                <li onclick="goCatDetail(31)">침실</li>
-                                <li onclick="goCatDetail(32)">주방</li>
-                                <li onclick="goCatDetail(33)">거실</li>
-                                <li onclick="goCatDetail(34)">DIY</li>
-                                <li onclick="goCatDetail(35)">서재∙사무용</li>
-                                <li onclick="goCatDetail(36)">기타</li>
-                            </ul>
-                        </div>
-                        <div class="category_nav_detail_item category_nav_detail_item4 font-weight-normal" >
-                            <ul>
-                                <li onclick="goCatDetail(41)">등산</li>
-                                <li onclick="goCatDetail(42)">캠핑</li>
-                                <li onclick="goCatDetail(43)">골프</li>
-                                <li onclick="goCatDetail(44)">헬스</li>
-                                <li onclick="goCatDetail(45)">공연∙티켓</li>
-                                <li onclick="goCatDetail(46)">여행</li>
-                                <li onclick="goCatDetail(46)">기타</li>
-                            </ul>
-                        </div>
-                        <div class="category_nav_detail_item category_nav_detail_item5 font-weight-normal">
-                            <ul>
-                                <li onclick="goCatDetail(51)">반려동물용품</li>
-                                <li onclick="goCatDetail(52)">차량용품</li>
-                                <li onclick="goCatDetail(53)">출산∙유아용품</li>
-                            </ul>
-                        </div>
+                <svg id="svg"
+                     xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-list"
+                     viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                </svg>
+                <a><span>카테고리</span></a>
+                <!--공통 카테고리 nav-->
+                <div class="category_nav" th:fragment="category(menu)">
+                    <div class="category_nav_main_item font-weight-light">
+                        <ul>
+                            <li class="category_nav_main_item1 10" onclick="goCatDetail(10)">
+                                <img class="categoryIcon" src="/icons/fashionIcon.svg" alt=""/>
+                                <span id="mc10">패션</span></li>
+                            <li class="category_nav_main_item2" onclick="goCatDetail(20)">
+                                <img class="categoryIcon" src="/icons/digitalIcon.svg" alt=""/>
+                                <span id="mc20">디지털∙가전</span></li>
+                            <li class="category_nav_main_item3" onclick="goCatDetail(30)">
+                                <img class="categoryIcon" src="/icons/furnitureIcon.svg" alt=""/>
+                                <span id="mc30">가구∙인테리어</span></li>
+                            <li class="category_nav_main_item4" onclick="goCatDetail(40)">
+                                <img class="categoryIcon" src="/icons/leisureIcon.svg" alt=""/>
+                                <span id="mc40">여가활동</span></li>
+                            <li class="category_nav_main_item5" onclick="goCatDetail(50)">
+                                <img class="categoryIcon" src="/icons/etcIcon.svg" alt=""/>
+                                <span id="mc50">기타</span></li>
+                            <li class="category_nav_main_item0" onclick="goCatDetail(60)">
+                                <img class="categoryIcon" src="/icons/buyIcon.svg" alt=""/>
+                                <span>삽니다</span></li>
+                        </ul>
                     </div>
-                </li>
-                <li th:classappend="${menu}=='product_create'? 'menu_active' : ''">
-                    <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                    </svg>
-                    <a th:if="${session.mbrId == null}" href="/login"><span>판매하기</span></a>
-                    <a th:if="${session.mbrId != null}" href="/product/create"><span>판매하기</span></a></li>
-                <li th:classappend="${menu}=='menu4'? 'menu_active' : ''">
-                    <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat" viewBox="0 0 16 16">
-                        <path d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"/>
-                    </svg>
-                    <a th:if="${session.mbrId == null}" href="login"><span>채팅</span></a>
-                    <a th:if="${session.mbrId != null}" href="#"><span>채팅</span></a></li>
-                <li th:classappend="${menu}=='myinfo'? 'menu_active' : ''">
-                    <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                   </svg>
-                    <a th:if="${session.mbrId == null}" href="login"><span>내정보</span></a>
-                    <a th:if="${session.mbrId != null}" href="/member/myinfo"><span>내정보</span></a></li>
+                    <div class="category_nav_detail_item category_nav_detail_item1 font-weight-light">
+                        <ul>
+                            <li onclick="goCatDetail(11)">남성의류</li>
+                            <li onclick="goCatDetail(12)">여성의류</li>
+                            <li onclick="goCatDetail(13)">아동의류</li>
+                            <li onclick="goCatDetail(14)">가방</li>
+                            <li onclick="goCatDetail(15)">신발</li>
+                            <li onclick="goCatDetail(16)">모자</li>
+                            <li onclick="goCatDetail(17)">액세서리</li>
+                            <li onclick="goCatDetail(18)">화장품</li>
+                            <li onclick="goCatDetail(19)">기타</li>
+                        </ul>
+                    </div>
+                    <div class="category_nav_detail_item category_nav_detail_item2 font-weight-light">
+                        <ul>
+                            <li onclick="goCatDetail(21)">pc∙노트북</li>
+                            <li onclick="goCatDetail(22)">휴대폰∙태블릿</li>
+                            <li onclick="goCatDetail(23)">카메라</li>
+                            <li onclick="goCatDetail(24)">게임</li>
+                            <li onclick="goCatDetail(25)">기타</li>
+                        </ul>
+                    </div>
+                    <div class="category_nav_detail_item category_nav_detail_item3 font-weight-light">
+                        <ul>
+                            <li onclick="goCatDetail(31)">침실</li>
+                            <li onclick="goCatDetail(32)">주방</li>
+                            <li onclick="goCatDetail(33)">거실</li>
+                            <li onclick="goCatDetail(34)">DIY</li>
+                            <li onclick="goCatDetail(35)">서재∙사무용</li>
+                            <li onclick="goCatDetail(36)">기타</li>
+                        </ul>
+                    </div>
+                    <div class="category_nav_detail_item category_nav_detail_item4 font-weight-light">
+                        <ul>
+                            <li onclick="goCatDetail(41)">등산</li>
+                            <li onclick="goCatDetail(42)">캠핑</li>
+                            <li onclick="goCatDetail(43)">골프</li>
+                            <li onclick="goCatDetail(44)">헬스</li>
+                            <li onclick="goCatDetail(45)">공연∙티켓</li>
+                            <li onclick="goCatDetail(46)">여행</li>
+                            <li onclick="goCatDetail(47)">기타</li>
+                        </ul>
+                    </div>
+                    <div class="category_nav_detail_item category_nav_detail_item5 font-weight-light">
+                        <ul>
+                            <li onclick="goCatDetail(51)">반려동물용품</li>
+                            <li onclick="goCatDetail(52)">차량용품</li>
+                            <li onclick="goCatDetail(53)">출산∙유아용품</li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li th:classappend="${menu}=='product_create'? 'menu_active' : ''">
+                <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
+                     class="bi bi-plus" viewBox="0 0 16 16">
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg>
+                <a th:if="${session.mbrId == null}" href="/login"><span>판매하기</span></a>
+                <a th:if="${session.mbrId != null}" href="/product/create"><span>판매하기</span></a></li>
+            <li th:classappend="${menu}=='chatting'? 'menu_active' : ''">
+                <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-chat" viewBox="0 0 16 16">
+                    <path d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"/>
+                </svg>
+                <a th:if="${session.mbrId == null}" href="/login"><span>채팅</span></a>
+                <a th:if="${session.mbrId != null}" href="#"
+                   onclick="window.open('/member/chatting/room','채팅방','toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=100,left=100')"><span>채팅</span></a></li>
+            <li th:classappend="${menu}=='myinfo'? 'menu_active' : ''">
+                <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                     class="bi bi-person" viewBox="0 0 16 16">
+                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                </svg>
+                <a th:if="${session.mbrId == null}" href="/login"><span>내정보</span></a>
+                <a th:if="${session.mbrId != null}" href="/member/myinfo"><span>내정보</span></a></li>
         </ul>
     </div>
 </nav>

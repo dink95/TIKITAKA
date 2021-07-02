@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="../css/owl.theme.default.min.css">
     <link rel="stylesheet" href="../css/aos.css">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/icon.css">
 </head>
 
 <body>
@@ -280,8 +281,9 @@
         color: #000;
     }
     .finishProd{
-        color: #000;
-        font-weight: lighter;
+        color: #a09e9e;
+        font-weight: normal;
+
     }
     .prod {
         margin-bottom: 10px;
@@ -313,6 +315,7 @@
     }
 
     function getIdQueryList() {
+        
         if($('#finishCheck').val() == 0) {
             param = {
                 selId: $('#p_id').text(),
@@ -324,6 +327,7 @@
                 dataType: 'json'
             }).done(function (data) {
                 drawPrdList(data);
+                
             }).fail(function (data, textStatus, errorThrown) {
                 console.log(textStatus);
             });
@@ -338,6 +342,7 @@
                 dataType: 'json'
             }).done(function (data) {
                 drawPrdList(data);
+                
             }).fail(function (data, textStatus, errorThrown) {
                 console.log(textStatus);
             });
@@ -456,6 +461,8 @@
         getIdQueryList();
         getMbrInfo();
     });
+    $('#loading').css('display','block');
+    $(window).on('load', function(){ $('#loading').css('display','none')});
 
     //등급 업데이트
     function updateGrade(point) {
