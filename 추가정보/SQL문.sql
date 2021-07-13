@@ -70,5 +70,17 @@ BUYER_ID varchar(20),
 foreign key(PROD_NO) references PROD(PROD_NO) on update cascade on delete CASCADE,
 foreign key(BUYER_ID) references MBR(MBR_ID) on update cascade on delete CASCADE
 );
+/* insert문을 할 시, end time에 들어가게된다.*/
+select date_add(current_timestamp(),interval 1 day);
 
+create table AUCTION(
+AUC_START_TIME DATETIME default CURRENT_TIMESTAMP,
+AUC_END_TIME datetime,
+STARTING_BID int default 0,
+END_BID int default 0,
+PROD_NO INT,
+MBR_ID varchar(20),
+foreign key(PROD_NO) references PROD(PROD_NO) on update cascade on delete CASCADE,
+foreign key(MBR_ID) references MBR(MBR_ID) on update cascade on delete CASCADE
+); 
 
