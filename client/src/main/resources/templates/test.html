@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>TIKITAKA &ndash; 테스트 </title>
+    <title>TIKITAKA &ndash; 상품조회 </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -21,278 +21,317 @@
 
 <body>
 
-<div id="modal_overlay">
-    <div id="modal_main">
-        <h1 id="modal_content"></h1>
-        <a id="modal_button" class="btn btn-primary btn-lg" style="color:white;"></a>
-    </div>
+<div id="img_modal">
+    <img id="img_modal_content" src="" alt="">
+    <a id="img_close_button" onclick="closeModalImg()"><i class="fas fa-times fa-1x"></i></a>
+
 </div>
 
 <div class="site-wrap">
     <header class="site-navbar" role="banner">
-
         <!--replace 헤더-->
-        <div class="site-navbar-top" th:replace="common::header(product_create)">
+        <div class="site-navbar-top" th:replace="common::header(product_view)">
         </div>
         <!------------->
         <!--replace-login-------------------------------->
 
         <nav class="site-navigation text-right text-md-center" role="navigation"
-             th:replace="common::menu(product_create)">
+             th:replace="common::menu(product_view)">
         </nav>
         <!----------------------------------------------------------->
     </header>
+    <!--replace logo-login-->
 
     <!--모바일 검색창-->
-    <div th:replace="common::mobile_search(product_create)"></div>
+    <div th:replace="common::mobile_search(home)"></div>
 
+    <div class="site-section margin-top-2">
+        <div class="col-md-12 mb-0"></div>
 
-    <div class="site-section "><!--margin class-->
         <div class="container">
 
-            <form action="/product/update.do" method="post" enctype="multipart/form-data"
-                  onsubmit="return Validation()">
-                <input type="hidden" id="p_id" name="selId" th:value="${session.mbrId}">
-                <input type="hidden" id="prodNo" name="prodNo">
-                <div class="text-black font-25 font-weight-normal bb-1-p padding-all-30 row"> 상품수정</div>
+            <input type="hidden" id="p_id" th:value="${session.mbrId}">
+            <input type="hidden" id="prodNo" value="">
+            <input type="hidden" id="query" value="">
+            <input type="hidden" id="prodNm" value="">
+            <input type="hidden" id="prodPrc" value="">
+            <input type="hidden" id="catNo" value="">
+            <input type="hidden" id="way" value="">
+            <input type="hidden" id="nego" value="">
+            <input type="hidden" id="prodCo" value="">
+            <div class="row align-items-start" style="border-bottom: 1px solid #ddd; padding:0 0 5% 0;">
+                <div class="col-12 col-md-6 order-1 order-md-1  text-center">
+                    <figure class="block-4-image">
+                        <img id="mainDetailImg" src="" alt="Image placeholder" class="img-fluid"
+                             style="max-height: 500px;">
+                    </figure>
+                </div>
+                <div class="col-12 col-md-6 order-2 order-md-2  text-left">
+                    <div class="aic1" style="border-bottom: 1px solid #dee2e6">
+                        <h1 id="detailName"></h1>
+                        <div style="display:flex; justify-content: space-between;">
+                            <div><span>현재가: </span><h1 id="detailPrice"></h1><span>원</span></div>
+                            <div class="d-flex-j-a-center">
+                               <span  class="margin-right-5 text-black">남은시간:</span>
+                                <span class="text-black" id="sample01"></span>
+                            </div>
+                            </div>
+                    </div>
+                        <div class="d-flex-j-between">
+                    <div class="aic2">
+                        <p>시작가:&nbsp&nbsp <span class="text-black">10000원</span></p>
+                        <p>판매자아이디:&nbsp&nbsp<span id="selId"></span></p>
+                        <p>조회수:&nbsp&nbsp<span id="detailView"></span></p>
+                        <p>입찰수:&nbsp&nbsp <span class="text-black">1</span> </p>
+                    </div>
+                            <div style="padding-top: 2%;">
+                                <div style="background: #a7a1f71c;" class="text-center"><span class="text-black">실시간 입찰자 명단</span></div>
+                                <table class="b-1-g">
+                                    <tr class="b-1-g">
+                                        <td width="40px"  class="b-1-g text-center"><span class=" text-black">순위</span></td>
+                                        <td width="100px" class="b-1-g text-center" ><span  class=" text-black">입찰자</span></td>
+                                        <td width="100px"  class="b-1-g text-center"><span  class=" text-black">제시금액</span></td>
+                                    </tr>
 
-                <input class="form-control-file" onchange="chk_file_type(this)" type="file" name="file" id="file"
-                       accept="image/jpeg,image/gif,image/png" multiple="multiple"/>
-                <div class=" row align-items-sm-start justify-content-center" >
-                    <div class=" col-12 col-md-2 order-1 order-md-1 text-left text-lg-center" style="text-align: left">
-                        <label for="file" class="text-black">사진</label>
-                        <span class="text-danger">*</span></div>
-                    <div class="imgs_wrap NavItem col-12 col-md-7 order-2 order-md-2  text-left text-lg-left fileGridContainer " id="imgDiv">
-                        <span class ="valid text-black font-10" id="valid_p_file" ></span>
-                        <div class="photoContainer margin-left-right-15"><i class="fas fa-camera fa-2x"></i>
-                            <span id="fileCount">(0/5)</span>
+                                    <tr class="b-1-g">
+                                        <td width="20px" class="b-1-g text-center" ><span  class="text-black">1</span></td>
+                                        <td width="100px"  class="b-1-g text-center"><span  class="text-black">user</span></td>
+                                        <td width="100px"  class="b-1-g text-center"><span  class="text-black">12000</span></td>
+                                    </tr>
+
+                                    <tr class="b-1-g">
+                                        <td  width="20px" class="b-1-g text-center"><span  class="text-black">2</span></td>
+                                        <td width="100px"  class="b-1-g text-center"><span  class="text-black"></span></td>
+                                        <td width="100px"  class="b-1-g text-center"><span  class="text-black"></span></td>
+                                    </tr>
+
+                                    <tr class="b-1-g">
+                                        <td width="20px"  class="b-1-g text-center"><span  class="text-black">3</span></td>
+                                        <td width="100px"  class="b-1-g text-center"><span  class="text-black"></span></td>
+                                        <td width="100px"  class="b-1-g text-center"><span  class="text-black"></span></td>
+                                    </tr>
+                                    <tr class="b-1-g">
+
+                                        <td width="100px" colspan="2"  class="b-1-g text-center"><span  class="text-black">내 입찰가</span></td>
+                                        <td width="100px"  class="b-1-g text-center"><span  class="text-black" style="color: #5e0080">12000</span></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    <div class="padding-top-bottom-10p d-flex-j-between" >
+                        <input type="number" class="width-80p margin-left-right-10 text-black" value="13000" step="1000">
+                        <input  class=" btn btn-primary width-80p margin-left-right-10" id="tradeProd"
+                                value="입찰하기" onclick="">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="site-section block-3 site-blocks-2 bg-light">
+                <div class="container">
+                    <div class="row justify-content-center">
+                    </div>
+                    <input type="hidden" id="imgCount">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class=" nonloop-block-3 owl-carousel">
+                                <div class="" data-aos="" data-aos-delay="">
+                                    <a class="block-2-item" onclick="goDetailPhoto('.img-fluid1')">
+                                        <div class="item">
+                                            <div class="block-4 text-center">
+                                                <figure class="block-4-image image">
+                                                    <img src="" class="img-fluid0 img-fluid1">
+                                                </figure>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class=" aos-init aos-animate" data-aos="fade" data-aos-delay="">
+                                    <a class="block-2-item" onclick="goDetailPhoto('.img-fluid2')">
+                                        <div class="item">
+                                            <div class="block-4 text-center">
+                                                <figure class="block-4-image image">
+                                                    <img src="" class="img-fluid0 img-fluid2">
+                                                </figure>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class=" aos-init aos-animate" data-aos="fade" data-aos-delay="">
+                                    <a class="block-2-item" onclick="goDetailPhoto('.img-fluid3')">
+                                        <div class="item">
+                                            <div class="block-4 text-center">
+                                                <figure class="block-4-image image">
+                                                    <img src="" class="img-fluid0 img-fluid3">
+                                                </figure>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class=" aos-init aos-animate" data-aos="fade" data-aos-delay="">
+                                    <a class="block-2-item" onclick="goDetailPhoto('.img-fluid4')">
+                                        <div class="item">
+                                            <div class="block-4 text-center">
+                                                <figure class="block-4-image image">
+                                                    <img src="" class="img-fluid0 img-fluid4">
+                                                </figure>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class=" aos-init aos-animate" data-aos="fade" data-aos-delay="">
+                                    <a class="block-2-item" onclick="goDetailPhoto('.img-fluid4')">
+                                        <div class="item">
+                                            <div class="block-4 text-center">
+                                                <figure class="block-4-image image">
+                                                    <img src="" class="img-fluid0 img-fluid5">
+                                                </figure>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <span id="photoValue"></span>
-
-                    <input type="hidden" name="imgCount">
-                    <div style="display:flex; justify-content: flex-end;" class="imgs_wrap  col-12 col-md-1 order-2 order-md-2  text-left text-lg-left fileGridContainer">
-                        <div class="pre_btn cursor-pointer" onclick="removeImg()">
-                            <img class="crossCircleIcon" src="/icons/crossCircleIcon.svg"/> </div>
-                    </div>
-
                 </div>
+            </div>
 
-                <div class="row align-items-sm-start justify-content-center">
-                    <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
-                        <label for="p_title" class="text-black">제목
-                            <span class="text-danger">*</span></label>
-                    </div>
-                    <div class="col-12 col-md-8 order-2 order-md-2  text-left text-lg-left">
-                        <input type="text" size="100" class="form-control" id="p_title" name="prodNm" maxlength="60"
-                               onkeyup="onKeyUp('#valid_p_title');">
-                        <span class="valid text-black font-10" id="valid_p_title"></span>
-                    </div>
-                    <div class="col-12 col-md-10 order-2 order-md-2 text-right text-lg-right">
-                        <span id="title_count"></span>
+            <div class="row align-items-center"
+                 style="border-bottom: 1px solid #ddd;  margin:30px 0 10px 0; padding:30px 0 10px 0;">
+                <div class="col-12  order-1 order-md-1  text-left">
+                    <label for="prodContent">상세정보</label><span
+                        class="text-danger">*</span></div>
+                <div class="col-12 col-md-12 order-2 order-md-2  text-left">
+                    <div class="p_content" style="border: 1px solid #ddd; height: 300px;">
+                        <span id="prodContent"class="font-weight-normal"></span>
                     </div>
                 </div>
-
-                <div class="row align-items-sm-start justify-content-center">
-                    <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
-                        <label class="text-black">카테고리
-                            <span class="text-danger">*</span></label>
-                        <!-- <img src="/istatic/images/shose/sho1.jpg"/>-->
-                    </div>
-
-                    <div class="col-12 col-md-4 order-2 order-md-2  text-left text-lg-center">
-                        <div class="conditionNav mainCategoryConditionNav">
-                            <div class="conditionTitle mainCategoryConditionTitle"
-                                 onclick="getCondition('mainCategory')">
-                                <span id="MainCatNm" class="text-black font-weight-normal">전체 카테고리</span>
-                                <img class="arrowDownIcon mainCategoryArrowDownIcon" src="/icons/arrowDown.svg" alt=""/>
-                            </div>
-
-                            <div class="conditionMenu mainCategoryConditionMenu">
-
-                            </div>
-                            <input type="hidden" id="mainSelectCat" value="">
-                        </div>
-
-                    </div>
-
-                    <div class="col-12 col-md-4 order-3 order-md-3  text-left text-lg-left">
-                        <div class="conditionNav detailCategoryConditionNav">
-                            <div class="conditionTitle detailCategoryConditionTitle"
-                                 onclick="getCondition('detailCategory')">
-                                <span id="DetailCatNm" class="text-black font-weight-normal">세부 카테고리</span>
-                                <img class="arrowDownIcon detailCategoryArrowDownIcon" src="/icons/arrowDown.svg"
-                                     alt=""/>
-                                </svg>
-                            </div>
-
-                            <div class="conditionMenu detailCategoryConditionMenu">
-
-                            </div>
-                            <input type="hidden" id="selectCat" name="catNo" value="">
-                        </div>
-                        <span class="valid" id="valid_p_category"></span>
-                    </div>
-
-
-                </div>
-
-
-                <div class="row align-items-sm-start justify-content-center text-black">
-                    <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
-                        <label for="p_price" class="text-black">가격
-                            <span class="text-danger">*</span></label></div>
-                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-left">
-                        <input type="number" class="form-control" id="p_price" name="prodPrc"
-                               onkeyup="onKeyUp('#valid_p_price');">
-                        <span class="valid text-black font-10" id="valid_p_price" ></span>
-                    </div>
-                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-left">
-                        <input class="margin-right-5" type="checkbox" id="p_nego" onclick="getCheckboxValue(event)"><span class="font-14">가격협의 가능</span>
-                        <input type="hidden" id="nego" name="nego" value="0">
-                    </div>
-                </div>
-
-                <div class="row align-items-sm-start justify-content-center text-black">
-                    <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
-                        <label class="text-black">거래방법</label>
-                        <span class="text-danger">*</span>
-                    </div>
-                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-left">
-                        <input class="margin-right-5" type="radio" name="way" value="직거래" checked><span class="font-14">직거래</span>
-                    </div>
-                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-left">
-                        <input class="margin-right-5" type="radio" name="way" value="택배거래"><span class="font-14">택배거래</span>
-                    </div>
-                    <span class="valid text-black font-10" id="valid_p_method" ></span>
-                </div>
-
-                <div class="row align-items-sm-start justify-content-center">
-                    <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
-                        <label class="text-black">상세정보
-                            <span class="text-danger">*</span></label></div>
-                    <div class="col-12 col-md-8 order-2 order-md-2  text-left text-lg-left">
-                    <textarea class="form-control" id="p_content" name="content" cols="100" rows="10"
-                              style="width:100%;" onkeyup="onKeyUp('#valid_p_content');"></textarea>
-                        <span class="valid text-black font-10" id="valid_p_content" ></span>
-                    </div>
-                </div>
-
-                <div class="row align-items-sm-start justify-content-center">
-                    <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
-                        <label for="p_code" class="text-black">상품코드</label>
-                        <span class="text-danger">*</span></div>
-                    <div class="col-12 col-md-8 order-2 order-md-2  text-left text-lg-left">
-                        <input type="text" class="form-control" id="p_code" name="prodCo"
-                               placeholder="상품코드가 필요한 물품의 경우 입력해주세요."></div>
-                </div>
-
-                <div class="NavContainer BtnNavContainer">
-                    <div class="ButtonNav">
-                        <input type="submit" class="border-0-btn btn btn-primary" value="등록하기">
-                        <input onclick="historyBack()" class="border-0-btn btn btn-primary" value="취소하기">
-                    </div>
-                </div>
-                <div class="NavContainer PreBtnContainer">
-                    <a class="cursor-pointer" onclick="goPre()">주의사항</a>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
+    <a id="arrow_up" class="scroll_up" onclick="scroll_up()"> </a>
+
+    <!-- 모바일 메뉴-->
+    <div th:replace="common::mobile(detail)"></div>
+
+    <style>
+
+        #detailMap {
+            margin: 10px;
+        }
+
+        #detailMap > span {
+            color: #a88d2c;
+        }
+
+        .ButtonNav {
+            display: flex;
+            justify-content: flex-start;
+            padding: 10% 0;
+        }
+
+        .ButtonNav > .btn {
+            border-radius: 2px;
+            width: 30%;
+            font-weight: normal;
+            margin: 1%;
+            display: none;!important;
+            font-size: 16px;
+            letter-spacing: 0;
+        }
+
+        #detailName {
+            color: #000;
+            font-size: 20px;
+            margin-bottom: 50px;
+        }
+
+        #detailPrice {
+            color: #000;
+            display: inline-block;
+        }
+
+        #detailPrice + span {
+
+            font-size: 20px;
+            color: #000;
+        }
+
+        #selId, #detailWay, #detailAddr, #detailView {
+            color: #000;
+        }
+
+        .aic1 {
+            padding-top: 2%;
+        }
+
+        .aic2 {
+            padding-top: 2%;
+        }
+
+        #prodContent {
+            color: #000;
+        }
+
+        figure {
+            overflow: hidden;
+        }
+
+        #img_modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            z-index: 20000;
+        }
+
+        #img_modal_content {
+            background-size: cover;
+            max-height: 95%;
+            max-width: 95%;
+            z-index: 10000;
+            position: relative;
+        }
+
+        #img_close_button {
+            position: absolute;
+            z-index: 10001;
+            color: #fff;
+            font-size: 30px;
+            font-weight: bold;
+            top: 3%;
+            right: 10%;
+            cursor: pointer;
+        }
+
+        .img-fluid0 {
+            display: none;
+            border-radius: 5px;
+            max-height: 207.5px;
+        }
+
+
+        p ,label{
+            font-weight: normal;
+        }
+        #sample01{
+            color: red;
+        }
+
+    </style>
 </div>
-<a id="arrow_up" class="scroll_up" onclick="scroll_up()"> </a>
-
 </div>
-
-
-<style>
-
-    .conditionTitle {
-        cursor: pointer;
-        text-align: right;
-        width: 100%;
-        height: 40px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-    }
-
-    .conditionTitle > span {
-        font-size: 14px;
-        margin-right: 10px;
-
-    }
-    .conditionMenu {
-        width: 90%;
-        border-top: 2px solid #5f0080;
-        text-align: left;
-        background: #fff;
-        box-shadow: 0 2px 4px rgb(0, 0, 0, .3);
-        display: none;
-        cursor: pointer;
-        position: absolute;
-        flex: 1;
-        z-index: 10000;
-    }
-
-    .mainCategoryConditionMenu{
-        margin:10px auto;
-    }
-    .detailCategoryConditionMenu{
-        margin:10px auto;
-    }
-
-    .mainCategoryConditionTitle, .detailCategoryConditionTitle{
-        padding:0 10px;
-        background: #fff;
-        box-shadow: 0 2px 4px rgb(0, 0, 0, .3);
-    }
-
-
-    .conditionMenu > span {
-        display: block;
-        padding: 10px;
-        font-size: 14px;
-    }
-
-    .conditionMenu > span:hover {
-        color: #5f0080;
-    }
-
-
-    #file {
-        display: none;
-    }
-
-    .creat_img {
-        width: 150px;
-        height: 150px;
-
-    }
-    .imgs_wrap {
-        padding: 0px;
-    }
-
-    .fileGridContainer {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(150px, auto));
-        row-gap: 10px;
-    }
-
-    .align-items-sm-start {
-        padding: 30px;
-        border-bottom: 1px solid #ddd;
-    }
-
-    .valid {
-        color: #ff0000;
-        font-size: 10px;
-    }
-
-
-</style>
-
+</span>
 <script src="../js/jquery-3.3.1.min.js"></script>
 <script src="../js/jquery-ui.js"></script>
 <script src="../js/popper.min.js"></script>
@@ -301,208 +340,13 @@
 <script src="../js/jquery.magnific-popup.min.js"></script>
 <script src="../js/aos.js"></script>
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-
 <script src="../js/main.js"></script>
 <script>
-    //모든 카테고리 리스트 조회
-    function getAllCategory(props) {
-        $.ajax({
-            url: '/category/list',
-            data: null,
-            type: 'post',
-            dataType: 'json'
-        }).done(function (data) {
-            console.log("@@data.allcatList", data.allcatList);
-            if (props) {
-                drawDetailList(data, props);
-            } else {
-                drawCatList(data);
-            }
-        }).fail(function (data, textStatus, errorThrown) {
-            console.log(textStatus);
-
-        });
-    }
-
-    //메인 카테고리 토글 리스트 그리기
-    function drawCatList(data) {
-        var mainCategoryConditionNav = $('.mainCategoryConditionMenu');
-        if (typeof data.allcatList !== 'undefined' && data.allcatList.length > 0) {
-            mainCategoryConditionNav.empty();
-            var contents2 = '';
-            var count = 0;
-            $.each(data.allcatList, function (index, obj) {
-                if (obj.catNo % 10 == 0) {
-                    contents2 = '';
-                    contents2 += '<span id="' + obj.catNo + '"  class="text-black font-weight-normal" onclick="goSelectMainQuery(' + obj.catNo + ')">' + obj.catNm + '</span>'
-                    mainCategoryConditionNav.append(contents2);
-                    count += 1;
-                }
-            })
-        }
-    }
-
-    //메인 카테고리 반응
-    function goSelectMainQuery(props) {
-        $('#valid_p_category').text('');
-        $('.detailCategoryTextNav').css('display','none');
-        var fas = $('.mainCategoryConditionTitle').children('img');
-        fas.attr("src","/icons/arrowDown.svg");
-        $(' .detailCategoryConditionNav').css('display','block');
-        $(' .detailCategoryConditionTitle').children('span').text('세부 카테고리');
-        var conditionMenu = $('.mainCategoryConditionMenu');
-        var conditionMenuText = $('#' +props).text();
-        var conditionTitle = $('.mainCategoryConditionTitle').children('span');
-        conditionTitle.text(conditionMenuText);
-        conditionMenu.css('display', 'none');
-        conditionTitle.css('color', '#000');
-        $('#mainSelectCat').val(props);
-        getAllCategory(props);
-        $('.categoryNav').css('display','block');
-
-
-    }
-
-    //상품 조건으로 조회 토글
-    function getCondition(props) {
-
-        var conditionMenu = $('.' + props +'ConditionMenu');
-        var conditionTitle = $('.' +props+'ConditionTitle').children('span');
-        var fas =  $('.' + props +'ConditionTitle').children('img');
-        var fasOther = $('.conditionTitle').not($('.' + props +'ConditionTitle')).children('img');
-        var conditionTitleOther =$('.conditionTitle').not ($('.' +props+'ConditionTitle')).children('span');
-        if (conditionMenu.css('display') == 'none') {
-            conditionMenu.not($('.conditionMenu').css('display','none'));
-            conditionMenu.css('display', 'block');
-            conditionTitle.css('color', '#5f0080');
-            conditionTitleOther.css('color','#000');
-            fas.attr("src","/icons/arrowUp.svg");
-            fasOther.attr("src","/icons/arrowDown.svg");
-        } else {
-            conditionMenu.css('display', 'none');
-            conditionTitle.css('color', '#000');
-            fas.attr("src","/icons/arrowDown.svg");
-        }
-    }
-
-    //세부 카테고리 반응
-    function goSelectDetailQuery(props) {
-        $('#valid_p_category').text('');
-        var fas = $('.detailCategoryConditionTitle').children('img');
-        fas.attr("src","/icons/arrowDown.svg");
-        $(' .orderConditionTitle').children('span').text('최근 날짜순');
-        var conditionMenu = $('.detailCategoryConditionMenu');
-        var conditionMenuText = $('#' +props).text();
-        var conditionTitle = $('.detailCategoryConditionTitle').children('span');
-        conditionTitle.text(conditionMenuText);
-        conditionMenu.css('display', 'none');
-        conditionTitle.css('color', '#000');
-        $('#selectCat').val(props);
-    }
-
-    //세부 카테고리 토글 리스트 그리기
-    function drawDetailList(data, props) {
-        var detailContainer2 = $('.detailCategoryConditionMenu');
-        if (typeof data.allcatList !== 'undefined' && data.allcatList.length > 0) {
-            detailContainer2.empty();
-            var contents2 = '';
-            $.each(data.allcatList, function (index, obj) {
-                if(obj.catNo !=60) {
-                    if (obj.catNo > props && obj.catNo < props + 10) {
-                        contents2 = '';
-                        contents2 += '<span id="' + obj.catNo + '"  class="text-black font-weight-normal" onclick="goSelectDetailQuery(' + obj.catNo + ')">' + obj.catNm + '</span>'
-                        //그리드에 삽입
-                        detailContainer2.append(contents2);
-                    }
-                }else{
-                    contents2 = '';
-                    contents2 += '<span id="' + obj.catNo + '"  class="text-black font-weight-normal" onclick="goSelectDetailQuery(' + obj.catNo + ')">' + obj.catNm + '</span>'
-                    //그리드에 삽입
-                    detailContainer2.append(contents2);
-                }
-            })
-        }
-    }
-
-
-    function getCheckboxValue(event) {
-        var result = 0;
-        if (event.target.checked) {
-            result = 1;
-        } else {
-            result = 0;
-        }
-        $('#nego').val(result);
-    }
-
-    function Validation() {
-        var result = true;
-
-        if ($('#selectCat').val() == '') {
-            $('#valid_p_category').text("*카테고리는 필수 선택 사항입니다.");
-            result = false;
-        }
-
-        if ($('#p_title').val() == '') {
-            $('#valid_p_title').text("*제목은 필수 입력 사항입니다.");
-            result = false;
-        }
-        if ($('#p_content').val() == '') {
-            $('#valid_p_content').text("*내용은 필수 입력 사항입니다.");
-            result = false;
-        }
-        if ($('#p_price').val() == '') {
-            $('#valid_p_price').text("*가격은 필수 입력 사항입니다.");
-            result = false;
-        }
-        if ($('input[name=imgCount]').val() == 0) {
-            $('#valid_p_file').text("*사진을 등록해주세요.");
-            result = false;
-        }
-        return result;
-    }
-
-    $(function () {
-        $('#p_title').keyup(function (e) {
-            var p_title = $(this).val();
-            $('#title_count').html(p_title.length + '/60');
-        });
-        $('#p_title').keyup();
-    });
-
-    function goPre() {
-        popup('주의사항', '주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.' +
-            '주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.' +
-            '주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.');
-    }
-
-    function upload() {
-        $('#file').click();
-    }
-
-    /*스크롤 상단 고정*/
-    $(function () {
-        $("html, body").scrollTop(0);
-    });
-
-    /*키 입력시 valid 메세지 삭제*/
-    function onKeyUp(props) {
-        $(props).text('');
-    }
-
-
-    function removeImg() {
-        fileCount = 0;
-        $('#fileCount').text('(0/5)')
-        $('img').remove();
-        fileClear('#file');
-        $('input[name=imgCount]').val(0);
-
-    }
-
-    function getMbrInfo() {
-        param = {
-            userId: $('#p_id').val(),
+    $('#loading').css('display', 'block');
+    /*멤버정보*/
+    function getMemberDetail() {
+        var param = {
+            userId: $('#selId').text(),
         }
         $.ajax({
             url: '/member/detail',
@@ -510,17 +354,20 @@
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            if (!data.memberDetail.mbrRole) {
-                popup('알림메세지', '상품을 등록하시려면 이메일인증을 완료해주세요!', 'back');
-            }
-        })
+            console.log("data.memberDetail", data.memberDetail);
+            $('#detailAddr').text(data.memberDetail.mbrAddr);
+
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+
     }
+
 
     /*정보*/
     function getProductDetail() {
-
         var param = {
-            prodNo:searchParam('prodNo'),
+            prodNo: $('#query').val(),
         }
 
         $.ajax({
@@ -529,90 +376,203 @@
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            $("#p_title").val(data.dataDetail.prodNm);
+            drawPrdList(data);
+            console.log("data.dataDetail", data.dataDetail);
+            if(data.dataDetail.prodFinish)
+            {
+                $('#prodFinish').css('display','none');
+                $('#updateProd').attr('class','btn_finish ');
+                $('#updateProd').val('판매완료');
+                $('#updateProd').attr('onclick', '').unbind('click');
 
-            $('input[name=prodPrc]').val(data.dataDetail.prodPrc);
-            $('input[name=catNo]').val(data.dataDetail.catNo);
-            if (data.dataDetail.way == '직거래') {
-                $("input:radio[name='way']:radio[value='직거래']").prop('checked', true);
-            } else {
-                $("input:radio[name='way']:radio[value='택배거래']").prop('checked', true);
             }
-            if (data.dataDetail.nego == '1') {
-                $("input:checkbox[id='p_nego']").prop("checked", true);
-            }
-            $('input[name=prodCo]').val(data.dataDetail.prodCo);
-            $('textarea[name=content]').val(data.dataDetail.content);
+            getMemberDetail();
+
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
         });
 
     }
 
-    function getCategory() {
+    /*삭제 여부 체크*/
+    function removeCheck() {
 
-        param = {
-            catNo: searchParam('catNo'),
+        if (confirm("정말 삭제하시겠습니까??") == true) {    //확인
+            goRemove();
+        } else {   //취소
+            return false;
+        }
+    }
+
+    /*삭제*/
+    function goRemove() {
+
+        var param = {
+            prodNo: $('#query').val(),
+            selId: $('#p_id').val()
         }
 
         $.ajax({
-            url: '/category/get',
+            url: '/product/delete',
             data: param,
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            console.log("@@data.categoryDTO", data.categoryDTO);
-            $('#DetailCatNm').text(data.categoryDTO.catNm);
-            console.log(Math.floor(data.categoryDTO.catNo / 10) * 10);
-
-            Mainparam = {
-                catNo: Math.floor(data.categoryDTO.catNo / 10) * 10,
+            if (data.resultCode == 200) {
+                popup('알림메세지', '상품이 삭제되었습니다.');
+                location.href = '/member/myinfo'
+            } else {
+                popup('알림메세지', '삭제에 실패하였습니다. 관리자에게 문의하세요.');
             }
-
-            $.ajax({
-                url: '/category/get',
-                data: Mainparam,
-                type: 'post',
-                dataType: 'json'
-            }).done(function (data) {
-                $('#MainCatNm').text(data.categoryDTO.catNm);
-                console.log("@@mainCatNm", data.categoryDTO.catNm)
-            }).fail(function (data, textStatus, errorThrown) {
-                console.log(textStatus);
-
-
-            });
-
-        }).fail(function (data, textStatus, errorThrown) {
+        }).fail(function (textStatus) {
             console.log(textStatus);
-
-
         });
+
     }
 
 
-    $('input[name=imgCount]').val(searchParam('imgCount'));
-    $('input[name=prodNo]').val(searchParam('prodNo'));
-    for (var i = 1; i < parseInt(searchParam('imgCount'))+1; i++) {
+    function drawPrdList(data) {
+        if (typeof data.dataDetail !== 'undefined') {
+            var imgPath = '';
 
-        var imgDiv = $('#imgDiv')
-        var imgTag = $('<img class="margin-left-right-15 creat_img"/>');
-        var imgPath = '/istatic/images/' + searchParam('prodNo') + '/' + i + '.jpg';
-        imgTag.attr('id', 'img_file');
-        imgTag.attr("src", imgPath);
-        imgDiv.append(imgTag);
+            //이미지경로를 미리 만들어놓는다.
+            imgPath = '/istatic/images/' + data.dataDetail.prodNo + '/1.jpg';
+            //메인 이미지 html
+            $('#mainDetailImg').attr("src", imgPath);
+            //디테일 정보들
+            $('#selNmLogo').text(data.dataDetail.prodNm);
+            $('#detailName').text(data.dataDetail.prodNm);
+            $('#detailPrice').text(data.dataDetail.prodPrc);
+            $('#selId').text(data.dataDetail.selId);
+            $('#detailView').text(data.dataDetail.prodView);
+            if (data.dataDetail.selId == $('#p_id').val()) {
+                buttonCheck(1);
+            } else {
+                buttonCheck(0);
+            }
+            $('#detailWay').text(data.dataDetail.way);
+            $('#prodNo').val(data.dataDetail.prodNo);
+            $('#prodNm').val(data.dataDetail.prodNm);
+            $('#prodPrc').val(data.dataDetail.prodPrc);
+            $('#catNo').val(data.dataDetail.catNo);
+            $('#way').val(data.dataDetail.way);
+            $('#nego').val(data.dataDetail.nego);
+            $('#prodCo').val(data.dataDetail.prodCo);
+            $('#prodContent').text(data.dataDetail.content);
+            $('#imgCount').val(data.dataDetail.imgCount);
+            var wday = data.dataDetail.wday;
+            $('#wday').text(timeForToday(wday));
+
+
+            var imgDetailPath = '';
+            for (var i = 1; i < data.dataDetail.imgCount + 1; i++) {
+                imgDetailPath = '/istatic/images/' + data.dataDetail.prodNo + '/' + i + '.jpg';
+                $('.img-fluid' + i).attr("src", imgDetailPath);
+                $('.img-fluid' + i).css("display", '');
+            }
+
+
+        }
+
+
     }
 
     function searchParam(key) {
         return new URLSearchParams(location.search).get(key);
     };
 
+
+    $('#query').val(searchParam('prodNo'));
+
+    function buttonCheck(props) {
+        if (props != 1) {
+            $('.ButtonNav>input:nth-child(2n-1)').css('display', 'block');
+            $('.ButtonNav>a').css('display', 'block');
+        } else {
+            $('.ButtonNav>input:nth-child(2n)').css('display', 'block');
+        }
+    }
+
+
+    function goReport() {
+        var prodNo = $("#query").val();
+        var selId = $('#selId').text();
+        var prodNm = $('#prodNm').val();
+        location.href = "/complain/index?prodNo=" + prodNo + '&selId=' + selId + '&prodNm=' + prodNm;
+    }
+
+
     $(document).ready(function () {
-        getCategory();
-        getMbrInfo();
-        getAllCategory();
         getProductDetail();
     });
+
+    function goDetailPhoto(i) {
+        var imgPath = $(i).attr("src");
+        $('#img_modal').css('display', 'flex');
+        $('#img_modal').children('img').attr("src", imgPath);
+
+    }
+
+    function closeModalImg() {
+        $('#img_modal').css('display', 'none');
+    }
+
+
+    //점수 업데이트
+    function updatePoint(id){
+        param = {
+            userId: id,
+        }
+        $.ajax({
+            url: '/member/update/point',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            console.log(data.resultMsg);
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+    }
+
+    $('#loading').css('display','block');
+    $(window).on('load', function(){ $('#loading').css('display','none')});
+
+
+    //남은시간 계산
+   const countDownTimer = function (id, date) {
+        var _vDate = new Date(date);
+        var _second = 1000;
+        var _minute = _second * 60;
+        var _hour = _minute * 60;
+        var _day = _hour * 24;
+        var timer;
+
+        function showRemaining() {
+            var now = new Date();
+            var distDt = _vDate - now;
+            if (distDt < 0) {
+                clearInterval(timer);
+                document.getElementById(id).textContent = '해당 이벤트가 종료 되었습니다!';
+                return;
+            }
+            var days = Math.floor(distDt / _day);
+            var hours = Math.floor((distDt % _day) / _hour);
+            var minutes = Math.floor((distDt % _hour) / _minute);
+            var seconds = Math.floor((distDt % _minute) / _second);
+
+            document.getElementById(id).textContent = days + '일 ';
+            document.getElementById(id).textContent += hours + '시간 ';
+            document.getElementById(id).textContent += minutes + '분 ';
+            document.getElementById(id).textContent += seconds + '초';
+        }
+
+        timer = setInterval(showRemaining, 1);
+    }
+
+    var dateObj = new Date(2021,6,13,23,5,0);
+    dateObj.setDate(dateObj.getDate());
+    countDownTimer('sample01', dateObj);
 
 
 </script>
