@@ -1,14 +1,12 @@
 package com.tiki.client.controller;
 
 import com.tiki.client.domain.MemberDTO;
-import com.tiki.client.domain.ProductDTO;
 import com.tiki.client.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +32,7 @@ public class MemberController {
 
     @PostMapping("/login/process") /*로그인*/
     @ResponseBody
+
     public Map<String, Object> loginAccess(@RequestParam(value = "userId") String userId,
                                            @RequestParam(value = "userPw") String userPw,
                                            HttpServletRequest request) {
@@ -45,6 +44,7 @@ public class MemberController {
         memberDTO.setMbrPwd(userPw);
 
         String mbrId = memberService.login(memberDTO);
+
         try {
             if (mbrId != null) {
                 request.getSession().setAttribute("mbrId", mbrId );
