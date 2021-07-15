@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuctionServiceImp implements AuctionService{
+public class AuctionServiceImp implements AuctionService {
 
     @Autowired
     private AuctionMapper mapper;
@@ -20,5 +20,10 @@ public class AuctionServiceImp implements AuctionService{
     @Override
     public int updateBid(AuctionDTO auctionDTO) {
         return mapper.updateBid(auctionDTO);
+    }
+
+    @Override
+    public AuctionDTO selectAuction(int prodNo) {
+        return mapper.selectAuction(prodNo);
     }
 }

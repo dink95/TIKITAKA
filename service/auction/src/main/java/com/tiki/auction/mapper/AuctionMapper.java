@@ -11,5 +11,7 @@ public interface AuctionMapper {
 
     public int updateBid(AuctionDTO auctionDTO);
 
+    public AuctionDTO selectAuction(int prodNo);
+
 
 }

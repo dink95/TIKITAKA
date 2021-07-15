@@ -9,7 +9,7 @@
         INSERT INTO auction ( auc_end_time, starting_bid, prod_no, mbr_id
         ) VALUES (
         (select date_add(current_timestamp ,interval 1 day))
-        , #{startingBid} , #{prodNO},#{mbrId}
+        , #{startingBid} , #{prodNo},#{mbrId}
         )
     </insert>
 
@@ -22,5 +22,11 @@
             prod_no = #{prodNo}
     </update>
 
+    <select id="selectAuction" resultMap="AuctionDTO" parameterType="String">
+        select *
+        from auction
+        where
+            prod_no = #{prodNo}
+    </select>
 
 </mapper>

@@ -9,6 +9,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 
 @Controller
 public class AuctionController {
+
     @GetMapping(value = "/auction/list") /*채팅방 페이지*/
     public ModelAndView list() {
         ModelAndView view = new ModelAndView();
