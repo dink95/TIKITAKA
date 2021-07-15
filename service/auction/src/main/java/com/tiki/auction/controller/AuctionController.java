@@ -13,12 +13,12 @@ public class AuctionController {
     private AuctionService service;
 
     @PostMapping("/auction")
-    public int insertAuction(AuctionDTO auctionDTO){
+    public int insertAuction(@RequestBody AuctionDTO auctionDTO){
         return service.insertAuction(auctionDTO);
     }
 
     @PatchMapping("/auction")
-    public int updateBid(AuctionDTO auctionDTO){
+    public int updateBid(@RequestBody AuctionDTO auctionDTO){
         return service.updateBid(auctionDTO);
     }
 

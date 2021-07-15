@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 @Controller
 @Slf4j
 public class ChatController {
+/*
 
     private final SimpMessagingTemplate template;
 
@@ -29,5 +30,6 @@ public class ChatController {
     public void message(Chat message) {
         template.convertAndSend("/subscribe/chat/room/" + message.getChatRoomId(), message);
     }
+*/
 
 }

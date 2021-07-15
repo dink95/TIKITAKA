@@ -6,23 +6,21 @@
 
 
     <insert id="insertAuction" parameterType="AuctionDTO">
-        INSERT INTO auction ( auc_end_time, starting_bid, prod_no, mbr_id
-        ) VALUES (
-        (select date_add(current_timestamp ,interval 1 day))
-        , #{startingBid} , #{prodNo},#{mbrId}
-        )
+        INSERT INTO auction ( auc_end_time, starting_bid, prod_no
+        ) VALUES
+         ((select date_add(current_timestamp(),interval 1 day)), #{startingBid},#{prodNo})
     </insert>
 
     <update id="updateBid" parameterType="AuctionDTO">
         update
             auction
         set
-            mbr_id = #{mbrId}, end_bid = #{endBid}
-        AND
-            prod_no = #{prodNo}
+            end_bid = #{endBid}, mbr_id = #{mbrId}
+        where
+            prod_no = #{prodNo};
     </update>
 
-    <select id="selectAuction" resultMap="AuctionDTO" parameterType="String">
+    <select id="selectAuction" resultType="AuctionDTO" parameterType="int">
         select *
         from auction
         where
