@@ -68,16 +68,18 @@
 
                     <div class="aic1" style="border-bottom: 1px solid #dee2e6">
                         <h1 id="detailName"></h1>
-                        <div style="display:flex; justify-content: space-between;">
-                            <div><span>현재가: </span>
-                                <h1 id="detailPrice"></h1><span>원</span></div>
+                        <div class="d-flex-j-between">
+                            <div><p>현재가:&nbsp&nbsp
+                                <span class="text-black" id="detailPrice"></span><span class="text-black">원</span></div></p>
                             <div class="d-flex-j-a-center">
+                                <p>
                                 <span class="margin-right-5 text-black">남은시간:</span>
                                 <span class="text-black" id="sample01"></span>
+                                </p>
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex-j-between">
+                    <div class="d-flex-j-between text-left">
                         <div class="aic2">
                             <p>시작가:&nbsp&nbsp <span id="startPrice" class="text-black"></span><span
                                     class="text-black">원</span></p>
@@ -86,33 +88,33 @@
                             <p>입찰수:&nbsp&nbsp <span id="auctionCount" class="text-black">0</span></p>
                         </div>
                         <div style="padding-top: 2%;">
-                            <div style="background: #a7a1f71c;" class="text-center"><span
-                                    class="text-black">실시간 입찰자 명단</span></div>
-                            <table class="b-1-g">
-                                <tr class="b-1-g">
-                                    <td width="40px" class="b-1-g text-center"><span class=" text-black">순위</span></td>
-                                    <td width="100px" class="b-1-g text-center"><span class=" text-black">입찰자</span>
-                                    </td>
-                                    <td width="100px" class="b-1-g text-center"><span class=" text-black">제시금액</span>
-                                    </td>
-                                </tr>
+<!--                            <div style="background: #a7a1f71c;" class="text-center"><span-->
+<!--                                    class="text-black">실시간 입찰자 명단</span></div>-->
+<!--                            <table class="b-1-g">-->
+<!--                                <tr class="b-1-g">-->
+<!--                                    <td width="40px" class="b-1-g text-center"><span class=" text-black">순위</span></td>-->
+<!--                                    <td width="100px" class="b-1-g text-center"><span class=" text-black">입찰자</span>-->
+<!--                                    </td>-->
+<!--                                    <td width="100px" class="b-1-g text-center"><span class=" text-black">제시금액</span>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
 
-                                <tr class="b-1-g">
-                                    <td width="20px" class="b-1-g text-center"><span class="text-black">1</span></td>
-                                    <td width="100px" id="topPriceUser" class="b-1-g text-center"><span
-                                            class="text-black"></span></td>
-                                    <td width="100px" id="topPrice" class="b-1-g text-center"><span
-                                            class="text-black"></span></td>
-                                </tr>
+<!--                                <tr class="b-1-g">-->
+<!--                                    <td width="20px" class="b-1-g text-center"><span class="text-black">1</span></td>-->
+<!--                                    <td width="100px" id="topPriceUser" class="b-1-g text-center"><span-->
+<!--                                            class="text-black"></span></td>-->
+<!--                                    <td width="100px" id="topPrice" class="b-1-g text-center"><span-->
+<!--                                            class="text-black"></span></td>-->
+<!--                                </tr>-->
 
-                                <tr class="b-1-g">
+<!--                                <tr class="b-1-g">-->
 
-                                    <td width="100px" colspan="2" class="b-1-g text-center"><span class="text-black">내입찰가</span>
-                                    </td>
-                                    <td width="100px" class="b-1-g text-center"><span id="myPrice"
-                                                                                      class="text-black"></span></td>
-                                </tr>
-                            </table>
+<!--                                    <td width="100px" colspan="2" class="b-1-g text-center"><span class="text-black">내입찰가</span>-->
+<!--                                    </td>-->
+<!--                                    <td width="100px" class="b-1-g text-center"><span id="myPrice"-->
+<!--                                                                                      class="text-black"></span></td>-->
+<!--                                </tr>-->
+<!--                            </table>-->
                         </div>
                     </div>
 
@@ -120,7 +122,8 @@
 
                 <div class="col-12 col-md-6 order-2 order-md-2  text-left">
 
-                        <ul class="chat_box">
+                    <div class="auctionTitle">실시간 입찰 현황</div>
+                        <ul class="auction_box">
                         </ul>
                         <div class="d-flex-j-between content">
                             <input id="priceInput" type="number" name="message"
@@ -234,27 +237,24 @@
             color: black;
         }
 
-        .chat_box {
+        .auctionTitle{
+            height: 30px;
+            background: #a7a1f71c;
+            color: black;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            text-align: center;
+            font-weight: normal;
+        }
+        .auction_box {
             white-space: nowrap;
             overflow: scroll;
             padding: 0 20px;
-            height: 700px;
             border: 1px solid #ddd;
         }
 
         #detailMap > span {
             color: #a88d2c;
-        }
-
-        .ButtonNav > .btn {
-            border-radius: 2px;
-            width: 30%;
-            font-weight: normal;
-            margin: 1%;
-            display: none;
-        !important;
-            font-size: 16px;
-            letter-spacing: 0;
         }
 
         #detailName {
@@ -264,6 +264,7 @@
         }
 
         #detailPrice {
+            font-size: 20px;
             color: #000;
             display: inline-block;
         }
@@ -596,10 +597,10 @@
     countDownTimer('sample01', dateObj);
     $(function () {
 
-        var chatBox = $('.chat_box');
+        var chatBox = $('.auction_box');
         var messageInput = $('input[name="message"]');
         var sendBtn = $('.send');
-        var prodNo = 'dink';
+        var prodNo = searchParam('prodNo');
         var mbrId = $('#p_id').val();
 
         var sock = new SockJS("/endpoint");
@@ -610,6 +611,10 @@
 
         // input 최소 가격
         client.connect({}, function () {
+            client.subscribe('/subscribe/chat/room/first' + prodNo, function (chat) {
+                var content = JSON.parse(chat.body);
+                chatBox.append('<li class="text-black active-color-purple text-right">' + content.mbrId + '님이 입장하였습니다.');
+            });
             $('#priceInput').change(function () {
                 // 시작시
                 if ($('#startPrice').text() === $('#detailPrice').text()) {
@@ -627,13 +632,16 @@
                     }
                 }
             });
+            getSendSubscribe();
 
+        });
 
+        function getSendSubscribe(){
             // 3. send(path, header, message)로 메시지를 보낼 수 있다.-->
             client.send('/publish/chat/join', {}, JSON.stringify({prodNo: prodNo, mbrId: mbrId}));
             // 4. subscribe(path, callback)로 메시지를 받을 수 있다. callback 첫번째 파라미터의 body로 메시지의 내용이 들어온다.-->
-            client.subscribe('/subscribe/chat/room/' + prodNo, function (chat) {
 
+            client.subscribe('/subscribe/chat/room/' + prodNo, function (chat) {
 
                 var content = JSON.parse(chat.body);
                 // chatBox.append('<li class="text-black active-color-purple text-right">' + content.mbrId + '님이 입장하였습니다.');
@@ -651,10 +659,10 @@
                     count++;
                     $('#auctionCount').text(count);
                 }
-                $('.chat_box').scrollTop($('.chat_box')[0].scrollHeight);
+                $('.auction_box').scrollTop($('.auction_box')[0].scrollHeight);
 
             });
-        });
+        }
 
 
         sendBtn.click(function () {

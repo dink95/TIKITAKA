@@ -18,9 +18,9 @@ public class StompController {
     }
 
     @MessageMapping("/chat/join")
-    public void join(AuctionDTO auctionDTO) {
+    public void join(AuctionDTO auctionDTO ) {
         auctionDTO.setMbrId(auctionDTO.getMbrId());
-        template.convertAndSend("/subscribe/chat/room/" + auctionDTO.getProdNo(), auctionDTO);
+        template.convertAndSend("/subscribe/chat/room/first" + auctionDTO.getProdNo(), auctionDTO);
     }
 
     @MessageMapping("/chat/message")
