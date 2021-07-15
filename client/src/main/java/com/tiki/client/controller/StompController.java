@@ -2,6 +2,7 @@ package com.tiki.client.controller;
 
 
 import com.tiki.client.domain.AuctionDTO;
+import com.tiki.client.domain.ChatDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -18,13 +19,13 @@ public class StompController {
     }
 
     @MessageMapping("/chat/join")
-    public void join(AuctionDTO auctionDTO) {
-        auctionDTO.setMbrId(auctionDTO.getMbrId());
-        template.convertAndSend("/subscribe/chat/room/" + auctionDTO.getProdNo(), auctionDTO);
+    public void join(ChatDTO chatDTO) {
+        chatDTO.setMbrId(chatDTO.getMbrId());
+        template.convertAndSend("/subscribe/chat/room/" + chatDTO.getProdNo(), chatDTO);
     }
 
     @MessageMapping("/chat/message")
-    public void message(AuctionDTO auctionDTO) {
-        template.convertAndSend("/subscribe/chat/room/" + auctionDTO.getProdNo(), auctionDTO);
+    public void message(ChatDTO chatDTO) {
+        template.convertAndSend("/subscribe/chat/room/" + chatDTO.getProdNo(), chatDTO);
     }
 }

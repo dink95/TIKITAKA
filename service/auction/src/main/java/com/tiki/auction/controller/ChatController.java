@@ -2,23 +2,32 @@ package com.tiki.auction.controller;
 
 import com.tiki.auction.domain.Chat;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-
-import java.util.Date;
 
 @Controller
 @Slf4j
 public class ChatController {
 
-    // 채팅 메세지 전달
-    @MessageMapping("/chat/{room}")//앞에 /app이 붙으면 자동으로 연결
-    @SendTo("/topic/chat/{room}")
-    public Chat broadcasting(Chat chat) {
+    private final SimpMessagingTemplate template;
 
-        chat.setSendDate(new Date());
-        return chat;
+    @Autowired
+    public ChatController(SimpMessagingTemplate template) {
+        this.template = template;
+    }
+
+    @MessageMapping("/chat/join")
+    public void join(Chat message) {
+        message.setMessage(message.getWriter() + "님이 경매에 참여합니다.");
+        template.convertAndSend("/subscribe/chat/room/" + message.getChatRoomId(), message);
+    }
+
+    @MessageMapping("/chat/message")
+    public void message(Chat message) {
+        template.convertAndSend("/subscribe/chat/room/" + message.getChatRoomId(), message);
     }
 
 }

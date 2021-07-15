@@ -13,8 +13,8 @@ import java.util.Date;
 //@AllArgsConstructor
 @ToString
 public class Chat{
-	private String sender;
-	private String content;
-	private Date sendDate;
+	private String chatRoomId;
+	private String writer;
+	private String message;
 
 }

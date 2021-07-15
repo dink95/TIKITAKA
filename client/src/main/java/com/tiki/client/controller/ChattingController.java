@@ -6,6 +6,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ChattingController {
+
+
     @GetMapping(value = "/member/chatting/chat") /*채팅방 페이지*/
     public ModelAndView chat() {
         ModelAndView view = new ModelAndView();
