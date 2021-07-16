@@ -167,34 +167,36 @@
 
       $.each(data.dataList, function (index, obj) {
         $('#objCatNo').val(obj.catNo); //카테고리 상품 디테일 -> 카테고리 번호 저장
-        //매번 컨텐츠가 달라야하니 초기화
-        contents = '';
-        var wday = timeForToday(obj.wday);
-        //이미지경로를 미리 만들어놓는다.
-        imgPath = '/istatic/images/' + obj.prodNo + '/1.jpg';
+        if(obj.catNo!=99) {
+          //매번 컨텐츠가 달라야하니 초기화
+          contents = '';
+          var wday = timeForToday(obj.wday);
+          //이미지경로를 미리 만들어놓는다.
+          imgPath = '/istatic/images/' + obj.prodNo + '/1.jpg';
 
-        //제품 html
-        contents += '<div class="gridItem">';
-        contents += '    <div class="item">';
-        contents += '       <div class="block-4 text-center">';
-        contents += '          <a href="#" onclick="goDetail(' + obj.prodNo + ')">';
-        contents += '               <figure class="block-4-image" >';
-        contents += '                    <img src="' + imgPath + '"  alt="Image placeholder"  class="img-fluid">';
-        contents += '                </figure>';
-        contents += '                <div class="block-4-text">';
-        contents += '                    <h3 class="ItemName"><a href="#"  onclick="goDetail(' + obj.prodNo + ')">' + textLengthOverCut(obj.prodNm, 11, '...') + ' </a></h3>';
-        contents += '                    <div class=priceContent>';
-        contents += '                    <p class="text-primary font-weight-bold">' + obj.prodPrc + '원</p>';
-        contents += '                    <span class="font-weight-normal">' + wday + '</span>';
-        contents += '                    </div>';
-        contents += '                </div>';
-        contents += '            </a>';
-        contents += '        </div>';
-        contents += '    </div>';
-        contents += '</div>';
+          //제품 html
+          contents += '<div class="gridItem">';
+          contents += '    <div class="item">';
+          contents += '       <div class="block-4 text-center">';
+          contents += '          <a href="#" onclick="goDetail(' + obj.prodNo + ')">';
+          contents += '               <figure class="block-4-image" >';
+          contents += '                    <img src="' + imgPath + '"  alt="Image placeholder"  class="img-fluid">';
+          contents += '                </figure>';
+          contents += '                <div class="block-4-text">';
+          contents += '                    <h3 class="ItemName"><a href="#"  onclick="goDetail(' + obj.prodNo + ')">' + textLengthOverCut(obj.prodNm, 11, '...') + ' </a></h3>';
+          contents += '                    <div class=priceContent>';
+          contents += '                    <p class="text-primary font-weight-bold">' + obj.prodPrc + '원</p>';
+          contents += '                    <span class="font-weight-normal">' + wday + '</span>';
+          contents += '                    </div>';
+          contents += '                </div>';
+          contents += '            </a>';
+          contents += '        </div>';
+          contents += '    </div>';
+          contents += '</div>';
 
-        //그리드에 삽입
-        container.append(contents);
+          //그리드에 삽입
+          container.append(contents);
+        }
       })
     }
   }

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <title>TIKITAKA &ndash; 경매등록 </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="../fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/magnific-popup.css">
+    <link rel="stylesheet" href="../css/jquery-ui.css">
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="../css/aos.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/icon.css">
+</head>
+
+<body>
+
+<div id="modal_overlay">
+    <div id="modal_main">
+        <h1 id="modal_content"></h1>
+        <a id="modal_button" class="btn btn-primary btn-lg" style="color:white;"></a>
+    </div>
+</div>
+
+<div class="site-wrap">
+    <header class="site-navbar" role="banner">
+
+        <!--replace 헤더-->
+        <div class="site-navbar-top" th:replace="common::header(auction_list)">
+        </div>
+        <!------------->
+        <!--replace-login-------------------------------->
+
+        <nav class="site-navigation text-right text-md-center" role="navigation"
+             th:replace="common::menu(auction_list)">
+        </nav>
+        <!----------------------------------------------------------->
+    </header>
+
+    <!--모바일 검색창-->
+    <div th:replace="common::mobile_search(auction_list)"></div>
+
+
+    <div class="site-section "><!--margin class-->
+        <div class="container">
+
+            <form action="/product/create.do" method="post" enctype="multipart/form-data"
+                  onsubmit="return Validation()">
+                <input type="hidden" id="p_id" name="selId" th:value="${session.mbrId}">
+                <div class="text-black font-25 font-weight-normal bb-1-p padding-all-30 row"> 상품등록</div>
+
+                <input class="form-control-file" onchange="chk_file_type(this)" type="file" name="file" id="file"
+                       accept="image/jpeg,image/gif,image/png" multiple="multiple"/>
+                <div class=" row align-items-sm-start justify-content-center" >
+                    <div class=" col-12 col-md-2 order-1 order-md-1 text-left text-lg-center" style="text-align: left">
+                        <label for="file" class="text-black">사진</label>
+                        <span class="text-danger">*</span></div>
+                    <div class="imgs_wrap NavItem col-12 col-md-7 order-2 order-md-2  text-left text-lg-left fileGridContainer " id="imgDiv">
+                        <span class ="valid text-black font-10 margin-left-right-15" id="valid_p_file" ></span>
+                        <div class="photoContainer margin-left-right-15" onclick="upload(); onKeyUp('#valid_p_file')"><i class="fas fa-camera fa-2x"></i>
+                            <span id="fileCount">(0/5)</span>
+                        </div>
+
+
+                    </div>
+
+                    <input type="hidden" name="imgCount">
+                    <div style="display:flex; justify-content: flex-end;" class="imgs_wrap  col-12 col-md-1 order-2 order-md-2  text-left text-lg-left fileGridContainer">
+                        <div class="pre_btn cursor-pointer" onclick="removeImg()">
+                            <img class="crossCircleIcon" src="/icons/crossCircleIcon.svg"/> </div>
+                    </div>
+
+                </div>
+
+                <div class="row align-items-sm-start justify-content-center">
+                    <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
+                        <label for="p_title" class="text-black">제목
+                            <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="col-12 col-md-8 order-2 order-md-2  text-left text-lg-left">
+                        <input type="text" size="100" class="form-control" id="p_title" name="prodNm" maxlength="60"
+                               onkeyup="onKeyUp('#valid_p_title');">
+                        <span class="valid text-black font-10" id="valid_p_title"></span>
+                    </div>
+                    <div class="col-12 col-md-10 order-2 order-md-2 text-right text-lg-right">
+                        <span id="title_count"></span>
+                    </div>
+                </div>
+
+                <input type="hidden" id="selectCat" name="catNo" value="99">
+
+
+                <div class="row align-items-sm-start justify-content-center text-black">
+                    <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
+                        <label for="p_price" class="text-black">경매시작가
+                            <span class="text-danger">*</span></label></div>
+                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-left">
+                        <input type="number" class="form-control" id="p_price" name="prodPrc"
+                               onkeyup="onKeyUp('#valid_p_price');">
+                        <span class="valid text-black font-10" id="valid_p_price" ></span>
+                    </div>
+                    <div class="col-6 col-md-4 order-2 order-md-2  text-left text-lg-left">
+                    </div>
+                </div>
+                        <input class="margin-right-5" type="hidden" name="way" value="경매">
+
+                <div class="row align-items-sm-start justify-content-center">
+                    <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
+                        <label class="text-black">상세정보
+                            <span class="text-danger">*</span></label></div>
+                    <div class="col-12 col-md-8 order-2 order-md-2  text-left text-lg-left">
+                    <textarea class="form-control" id="p_content" name="content" cols="100" rows="10"
+                              style="width:100%;" onkeyup="onKeyUp('#valid_p_content');"></textarea>
+                        <span class="valid text-black font-10" id="valid_p_content" ></span>
+                    </div>
+                </div>
+
+                <div class="row align-items-sm-start justify-content-center">
+                    <div class="col-12 col-md-2 order-1 order-md-1 text-left text-lg-center">
+                        <label for="p_code" class="text-black">상품코드</label>
+                        <span class="text-danger">*</span></div>
+                    <div class="col-12 col-md-8 order-2 order-md-2  text-left text-lg-left">
+                        <input type="text" class="form-control" id="p_code" name="prodCo"
+                               placeholder="상품코드가 필요한 물품의 경우 입력해주세요."></div>
+                </div>
+
+
+                <span id="photoValue"></span>
+                <div class="NavContainer BtnNavContainer">
+                    <div class="ButtonNav">
+                        <input type="submit" class="border-0-btn btn btn-primary" value="등록하기">
+                        <input onclick="historyBack()" class="border-0-btn btn btn-primary" value="취소하기">
+                    </div>
+                </div>
+                <div class="NavContainer PreBtnContainer">
+                    <a class="cursor-pointer" onclick="goPre()">주의사항</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<a id="arrow_up" class="scroll_up" onclick="scroll_up()"> </a>
+
+</div>
+
+
+<style>
+
+
+    .conditionTitle > span {
+        font-size: 14px;
+        margin-right: 10px;
+
+    }
+
+
+    .conditionMenu > span {
+        display: block;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .conditionMenu > span:hover {
+        color: #5f0080;
+    }
+
+
+    #file {
+        display: none;
+    }
+
+    .creat_img {
+        width: 150px;
+        height: 150px;
+
+    }
+
+    .imgs_wrap {
+        padding: 0px;
+    }
+
+    .fileGridContainer {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, auto));
+        row-gap: 10px;
+    }
+
+    .align-items-sm-start {
+        padding: 30px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .valid {
+        color: #ff0000;
+        font-size: 10px;
+    }
+
+
+</style>
+
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script src="../js/jquery-ui.js"></script>
+<script src="../js/popper.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/owl.carousel.min.js"></script>
+<script src="../js/jquery.magnific-popup.min.js"></script>
+<script src="../js/aos.js"></script>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+<script src="../js/main.js"></script>
+<script>
+
+
+    //모든 카테고리 리스트 조회
+    function getAllCategory(props) {
+        $.ajax({
+            url: '/category/list',
+            data: null,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            console.log("@@data.allcatList", data.allcatList);
+            if (props) {
+                drawDetailList(data, props);
+            } else {
+                drawCatList(data);
+            }
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+
+        });
+    }
+
+    //메인 카테고리 토글 리스트 그리기
+    function drawCatList(data) {
+        var mainCategoryConditionNav = $('.mainCategoryConditionMenu');
+        if (typeof data.allcatList !== 'undefined' && data.allcatList.length > 0) {
+            mainCategoryConditionNav.empty();
+            var contents2 = '';
+            var count = 0;
+            $.each(data.allcatList, function (index, obj) {
+                if (obj.catNo % 10 == 0) {
+                    contents2 = '';
+                    contents2 += '<span id="' + obj.catNo + '"  class="text-black font-weight-normal" onclick="goSelectMainQuery(' + obj.catNo + ')">' + obj.catNm + '</span>'
+                    mainCategoryConditionNav.append(contents2);
+                    count += 1;
+                }
+            })
+        }
+    }
+
+    //메인 카테고리 반응
+    function goSelectMainQuery(props) {
+        $('#selectCat').val('');
+        $('#valid_p_category').text('');
+        $('.detailCategoryTextNav').css('display','none');
+        var fas = $('.mainCategoryConditionTitle').children('img');
+        fas.attr("src","/icons/arrowDown.svg");
+        $(' .detailCategoryConditionNav').css('display','block');
+        $(' .detailCategoryConditionTitle').children('span').text('세부 카테고리');
+        var conditionMenu = $('.mainCategoryConditionMenu');
+        var conditionMenuText = $('#' +props).text();
+        var conditionTitle = $('.mainCategoryConditionTitle').children('span');
+        conditionTitle.text(conditionMenuText);
+        conditionMenu.css('display', 'none');
+        conditionTitle.css('color', '#000');
+        $('#mainSelectCat').val(props);
+        getAllCategory(props);
+        $('.categoryNav').css('display','block');
+
+
+    }
+
+
+    //세부 카테고리 반응
+    function goSelectDetailQuery(props) {
+        $('#valid_p_category').text('');
+        var fas = $('.detailCategoryConditionTitle').children('img');
+        fas.attr("src","/icons/arrowDown.svg");
+        $(' .orderConditionTitle').children('span').text('최근 날짜순');
+        var conditionMenu = $('.detailCategoryConditionMenu');
+        var conditionMenuText = $('#' +props).text();
+        var conditionTitle = $('.detailCategoryConditionTitle').children('span');
+        conditionTitle.text(conditionMenuText);
+        conditionMenu.css('display', 'none');
+        conditionTitle.css('color', '#000');
+        $('#selectCat').val(props);
+    }
+
+    //세부 카테고리 토글 리스트 그리기
+    function drawDetailList(data, props) {
+        var detailContainer2 = $('.detailCategoryConditionMenu');
+        if (typeof data.allcatList !== 'undefined' && data.allcatList.length > 0) {
+            detailContainer2.empty();
+            var contents2 = '';
+            $.each(data.allcatList, function (index, obj) {
+                if(obj.catNo !=60) {
+                    if (obj.catNo > props && obj.catNo < props + 10) {
+                        contents2 = '';
+                        contents2 += '<span id="' + obj.catNo + '"  class="text-black font-weight-normal" onclick="goSelectDetailQuery(' + obj.catNo + ')">' + obj.catNm + '</span>'
+                        //그리드에 삽입
+                        detailContainer2.append(contents2);
+                    }
+                }else{
+                    contents2 = '';
+                    contents2 += '<span id="' + obj.catNo + '"  class="text-black font-weight-normal" onclick="goSelectDetailQuery(' + obj.catNo + ')">' + obj.catNm + '</span>'
+                    //그리드에 삽입
+                    detailContainer2.append(contents2);
+                }
+            })
+        }
+    }
+
+
+
+    function Validation() {
+        var result = true;
+
+        if ($('#selectCat').val() == '') {
+            $('#valid_p_category').text("*카테고리는 필수 선택 사항입니다.");
+            result = false;
+        }
+
+        if ($('#p_title').val() == '') {
+            $('#valid_p_title').text("*제목은 필수 입력 사항입니다.");
+            result = false;
+        }
+        if ($('#p_content').val() == '') {
+            $('#valid_p_content').text("*내용은 필수 입력 사항입니다.");
+            result = false;
+        }
+        if ($('#p_price').val() == '') {
+            $('#valid_p_price').text("*가격은 필수 입력 사항입니다.");
+            result = false;
+        }
+        if ($('input[name=imgCount]').val() == 0) {
+            $('#valid_p_file').text("*사진을 등록해주세요.");
+            result = false;
+        }
+        return result;
+    }
+
+    $(function () {
+        $('#p_title').keyup(function (e) {
+            var p_title = $(this).val();
+            $('#title_count').html(p_title.length + '/60');
+        });
+        $('#p_title').keyup();
+    });
+
+    function goPre() {
+        popup('주의사항', '주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.' +
+            '주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.' +
+            '주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.주의사항입니다.');
+    }
+
+    function upload() {
+        $('#file').click();
+    }
+
+    /*스크롤 상단 고정*/
+    $(function () {
+        $("html, body").scrollTop(0);
+    });
+
+    /*키 입력시 valid 메세지 삭제*/
+    function onKeyUp(props) {
+        $(props).text('');
+    }
+
+    var fileCount = 0;
+
+    function chk_file_type(obj) {
+
+        var count = 0;
+        for (var i = 0; i < obj.files.length; i++) {
+
+            var data = obj.files[i];
+
+            var file_kind = data.name.lastIndexOf('.');
+            var file_name = data.name.substring(file_kind + 1, obj.length);
+            var file_type = file_name.toLowerCase();
+
+            var check_file_type = ['jpg', 'gif', 'png', 'jpeg'];
+
+            if (check_file_type.indexOf(file_type) == -1) {
+                popup('알림메세지', '이미지 파일만 선택할 수 있습니다.');
+                fileClear(obj);
+                break;
+            } else if (obj.files.length > 5) {
+                popup('알림메세지', '파일은 최대 5개까지 등록할 수 있습니다.');
+                fileClear(obj);
+                break;
+
+            } else {
+                count++;
+                readImage(count, data);
+            }
+
+        }
+        ;
+        fileCount += count;
+
+        $('#fileCount').text('(' + fileCount + '/5)');
+        $('input[name=imgCount]').val(fileCount);
+    }
+
+    function fileClear(obj) {
+        var agent = navigator.userAgent.toLowerCase()
+
+        if ((navigator.appName == 'Netscape'
+            && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1)) {
+            $(obj).replaceWith($(data).clone(true));
+        } else {
+            $(obj).val("");
+
+        }
+    }
+
+    function removeImg() {
+        fileCount = 0;
+        $('#fileCount').text('(0/5)')
+        $('img').remove();
+        fileClear('#file');
+        $('input[name=imgCount]').val(0);
+
+    }
+
+    function readImage(count, file) {
+        var reader = new FileReader();
+
+        var imgDiv = $('#imgDiv')
+        reader.onload = function (e) {
+            var imgTag = $('<img class="creat_img margin-left-right-15" />');
+
+            imgTag.attr('id', 'img_file' + count);
+            imgTag.attr("src", e.target.result);
+            imgDiv.append(imgTag);
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function getMbrInfo() {
+        param = {
+            userId: $('#p_id').val(),
+        }
+        $.ajax({
+            url: '/member/detail',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            if (!data.memberDetail.mbrRole) {
+                popup('알림메세지', '상품을 등록하시려면 이메일인증을 완료해주세요!', 'back');
+            }
+        })
+    }
+
+    $(document).ready(function () {
+        getMbrInfo();
+        getAllCategory();
+    });
+
+
+    $('#loading').css('display','block');
+    $(window).on('load', function(){ $('#loading').css('display','none')});
+
+</script>
+
+</body>
+</html>

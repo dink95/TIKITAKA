@@ -36,8 +36,8 @@ public class ProductController {
         try {
             result = productService.createProduct(productDTO);
             List<MultipartFile> fileList = multi.getFiles("file");
-           //String path = "c:/tmp/"+Integer.toString(result)+"/";
-            String path = "/Users/gimmugyeong/tmp/" +Integer.toString(result)+"/";
+           String path = "c:/tmp/"+Integer.toString(result)+"/";
+//            String path = "/Users/gimmugyeong/tmp/" +Integer.toString(result)+"/";
             System.out.println(path);
             File dir = new File(path);
             if (!dir.isDirectory()) {
@@ -55,8 +55,9 @@ public class ProductController {
             }
             if (result > 0) {
                 view.addObject("resultCode", 200);
+                view.addObject("catNo", productDTO.getCatNo());
             }else {
-                view.addObject("resultCode", 500);
+                view.addObject("resultCode", 400);
             }
         } catch (Exception e) {
             view.addObject("resultCode", 500);

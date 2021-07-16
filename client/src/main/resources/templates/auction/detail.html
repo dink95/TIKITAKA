@@ -360,6 +360,31 @@
 <script>
     $('#loading').css('display', 'block');
 
+
+    $(document).ready(function () {
+        getProductDetail();
+    });
+
+    /*옥션 insert*/
+    function insertAuction(startPrice) {
+        var param = {
+            startingBid: startPrice, //시작가
+            prodNo:searchParam('prodNo'), //상품번호
+        }
+        $.ajax({
+            url: '/auction/create.do',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            alert(data.resultCode);
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+            alert('아작스 실패');
+        });
+
+    }
+
     /*멤버정보*/
     function getMemberDetail() {
         var param = {
@@ -395,6 +420,8 @@
         }).done(function (data) {
             drawPrdList(data);
             console.log("data.dataDetail", data.dataDetail);
+            $('#startPrice').text(data.dataDetail.prodPrc);
+            insertAuction(data.dataDetail.prodPrc);
             if (data.dataDetail.prodFinish) {
                 $('#prodFinish').css('display', 'none');
                 $('#updateProd').attr('class', 'btn_finish ');
@@ -521,10 +548,6 @@
     }
 
 
-    $(document).ready(function () {
-        getProductDetail();
-    });
-
     function goDetailPhoto(i) {
         var imgPath = $(i).attr("src");
         $('#img_modal').css('display', 'flex');
@@ -537,22 +560,6 @@
     }
 
 
-    //점수 업데이트
-    function updatePoint(id) {
-        param = {
-            userId: id,
-        }
-        $.ajax({
-            url: '/member/update/point',
-            data: param,
-            type: 'post',
-            dataType: 'json'
-        }).done(function (data) {
-            console.log(data.resultMsg);
-        }).fail(function (data, textStatus, errorThrown) {
-            console.log(textStatus);
-        });
-    }
 
     $('#loading').css('display', 'block');
     $(window).on('load', function () {

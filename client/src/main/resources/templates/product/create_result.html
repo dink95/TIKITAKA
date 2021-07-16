@@ -33,7 +33,8 @@
     </header>
 </div>
 <input type="hidden" id="resultCode" th:value="${resultCode}">
-<input type="hidden" id="prodNo" th:value="${prodNo}">
+<input type="hidden" id="catNo" th:value="${catNo}">
+
 </body>
 <script src="../js/jquery-3.3.1.min.js"></script>
 <script src="../js/jquery-ui.js"></script>
@@ -48,9 +49,9 @@
 
     function  showResult() {
         var resultCode = $('#resultCode').val();
-        var prodNo = $('#prodNo').val();
+
         if(resultCode === 200 || resultCode === '200' ) {
-            popup('알림메세지','상품이 등록되었습니다.','/');
+                popup('알림메세지', '상품이 등록되었습니다.', '/');
         }
         else if(resultCode === 201 || resultCode === '201' ) {
             popup('알림메세지','상품이 수정되었습니다.','/member/myinfo');
@@ -59,9 +60,9 @@
             popup('알림메세지','신고내용이 접수되었습니다.',"/product/detail?prodNo=" + prodNo);
 
         }
-        else  {
-            popup('알림메세지','실패하였습니다. 관리자에게 문의하세요.');
-            history.back();
+        else {
+            popup('알림메세지','실패하였습니다. 관리자에게 문의하세요.','/');
+
         }
 
     }
