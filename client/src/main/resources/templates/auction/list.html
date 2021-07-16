@@ -1,157 +1,251 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>TIKITAKA &ndash; 상품등록 </title>
+    <title>TIKITAKA &ndash; 경매상품 </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
-    <link rel="stylesheet" href="../fonts/icomoon/style.css">
-
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/magnific-popup.css">
-    <link rel="stylesheet" href="../css/jquery-ui.css">
-    <link rel="stylesheet" href="../css/owl.carousel.min.css">
-    <link rel="stylesheet" href="../css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="../css/aos.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/icon.css">
-
+    <link rel="stylesheet" href="/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/jquery-ui.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/aos.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/icon.css">
 </head>
 
+
+
 <body>
-
-
 <div class="site-wrap">
     <header class="site-navbar" role="banner">
-        <!--replace 헤더-->
-        <div class="site-navbar-top" th:replace="common::header(product_list)">
-        </div>
-        <!------------->
-        <!--replace-login-------------------------------->
-
+        <div class="site-navbar-top" th:replace="common::header(auction_list)"></div>
+        <!--replace menu-home------------------------------------------------>
         <nav class="site-navigation text-right text-md-center" role="navigation"
-             th:replace="common::menu(product_list)">
+             th:replace="common::menu(auction_list)">
         </nav>
-        <!----------------------------------------------------------->
+        <!--<div th:replace="common::category(home)"></div>-->
+        <!-------------------------------------------------------------------->
     </header>
 
     <!--모바일 검색창-->
-    <div th:replace="common::mobile_search(product_list)"></div>
+    <div th:replace="common::mobile_search(auction_list)"></div>
 
-    <!------------------------->
-    <div class="site-section block-3 site-blocks-2 bg-light">
+
+    <div class="site-section block-3 site-blocks-2 bg-light" style="opacity: .99;">
+
+        <!--상품사진-->
         <div class="container">
+            <div class="prodContainer">
+                <div class="prod" onclick="finishCheck(0)">
+                    경매상품
+                </div>
+                <div>
+                    <a href="/auction/create">경매상품 등록하기</a>
+                </div>
+            </div>
 
-            <input type="text" id="roomName">
-            <button class="cb"><a>방입장</a></button>
+            <div class="gridContainer">
+
+            </div>
         </div>
-
     </div>
-</div>
-</div>
 
+    <a id="arrow_up" class="scroll_up" onclick="scroll_up()"></a>
+</div>
 <!-- 모바일 메뉴-->
-<div th:replace="common::mobile(product_list)"></div>
+<div th:replace="common::mobile(home)"></div>
 
 <style>
 
-
-    .conditionMenu > span {
-        display: block;
-        padding: 10px 10px 10px 0;
-        font-size: 13px;
+    /*이미지리스트 css*/
+    .block-4-image {
+        margin: 0;
     }
-
-    .conditionMenu > span:hover {
-        color: #5f0080;
-    }
-
-
-
-    .detailCategoryTextNav > span {
-        display: inline-block;
-        padding: 10px 10px 5px 10px;
-        text-align: center;
-        border-bottom: 1px solid #e5e3e3;
-        cursor: pointer;
-        font-size: 12px;
-        font-weight: normal;
-        width: 80px;
-
-    }
-
-    .detailCategoryTextNav > span:nth-child(1) {
-        color: #5f0080;
-    }
-
-
-
-
-    .categoryTextNav > span {
-        display: inline-block;
+    .block-4-text {
         font-size: 16px;
-        padding: 10px 10px;
         color: #000;
-        font-weight: normal;
     }
-
-
-    .mainCategoryTextNav > span {
-        display: inline-block;
-        padding: 7px 10px 5px 5px;
-        text-align: center;
-        cursor: pointer;
-        color: #5f0080;
-        font-size: 15px;
-        font-weight: normal;
+    .img-fluid {
+        width: 100%;
+        height: 193.53px;
     }
-
-
+    .block-4-text {
+        padding: 10px 0;
+    }
+    .ItemName {
+        margin: 0 20px 20px 20px;
+        display: flex;
+        justify-content: flex-start;
+    }
     .ItemName > a {
         text-align: left;
     }
-
     p {
         margin: 0;
+        color: #000;
     }
-
-
-
-    #innerSearchForm > button {
-
-        margin: 1px 0px 1px 15px;
+    span {
+        font-size: 14px;
     }
-
+    .priceContent {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 20px 10px 0 20px;
+    }
+    .prodContainer{
+        display: flex;
+        justify-content: flex-start;
+        border-bottom: 1px solid #ddd;
+        margin-bottom:30px;
+        padding:0 30px;
+    }
+    .prod {
+        color: #000;
+        margin-bottom: 10px;
+        width: 200px;
+        text-align: center;
+        padding: 10px 0;
+        font-weight: normal;
+        cursor: pointer;
+        font-size: 25px;
+        text-align: left;
+    }
     /*****************/
+
 </style>
-<script src="../js/jquery-3.3.1.min.js"></script>
-<script src="../js/jquery-ui.js"></script>
-<script src="../js/popper.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
-<script src="../js/owl.carousel.min.js"></script>
-<script src="../js/jquery.magnific-popup.min.js"></script>
-<script src="../js/aos.js"></script>
-<script src="../js/main.js"></script>
+
+
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/jquery-ui.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/aos.js"></script>
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+<script src="/js/main.js"></script>
 <script>
+    if ($('#modelCode').val() == 400) {
+        alert($('#modelMsg').val());
+    }
 
+    function getProductList() {
 
-    $('.cb').click(function(){
-        var roomName = $('#roomName').val()
-        if(roomName == '') {
-            alert('방이름 입력하세요');
-        }else {
-            alert(roomName + '방에 입장');
-            location.href = '/auction/detail?roomName='+roomName;
+        var param = {
+            catNo:'99'
         }
+        $.ajax({
+            url: '/product/list.category',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            drawPrdList(data);
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+
+    }
+
+
+    function drawPrdList(data) {
+        console.log("@@product data", data);
+
+        if (typeof data.dataQueryList !== 'undefined' && data.dataQueryList.length > 0) {
+            var container = $('.gridContainer');
+            container.empty();
+            var contents = '';
+            var imgPath = '';
+
+            $.each(data.dataQueryList, function (index, obj) {
+                $('#objCatNo').val(obj.catNo); //카테고리 상품 디테일 -> 카테고리 번호 저장
+                //매번 컨텐츠가 달라야하니 초기화
+                contents = '';
+                var wday = timeForToday(obj.wday);
+                //이미지경로를 미리 만들어놓는다.
+                imgPath = '/istatic/images/' + obj.prodNo + '/1.jpg';
+
+                //제품 html
+                contents += '<div class="gridItem">';
+                contents += '    <div class="item">';
+                contents += '       <div class="block-4 text-center">';
+                contents += '          <a href="#" onclick="goDetail(' + obj.prodNo + ')">';
+                contents += '               <figure class="block-4-image" >';
+                contents += '                    <img src="' + imgPath + '"  alt="Image placeholder"  class="img-fluid">';
+                contents += '                </figure>';
+                contents += '                <div class="block-4-text">';
+                contents += '                    <h3 class="ItemName"><a href="#"  onclick="goDetail(' + obj.prodNo + ')">' + textLengthOverCut(obj.prodNm, 11, '...') + ' </a></h3>';
+                contents += '                    <div class=priceContent>';
+                contents += '                    <p class="text-primary font-weight-bold">' + obj.prodPrc + '원</p>';
+                contents += '                    <span class="font-weight-normal">' + wday + '</span>';
+                contents += '                    </div>';
+                contents += '                </div>';
+                contents += '            </a>';
+                contents += '        </div>';
+                contents += '    </div>';
+                contents += '</div>';
+
+                //그리드에 삽입
+                container.append(contents);
+            })
+        }
+    }
+
+    //상세페이지
+    function goDetail(prodNo) {
+        location.href = '/auction/detail?prodNo=' + prodNo;
+    }
+
+    $(document).ready(function () {
+        getProductList();
     });
 
+    $('#loading').css('display','block');
+    $(window).on('load', function(){ $('#loading').css('display','none')});
 
 
 </script>
 
-
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
