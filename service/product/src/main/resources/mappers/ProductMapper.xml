@@ -17,6 +17,7 @@
         , content
         , img_count
        , prod_finish
+        , room_count
     </sql>
 
     <insert id="insertProduct" parameterType="ProductDTO">
@@ -63,6 +64,15 @@
             prod_no = #{prodNo}
     </update>
 
+    <select id="selectRoomCount" parameterType="int" resultType="int">
+        SELECT
+            room_count
+        FROM
+            prod
+        WHERE
+            prod_no = #{prodNo}
+    </select>
+
     <update id="updateProduct" parameterType="ProductDTO">
         UPDATE
             prod
@@ -79,6 +89,15 @@
             prod_no = #{prodNo}
         AND
             sel_id = #{selId}
+    </update>
+
+    <update id="updateRoomCount" parameterType="int">
+        UPDATE
+            prod
+        SET
+            room_count = room_count + 1
+        WHERE
+            prod_no = #{prodNo}
     </update>
 
     <update id="updateProductFinish" parameterType="ProductDTO">

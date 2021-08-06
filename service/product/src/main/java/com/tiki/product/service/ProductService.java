@@ -14,6 +14,10 @@ public interface ProductService {
 
     public int updateProductFinish(ProductDTO params);
 
+    public int updateRoomCount(int prodNo);
+
+    public int selectRoomCount(int prodNo);
+
     public ProductDTO selectProductDetail(int prodNo);
 
     public List<ProductDTO> getProductList();

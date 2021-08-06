@@ -256,7 +256,7 @@ public class ProductController {
 
         ProductDTO productDTO = new ProductDTO(insertProdDTO.getProdNm(), insertProdDTO.getProdPrc(),
                 insertProdDTO.getCatNo(),insertProdDTO.getSelId(),insertProdDTO.getWay(),insertProdDTO.getNego()
-        ,insertProdDTO.getProdCo(), insertProdDTO.getContent(), insertProdDTO.getImgCount());
+        ,insertProdDTO.getProdCo(), insertProdDTO.getContent(), insertProdDTO.getImgCount(), insertProdDTO.getRoomCount());
 
         productService.insertProduct(productDTO);
 
