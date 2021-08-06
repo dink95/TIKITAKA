@@ -84,3 +84,17 @@ foreign key(PROD_NO) references PROD(PROD_NO) on update cascade on delete CASCAD
 foreign key(MBR_ID) references MBR(MBR_ID) on update cascade on delete CASCADE
 ); 
 
+CREATE TABLE CHAT(
+CHAT_IDX INT primary KEY auto_increment,
+ROOM_NO INT,
+PROD_NO INT,
+SEND_ID varchar(20),
+RECIPIENT_ID varchar(20),
+CONTENT TEXT,
+SENDTIME DATETIME default CURRENT_TIMESTAMP,
+foreign key(PROD_NO) references PROD(PROD_NO) on update cascade on delete CASCADE,
+foreign key(SEND_ID) references MBR(MBR_ID) on update cascade on delete CASCADE,
+foreign key(RECIPIENT_ID) references MBR(MBR_ID) on update cascade on delete CASCADE
+);
+
+alter table prod add ROOM_COUNT int default 0;

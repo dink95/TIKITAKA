@@ -12,6 +12,10 @@ public interface ProductMapper {
 
     public int updateProduct(ProductDTO params);
 
+    public int updateRoomCount(int prodNo);
+
+    public int selectRoomCount(int prodNo);
+
     public int updateProductFinish(ProductDTO params);
 
     public int deleteProduct(ProductDTO params);

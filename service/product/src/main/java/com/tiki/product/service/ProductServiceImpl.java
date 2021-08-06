@@ -29,6 +29,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public int updateRoomCount(int prodNo) {
+
+        return productMapper.updateRoomCount(prodNo);
+    }
+
+    @Override
+    public int selectRoomCount(int prodNo) {
+        return productMapper.selectRoomCount(prodNo);
+    }
+
+    @Override
     public int updateProductFinish(ProductDTO params) {
 
         return productMapper.updateProductFinish(params);
