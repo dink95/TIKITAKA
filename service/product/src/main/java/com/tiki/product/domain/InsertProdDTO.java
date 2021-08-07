@@ -37,5 +37,5 @@ public class InsertProdDTO {
     private int imgCount;
 
     /** 채팅방 개수 **/
-    private int roomCount;
+    private Integer roomCount;
 }

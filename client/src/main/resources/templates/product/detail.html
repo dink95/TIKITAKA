@@ -83,16 +83,16 @@
                     </div>
                     <div class="aic3 ButtonNav">
                         <input  class=" btn btn-primary" id="tradeProd"
-                               value="거래하기" onclick="">
+                                value="거래하기" onclick="goChat()">
                         <input class="  btn btn-primary" id="updateProd"
                                value="수정하기" onclick="goRegist()">
                         <input  class=" btn btn-danger"
-                               value="신고하기" onclick="goReport()">
+                                value="신고하기" onclick="goReport()">
                         <input  class=" btn btn-danger" id="deleteProd"
-                               value="삭제하기" onclick="removeCheck()">
+                                value="삭제하기" onclick="removeCheck()">
                         <input type="hidden">
                         <input  class="btn btn-dark" id="prodFinish"
-                               value="거래완료로 변경" onclick="goProdFinish()">
+                                value="거래완료로 변경" onclick="goProdFinish()">
                     </div>
                 </div>
             </div>
@@ -200,11 +200,6 @@
             color: #a88d2c;
         }
 
-        .ButtonNav {
-            display: flex;
-            justify-content: flex-start;
-            padding: 10% 0;
-        }
 
         .ButtonNav > .btn {
             border-radius: 2px;
@@ -537,6 +532,26 @@
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
         });
+    }
+
+
+    var newName, n=0;
+
+    //팝업 창 제목 만들기 함수(다중 팝업을 위한..)
+    function newWindow(value)
+    {
+        n = n + 1;
+        newName = value + n;
+    }
+    //채팅 버튼 클릭시 채팅방 입장
+    function goChat()
+    {
+        prodNo = searchParam('prodNo');
+        var top = Math.random()*100 + 100;
+        var left = Math.random()*100 + 600;
+        newWindow("MyWindow");
+        window.open('/member/chatting/chat?prodNo='+prodNo+'', newName,
+            'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top='+top+',left='+left+'');
     }
 
     $('#loading').css('display','block');

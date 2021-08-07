@@ -2,6 +2,7 @@ package com.tiki.client.controller;
 
 import com.tiki.client.domain.AuctionDTO;
 import com.tiki.client.domain.InsertProductDTO;
+import com.tiki.client.domain.ProductDTO;
 import com.tiki.client.service.AuctionService;
 import com.tiki.client.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,39 @@ public class AuctionController {
             resultMap.put("resultCode", 500);
         }
 
+        return resultMap;
+    }
+
+    @RequestMapping("/auction/update.do")  /*경매업데이트*/
+    public ModelAndView updateAuction(AuctionDTO auctionDTO) {
+        ModelAndView view = new ModelAndView();
+        int result = 0;
+        try {
+            result = auctionService.updateBid(auctionDTO);
+
+            if (result > 0) {
+                view.addObject("resultCode", 200);
+            }else {
+                view.addObject("resultCode", 400);
+            }
+        } catch (Exception e) {
+            view.addObject("resultCode", 500);
+        }
+        view.setViewName("product/create_result");
+        return view;
+    }
+
+    @RequestMapping(value = "/auction/select.do") /*경매 상품 상세 정보*/
+    @ResponseBody
+    public Map<String,Object> productDetail(@RequestParam(value = "prodNo") Integer prodNo) {
+        Map<String ,Object> resultMap = new HashMap<>();
+        try {
+            AuctionDTO auctionDTO = auctionService.selectAuctionByProdNo(prodNo);
+            resultMap.put("auctionDetail", auctionDTO);
+        }catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("detail error");
+        }
         return resultMap;
     }
 

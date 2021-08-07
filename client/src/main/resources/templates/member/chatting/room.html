@@ -75,8 +75,8 @@
 
     function goChat(props)
     {
-         var top = Math.random()*100 + 100;
-         var left = Math.random()*100 + 600;
+        var top = Math.random()*100 + 100;
+        var left = Math.random()*100 + 600;
         newWindow("MyWindow");
         window.open('/member/chatting/chat?chatNo='+props+'', newName,
             'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top='+top+',left='+left+'');

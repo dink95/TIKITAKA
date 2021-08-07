@@ -26,7 +26,6 @@ public class ChatController {
         ChatDTO dto = chatDTO;
 
         int prodNo = dto.getProdNo();
-
         if(productService.selectRoomCount(prodNo) == 0) {
 
             productService.updateRoomCount(prodNo);
@@ -37,8 +36,6 @@ public class ChatController {
         else {
 
             Integer roomNo = chatService.findRoomNoSendId(dto);
-
-            roomNo = chatService.findRoomNoSendId(dto);
 
             if(roomNo == null) {
                 productService.updateRoomCount(prodNo);

@@ -32,6 +32,7 @@
                          , prod_co
                          , content
                          , img_count
+
         ) VALUES (
                   #{prodNm},
         #{prodPrc}
@@ -43,6 +44,7 @@
         , #{prodCo}
         , #{content}
         , #{imgCount}
+
         )
     </insert>
 

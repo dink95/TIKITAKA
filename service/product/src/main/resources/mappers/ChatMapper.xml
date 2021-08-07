@@ -20,12 +20,14 @@
                          , send_id
                          , recipient_id
                          , content
+                         ,sendtime
         ) VALUES (
                   #{roomNo}
         , #{prodNo}
         , #{sendId}
         , #{recipientId}
         , #{content}
+        , NOW()
         )
     </insert>
 
@@ -39,12 +41,12 @@
                 (c.send_id = #{recipientId} AND c.recipient_id = #{sendId})
             )
         AND
-            prod_no = #{prodNo}
+            c.prod_no = #{prodNo}
     </select>
 
     <select id="selectAllChat" parameterType="ChatDTO" resultType="ChatDTO">
         SELECT
-            <include refid="productColumns" />
+            <include refid="chatColumns" />
         FROM
             chat
         WHERE
@@ -57,7 +59,7 @@
 
     <select id="selectChatDetail" parameterType="int" resultType="ChatDTO">
         SELECT
-            <include refid="productColumns" />
+            <include refid="chatColumns" />
         FROM
             chat
         WHERE

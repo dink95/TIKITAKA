@@ -7,7 +7,18 @@
 <body>
 
 <span>채팅방</span>
+<span>채팅 버튼 눌러서 들어오고 채팅치면 roomNo가 만들어진다.</span>
+<span>roomId 가 만들어지면 페이지 갱신 없이 현재 카테고리 번호로 주소를 변경한다. js 참고</span>
+<button onclick="createRoomNo();">채팅 시작</button>
 <span class="chatNo"></span>
+<form onsubmit="CreateChat(); return false">
+   상품번호 <input type="number" id="chatProdNo" name="ProdNo"><br>
+    보내는사람<input type="text" id="chatSendId" name="SendId"><br>
+    받는사람<input type="text" id="chatRecipientId" name="RecipientId"><br>
+    내용<input type="text" id="chatContent" name="Content"><br>
+    <input type="submit" value="전송하기">
+</form>
+
 </body>
 <script src="/js/jquery-3.3.1.min.js"></script>
 <script src="/js/main.js"></script>
@@ -15,7 +26,44 @@
     function searchParam(key) {
         return new URLSearchParams(location.search).get(key);
     };
-    var chatNo = searchParam('chatNo');
-    $('.chatNo').text(chatNo);
+
+    // 처음 채팅 쳤을 때 이 함수 실행
+    function createRoomNo() {
+
+        // 채팅 insert 후
+        // 바로 select 해서 roomNo를 뽑는다.
+
+        // roomNo를 포함한 주소로 변경
+        //페이지 갱신 없이 현재 카테고리 번호로 주소 변경 하기 위한 변수
+        var state = null;
+        var title = null;
+        var prodNo = searchParam('prodNo');
+        if (prodNo) {
+            //페이지 갱신 없이 현재 카테고리 번호로 주소 변경
+            var url = '/member/chatting/chat?prodNo=' + prodNo + '&roomNo=1';
+            history.pushState(state, title, url);
+        }
+    }
+
+    function CreateChat(){
+            param = {
+                prodNo : $('#chatProdNo').val(),
+                sendId : $('#chatSendId').val(),
+                recipientId : $('#chatRecipientId').val(),
+                content : $('#chatContent').val(),
+            }
+
+            $.ajax({
+                url: '/chat/create',
+                data: param,
+                type: 'post',
+                dataType: 'json'
+            }).done(function (data) {
+               alert(data.resultCode);
+            }).fail(function (data, textStatus, errorThrown) {
+                alert('채팅 insert 500');
+        console.log(textStatus);
+    });
+    }
 </script>
 </html>
