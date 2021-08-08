@@ -1203,6 +1203,16 @@ option[value=""][disabled] {
   display: none;
 }
 
+input:focus{
+  outline:none;
+}
+text:focus{
+  outline:none;
+}
+textarea:focus{
+  outline: none;
+}
+
 
 
 .category {

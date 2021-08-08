@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 @Service("ChatService")
 public class ChatService {
 
@@ -21,6 +23,24 @@ public class ChatService {
         return webClient.post()
                 .uri("/chat")
                 .body(Mono.just(chatDTO), ChatDTO.class)
+                .retrieve()
+                .bodyToMono(Integer.class) //반환정보
+                .block();
+    }
+
+    //채팅 리스트
+    public List chatList(ChatDTO chatDTO) throws Exception {
+        return webClient.get()
+                .uri("/chat/allchat")
+                .retrieve()
+                .bodyToMono(List.class) //반환정보
+                .block();
+    }
+
+    //룸넘버
+    public int getRoomNo(ChatDTO chatDTO) throws Exception {
+        return webClient.get()
+                .uri("/chat/roomNo")
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
                 .block();

@@ -365,7 +365,6 @@
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
         });
-
     }
 
     /*삭제 여부 체크*/
@@ -550,7 +549,7 @@
         var top = Math.random()*100 + 100;
         var left = Math.random()*100 + 600;
         newWindow("MyWindow");
-        window.open('/member/chatting/chat?prodNo='+prodNo+'', newName,
+        window.open('/member/chatting/chat?prodNo='+prodNo+'&sendId='+$('#p_id').val()+'&recipientId='+$('#selId').text(), newName,
             'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top='+top+',left='+left+'');
     }
 
