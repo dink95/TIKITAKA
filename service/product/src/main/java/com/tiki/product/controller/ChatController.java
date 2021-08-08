@@ -51,11 +51,14 @@ public class ChatController {
     }
 
     // prodNo + roomNo 에 해당하는 전체 채팅 보기
-    @GetMapping(value = "/chat/allChat")
-    public List selectAllChat(@RequestBody ChatDTO chatDTO) {
+    @GetMapping(value = "/chat/allChat/{prodNo}/{roomNo}")
+    public List selectAllChat(@PathVariable("prodNo") int prodNo,
+                              @PathVariable("roomNo") int roomNo) {
 
         List<ChatDTO> chatList;
-
+        ChatDTO chatDTO = new ChatDTO();
+        chatDTO.setProdNo(prodNo);
+        chatDTO.setRoomNo(roomNo);
         chatList = chatService.selectAllChat(chatDTO);
 
         if(chatList == null) {
@@ -83,6 +86,17 @@ public class ChatController {
 
         return roomNo;
 
+    }
+
+    // 해당 Id가 참가하고 있는 채팅 목록 불러오기
+    @GetMapping(value = "/chat/existChat/{sendId}")
+    public List selectExistChatList(@PathVariable("sendId") String sendId) {
+
+        List<ChatDTO> chatList;
+
+        chatList = chatService.selectExistChatList(sendId);
+
+        return chatList;
     }
 
     // 특정 chatIdx에 해당하는 채팅만 보기

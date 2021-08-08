@@ -67,13 +67,36 @@
     </select>
 
     <select id="selectExistChatList" parameterType="String" resultType="ChatDTO">
-        SELECT DISTINCT
-            prod_no, roomNo
+        SELECT
+            <include refid="chatColumns" />
+        FROM
+        (
+            SELECT
+                <include refid="chatColumns" />
+            FROM
+                chat
+            WHERE
+                send_id = #{sendId}
+            OR
+                recipient_id = #{sendId}
+            ORDER BY
+                chat_idx DESC
+            LIMIT 18446744073709551615
+        ) AS c
+        GROUP BY
+            prod_no, room_no
+        ORDER BY
+            sendtime DESC
+    </select>
+
+    <select id="selectChatTotalCount" parameterType="ChatDTO" resultType="int">
+        SELECT
+            COUNT(*)
         FROM
             chat
         WHERE
             send_id = #{sendId}
-        OR
+           OR
             recipient_id = #{sendId}
     </select>
 

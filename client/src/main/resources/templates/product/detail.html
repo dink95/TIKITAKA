@@ -82,17 +82,17 @@
                         <p>조회수:&nbsp&nbsp<span id="detailView"></span></p>
                     </div>
                     <div class="aic3 ButtonNav">
-                        <input  class=" btn btn-primary" id="tradeProd"
-                                value="거래하기" onclick="goChat()">
+                        <input class=" btn btn-primary" id="tradeProd"
+                               value="거래하기" onclick="goChat()">
                         <input class="  btn btn-primary" id="updateProd"
                                value="수정하기" onclick="goRegist()">
-                        <input  class=" btn btn-danger"
-                                value="신고하기" onclick="goReport()">
-                        <input  class=" btn btn-danger" id="deleteProd"
-                                value="삭제하기" onclick="removeCheck()">
+                        <input class=" btn btn-danger"
+                               value="신고하기" onclick="goReport()">
+                        <input class=" btn btn-danger" id="deleteProd"
+                               value="삭제하기" onclick="removeCheck()">
                         <input type="hidden">
-                        <input  class="btn btn-dark" id="prodFinish"
-                                value="거래완료로 변경" onclick="goProdFinish()">
+                        <input class="btn btn-dark" id="prodFinish"
+                               value="거래완료로 변경" onclick="goProdFinish()">
                     </div>
                 </div>
             </div>
@@ -179,7 +179,7 @@
                         class="text-danger">*</span></div>
                 <div class="col-12 col-md-12 order-2 order-md-2  text-left">
                     <div class="p_content" style="border: 1px solid #ddd; height: 300px;">
-                        <span id="prodContent"class="font-weight-normal"></span>
+                        <span id="prodContent" class="font-weight-normal"></span>
                     </div>
                 </div>
             </div>
@@ -206,7 +206,8 @@
             width: 30%;
             font-weight: normal;
             margin: 1%;
-            display: none;!important;
+            display: none;
+        !important;
             font-size: 16px;
             letter-spacing: 0;
         }
@@ -285,10 +286,11 @@
             border-radius: 5px;
             max-height: 207.5px;
         }
-        .btn_finish{
+
+        .btn_finish {
             border-style: none;
             padding: 6px 12px;
-            margin:1%;
+            margin: 1%;
             width: 30%;
             background: #ddd;
             color: #000;
@@ -298,7 +300,7 @@
         }
 
 
-        p ,label{
+        p, label {
             font-weight: normal;
         }
 
@@ -317,6 +319,7 @@
 <script src="../js/main.js"></script>
 <script>
     $('#loading').css('display', 'block');
+
     /*멤버정보*/
     function getMemberDetail() {
         var param = {
@@ -352,10 +355,9 @@
         }).done(function (data) {
             drawPrdList(data);
             console.log("data.dataDetail", data.dataDetail);
-            if(data.dataDetail.prodFinish)
-            {
-                $('#prodFinish').css('display','none');
-                $('#updateProd').attr('class','btn_finish ');
+            if (data.dataDetail.prodFinish) {
+                $('#prodFinish').css('display', 'none');
+                $('#updateProd').attr('class', 'btn_finish ');
                 $('#updateProd').val('판매완료');
                 $('#updateProd').attr('onclick', '').unbind('click');
 
@@ -510,14 +512,14 @@
         }).done(function (data) {
             //점수 업데이트
             updatePoint($('#p_id').val());
-            popup('알림메세지','거래가 완료되었습니다.','/member/myinfo');
+            popup('알림메세지', '거래가 완료되었습니다.', '/member/myinfo');
         }).fail(function (textStatus) {
             console.log(textStatus);
         });
     }
 
     //점수 업데이트
-    function updatePoint(id){
+    function updatePoint(id) {
         param = {
             userId: id,
         }
@@ -534,28 +536,32 @@
     }
 
 
-    var newName, n=0;
+    var newName, n = 0;
 
     //팝업 창 제목 만들기 함수(다중 팝업을 위한..)
-    function newWindow(value)
-    {
+    function newWindow(value) {
         n = n + 1;
         newName = value + n;
     }
+
     //채팅 버튼 클릭시 채팅방 입장
-    function goChat()
-    {
-        prodNo = searchParam('prodNo');
-        var top = Math.random()*100 + 100;
-        var left = Math.random()*100 + 600;
-        newWindow("MyWindow");
-        window.open('/member/chatting/chat?prodNo='+prodNo+'&sendId='+$('#p_id').val()+'&recipientId='+$('#selId').text(), newName,
-            'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top='+top+',left='+left+'');
+    function goChat() {   //로그인 여부 확인
+        if ($('#p_id').val()){
+            prodNo = searchParam('prodNo');
+            var top = Math.random() * 100 + 100;
+            var left = Math.random() * 100 + 600;
+            newWindow("MyWindow");
+            window.open('/member/chatting/chat?prodNo=' + prodNo + '&sendId=' + $('#p_id').val() + '&recipientId=' + $('#selId').text(), newName,
+                'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=' + top + ',left=' + left + '');
+        }else{
+            location.href='/login';
+        }
     }
 
-    $('#loading').css('display','block');
-    $(window).on('load', function(){ $('#loading').css('display','none')});
-
+    $('#loading').css('display', 'block');
+    $(window).on('load', function () {
+        $('#loading').css('display', 'none')
+    });
 
 
 </script>

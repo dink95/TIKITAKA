@@ -53,4 +53,10 @@ public class ChatServiceImpl implements ChatService {
 
         return chatMapper.selectExistChatList(sendId);
     }
+
+    @Override
+    public int selectChatTotalCount() {
+
+        return chatMapper.selectChatTotalCount();
+    }
 }

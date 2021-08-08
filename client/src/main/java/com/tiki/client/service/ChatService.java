@@ -29,9 +29,9 @@ public class ChatService {
     }
 
     //채팅 리스트
-    public List chatList(ChatDTO chatDTO) throws Exception {
+    public List chatList(int prodNo , int roomNo) throws Exception {
         return webClient.get()
-                .uri("/chat/allchat")
+                .uri("/chat/allChat/{prodNo}/{roomNo}",prodNo,roomNo)
                 .retrieve()
                 .bodyToMono(List.class) //반환정보
                 .block();

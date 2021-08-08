@@ -127,6 +127,10 @@
 <script src="js/main.js"></script>
 <script>
 
+    function searchParam(key) {
+        return new URLSearchParams(location.search).get(key);
+    };
+
     /*로그인*/
     function goLogin(){
         $('#valid_loginError').text('');
@@ -168,7 +172,7 @@
                     dataType: 'json'
                 }).done(function (data) {
                     if (data.resultCode == 200) {
-                        location.href = '/';
+                            window.location=document.referrer;
                     } else {
                         $('#valid_loginError').text('* 가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.');
                         return false;
