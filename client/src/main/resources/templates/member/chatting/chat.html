@@ -1,21 +1,386 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta meta http-equiv="content-type" content="text/html;" charset="UTF-8">
     <title>채팅</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="preconnect" href="/https://fonts.gstatic.com">
+    <link rel="stylesheet" href="/https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/icon.css">
 </head>
 <body>
 
-<span>채팅방</span>
-<span class="chatNo"></span>
+<div class="site-wrap">
+
+    <div class="chattingRoomContainer">
+        <div>
+            <div class="chattingRoomTitle bb-1-p ">
+                <div class="font-weight-normal font-20 ">
+                    <img class="titleImg" src="" alt="">
+                    <div class="titleInfo">
+                        <span class="titleProdName"></span>
+                        <div>
+                        <span class="titlePrice"></span>
+                            <span>원</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="titleUserIdDiv">
+                    <span class="titleUserId"></span>
+                </div>
+            </div>
+            <div class="chatContent">
+
+            </div>
+        </div>
+
+        <div class="chatInputContainer">
+            <form onsubmit="CreateChat(); return false"
+                  class="chatForm col-12 col-md-6 order-3 order-md-2  text-center d-flex-j-center">
+                <div class="textareaContainer" onkeydown="resize(this);" onkeyup="resize(this);">
+                    <textarea class="chatInput autosize" onkeydown="resize(this); validation();"
+                              onkeyup="resize(this); validation();" name="chatContent" id="chatContent"
+                              rows="3" cols="10" wrap="hard" placeholder="메세지를 입력하세요."></textarea></div>
+
+                <span type="submit" id="submitSpan" class="submitSpan"><img type="button" class="submitIcon"
+                                                                            src="/icons/submitIcon.svg" alt=""
+                                                                            onclick="CreateChat();"/></span>
+            </form>
+        </div>
+
+
+    </div>
+</div>
+
+
 </body>
-<script src="/js/jquery-3.3.1.min.js"></script>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    body::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera*/
+    }
+    textarea::placeholder{
+        font-size: 14px;
+        color: #ddd;
+    }
+    .chattingRoomContainer {
+        width: 400px;
+        height: 700px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+
+    }
+    .chattingRoomTitle {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-end;
+        background: #fff;
+        border-bottom: 2px solid #5e0080;
+    }
+
+    .chattingRoomTitle > div:nth-child(1) {
+        display: flex;
+        justify-content: flex-start;
+        margin-left: 20px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        width: 70%;
+    }
+    .titleImg{
+        width: 50px;
+        height: 50px;
+        border-radius: 5px;
+    }
+    .titleInfo{
+        font-size: 14px;
+        color: #000;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin: 0 20px;
+    }
+    .titleProdName{
+        font-size: 15px;
+        font-weight: normal;
+    }
+    .titlePrice{
+        font-size: 20px;
+        font-weight: normal;
+    }
+    .titlePrice + span{
+        font-weight: normal;
+        font-size: 15px;
+    }
+    .titleUserIdDiv{
+        display: flex;
+        justify-content: flex-end;
+        margin-left: 20px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        width: 30%;
+    }
+    .titleUserId{
+        font-size: 16px;
+        font-weight: normal;
+        color: #5e0080;
+        margin-right:20px;
+    }
+    .chatInputContainer {
+        background: #a7a1f71c;
+        position: relative;
+
+    }
+
+    .chatContent {
+        width: 400px;
+
+    }
+
+    .chatForm {
+        align-items: flex-end;
+        height: auto;
+    }
+
+    .textareaContainer {
+        word-break: break-all;
+        background: #fff;
+        width: 90%;
+        height: 36px;
+        margin-top: 15px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        border: 1px solid #a7a1f71c;
+        font-size: 17px;
+        font-weight: normal;
+    }
+
+    .chatInput {
+        word-break: break-all;
+        background: #fff;
+        width: 85%;
+        height: 26px;
+        margin-top: 5px;
+        margin-bottom: 20px;
+        font-size: 17px;
+        font-weight: normal;
+        border-style: none;
+        resize: none;
+    }
+
+    .submitSpan {
+        vertical-align: bottom;
+    }
+
+    .submitIcon {
+        visibility: hidden;
+        margin-left: -40px;
+        margin-bottom: 6px;
+    }
+</style>
+<script src="/js/jquery-3.3.1.min.js"></script>-->
+<script src="/js/jquery-ui.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/aos.js"></script>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script src="/js/main.js"></script>
 <script>
+    $(document).ready(function () {
+        getProductDetail();
+    });
+
+    // 채팅 내용에 따라 textarea자동 크기 조절
+    function resize(obj) {
+        obj.style.height = "1px";
+        obj.style.height = (1 + obj.scrollHeight) + "px";
+
+    }
+
+    // input validation 체크
+    function validation() {
+        var result = 0;
+        if ($('#chatContent').val() != '') {
+            result = 1;
+            $('.submitIcon').css('visibility', 'unset');
+        } else {
+            result = 0;
+            $('.submitIcon').css('visibility', 'hidden');
+        }
+        return result;
+    }
+
     function searchParam(key) {
         return new URLSearchParams(location.search).get(key);
     };
-    var chatNo = searchParam('chatNo');
-    $('.chatNo').text(chatNo);
+
+
+    function CreateChat() {
+        // 채팅 insert 후
+        if (validation()) {
+            $('.chatInput').val('');
+
+            param = {
+                prodNo: searchParam('prodNo'),
+                sendId: searchParam('sendId'),
+                recipientId: searchParam('recipientId'),
+                content: $('#chatContent').val(),
+            }
+
+            $.ajax({
+                url: '/chat/create',
+                data: param,
+                type: 'post',
+                dataType: 'json'
+            }).done(function (data) {
+                if(data.resultCode == 200) {
+                    // 바로 select 해서 roomNo를 뽑는다.
+                    getRoomId();
+                    //
+                    // // roomNo를 포함한 주소로 변경
+                }else{
+                    alert('메세지 전송이 실패하였습니다. 관리자에게 문의하세요.');
+                }
+
+            }).fail(function (data, textStatus, errorThrown) {
+                alert('메세지 전송이 실패하였습니다. 관리자에게 문의하세요.');
+                console.log(textStatus);
+            });
+        }
+
+    }
+
+    function getRoomId(){
+        param = {
+            prodNo: searchParam('prodNo'),
+            sendId: searchParam('sendId'),
+            recipientId: searchParam('recipientId'),
+        }
+
+        // $.ajax({
+        //     url: '/chat/getRoomNo',
+        //     data: param,
+        //     type: 'post',
+        //     dataType: 'json'
+        // }).done(function (data) {
+        //     console.log("@@data.roomNo",data.roomNo)
+        //     // roomNo를 포함한 주소로 변경
+        //     //페이지 갱신 없이 현재 카테고리 번호로 주소 변경 하기 위한 변수
+        //     var state = null;
+        //     var title = null;
+        //     var prodNo = searchParam('prodNo');
+        //     var sendId = searchParam('sendId');
+        //     var recipientId = searchParam('recipientId');
+        //     if (prodNo) {
+        //         //페이지 갱신 없이 현재 카테고리 번호로 주소 변경
+        //         var url = '/member/chatting/chat?prodNo=' + prodNo + '&sendId='+ sendId +'&recipientId='+ recipientId +'&roomNo='+ data.roomNo;
+        //         history.pushState(state, title, url);
+        //     }
+        //
+        // }).fail(function (data, textStatus, errorThrown) {
+        //     alert('메세지를 불러오는데 실패하였습니다. 관리자에게 문의하세요.');
+        //     console.log(textStatus);
+        // });  했다 치고 roomNo = 1
+
+        var state = null;
+            var title = null;
+            var prodNo = searchParam('prodNo');
+            var sendId = searchParam('sendId');
+            var recipientId = searchParam('recipientId');
+            if (prodNo) {
+                //페이지 갱신 없이 현재 카테고리 번호로 주소 변경
+                var url = '/member/chatting/chat?prodNo=' + prodNo + '&sendId='+ sendId +'&recipientId='+ recipientId +'&roomNo='+ 1;
+                history.pushState(state, title, url);
+            }
+
+            getChatList();
+    }
+
+    function getChatList(){
+            $('.chatInput').val('');
+
+            param = {
+                roomNo: 1,
+                prodNo: searchParam('prodNo'),
+            }
+
+            $.ajax({
+                url: '/chat/list',
+                data: param,
+                type: 'post',
+                dataType: 'json'
+            }).done(function (data) {
+                console.log("@@chatList",data.chatList);
+            }).fail(function (data, textStatus, errorThrown) {
+                console.log(textStatus);
+            });
+
+    }
+
+    /*상품 정보 가져오기*/
+    function getProductDetail() {
+        var param = {
+            prodNo: searchParam('prodNo'),
+        }
+
+        $.ajax({
+            url: '/product/detail.do',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            drawTitle(data);
+            console.log("data.dataDetail", data.dataDetail);
+
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+    }
+
+    function drawTitle(data) {
+        if (typeof data.dataDetail !== 'undefined') {
+            var imgPath = '';
+
+            //이미지경로를 미리 만들어놓는다.
+            imgPath = '/istatic/images/' + data.dataDetail.prodNo + '/1.jpg';
+            //메인 이미지 html
+            $('.titleImg').attr("src", imgPath);
+            //디테일 정보들
+            $('.titleProdName').text(data.dataDetail.prodNm);
+            $('.titlePrice').text(data.dataDetail.prodPrc);
+            $('.titleUserId').text(data.dataDetail.selId);
+
+        }
+    }
+
+    /*채팅 정보 가져오기*/
+    function getChatList() {
+        var param = {
+            prodNo: searchParam('prodNo'),
+            roomNo: searchParam('roomNo')
+        }
+
+        $.ajax({
+            url: '/chat/list',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            drawTitle(data);
+            console.log("data.chatList", data.chatList);
+
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+    }
 </script>
 </html>

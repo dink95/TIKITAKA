@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @RestController
+
 public class ProductController {
 
     @Autowired
@@ -60,6 +61,14 @@ public class ProductController {
 
         return finishNo;
     }
+
+//    // 룸카운트 테스트
+//    @GetMapping(value = "/roomcount/{prodNo}")
+//    public int roomCount(@PathVariable("prodNo") int prodNo) {
+//
+//        return  productService.selectRoomCount(prodNo);
+//    }
+
 
     // 상품 디테일 보기
     @GetMapping("/prd/{prodNo}")

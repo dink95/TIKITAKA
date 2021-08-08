@@ -70,11 +70,12 @@
                         <h1 id="detailName"></h1>
                         <div class="d-flex-j-between">
                             <div><p>현재가:&nbsp&nbsp
-                                <span class="text-black" id="detailPrice"></span><span class="text-black">원</span></div></p>
+                                <span class="text-black" id="currentPrice"></span><span class="text-black">원</span></div></p>
+                            <input type="hidden" id="detailPrice">
                             <div class="d-flex-j-a-center">
                                 <p>
-                                <span class="margin-right-5 text-black">남은시간:</span>
-                                <span class="text-black" id="sample01"></span>
+                                    <span class="margin-right-5 text-black">남은시간:</span>
+                                    <span class="text-black" id="sample01"></span>
                                 </p>
                             </div>
                         </div>
@@ -85,36 +86,9 @@
                                     class="text-black">원</span></p>
                             <p>판매자아이디:&nbsp&nbsp<span id="selId"></span></p>
                             <p>조회수:&nbsp&nbsp<span id="detailView"></span></p>
-                            <p>입찰수:&nbsp&nbsp <span id="auctionCount" class="text-black">0</span></p>
                         </div>
                         <div style="padding-top: 2%;">
-<!--                            <div style="background: #a7a1f71c;" class="text-center"><span-->
-<!--                                    class="text-black">실시간 입찰자 명단</span></div>-->
-<!--                            <table class="b-1-g">-->
-<!--                                <tr class="b-1-g">-->
-<!--                                    <td width="40px" class="b-1-g text-center"><span class=" text-black">순위</span></td>-->
-<!--                                    <td width="100px" class="b-1-g text-center"><span class=" text-black">입찰자</span>-->
-<!--                                    </td>-->
-<!--                                    <td width="100px" class="b-1-g text-center"><span class=" text-black">제시금액</span>-->
-<!--                                    </td>-->
-<!--                                </tr>-->
 
-<!--                                <tr class="b-1-g">-->
-<!--                                    <td width="20px" class="b-1-g text-center"><span class="text-black">1</span></td>-->
-<!--                                    <td width="100px" id="topPriceUser" class="b-1-g text-center"><span-->
-<!--                                            class="text-black"></span></td>-->
-<!--                                    <td width="100px" id="topPrice" class="b-1-g text-center"><span-->
-<!--                                            class="text-black"></span></td>-->
-<!--                                </tr>-->
-
-<!--                                <tr class="b-1-g">-->
-
-<!--                                    <td width="100px" colspan="2" class="b-1-g text-center"><span class="text-black">내입찰가</span>-->
-<!--                                    </td>-->
-<!--                                    <td width="100px" class="b-1-g text-center"><span id="myPrice"-->
-<!--                                                                                      class="text-black"></span></td>-->
-<!--                                </tr>-->
-<!--                            </table>-->
                         </div>
                     </div>
 
@@ -123,15 +97,15 @@
                 <div class="col-12 col-md-6 order-2 order-md-2  text-left">
 
                     <div class="auctionTitle">실시간 입찰 현황</div>
-                        <ul class="auction_box">
-                        </ul>
-                        <div class="d-flex-j-between content">
-                            <input id="priceInput" type="number" name="message"
-                                   class="width-80p margin-left-right-10 text-black" step="1000" pattern="[0-9]*"
-                                   inputmode="numeric" min="0">
-                            <input class="send btn btn-primary width-80p margin-left-right-10" id="tradeProd"
-                                   value="입찰하기" onclick="">
-                        </div>
+                    <ul class="auction_box">
+                    </ul>
+                    <div class="d-flex-j-between content">
+                        <input id="priceInput" type="number" name="message"
+                               class="width-80p margin-left-right-10 text-black" step="1000" pattern="[0-9]*"
+                               inputmode="numeric" min="0">
+                        <input class="send btn btn-primary width-80p margin-left-right-10" id="tradeProd"
+                               value="입찰하기">
+                    </div>
 
                 </div>
 
@@ -263,13 +237,13 @@
             margin-bottom: 50px;
         }
 
-        #detailPrice {
+        #currentPrice {
             font-size: 20px;
             color: #000;
             display: inline-block;
         }
 
-        #detailPrice + span {
+        #currentPrice + span {
 
             font-size: 20px;
             color: #000;
@@ -363,6 +337,7 @@
 
     $(document).ready(function () {
         getProductDetail();
+        selectAuction();
     });
 
     /*옥션 insert*/
@@ -377,12 +352,55 @@
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            alert(data.resultCode);
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
-            alert('아작스 실패');
         });
+    }
 
+    /*옥션 update*/
+    function updateAuction(mbrId , endBid) {
+        var param = {
+            endBid: endBid, //현재가
+            mbrId: mbrId,  //입찰자
+            prodNo:searchParam('prodNo')//상품번호
+        }
+        $.ajax({
+            url: '/auction/update.do',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+    }
+
+    /*옥션 select*/
+    function selectAuction() {
+        var param = {
+            prodNo:searchParam('prodNo')//상품번호
+        }
+        $.ajax({
+            url: '/auction/select.do',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            console.log("@@auctionDetail",data.auctionDetail);
+            var year = data.auctionDetail.aucEndTime.substring(0,4);
+            var month = data.auctionDetail.aucEndTime.substring(6,7)-1;
+            var day = data.auctionDetail.aucEndTime.substring(8,10);
+            var hour = data.auctionDetail.aucEndTime.substring(11,13);
+            var minute = data.auctionDetail.aucEndTime.substring(14,16);
+            var second = data.auctionDetail.aucEndTime.substring(17,19);
+            var dateObj = new Date(year, month, day, hour, minute, second);
+            dateObj.setDate(dateObj.getDate());
+            countDownTimer('sample01', dateObj);
+
+            $('#currentPrice').text(data.auctionDetail.endBid);
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
     }
 
     /*멤버정보*/
@@ -485,10 +503,8 @@
             //디테일 정보들
             $('#selNmLogo').text(data.dataDetail.prodNm);
             $('#detailName').text(data.dataDetail.prodNm);
-            $('#detailPrice').text(data.dataDetail.prodPrc);
             $('#startPrice').text(data.dataDetail.prodPrc);
-
-            $('#priceInput').val(parseInt($('#detailPrice').text()));
+            $('#priceInput').val(parseInt($('#currentPrice').text())+1000);
             $('#selId').text(data.dataDetail.selId);
             $('#detailView').text(data.dataDetail.prodView);
             if (data.dataDetail.selId == $('#p_id').val()) {
@@ -568,7 +584,7 @@
 
 
     //남은시간 계산
-    const countDownTimer = function (id, date) {
+    const countDownTimer = function (id, date ) {
         var _vDate = new Date(date);
         var _second = 1000;
         var _minute = _second * 60;
@@ -599,9 +615,6 @@
     }
 
 
-    var dateObj = new Date(2021, 6, 15, 23, 5, 0);
-    dateObj.setDate(dateObj.getDate());
-    countDownTimer('sample01', dateObj);
     $(function () {
 
         var chatBox = $('.auction_box');
@@ -624,15 +637,15 @@
             });
             $('#priceInput').change(function () {
                 // 시작시
-                if ($('#startPrice').text() === $('#detailPrice').text()) {
-                    var min = parseInt($('#detailPrice').text());
+                if ($('#startPrice').text() === $('#currentPrice').text()) {
+                    var min = parseInt($('#currentPrice').text());
 
                     if ($(this).val() < min) {
                         $(this).val(min);
                     }
                     // 입찰 시작 후
                 } else {
-                    var min = parseInt($('#detailPrice').text()) + 1000;
+                    var min = parseInt($('#currentPrice').text()) + 1000;
 
                     if ($(this).val() < min) {
                         $(this).val(min);
@@ -653,13 +666,14 @@
                 var content = JSON.parse(chat.body);
                 // chatBox.append('<li class="text-black active-color-purple text-right">' + content.mbrId + '님이 입장하였습니다.');
                 if (content.message != null) {
+                    selectAuction();
                     if (content.mbrId === $('#p_id').val()) {
                         $('#myPrice').text(content.message);
                         chatBox.append('<li class="text-black active-color-purple text-right">' + content.message + '원을 입찰하였습니다.');
                     } else {
                         chatBox.append('<li class="text-black">' + content.mbrId + '님이' + content.message + '원을 입찰하였습니다.</li>');
                     }
-                    $('#detailPrice').text(content.message);
+                    $('#detailPrice').val(content.message);
                     $('#topPriceUser').text(content.mbrId);
                     $('#topPrice').text(content.message);
                     $('#priceInput').val(parseInt(content.message) + 1000);
@@ -673,9 +687,19 @@
 
 
         sendBtn.click(function () {
-            var message = messageInput.val();
-            client.send('/publish/chat/message', {}, JSON.stringify({prodNo: prodNo, message: message, mbrId: mbrId}));
-            messageInput.val('');
+            if($('#p_id').val() == $('#selId').text())
+            {
+                popup('알림메세지','판매자는 입찰할 수 없습니다.');
+            }else {
+                var message = messageInput.val();
+                client.send('/publish/chat/message', {}, JSON.stringify({
+                    prodNo: prodNo,
+                    message: message,
+                    mbrId: mbrId
+                }));
+                updateAuction(mbrId, parseInt(message));
+                messageInput.val('');
+            }
         });
     });
 

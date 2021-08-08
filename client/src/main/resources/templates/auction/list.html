@@ -40,13 +40,13 @@
 
         <!--상품사진-->
         <div class="container">
-            <div class="prodContainer">
+            <div class="prodContainer" >
                 <div class="prod" onclick="finishCheck(0)">
                     경매상품
                 </div>
-                <div>
-                    <a href="/auction/create">경매상품 등록하기</a>
-                </div>
+
+                <a href="/auction/create" class="text-black text-right aucCreateBtn">경매상품 등록하기</a>
+
             </div>
 
             <div class="gridContainer">
@@ -100,7 +100,7 @@
     }
     .prodContainer{
         display: flex;
-        justify-content: flex-start;
+        justify-content: space-between;
         border-bottom: 1px solid #ddd;
         margin-bottom:30px;
         padding:0 30px;
@@ -115,6 +115,9 @@
         cursor: pointer;
         font-size: 25px;
         text-align: left;
+    }
+    .aucCreateBtn:hover{
+        color: #5e0080;
     }
     /*****************/
 

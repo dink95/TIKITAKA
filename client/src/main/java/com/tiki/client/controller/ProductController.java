@@ -36,8 +36,8 @@ public class ProductController {
         try {
             result = productService.createProduct(productDTO);
             List<MultipartFile> fileList = multi.getFiles("file");
-           String path = "c:/tmp/"+Integer.toString(result)+"/";
-//            String path = "/Users/gimmugyeong/tmp/" +Integer.toString(result)+"/";
+//           String path = "c:/tmp/"+Integer.toString(result)+"/";
+            String path = "/Users/gimmugyeong/tmp/" +Integer.toString(result)+"/";
             System.out.println(path);
             File dir = new File(path);
             if (!dir.isDirectory()) {
@@ -353,7 +353,7 @@ public class ProductController {
     @ResponseBody
     public Map<String,Object> updateProdfinish(@RequestParam(value="selId") String selId,
                                                @RequestParam(value="prodNo") int prodNo) {
-       HashMap<String,Object> resultMap = new HashMap<>();
+        HashMap<String,Object> resultMap = new HashMap<>();
         ProductDTO productDTO = new ProductDTO();
         productDTO.setSelId(selId);
         productDTO.setProdNo(prodNo);

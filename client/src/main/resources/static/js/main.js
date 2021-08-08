@@ -483,10 +483,10 @@ $(document).ready(function () {
             const category_nav_toggle = $('.category_nav');
             category_nav_toggle.stop().animate();
             if (!category_nav_toggle.is(':animated')) {
-            category_nav_toggle.css('display', 'flex');
-            category_nav_toggle.animate({opacity: '1', top: '148px'}, 100);
-            $('.category_nav_main_item').children('ul').children('li').css('background', '#fff');
-        }
+                category_nav_toggle.css('display', 'flex');
+                category_nav_toggle.animate({opacity: '1', top: '148px'}, 100);
+                $('.category_nav_main_item').children('ul').children('li').css('background', '#fff');
+            }
         },
         function () {
             const category_nav_toggle = $('.category_nav');
@@ -643,6 +643,44 @@ function popup(title, content, href) {
 
 
 /**********************************************반응형******************************************/
+
+// 모바일 카테고리 반응
+$('.mobile_category_icon').click(function () {
+    const mobile_category_toggle = $('.input-mobile-category_div');
+    mobile_category_toggle.animate({
+        right: '0px',
+    }, 300, 'swing');
+    mobile_category_toggle.css('position', 'fixed');
+
+})
+
+$('.mobile_category_close_btn').click(function () {
+    const mobile_category_toggle = $('.input-mobile-category_div');
+    mobile_category_toggle.animate({
+        right: '-100vh',
+    }, 300, 'swing');
+    mobile_category_toggle.css('position', 'fixed');
+})
+$('.input-mobile-category-content-text').click(function () {
+
+    const mobile_category_toggle = $('.input-mobile-category-content-item');
+    if(mobile_category_toggle.css('display') == 'none') {
+        mobile_category_toggle.css('display', 'flex');
+        mobile_category_toggle.css('border-bottom', '1px solid #ddd');
+        $('.arrowDownIcon').attr('src','/icons/arrowUp.svg');
+
+        // mobile_category_toggle.animate({
+        //     right: '-100vh',
+        // }, 300, 'swing');
+    }else{
+        mobile_category_toggle.css('display', 'none');
+        mobile_category_toggle.css('border-bottom', 'none');
+        $('.arrowDownIcon').attr('src','/icons/arrowDown.svg');
+    }
+})
+
+
+// 모바일 검색 반응
 $('.mobile_search_icon').click(function () {
     $('.input-mobile-search_nav').children('form').children('input').focus();
     const mobile_search_toggle = $('.input-mobile-search_div');

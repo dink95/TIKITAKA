@@ -47,4 +47,10 @@ public class ChatServiceImpl implements ChatService {
 
         return chatMapper.selectChatDetail(chatIdx);
     }
+
+    @Override
+    public List<ChatDTO> selectExistChatList(String sendId) {
+
+        return chatMapper.selectExistChatList(sendId);
+    }
 }

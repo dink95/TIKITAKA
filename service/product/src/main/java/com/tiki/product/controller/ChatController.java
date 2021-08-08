@@ -26,7 +26,6 @@ public class ChatController {
         ChatDTO dto = chatDTO;
 
         int prodNo = dto.getProdNo();
-
         if(productService.selectRoomCount(prodNo) == 0) {
 
             productService.updateRoomCount(prodNo);
@@ -37,8 +36,6 @@ public class ChatController {
         else {
 
             Integer roomNo = chatService.findRoomNoSendId(dto);
-
-            roomNo = chatService.findRoomNoSendId(dto);
 
             if(roomNo == null) {
                 productService.updateRoomCount(prodNo);
@@ -66,6 +63,25 @@ public class ChatController {
         }
 
         return chatList;
+
+    }
+
+    // prodNo + sendId + recipientId 에 해당하는 룸 넘버 보내기
+    @GetMapping("/chat/roomNo")
+    public int selectRoomNumber(@RequestBody ChatDTO chatDTO) {
+
+        int roomNo;
+        Integer check = chatService.findRoomNoSendId(chatDTO);
+
+        if(check == null) {
+            System.out.println("상품번호 혹은 보내는 사람 혹은 받는 사람의 아이디가 잘못됨");
+            roomNo = 0;
+        }
+        else {
+            roomNo = check.intValue();
+        }
+
+        return roomNo;
 
     }
 

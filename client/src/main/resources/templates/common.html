@@ -20,7 +20,7 @@
         </div>
     </div>
 
-<!--    로딩창-->
+    <!--    로딩창-->
     <div id="loading" style="display: none">
         <img id="loading-image" src="/images/ajax-loader.gif" alt="전송중..." />
     </div>
@@ -87,7 +87,29 @@
         </form>
 
     </div>
-    <div class="input-mobile-search_content"></div>
+    <div class="input-mobile-search_content">
+    </div>
+</div>
+
+<!--모바일 카테고리 메뉴-->
+<div class=" input-mobile-category_div" th:fragment="mobile_search(header)">
+    <div class="input-mobile-category_nav">
+        <div class="mobile_category_close_btn"><img class="arrowLeftIcon" src="/icons/arrowLeft2.svg" alt="" /></div>
+        <span class="input-mobile-category-text">
+            카테고리
+        </span>
+        <div class="mobile_category_empty"></div>
+    </div>
+    <div class="input-mobile-category_content">
+        <div class="input-mobile-category-content-text"><span>패션</span><img class="arrowDownIcon" src="/icons/arrowDown.svg" alt="" />
+        </div>
+        <div class="input-mobile-category-content-item" style=" display:none; height: 300px;"></div>
+        <div class="input-mobile-category-content-text"><span>디지털∙가전</span><img class="arrowDownIcon" src="/icons/arrowDown.svg" alt="" /></div>
+        <div class="input-mobile-category-content-text"><span>가구∙인테리어</span><img class="arrowDownIcon" src="/icons/arrowDown.svg" alt="" /></div>
+        <div class="input-mobile-category-content-text"><span>여가활동</span><img class="arrowDownIcon" src="/icons/arrowDown.svg" alt="" /></div>
+        <div class="input-mobile-category-content-text"><span>기타</span><img class="arrowDownIcon" src="/icons/arrowDown.svg" alt="" /></div>
+        <div class="input-mobile-category-content-text"><span>삽니다</span><img class="arrowDownIcon" src="/icons/arrowDown.svg" alt="" /></div>
+    </div>
 </div>
 
 <!--공통 모바일 메뉴바-->
@@ -105,8 +127,8 @@
         </a>
             <a href="/">HOME</a></li>
 
-        <li th:classappend="${menu}=='product_list'? 'active' : ''">
-            <a >
+        <li class="mobile_category_icon" th:classappend="${menu}=='product_list'? 'active' : ''">
+            <a>
                 <svg id="svg"
                      xmlns="http://www.w3.org/2000/svg" width="25" height="20" fill="currentColor" class="bi bi-list"
                      viewBox="0 0 16 16">
@@ -313,9 +335,9 @@
             <li th:classappend="${menu}=='auction_list'? 'menu_active' : ''">
                 <svg id="svg" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 -5 64 80" x="0px" y="0px" witdh="24" height="24">
                     <g fill="currentColor" stroke="currentColor">
-                    <path d="M51.16,33.09H46.32a3.25,3.25,0,0,0-3.25,3.25v5a15.44,15.44,0,0,0-9.16-3.69,13.28,13.28,0,1,0-13.79,0A14.87,14.87,0,0,0,6.53,52.46v4.87a1,1,0,0,0,1,1H51.16a3.25,3.25,0,0,0,3.25-3.25V36.34A3.25,3.25,0,0,0,51.16,33.09ZM15.71,26.32A11.28,11.28,0,1,1,27,37.6H27A11.3,11.3,0,0,1,15.71,26.32Zm36.7,28.76a1.25,1.25,0,0,1-1.25,1.25H8.53V52.46A12.87,12.87,0,0,1,21.39,39.6H33a13.5,13.5,0,0,1,10.29,4.79,1,1,0,0,0,1.76-.65v-7.4a1.25,1.25,0,0,1,1.25-1.25h4.83a1.25,1.25,0,0,1,1.25,1.25Z"/>
-                    <path d="M48.53,5.67a8.94,8.94,0,0,0-3.37,17.22V30.3a1,1,0,0,0,1,1h4.75a1,1,0,0,0,1-1V22.89A8.94,8.94,0,0,0,48.53,5.67Zm2.08,15.56a1,1,0,0,0-.7,1V29.3H47.16V22.19a1,1,0,0,0-.7-1,6.94,6.94,0,1,1,4.15,0Z"/>
-                    <path stroke-width="10"></path>
+                        <path d="M51.16,33.09H46.32a3.25,3.25,0,0,0-3.25,3.25v5a15.44,15.44,0,0,0-9.16-3.69,13.28,13.28,0,1,0-13.79,0A14.87,14.87,0,0,0,6.53,52.46v4.87a1,1,0,0,0,1,1H51.16a3.25,3.25,0,0,0,3.25-3.25V36.34A3.25,3.25,0,0,0,51.16,33.09ZM15.71,26.32A11.28,11.28,0,1,1,27,37.6H27A11.3,11.3,0,0,1,15.71,26.32Zm36.7,28.76a1.25,1.25,0,0,1-1.25,1.25H8.53V52.46A12.87,12.87,0,0,1,21.39,39.6H33a13.5,13.5,0,0,1,10.29,4.79,1,1,0,0,0,1.76-.65v-7.4a1.25,1.25,0,0,1,1.25-1.25h4.83a1.25,1.25,0,0,1,1.25,1.25Z"/>
+                        <path d="M48.53,5.67a8.94,8.94,0,0,0-3.37,17.22V30.3a1,1,0,0,0,1,1h4.75a1,1,0,0,0,1-1V22.89A8.94,8.94,0,0,0,48.53,5.67Zm2.08,15.56a1,1,0,0,0-.7,1V29.3H47.16V22.19a1,1,0,0,0-.7-1,6.94,6.94,0,1,1,4.15,0Z"/>
+                        <path stroke-width="10"></path>
                     </g>
                 </svg>
                 <a th:if="${session.mbrId == null}" href="/login"><span>경매장터</span></a>
@@ -328,7 +350,7 @@
                 </svg>
                 <a th:if="${session.mbrId == null}" href="/login"><span>채팅</span></a>
                 <a th:if="${session.mbrId != null}" href="#"
-                   onclick="window.open('/member/chatting/room','채팅방','toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=100,left=100')"><span>채팅</span></a></li>
+                   onclick="window.open('/member/chatting/room?userId='+'예시' +'' ,'채팅방','toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=100,left=100')"><span>채팅</span></a></li>
             <li th:classappend="${menu}=='myinfo'? 'menu_active' : ''">
                 <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                      class="bi bi-person" viewBox="0 0 16 16">

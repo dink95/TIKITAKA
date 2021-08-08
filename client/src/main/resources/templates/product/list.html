@@ -62,37 +62,37 @@
                 <div class="underLine"></div>
             </div>
             <div class="queryTextNav">
-            <div style="display:flex; justify-content: center;">
-                <div class="conditionNav mainCategoryConditionNav">
-                    <div class="conditionTitle mainCategoryConditionTitle" onclick="getCondition('mainCategory')">
-                        <span class="text-black font-weight-normal">전체 카테고리</span>
-                        <img class="arrowDownIcon mainCategoryArrowDownIcon" src="/icons/arrowDown.svg" alt=""/>
+                <div style="display:flex; justify-content: center;">
+                    <div class="conditionNav mainCategoryConditionNav">
+                        <div class="conditionTitle mainCategoryConditionTitle" onclick="getCondition('mainCategory')">
+                            <span class="text-black font-weight-normal">전체 카테고리</span>
+                            <img class="arrowDownIcon mainCategoryArrowDownIcon" src="/icons/arrowDown.svg" alt=""/>
+                        </div>
+
+                        <div class="conditionMenu mainCategoryConditionMenu">
+
+                        </div>
                     </div>
 
-                    <div class="conditionMenu mainCategoryConditionMenu">
+                    <div class="conditionNav detailCategoryConditionNav">
+                        <div class="conditionTitle detailCategoryConditionTitle" onclick="getCondition('detailCategory')">
+                            <span class="text-black font-weight-normal">전체</span>
+                            <img class="arrowDownIcon detailCategoryArrowDownIcon" src="/icons/arrowDown.svg" alt=""/>
+                            </svg>
+                        </div>
 
+                        <div class="conditionMenu detailCategoryConditionMenu">
+
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-black" id="queryTextProdNm"></span>
+                        <span class="font-weight-normal text-black">검색 결과</span>
+
+                        <span class="font-weight-light queryTextCount font-14">0</span>
+                        <span class="font-weight-normal font-14">개</span>
                     </div>
                 </div>
-
-                <div class="conditionNav detailCategoryConditionNav">
-                    <div class="conditionTitle detailCategoryConditionTitle" onclick="getCondition('detailCategory')">
-                        <span class="text-black font-weight-normal">전체</span>
-                        <img class="arrowDownIcon detailCategoryArrowDownIcon" src="/icons/arrowDown.svg" alt=""/>
-                        </svg>
-                    </div>
-
-                    <div class="conditionMenu detailCategoryConditionMenu">
-
-                    </div>
-                </div>
-                <div>
-                    <span class="text-black" id="queryTextProdNm"></span>
-                    <span class="font-weight-normal text-black">검색 결과</span>
-
-                    <span class="font-weight-light queryTextCount font-14">0</span>
-                    <span class="font-weight-normal font-14">개</span>
-                </div>
-            </div>
 
 
 
@@ -211,9 +211,7 @@
         width: 80px;
 
     }
-    .detailCategoryTextNav > span:nth-child(1) {
-        color: #5f0080;
-    }
+
 
     .underLine {
         display: none;
@@ -248,7 +246,7 @@
         font-weight: normal;
     }
 
-    
+
     .queryTextNav {
         display: flex;
         justify-content: space-between;
@@ -308,7 +306,7 @@
     }
 
     .categoryIcon2{
-    filter:invert(15%) sepia(73%) saturate(2372%) hue-rotate(270deg) brightness(98%) contrast(132%);
+        filter:invert(15%) sepia(73%) saturate(2372%) hue-rotate(270deg) brightness(98%) contrast(132%);
     }
 
 
@@ -339,7 +337,6 @@
 <script src="../js/main.js"></script>
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script>
-
     //상품 조건으로 조회 토글
     function getCondition(props) {
 
@@ -413,7 +410,7 @@
 
         //카테고리 검색 높은 가격순
         f_run_cat_highPrice: function () {
-            
+
             param = {
                 catNo: searchParam('catNo'),
             }
@@ -434,7 +431,7 @@
 
         //카테고라 검색 낮은 가격순
         f_run_cat_lowPrice: function () {
-            
+
             param = {
                 catNo: searchParam('catNo'),
             }
@@ -455,7 +452,7 @@
     var f_obj_prodNm = {
         //검색어, 카테고리별 최근 날짜순
         f_run_prodNm_latestDay: function () {
-            
+
             if ($('#selectCat').val() == '') {
                 param = {
                     prodNm: $('#prodNm').val(),
@@ -496,7 +493,7 @@
 
         //검색어, 카테고리 검색 높은 가격순
         f_run_prodNm_highPrice: function () {
-            
+
             if ($('#selectCat').val() == '') {
                 param = {
                     prodNm: $('#prodNm').val(),
@@ -623,7 +620,7 @@
             conditionMenu.css('display', 'none');
             conditionTitle.css('color', '#000');
 
-             $('#selectCat').val(props);
+            $('#selectCat').val(props);
 
             f_obj_prodNm['f_run_prodNm_latestDay']();
             getAllCategory(props);
@@ -655,7 +652,7 @@
             f_obj_prodNm['f_run_prodNm_latestDay']();
 
         } else {
-          // location.href='/product/list?catNo=' + props;
+            // location.href='/product/list?catNo=' + props;
             f_obj_cat['f_run_cat_latestDay'](props);
         }
     }
@@ -663,19 +660,29 @@
 
     /*카테고리 이름*/
     function getCategory(props,width) {
-            if(props){
-                param = {
-                    catNo: props,
-                }
-                console.log(props);
-                $('.underLine').animate({'left':width },500);
-                $('#' +props).css('color','#5f0080');
-                $('.detailCategoryTextNav').children('span').not($('#' +props)).css('color','#000');
-            }else {
-                param = {
-                    catNo: searchParam('catNo'),
-                }
+
+        //페이지 갱신 없이 현재 카테고리 번호로 주소 변경 하기 위한 변수
+        var state = null;
+        var title = null;
+
+        if(props){
+            //페이지 갱신 없이 현재 카테고리 번호로 주소 변경
+            var url = '/product/list?catNo=' + props;
+            history.pushState(state, title, url);
+
+            param = {
+                catNo: props,
             }
+            console.log(props);
+            $('.underLine').animate({'left':width },500);
+            $('#' +props).css('color','#5f0080');
+            $('.detailCategoryTextNav').children('span').not($('#' +props)).css('color','#000');
+        }else {
+
+            param = {
+                catNo: searchParam('catNo'),
+            }
+        }
 
         $.ajax({
             url: '/category/get',
@@ -850,7 +857,7 @@
                 var width = 0;
                 detailContainer.append('<span id="' + parseInt(props / 10) * 10 + '"  class="text-black font-weight-normal" onclick="goSelectDetailQuery(' + parseInt(props / 10) * 10 + ');  getCategory(' +  parseInt(props / 10) * 10 + ', '+width+')">전체보기</span>')
             }
-                $.each(data.allcatList, function (index, obj) {
+            $.each(data.allcatList, function (index, obj) {
                 if (obj.catNo>parseInt(props/10)*10 && obj.catNo < parseInt(props/10)*10 +10) {
                     width += 80;
                     contents = '';
@@ -860,6 +867,11 @@
                 }
 
             })
+            //처음 페이지 접속시 세부 카테고리 active
+            getCategory(props , (props%10)*80);
+            var detailCatActive = parseInt(searchParam('catNo'));
+            $('#' + detailCatActive).css('color','#5f0080');
+
         }
         // $('#' +searchParam('catNo')).removeClass('text-black');
         // $('#' +searchParam('catNo')).addClass('active-color-purple');
@@ -875,6 +887,7 @@
     function goDetail(prodNo) {
         location.href = '/product/detail?prodNo=' + prodNo;
     }
+
 
     //파라미터 조회
     if (searchParam('prodNm')) {
@@ -893,6 +906,7 @@
     $(document).ready(function () {
         getAllCategory();
         $('#innerSearch').val(searchParam('prodNm'));
+        var props = parseInt(searchParam('catNo'));
 
     });
 

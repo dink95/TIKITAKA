@@ -20,23 +20,25 @@
                          , send_id
                          , recipient_id
                          , content
+                         ,sendtime
         ) VALUES (
                   #{roomNo}
         , #{prodNo}
         , #{sendId}
         , #{recipientId}
         , #{content}
+        , NOW()
         )
     </insert>
 
     <select id="findRoomNoSendId" parameterType="ChatDTO" resultType="Integer">
         SELECT DISTINCT room_no
-        FROM prod as p JOIN chat as c ON p.prod_no = c.prod_no
+        FROM chat
         WHERE
             (
-                (c.send_id = #{sendId} AND c.recipient_id = #{recipientId})
+                (send_id = #{sendId} AND recipient_id = #{recipientId})
                 OR
-                (c.send_id = #{recipientId} AND c.recipient_id = #{sendId})
+                (send_id = #{recipientId} AND recipient_id = #{sendId})
             )
         AND
             prod_no = #{prodNo}
@@ -44,7 +46,7 @@
 
     <select id="selectAllChat" parameterType="ChatDTO" resultType="ChatDTO">
         SELECT
-            <include refid="productColumns" />
+            <include refid="chatColumns" />
         FROM
             chat
         WHERE
@@ -57,11 +59,22 @@
 
     <select id="selectChatDetail" parameterType="int" resultType="ChatDTO">
         SELECT
-            <include refid="productColumns" />
+            <include refid="chatColumns" />
         FROM
             chat
         WHERE
             chat_idx = #{chatIdx}
+    </select>
+
+    <select id="selectExistChatList" parameterType="String" resultType="ChatDTO">
+        SELECT DISTINCT
+            prod_no, roomNo
+        FROM
+            chat
+        WHERE
+            send_id = #{sendId}
+        OR
+            recipient_id = #{sendId}
     </select>
 
 </mapper>
