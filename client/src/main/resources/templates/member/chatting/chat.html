@@ -31,20 +31,20 @@
                     <span class="titleUserId"></span>
                 </div>
             </div>
-            <div class="chatContent">
+            <ul class="chatContent">
 
-            </div>
+            </ul>
         </div>
 
         <div class="chatInputContainer">
-            <form onsubmit="CreateChat(); return false"
+            <form onsubmit="return false"
                   class="chatForm col-12 col-md-6 order-3 order-md-2  text-center d-flex-j-center">
                 <div class="textareaContainer" onkeydown="resize(this);" onkeyup="resize(this);">
                     <textarea class="chatInput autosize" onkeydown="resize(this); validation();"
-                              onkeyup="resize(this); validation();" name="chatContent" id="chatContent"
+                              onkeyup="resize(this); validation();" name="chatText" id="chatText"
                               rows="3" cols="10" wrap="hard" placeholder="메세지를 입력하세요."></textarea></div>
 
-                <span type="submit" id="submitSpan" class="submitSpan"><img type="button" class="submitIcon"
+                <span type="button" id="submitSpan" class="submitSpan"><img type="button" class="submitIcon" id="submitIcon"
                                                                             src="/icons/submitIcon.svg" alt=""
                                                                             onclick="CreateChat();"/></span>
             </form>
@@ -65,13 +65,22 @@
     body::-webkit-scrollbar {
         display: none; /* Chrome, Safari, Opera*/
     }
+    input::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera*/
+    }
+    textarea::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera*/
+    }
+    div::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera*/
+    }
     textarea::placeholder{
         font-size: 14px;
         color: #ddd;
     }
     .chattingRoomContainer {
         width: 400px;
-        height: 700px;
+        max-height: 700px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -134,14 +143,26 @@
         margin-right:20px;
     }
     .chatInputContainer {
-        background: #a7a1f71c;
-        position: relative;
-
+        position: fixed;
+        bottom: 0;
+        width: 400px;
+        background: #dbd9f1;
     }
 
     .chatContent {
-        width: 400px;
+        position: absolute;
+        width: 380px;
+        white-space: nowrap;
+        overflow: scroll;
+        height: 540px;
+        padding: 0 10px;
 
+    }
+    .chatContent > li{
+        color: #000;
+        font-weight: normal;
+        font-size: 10px;
+        width: 400px;
     }
 
     .chatForm {
@@ -185,7 +206,7 @@
         margin-bottom: 6px;
     }
 </style>
-<script src="/js/jquery-3.3.1.min.js"></script>-->
+<script src="/js/jquery-3.3.1.min.js"></script>
 <script src="/js/jquery-ui.js"></script>
 <script src="/js/popper.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
@@ -197,22 +218,39 @@
 <script>
     $(document).ready(function () {
         getProductDetail();
+        getChatList();
+        $('.chatContent').scrollTop($('.chatContent')[0].scrollHeight);
+        if($('.chatInput').val() == ''){
+            inputHeightReset();
+        }
+    });
+
+    //엔터로 메세지 전송
+    document.getElementById('chatText').addEventListener('keydown',function(event){
+        if(event.keyCode ==13){
+            event.preventDefault();
+            document.getElementById('submitIcon').click();
+        }
     });
 
     // 채팅 내용에 따라 textarea자동 크기 조절
     function resize(obj) {
-        obj.style.height = "1px";
-        obj.style.height = (1 + obj.scrollHeight) + "px";
-
+        if($('.textareaContainer').height() >129){
+            $('.textareaContainer').css('white-space','nowrap');
+            $('.textareaContainer').css('overflow','scroll');
+        }else{
+            obj.style.height = "1px";
+            obj.style.height = (1 + obj.scrollHeight) + "px";
+        }
     }
 
     // input validation 체크
     function validation() {
-        var result = 0;
-        if ($('#chatContent').val() != '') {
+        var result;
+        if ($('#chatText').val() != '') {
             result = 1;
             $('.submitIcon').css('visibility', 'unset');
-        } else {
+        } else{
             result = 0;
             $('.submitIcon').css('visibility', 'hidden');
         }
@@ -227,15 +265,12 @@
     function CreateChat() {
         // 채팅 insert 후
         if (validation()) {
-            $('.chatInput').val('');
-
             param = {
                 prodNo: searchParam('prodNo'),
                 sendId: searchParam('sendId'),
                 recipientId: searchParam('recipientId'),
-                content: $('#chatContent').val(),
+                content: $("textarea#chatText").val()
             }
-
             $.ajax({
                 url: '/chat/create',
                 data: param,
@@ -255,9 +290,19 @@
                 alert('메세지 전송이 실패하였습니다. 관리자에게 문의하세요.');
                 console.log(textStatus);
             });
+        }else{
+            alert('채팅을 입력해주세요');
         }
+        $('.chatInput').val('');
+        $('.submitIcon').css('visibility','hidden');
 
     }
+
+    function inputHeightReset() {
+        $('.textareaContainer').css('height', '36px');
+        $('.chatInput').css('height', '26px');
+    }
+
 
     function getRoomId(){
         param = {
@@ -300,19 +345,16 @@
                 //페이지 갱신 없이 현재 카테고리 번호로 주소 변경
                 var url = '/member/chatting/chat?prodNo=' + prodNo + '&sendId='+ sendId +'&recipientId='+ recipientId +'&roomNo='+ 1;
                 history.pushState(state, title, url);
+                // 주소변경하고  룸넘버 인자로 넘겨줘서 list 받기
+                getChatList();
             }
-
-            getChatList();
     }
 
     function getChatList(){
-            $('.chatInput').val('');
-
             param = {
                 roomNo: 1,
                 prodNo: searchParam('prodNo'),
             }
-
             $.ajax({
                 url: '/chat/list',
                 data: param,
@@ -320,10 +362,10 @@
                 dataType: 'json'
             }).done(function (data) {
                 console.log("@@chatList",data.chatList);
+                drawChatList(data);
             }).fail(function (data, textStatus, errorThrown) {
                 console.log(textStatus);
             });
-
     }
 
     /*상품 정보 가져오기*/
@@ -362,25 +404,37 @@
         }
     }
 
-    /*채팅 정보 가져오기*/
-    function getChatList() {
-        var param = {
-            prodNo: searchParam('prodNo'),
-            roomNo: searchParam('roomNo')
+    //상품 리스트 그리기
+    function drawChatList(data) {
+        var container = $('.chatContent');
+        if (typeof data.chatList !== 'undefined' && data.chatList.length > 0) {
+            container.empty();
+            var contents = '';
+
+            $.each(data.chatList, function (index, obj) {
+                // 매번 컨텐츠가 달라야하니 초기화
+                contents = '';
+
+                //채팅 html
+
+                contents += '<li class="sendtime">보낸시간:' + obj.sendtime + '</li><br>';
+                contents += '<li class="sendId">보낸사람:' + obj.sendId + '</li><br>';
+                contents += '<li class="recipienId">받는사람:' + obj.recipientId + '</li><br>';
+                contents += '<li class="content">내용:' + obj.content + '</li><br>';
+
+                //그리드에 삽입
+                container.append(contents)
+            })
+
+        } else {
+            container.empty();
+            contents = '<span></span>';
+            container.append(contents);
+
         }
+        $('.chatContent').scrollTop($('.chatContent')[0].scrollHeight);
 
-        $.ajax({
-            url: '/chat/list',
-            data: param,
-            type: 'post',
-            dataType: 'json'
-        }).done(function (data) {
-            drawTitle(data);
-            console.log("data.chatList", data.chatList);
-
-        }).fail(function (data, textStatus, errorThrown) {
-            console.log(textStatus);
-        });
     }
+
 </script>
 </html>

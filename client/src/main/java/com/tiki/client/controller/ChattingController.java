@@ -56,12 +56,13 @@ public class ChattingController {
 
     @RequestMapping("/chat/list")  /*채팅 리스트 보기 */
     @ResponseBody
-    public Map<String, Object> chatList(ChatDTO chatDTO) {
+    public Map<String, Object> chatList(@RequestParam(value = "prodNo") int prodNo,
+                                        @RequestParam(value = "roomNo") int roomNo) {
         Map<String, Object> resultMap = new HashMap<>();
         List<Object> list = null;
 
         try {
-            list= chatService.chatList(chatDTO);
+            list= chatService.chatList(prodNo, roomNo);
             resultMap.put("chatList", list);
         } catch (Exception e) {
             e.printStackTrace();

@@ -51,11 +51,14 @@ public class ChatController {
     }
 
     // prodNo + roomNo 에 해당하는 전체 채팅 보기
-    @GetMapping(value = "/chat/allChat")
-    public List selectAllChat(@RequestBody ChatDTO chatDTO) {
+    @GetMapping(value = "/chat/allChat/{prodNo}/{roomNo}")
+    public List selectAllChat(@PathVariable("prodNo") int prodNo,
+                              @PathVariable("roomNo") int roomNo) {
 
         List<ChatDTO> chatList;
-
+        ChatDTO chatDTO = new ChatDTO();
+        chatDTO.setProdNo(prodNo);
+        chatDTO.setRoomNo(roomNo);
         chatList = chatService.selectAllChat(chatDTO);
 
         if(chatList == null) {
