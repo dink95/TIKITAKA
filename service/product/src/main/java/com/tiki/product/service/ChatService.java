@@ -15,6 +15,8 @@ public interface ChatService {
 
     public ChatDTO selectChatDetail(int chatIdx);
 
+    public List<ChatDTO> selectExistChatList(String sendId);
+
     // public Integer findRoomNoRecipientId(ChatDTO params);
 
 }

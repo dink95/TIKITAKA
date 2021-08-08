@@ -66,6 +66,25 @@ public class ChatController {
 
     }
 
+    // prodNo + sendId + recipientId 에 해당하는 룸 넘버 보내기
+    @GetMapping("/chat/roomNo")
+    public int selectRoomNumber(@RequestBody ChatDTO chatDTO) {
+
+        int roomNo;
+        Integer check = chatService.findRoomNoSendId(chatDTO);
+
+        if(check == null) {
+            System.out.println("상품번호 혹은 보내는 사람 혹은 받는 사람의 아이디가 잘못됨");
+            roomNo = 0;
+        }
+        else {
+            roomNo = check.intValue();
+        }
+
+        return roomNo;
+
+    }
+
     // 특정 chatIdx에 해당하는 채팅만 보기
     @GetMapping("/chat/{chatIdx}")
     public ChatDTO selectChatDetail(@PathVariable("chatIdx") int chatIdx) {
