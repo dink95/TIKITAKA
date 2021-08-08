@@ -34,6 +34,25 @@ class ProductApplicationTests {
     private ChatService chatService;
 
     @Test
+    public void testOfselectChat() {
+        int chatTotalCount = chatMapper.selectChatTotalCount();
+        if(chatTotalCount > 0) {
+            List<ChatDTO> chatList = chatService.selectExistChatList("test");
+            if(CollectionUtils.isEmpty(chatList) == false) {
+                for(ChatDTO chat : chatList) {
+                    System.out.println("==============");
+                    System.out.println(chat.getChatIdx());
+                    System.out.println(chat.getRoomNo());
+                    System.out.println(chat.getProdNo());
+                    System.out.println(chat.getContent());
+                    System.out.println(chat.getSendtime());
+                    System.out.println("==============");
+                }
+            }
+        }
+    }
+
+    /**@Test
     public void testOfChatInsert() {
 
         ChatDTO params = new ChatDTO();
@@ -46,7 +65,7 @@ class ProductApplicationTests {
 
         System.out.println("roomNo : " + params.getRoomNo());
         System.out.println("결과는 " + result + " 입니다.");
-    }
+    }*/
 
     /**@Test
     public void testOfupdateRoomCount() {

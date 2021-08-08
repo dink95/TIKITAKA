@@ -17,6 +17,8 @@ public interface ChatService {
 
     public List<ChatDTO> selectExistChatList(String sendId);
 
+    public int selectChatTotalCount();
+
     // public Integer findRoomNoRecipientId(ChatDTO params);
 
 }

@@ -88,6 +88,17 @@ public class ChatController {
 
     }
 
+    // 해당 Id가 참가하고 있는 채팅 목록 불러오기
+    @GetMapping(value = "/chat/existChat/{sendId}")
+    public List selectExistChatList(@PathVariable("sendId") String sendId) {
+
+        List<ChatDTO> chatList;
+
+        chatList = chatService.selectExistChatList(sendId);
+
+        return chatList;
+    }
+
     // 특정 chatIdx에 해당하는 채팅만 보기
     @GetMapping("/chat/{chatIdx}")
     public ChatDTO selectChatDetail(@PathVariable("chatIdx") int chatIdx) {
