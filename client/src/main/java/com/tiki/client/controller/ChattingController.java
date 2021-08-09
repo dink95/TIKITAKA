@@ -62,7 +62,7 @@ public class ChattingController {
         List<Object> list = null;
 
         try {
-            list= chatService.chatList(prodNo, roomNo);
+            list = chatService.chatList(prodNo, roomNo);
             resultMap.put("chatList", list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,14 +71,17 @@ public class ChattingController {
         return resultMap;
     }
 
+
     @RequestMapping("/chat/getRoomNo")  /*룸넘버 조회 */
     @ResponseBody
-    public Map<String, Object> getRoomNo(ChatDTO chatDTO) {
+    public Map<String, Object> getRoomNo(@RequestParam(value = "prodNo") int prodNo,
+                                         @RequestParam(value = "sendId") String sendId,
+                                            @RequestParam(value = "recipientId") String recipientId) {
         Map<String, Object> resultMap = new HashMap<>();
-        int result=0;
-        System.out.println(chatDTO);
+        int result = 0;
+
         try {
-            result = chatService.getRoomNo(chatDTO);
+            result = chatService.getRoomNo(prodNo, sendId, recipientId);
             resultMap.put("roomNo", result);
         } catch (Exception e) {
             e.printStackTrace();
@@ -86,5 +89,21 @@ public class ChattingController {
 
         return resultMap;
     }
+
+    @RequestMapping("/chat/list/id")  /*채팅 리스트 보기 */
+    @ResponseBody
+    public Map<String, Object> chatListById(@RequestParam(value = "sendId") String sendId) {
+        Map<String, Object> resultMap = new HashMap<>();
+        List<Object> list = null;
+        try {
+            list = chatService.chatListById(sendId);
+            resultMap.put("chatList", list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return resultMap;
+    }
+
 
 }

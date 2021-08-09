@@ -38,12 +38,22 @@ public class ChatService {
     }
 
     //룸넘버
-    public int getRoomNo(ChatDTO chatDTO) throws Exception {
+    public int getRoomNo(int prodNo, String sendId, String recipientId) throws Exception {
         return webClient.get()
-                .uri("/chat/roomNo")
+                .uri("/chat/roomNo/{prodNo}/{sendId}/{recipientId}",prodNo,sendId,recipientId)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
                 .block();
     }
+
+    //채팅 목록 -> 특정 아이디로 조회
+    public List chatListById(String sendId) throws Exception {
+        return webClient.get()
+                .uri("/chat/existChat/{sendId}",sendId)
+                .retrieve()
+                .bodyToMono(List.class) //반환정보
+                .block();
+    }
+
 
 }

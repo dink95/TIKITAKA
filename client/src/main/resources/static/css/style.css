@@ -1,9 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&family=Roboto:wght@100&display=swap');
+
+textarea{
+  font-family: 'Roboto','Noto Sans KR',  sans-serif;
+}
 /* Base */
 body {
   line-height: 1.7;
   color: #8c92a0;
   font-weight: 300;
   font-size: 16px;
+  overflow-X:hidden;
 }
 
 .font-14 {

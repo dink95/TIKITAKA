@@ -56,14 +56,14 @@
                         <li th:if="${session.mbrId == null}"><a href="signup"><span
                                 class="sign-in font-weight-normal">&nbsp;회원가입</span></a>
                         </li> <!--로그인 전-->
-                        <li th:if="${session.mbrId != null}"><a><span class="sign-in-id font-weight-normal"
+                        <li th:if="${session.mbrId != null}"><a><span class="sign-in-id font-weight-normal" id="login_id"
                                                                       th:text="${session.mbrId}"></span></a>
                         </li> <!--로그인 후-->
                         <li>/&nbsp;&nbsp;</li>
                         <li th:if="${session.mbrId == null}"><a href="/login"><span class="sign-in font-weight-normal">로그인</span></a>
                         </li><!--로그인 전-->
                         <li th:if="${session.mbrId != null}"><a href="/logout"><span
-                                class="sign-in font-weight-normal">&nbsp;&nbsp;로그아웃</span></a>
+                                class="sign-in font-weight-normal">&nbsp&nbsp;로그아웃</span></a>
                         </li> <!--로그인 후-->
                         <!--<li class="d-inline-block d-md-none ml-md-0"><a href="#"
                                                                         class="site-menu-toggle js-menu-toggle"><span
@@ -350,7 +350,7 @@
                 </svg>
                 <a th:if="${session.mbrId == null}" href="/login"><span>채팅</span></a>
                 <a th:if="${session.mbrId != null}" href="#"
-                   onclick="window.open('/member/chatting/room?userId='+'예시' +'' ,'채팅방','toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=100,left=100')"><span>채팅</span></a></li>
+                   onclick="goChatRoom($('#login_id').text());"><span>채팅</span></a></li>
             <li th:classappend="${menu}=='myinfo'? 'menu_active' : ''">
                 <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                      class="bi bi-person" viewBox="0 0 16 16">

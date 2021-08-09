@@ -641,6 +641,9 @@ function popup(title, content, href) {
     });
 }
 
+    function goChatRoom(props){
+        window.open('/member/chatting/room?sendId='+ props + '' ,'채팅방','toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=100,left=100')
+    }
 
 /**********************************************반응형******************************************/
 

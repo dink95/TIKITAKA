@@ -69,11 +69,20 @@ public class ChatController {
 
     }
 
+
     // prodNo + sendId + recipientId 에 해당하는 룸 넘버 보내기
-    @GetMapping("/chat/roomNo")
-    public int selectRoomNumber(@RequestBody ChatDTO chatDTO) {
+    @GetMapping(value="/chat/roomNo/{prodNo}/{sendId}/{recipientId}")
+    public int selectRoomNumber(@PathVariable("prodNo") int prodNo,
+                                @PathVariable("sendId") String sendId,
+                                @PathVariable("recipientId") String recipientId) {
+
 
         int roomNo;
+        ChatDTO chatDTO = new ChatDTO();
+        chatDTO.setProdNo(prodNo);
+        chatDTO.setSendId(sendId);
+        chatDTO.setRecipientId(recipientId);
+
         Integer check = chatService.findRoomNoSendId(chatDTO);
 
         if(check == null) {

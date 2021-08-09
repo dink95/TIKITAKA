@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="preconnect" href="/https://fonts.gstatic.com">
-    <link rel="stylesheet" href="/https://fonts.googleapis.com/css?family=Mukta:300,400,700">
     <link rel="stylesheet" href="/fonts/icomoon/style.css">
 
     <link rel="stylesheet" href="/css/style.css">
@@ -14,19 +13,17 @@
 <body>
 
 <div class="site-wrap">
+    <header>
+        <!--replace 헤더-->
+        <div th:replace="common::header(myinfo)">
+        </div>
+    </header>
     <div class="chattingRoomContainer">
         <div class="chattingRoomTitle bb-1-p d-flex-j-a-center padding-top-bottom-5">
             <span class="font-weight-normal font-20 text-black">채팅 리스트</span>
         </div>
         <ul class="chattingListNav">
-            <li  onclick="goChat(1)">
-                <span>채팅1</span>
-            </li>
-            <li onclick="goChat(2)"><span>채팅2</span></li>
-            <li onclick="goChat(3)"><span>채팅3</span></li>
-            <li onclick="goChat(4)"><span>채팅4</span></li>
-            <li onclick="goChat(5)"><span>채팅5</span></li>
-            <li onclick="goChat(6)"><span>채팅6</span></li>
+
         </ul>
     </div>
 </div>
@@ -35,6 +32,9 @@
     body {
         margin: 0;
         padding: 0;
+    }
+    header{
+        display: none;
     }
     .chattingRoomContainer {
         width: 400px;
@@ -49,6 +49,11 @@
         height: 80px;
         border-bottom: 1px solid #ddd;
     }
+    .chatImg{
+        width: 50px;
+        height: 50px;
+        border-radius: 5px;
+    }
 </style>
 <script src="/js/jquery-3.3.1.min.js"></script>
 <script src="/js/jquery-ui.js"></script>
@@ -60,9 +65,146 @@
 <script src="/https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script src="/js/main.js"></script>
 <script>
+
+
     // function goChat(props){
     // window.open('/member/chatting/chat?chatNo='+props+'' ,'채팅방 대화창','toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=100,left=600');
     // }
+    $(document).ready(function () {
+        getProdNoRoomNo();
+        autoRefresh_div();
+    });
+
+    function searchParam(key) {
+        return new URLSearchParams(location.search).get(key);
+    };
+
+    //로그아웃하면 창 종료
+    function autoRefresh_div()
+    {
+        var currentLocation = window.location;
+        $("header").load(currentLocation +"header");
+        if($('#login_id').text() != searchParam('sendId')){
+            window.close();
+        }
+    }
+
+    function getProdNoRoomNo(){
+        param = {
+            sendId: searchParam('sendId')
+        }
+        $.ajax({
+            url: '/chat/list/id',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            console.log("@@chatListById",data.chatList);
+            drawChatRoomList(data);
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+    }
+
+    function getProdDetail(prodNo){
+        var param = {
+            prodNo: prodNo,
+        }
+
+        $.ajax({
+            url: '/product/detail.do',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            console.log("data.dataDetail", data.dataDetail);
+            drawChatImg(data);
+
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+    }
+
+    function getMbrDetail(mbrId)
+       {
+            param = {
+                userId: mbrId,
+            }
+            $.ajax({
+                url: '/member/detail',
+                data: param,
+                type: 'post',
+                dataType: 'json'
+            }).done(function (data) {
+                console.log("@@memberDetail",data.memberDetail)
+                drawAddr(data)
+            }).fail(function (data, textStatus, errorThrown) {
+                console.log(textStatus);
+            });
+    }
+
+    //채팅 목록 그리기
+    function drawChatRoomList(data) {
+        var container = $('.chattingListNav');
+        $('.queryTextCount').text(data.chatList.length);
+        if (typeof data.chatList !== 'undefined' && data.chatList.length > 0) {
+            container.empty();
+            var contents = '';
+            var mbrId;
+            $.each(data.chatList, function (index, obj) {
+
+                //상품 정보 조회
+                // 매번 컨텐츠가 달라야하니 초기화
+                contents = '';
+                //상품 하나 html
+                contents += '<li class="chatRoom" onclick="goChat('+obj.prodNo+','+obj.roomNo+')">';
+                contents += '    <span class="chatRoomMessage">' +obj.content + '</span>';
+                if(obj.sendId == searchParam('sendId')){
+                    contents += '    <span class="chatRecipientId">' +obj.recipientId + '</span>';
+                    contents += '    <span class="chatAddr addrName'+obj.recipientId+'"></span>';
+                    mbrId=obj.recipientId;
+                }else{
+                    contents += '    <span class="chatRecipientId">' +obj.sendId + '</span>';
+                    contents += '    <span class="chatAddr addrName'+obj.sendId+'"></span>';
+                    mbrId=obj.sendId;
+                }
+
+                contents += '    <span class="sendtime">' +obj.sendtime + '</span>';
+                contents += '    <img class="chatImg imgNo'+obj.prodNo+'" src="" alt="">';
+                contents += '</li>';
+
+                //그리드에 삽입
+                container.append(contents)
+                getProdDetail(obj.prodNo);
+                getMbrDetail(mbrId);
+            })
+        } else {
+            container.empty();
+            contents = '<span>채팅 목록이 없습습니다.</span>';
+            container.append(contents);
+        }
+    }
+
+    function drawChatImg(data) {
+        if (typeof data.dataDetail !== 'undefined') {
+            var imgPath = '';
+            //이미지경로를 미리 만들어놓는다.
+            imgPath = '/istatic/images/' + data.dataDetail.prodNo + '/1.jpg';
+            //메인 이미지 html
+            $('.imgNo'+ data.dataDetail.prodNo).attr("src", imgPath);
+            //디테일 정보들
+
+        }
+    }
+
+    function drawAddr(data) {
+        if (typeof data.memberDetail !== 'undefined') {
+            //메인 이미지 html
+            $('.addrName'+ data.memberDetail.mbrId).text(data.memberDetail.mbrAddr);
+            //디테일 정보들
+
+        }
+    }
 
     var newName, n=0;
 
@@ -73,14 +215,16 @@
         newName = value + n;
     }
 
-    function goChat(props)
+    function goChat(prodNo,roomNo)
     {
+        var sendId = searchParam('sendId');
         var top = Math.random()*100 + 100;
         var left = Math.random()*100 + 600;
         newWindow("MyWindow");
-        window.open('/member/chatting/chat?chatNo='+props+'', newName,
+        window.open('/member/chatting/chat?prodNo='+prodNo+'&sendId='+sendId+'&roomNo='+roomNo+'', newName,
             'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top='+top+',left='+left+'');
     }
+
 </script>
 </body>
 </html>
