@@ -20,8 +20,8 @@
     <div class="chattingRoomContainer">
         <div style="  background: #ecebf5;">
             <div class="chattingRoomTitle bb-1-p ">
-                <div class="font-weight-normal font-20 ">
-                    <img class="titleImg" src="" alt="">
+                <div class="titleProdContainer font-weight-normal font-20">
+                    <img class="titleImg" src="" alt="" >
                     <div class="titleInfo">
                         <span class="titleProdName"></span>
                         <div>
@@ -163,6 +163,7 @@
         font-weight: bold;
         color: #5e0080;
         margin-right: 20px;
+        cursor: pointer;
     }
 
     .chatInputContainer {
@@ -246,7 +247,6 @@
         display: flex;
         align-items: flex-end;
         margin: -10px 0;
-
     }
 </style>
 <script src="/js/jquery-3.3.1.min.js"></script>
@@ -259,14 +259,16 @@
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script src="/js/main.js"></script>
 <script>
+
     $(document).ready(function () {
+
         getProductDetail();
         if (searchParam('recipientId')) {
             getRoomId();
         } else {
             getChatList();
         }
-        $('.chatContent').scrollTop($('.chatContent')[0].scrollHeight);
+        $('.chatContent').scrollTop($('.chatConten샷')[0].scrollHeight);
         if ($('.chatInput').val() == '') {
             inputHeightReset();
         }
@@ -274,6 +276,10 @@
         drawOpponentId();
         // autoRefresh_div(); -> 에러
     });
+
+    setInterval(function(){
+        getChatList();
+    },1000);
 
     //로그아웃하면 창 종료
     function autoRefresh_div() {
@@ -470,6 +476,8 @@
             //디테일 정보들
             $('.titlePrice').text(data.dataDetail.prodPrc);
             $('.titleProdName').text(data.dataDetail.prodNm);
+            //title 상품 클릭
+            $('.titleProdContainer').attr('onclick','goChatToProd('+data.dataDetail.prodNo+')');
 
         }
     }
@@ -486,6 +494,8 @@
         } else {
             opponentId = recipientId;
         }
+        //title id 클릭
+        titleUserId.attr('onclick','goChatToId("'+opponentId+'")');
         titleUserId.text(opponentId);
     }
 

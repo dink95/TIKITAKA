@@ -641,9 +641,19 @@ function popup(title, content, href) {
     });
 }
 
-    function goChatRoom(props){
-        window.open('/member/chatting/room?sendId='+ props + '' ,'채팅방','toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=100,left=100')
-    }
+function goChatRoom(props) {
+    window.open('/member/chatting/room?sendId=' + props + '', '채팅방', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=100,left=100')
+}
+
+//채팅에서 상품 클릭
+function goChatToProd(prodNo) {
+    window.open('/product/detail?prodNo=' + prodNo + '', 'TIKITAKA', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no');
+}
+
+//채팅에서 아이디 클릭
+function goChatToId(userId) {
+    window.open('/member/userinfo?userId=' + userId + '', 'TIKITAKA', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=100,left=100')
+}
 
 /**********************************************반응형******************************************/
 
@@ -667,18 +677,18 @@ $('.mobile_category_close_btn').click(function () {
 $('.input-mobile-category-content-text').click(function () {
 
     const mobile_category_toggle = $('.input-mobile-category-content-item');
-    if(mobile_category_toggle.css('display') == 'none') {
+    if (mobile_category_toggle.css('display') == 'none') {
         mobile_category_toggle.css('display', 'flex');
         mobile_category_toggle.css('border-bottom', '1px solid #ddd');
-        $('.arrowDownIcon').attr('src','/icons/arrowUp.svg');
+        $('.arrowDownIcon').attr('src', '/icons/arrowUp.svg');
 
         // mobile_category_toggle.animate({
         //     right: '-100vh',
         // }, 300, 'swing');
-    }else{
+    } else {
         mobile_category_toggle.css('display', 'none');
         mobile_category_toggle.css('border-bottom', 'none');
-        $('.arrowDownIcon').attr('src','/icons/arrowDown.svg');
+        $('.arrowDownIcon').attr('src', '/icons/arrowDown.svg');
     }
 })
 

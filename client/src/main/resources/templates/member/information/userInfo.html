@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title> </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+  <link rel="stylesheet" href="../fonts/icomoon/style.css">
+
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/magnific-popup.css">
+  <link rel="stylesheet" href="../css/jquery-ui.css">
+  <link rel="stylesheet" href="../css/owl.carousel.min.css">
+  <link rel="stylesheet" href="../css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="../css/aos.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/icon.css">
+</head>
+
+<body>
+
+
+<div>
+  <div class="profile">
+    프로필
+  </div>
+  <div class="userName">
+    userName
+  </div>
+  <div class="site-section"><!--margin class-->
+
+    <div class="container" style="display: flex;">
+        <div class="myinfoSubNav">
+          <div class="myinfoSubGrade">
+            <label for="p_grade" class="p_grade text-black">거래등급
+            </label>
+          </div>
+          <div>
+            <span id="p_grade"></span>
+          </div>
+        </div>
+
+        <div class="myinfoSubNav">
+          <div>
+            <label for="p_point" class="text-black">판매점수</label>
+          </div>
+          <div>
+            <span id="p_point"></span>
+            <span>점</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="prodContainer">
+      <div class="prod myProd" onclick="finishCheck(0)">
+        판매상품
+      </div>
+    </div>
+    <input id="finishCheck" type="hidden" value="0">
+    <div class="gridContainer" style="">
+
+    </div>
+
+  </div>
+</div>
+<a id="arrow_up" class="scroll_up" onclick="scroll_up()"> </a>
+
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script src="../js/jquery-ui.js"></script>
+<script src="../js/popper.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/owl.carousel.min.js"></script>
+<script src="../js/jquery.magnific-popup.min.js"></script>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<script src="../js/aos.js"></script>
+
+<script src="../js/main.js"></script>
+<style>
+
+  .site-section {
+    background: #f8f9fa;
+    padding: 1em 0 1em 0;
+  }
+  .userName{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 20px;
+    font-weight: bold;
+    color: #5e0080;
+  }
+  .profile{
+    color: #000;
+    border-bottom: 1px solid #ddd;
+    font-weight: normal;
+    display: flex;
+    justify-content: center;
+    background: #ecebf5;
+  }
+
+  .myinfoContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .myinfoMainNav, .myinfoSubNav {
+    background: #fff;
+    padding: 10px;
+    margin: 3px;
+  }
+
+
+
+  .myinfoSubNav {
+    width: 50%;
+  }
+
+  .myinfoMainNav > div:nth-child(1) {
+    margin-left: 30px;
+    font-weight: normal;
+  }
+
+  .myinfoMainNav > div:nth-child(2) {
+    margin-left: 30px;
+    font-size: 30px;
+    color: #5f0080;
+    font-weight: normal;
+    height: 50%;
+  }
+
+  .myinfoMainNav > div:nth-child(3) {
+    text-align: right;
+    color: #000;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-around;
+    border-radius: 25px;
+  }
+
+  .myinfoMainNav > div:nth-child(3) > button {
+    border-style: none;
+    font-size: 14px;
+    font-weight: normal;
+    padding: 5px 30px;
+    border-radius: 25px;
+  }
+
+  .myinfoMainNav > div:nth-child(3) > button:focus {
+    outline: none;
+  }
+
+  .myinfoMainNav > div:nth-child(3) > button:nth-child(2) {
+    color: red;
+  }
+
+  .myinfoSubNav > div:nth-child(1) {
+    margin-left: 30px;
+    font-weight: normal;
+  }
+
+  .myinfoSubNav > div:nth-child(2) {
+    margin-left: 30px;
+    font-size: 30px;
+    color: #5f0080;
+    font-weight: normal;
+    height: 50%;
+  }
+
+  .myinfoSubNav > div:nth-child(2) > span:nth-child(2) {
+    font-size: 14px;
+    color: #000;
+    font-weight: bold;
+  }
+
+  .myinfoSubNav > div:nth-child(3) {
+    text-align: right;
+    margin-right: 30px;
+    color: #000;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  /*이미지리스트 css*/
+  .block-4-image {
+    margin: 0;
+  }
+
+  .block-4-text {
+    font-size: 16px;
+    color: #000;
+
+
+  }
+
+  .img-fluid {
+    width: 100%;
+    height: 193.53px;
+  }
+
+  .block-4-text {
+    padding: 10px 0;
+  }
+
+  p {
+    margin: 0;
+    color: #000;
+  }
+
+  .priceContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 10px 0 20px;
+  }
+
+  label {
+    margin-right: 20px;
+    padding-bottom: 20px;
+  }
+
+  label + span {
+    margin-right: 20px;
+    font-size: 14px;
+  }
+
+  .ItemName > a {
+    margin: 0 20px 20px 20px;
+    display: flex;
+    justify-content: flex-start;
+  }
+  .prodContainer{
+    display: flex;
+    justify-content: flex-start;
+  }
+  .myProd{
+    font-weight: normal;
+    border-bottom: 1px solid black;
+    color: #000;
+  }
+  .finishProd{
+    color: #a09e9e;
+    font-weight: normal;
+
+  }
+  .prod {
+    margin-bottom: 10px;
+    width: 100px;
+    text-align: center;
+    padding: 10px 0;
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  function searchParam(key) {
+    return new URLSearchParams(location.search).get(key);
+  };
+  var userIdInfo = searchParam('userId');
+  $('title').text('TIKITAKA' + ' ' +userIdInfo + '님의 정보');
+  $('.userName').text(userIdInfo);
+  function finishCheck(props) {
+    $('#finishCheck').val(props);
+    getIdQueryList();
+    if ($('#finishCheck').val() == 0) {
+      $('.myProd').css('border-bottom', '1px solid black');
+      $('.myProd').css('color', 'black');
+      $('.myProd').css('font-weight','normal');
+      $('.finishProd').css('border-bottom', 'none');
+      $('.finishProd').css('font-weight','lighter');
+    } else {
+      $('.finishProd').css('border-bottom', '1px solid black');
+      $('.finishProd').css('color', 'black');
+      $('.finishProd').css('font-weight','normal');
+      $('.myProd').css('border-bottom', 'none');
+      $('.myProd').css('font-weight','lighter');
+    }
+  }
+
+  function getIdQueryList() {
+
+    if($('#finishCheck').val() == 0) {
+      param = {
+        selId: searchParam('userId')
+      }
+      $.ajax({
+        url: '/product/list.selId',
+        data: param,
+        type: 'post',
+        dataType: 'json'
+      }).done(function (data) {
+        drawPrdList(data);
+
+      }).fail(function (data, textStatus, errorThrown) {
+        console.log(textStatus);
+      });
+    }else{
+      param = {
+        selId: searchParam('userId'),
+      }
+      $.ajax({
+        url: '/product/finish/list.selId',
+        data: param,
+        type: 'post',
+        dataType: 'json'
+      }).done(function (data) {
+        drawPrdList(data);
+
+      }).fail(function (data, textStatus, errorThrown) {
+        console.log(textStatus);
+      });
+
+    }
+  }
+
+  function getMbrInfo() {
+    param = {
+      userId: searchParam('userId')
+    }
+    $.ajax({
+      url: '/member/detail',
+      data: param,
+      type: 'post',
+      dataType: 'json'
+    }).done(function (data) {
+      if (data.memberDetail.mbrRole) {
+        $('#emailCheck').text('이메일 인증 완료');
+        $("#emailCheck").attr('onclick', '').unbind('click');
+        $("#emailCheck").css('cursor', 'initial');
+
+      }
+      updateGrade(data.memberDetail.mbrPoints);
+      $('#p_point').text(data.memberDetail.mbrPoints);
+      if (data.memberDetail.mbrPoints > 499) {
+        $('#p_grade').css('color', '#5f0080');
+      } else if (data.memberDetail.mbrPoints > 299) {
+        $('#p_grade').css('color', '#20b2aa');
+      } else if (data.memberDetail.mbrPoints > 99) {
+        $('#p_grade').css('color', '#d4af37');
+      } else if (data.memberDetail.mbrPoints > 49) {
+        $('#p_grade').css('color', '#a9a9a9');
+      } else if (data.memberDetail.mbrPoints > 4) {
+        $('#p_grade').css("color", "#392f31");
+      } else {
+        $('#p_grade').css("color", "#000");
+      }
+
+    }).fail(function (data, textStatus, errorThrown) {
+      console.log(textStatus);
+    });
+  }
+
+  function drawPrdList(data) {
+
+    console.log("@@product data", data);
+
+    if (typeof data.dataQueryList !== 'undefined' && data.dataQueryList.length > 0) {
+      var container = $('.gridContainer');
+      container.empty();
+      var contents = '';
+      var imgPath = '';
+
+      $.each(data.dataQueryList, function (index, obj) {
+        $('#objCatNo').val(obj.catNo); //카테고리 상품 디테일 -> 카테고리 번호 저장
+        //매번 컨텐츠가 달라야하니 초기화
+        contents = '';
+        var wday = timeForToday(obj.wday);
+        //이미지경로를 미리 만들어놓는다.
+        imgPath = '/istatic/images/' + obj.prodNo + '/1.jpg';
+
+        //제품 html
+        contents += '<div class="gridItem">';
+        contents += '    <div class="item">';
+        contents += '       <div class="block-4 text-center">';
+        contents += '          <a href="#" onclick="goDetail(' + obj.prodNo + ')">';
+        contents += '               <figure class="block-4-image" >';
+        contents += '                    <img src="' + imgPath + '"  alt="Image placeholder"  class="img-fluid">';
+        contents += '                </figure>';
+        contents += '                <div class="block-4-text">';
+        contents += '                    <h3 class="ItemName"><a href="#"  onclick="goDetail(' + obj.prodNo + ')">' + textLengthOverCut(obj.prodNm, 11, '...') + ' </a></h3>';
+        contents += '                    <div class=priceContent>';
+        contents += '                    <p class="text-primary font-weight-bold">' + obj.prodPrc + '원</p>';
+        contents += '                    <span class="font-weight-normal">' + wday + '</span>';
+        contents += '                    </div>';
+        contents += '                </div>';
+        contents += '            </a>';
+        contents += '        </div>';
+        contents += '    </div>';
+        contents += '</div>';
+
+        //그리드에 삽입
+        container.append(contents);
+      })
+
+    }else{
+      $('.gridContainer').empty();
+    }
+  }
+
+
+  //상세페이지
+  function goDetail(prodNo) {
+    location.href = '/product/detail?prodNo=' + prodNo;
+  }
+
+  function goUpdateInfo() {
+    location.href = '/member/info/pwdconfirm';
+  }
+
+  /*탈퇴 페이지 이동*/
+  function removeCheck() {
+    location.href = '/member/info/delete';
+  }
+
+  function goCertify() {
+    location.href = '/member/info/certify';
+  }
+
+  function goGrade() {
+    location.href = '/grade';
+  }
+
+  $(document).ready(function () {
+    getIdQueryList();
+    getMbrInfo();
+  });
+  $('#loading').css('display','block');
+  $(window).on('load', function(){ $('#loading').css('display','none')});
+
+  //등급 업데이트
+  function updateGrade(point) {
+    param = {
+      userId: searchParam('userId'),
+      userPoint: point,
+    }
+    $.ajax({
+      url: '/member/update/grade',
+      data: param,
+      type: 'post',
+      dataType: 'json'
+    }).done(function (data) {
+      param = {
+        userId:searchParam('userId')
+      }
+      $.ajax({
+        url: '/member/detail',
+        data: param,
+        type: 'post',
+        dataType: 'json'
+      }).done(function (data) {
+        $('#p_grade').text(data.memberDetail.mbrGrade);
+      }).fail(function (data, textStatus, errorThrown) {
+        console.log(textStatus);
+      });
+      console.log(data.resultMsg);
+    }).fail(function (data, textStatus, errorThrown) {
+      console.log(textStatus);
+    });
+  }
+
+</script>
+
+</body>
+</html>
