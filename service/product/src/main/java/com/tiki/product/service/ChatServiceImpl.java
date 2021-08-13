@@ -89,4 +89,10 @@ public class ChatServiceImpl implements ChatService {
 
         return chatMapper.updateChatReadCount(params);
     }
+
+    @Override
+    public int selectReadCount(ChatDTO chatDTO) {
+
+        return chatMapper.selectReadCount(chatDTO);
+    }
 }

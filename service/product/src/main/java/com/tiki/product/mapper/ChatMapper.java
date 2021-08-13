@@ -32,5 +32,6 @@ public interface ChatMapper {
 
     public int selectChatReadCountByProdNoRoomNo(ChatDTO chatDTO);
 
+    public int selectReadCount(ChatDTO chatDTO);
     // public Integer findRoomNoRecipientId(ChatDTO params);
 }

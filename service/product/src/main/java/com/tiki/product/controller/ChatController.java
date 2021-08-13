@@ -152,23 +152,36 @@ public class ChatController {
     }
 
     // 읽은 메세지 업데이트
-    @PatchMapping("/chat/updateView/{prodNo}/{roomNo}")
+    @PatchMapping("/chat/updateView/{prodNo}/{roomNo}/{loginId}")
     public int updateViewChat(@PathVariable("prodNo") int prodNo,
-                              @PathVariable("roomNo") int roomNo){
+                              @PathVariable("roomNo") int roomNo,
+                              @PathVariable("loginId") String loginId) {
+
         ChatDTO chatDTO = new ChatDTO();
         chatDTO.setProdNo(prodNo);
         chatDTO.setRoomNo(roomNo);
+        chatDTO.setRecipientId(loginId);
+
         return chatService.updateViewChat(chatDTO);
     }
 
-    // 안읽은 메세지 업데이트
-    @PatchMapping("/chat/updateReadCount/{prodNo}/{roomNo}")
-    public int updateChatReadCount(@PathVariable("prodNo") int prodNo,
-                              @PathVariable("roomNo") int roomNo){
+    //
+    //
+    @GetMapping(value = "/chat/readCount/{prodNo}/{roomNo}/{loginId}")
+    public int selectChatReadCountByProdNoRoomNo(@PathVariable("prodNo") int prodNo,
+                                                 @PathVariable("roomNo") int roomNo,
+                                                 @PathVariable("loginId") String loginId) {
+
+        int readCount;
+
         ChatDTO chatDTO = new ChatDTO();
         chatDTO.setProdNo(prodNo);
         chatDTO.setRoomNo(roomNo);
-        return chatService.updateChatReadCount(chatDTO);
+        chatDTO.setRecipientId(loginId);
+
+        readCount = chatService.selectReadCount(chatDTO);
+        
+        return readCount;
     }
 
 

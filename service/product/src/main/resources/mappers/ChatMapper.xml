@@ -124,17 +124,6 @@
             recipient_id = #{sendId}
     </select>
 
-    <update id="updateChatReadCount" parameterType="ChatDTO">
-        UPDATE
-            chat
-        SET
-            read_count = read_count + 1
-        WHERE
-            prod_no = #{prodNo}
-        AND
-            room_no = #{roomNo}
-    </update>
-
     <update id="updateViewChat" parameterType="ChatDTO">
         UPDATE
             chat
@@ -144,7 +133,24 @@
             prod_no = #{prodNo}
           AND
             room_no = #{roomNo}
+        AND
+            recipient_id = #{recipientId}
     </update>
+
+    <select id="selectReadCount" parameterType="ChatDTO" resultType="int">
+        SELECT
+            COUNT(read_count)
+        FROM
+            chat
+        WHERE
+            prod_no = #{prodNo}
+        AND
+            room_no = #{roomNo}
+        AND
+            recipient_id = #{recipientId}
+        AND
+            read_count = 1;
+    </select>
 
     <select id="selectChatReadCountById" parameterType="ChatDTO" resultType="ChatDTO">
         SELECT

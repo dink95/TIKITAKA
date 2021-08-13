@@ -30,6 +30,7 @@ public interface ChatService {
 
     public int updateViewChat(ChatDTO params);
 
+    public int selectReadCount(ChatDTO chatDTO);
     // public Integer findRoomNoRecipientId(ChatDTO params);
 
 }
