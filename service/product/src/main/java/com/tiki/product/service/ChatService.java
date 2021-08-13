@@ -1,6 +1,7 @@
 package com.tiki.product.service;
 
 import com.tiki.product.domain.ChatDTO;
+import com.tiki.product.domain.ProductDTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -17,7 +18,17 @@ public interface ChatService {
 
     public List<ChatDTO> selectExistChatList(String sendId);
 
+    public ChatDTO selectLastChatId(ChatDTO params);
+
     public int selectChatTotalCount();
+
+    public List<ChatDTO> selectChatReadCountById(ChatDTO params);
+
+    public int selectChatReadCountByProdNoRoomNo(ChatDTO params);
+
+    public int updateChatReadCount(ChatDTO params);
+
+    public int updateViewChat(ChatDTO params);
 
     // public Integer findRoomNoRecipientId(ChatDTO params);
 

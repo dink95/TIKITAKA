@@ -32,5 +32,8 @@ public class ChatDTO {
     /** 보낸 날짜 */
     private LocalDateTime sendtime;
 
+    /* 안읽은 메세지 */
+    private int readCount;
+
 
 }

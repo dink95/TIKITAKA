@@ -167,7 +167,7 @@
                 </svg>
             </a>
             <a th:if="${session.mbrId == null}" href="login">채팅</a>
-            <a th:if="${session.mbrId != null}" href="/member/chatting/room" target='_blank'>채팅</a></li>
+            <a th:if="${session.mbrId != null}"  onclick="goChatRoomMobile($('#login_id').text());">채팅</a></li>
         <li th:classappend="${menu}=='myinfo'? 'active' : ''">
             <a th:if="${session.mbrId == null}" href="login">
                 <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="25" height="20" fill="currentColor"

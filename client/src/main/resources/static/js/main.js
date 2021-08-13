@@ -645,6 +645,11 @@ function goChatRoom(props) {
     window.open('/member/chatting/room?sendId=' + props + '', '채팅방', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=100,left=100')
 }
 
+function goChatRoomMobile(props) {
+    location.href = '/member/chatting/room?sendId='+props+'';
+    // window.open('/member/chatting/room?sendId=' + props + '', '채팅방', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=100,left=100')
+}
+
 //채팅에서 상품 클릭
 function goChatToProd(prodNo) {
     window.open('/product/detail?prodNo=' + prodNo + '', 'TIKITAKA', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no');

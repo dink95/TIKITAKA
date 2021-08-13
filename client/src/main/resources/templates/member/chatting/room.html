@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>TIKITAKA &ndash; 채팅 리스트 </title>
-    <meta charset="utf-8">
+    <title>TIKITAKA - 채팅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="preconnect" href="/https://fonts.gstatic.com">
     <link rel="stylesheet" href="/fonts/icomoon/style.css">
-
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/icon.css">
 </head>
@@ -19,12 +17,13 @@
         </div>
     </header>
     <div class="chattingRoomContainer">
-        <div class="chattingRoomTitle bb-1-p d-flex-j-a-center padding-top-bottom-5">
+        <div class="chattingRoomTitle d-flex-j-a-center padding-top-bottom-5">
             <span class="font-weight-normal font-20 text-black">채팅 리스트</span>
         </div>
         <ul class="chattingListNav">
 
         </ul>
+        <input type="text" id="chatRoomLength" value="0">
     </div>
 </div>
 
@@ -40,6 +39,9 @@
         width: 400px;
         height: 700px;
     }
+    .chattingRoomTitle{
+        border-bottom: 2px solid #5e0080;
+    }
     .chattingListNav{
         padding: 0;
         margin: 0;
@@ -49,10 +51,54 @@
         height: 80px;
         border-bottom: 1px solid #ddd;
     }
+    .chatRecipientId{
+        font-weight: bold;
+        font-size: 18px;
+        color: #5e0080;
+    }
+    .chatAddr,.sendDay{
+        font-size: 12px;
+        color: #504f4f;
+        margin-left: 10px;
+        font-weight: normal;
+    }
+    .sendtime{
+        font-size: 11px;
+        color: #504f4f;
+        margin-left: 1px;
+        font-weight: normal;
+    }
     .chatImg{
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
         border-radius: 5px;
+        margin-left: 10px;
+    }
+    .readCount{
+        color: red;
+        font-weight: bold;
+    }
+    .chatRoomMessage{
+        font-weight: normal;
+        font-size: 16px;
+        color: #000;
+    }
+    .chatRoom{
+        display: flex;
+        justify-content:space-around;
+        align-items: center;
+    }
+    .imgContainer{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+    }
+    .chatRoomContent{
+        width: 70%;
+        white-space: nowrap;
+        overflow: hidden;
+
     }
 </style>
 <script src="/js/jquery-3.3.1.min.js"></script>
@@ -62,17 +108,23 @@
 <script src="/js/owl.carousel.min.js"></script>
 <script src="/js/jquery.magnific-popup.min.js"></script>
 <script src="/js/aos.js"></script>
-<script src="/https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script src="/js/main.js"></script>
 <script>
 
+    var chatRoomLoaded =false;
 
-    // function goChat(props){
-    // window.open('/member/chatting/chat?chatNo='+props+'' ,'채팅방 대화창','toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=100,left=600');
-    // }
+    document.addEventListener("DOMContentLoaded", getLastMessage);
+    setInterval(getLastMessage, 100);
+
+    document.addEventListener("DOMContentLoaded", getReadCount);
+    setInterval(getReadCount, 100);
+
+
+
     $(document).ready(function () {
         getProdNoRoomNo();
-        autoRefresh_div();
+        // autoRefresh_div();
     });
 
     function searchParam(key) {
@@ -89,6 +141,7 @@
         }
     }
 
+    // 사용자 채팅방 정보 목록
     function getProdNoRoomNo(){
         param = {
             sendId: searchParam('sendId')
@@ -101,6 +154,27 @@
         }).done(function (data) {
             console.log("@@chatListById",data.chatList);
             drawChatRoomList(data);
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+    }
+
+    //사용자 채팅방 정보목록중 마지막 채팅내용만
+    function getLastMessage(){
+        param = {
+            sendId: searchParam('sendId')
+        }
+        $.ajax({
+            url: '/chat/list/id',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            console.log(data.chatList.length)
+            if($('#chatRoomLength').val()!=data.chatList.length){
+                getProdNoRoomNo();
+            }
+            drawLastMessage(data);
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
         });
@@ -143,6 +217,23 @@
             });
     }
 
+    function getReadCount(){
+        param = {
+            recipientId: searchParam('sendId')
+        }
+        $.ajax({
+            url: '/chat/readcount/id',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            console.log("@@chatReadcountList",data.readCountList);
+            drawReadCount(data);
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+    }
+
     //채팅 목록 그리기
     function drawChatRoomList(data) {
         var container = $('.chattingListNav');
@@ -151,40 +242,84 @@
             container.empty();
             var contents = '';
             var mbrId;
+            var lastSendTime;
             $.each(data.chatList, function (index, obj) {
-
+                var year = obj.sendtime.substring(0, 4);
+                var month = obj.sendtime.substring(5, 7);
+                var day = obj.sendtime.substring(8, 10);
+                var date = year + '년' + ' ' + month + '월' + day + '' + '일';
+                var hour = obj.sendtime.substring(11, 13);
+                var minute = obj.sendtime.substring(14, 16);
+                var second = obj.sendtime.substring(17, 19);
+                var sendDay = month + '/'+ day;
+                var sendTime = hour + ':' + '' + minute;
+                var objTime= year+month+day+hour+minute+second;
                 //상품 정보 조회
                 // 매번 컨텐츠가 달라야하니 초기화
                 contents = '';
                 //상품 하나 html
                 contents += '<li class="chatRoom" onclick="goChat('+obj.prodNo+','+obj.roomNo+')">';
-                contents += '    <span class="chatRoomMessage">' +obj.content + '</span>';
+                contents += '<div class="chatRoomContent">';
+                    contents += '<div>';
                 if(obj.sendId == searchParam('sendId')){
                     contents += '    <span class="chatRecipientId">' +obj.recipientId + '</span>';
                     contents += '    <span class="chatAddr addrName'+obj.recipientId+'"></span>';
                     mbrId=obj.recipientId;
+
                 }else{
                     contents += '    <span class="chatRecipientId">' +obj.sendId + '</span>';
                     contents += '    <span class="chatAddr addrName'+obj.sendId+'"></span>';
                     mbrId=obj.sendId;
                 }
+                contents += '    <span class=" sendDay">'+sendDay+'</span>';
+                contents +='</div>';
+                contents +='<div>';
+                contents += '    <span class="chatRoomMessage chatRoomMessage'+obj.prodNo+'-'+obj.roomNo+'">'+textLengthOverCut(obj.content, 15, '...')+'</span>';
+                contents += '    <span class="sendtime">'+sendTime+ '</span>';
+                contents +='</div>';
+                contents +='</div>';
 
-                contents += '    <span class="sendtime">' +obj.sendtime + '</span>';
+                contents +='<div class="imgContainer">';
+                if(obj.readCount!=0) {
+                    contents += '    <span class="readCount readCount' + obj.prodNo + '-' + obj.roomNo + '-'+obj.recipientId+'"></span>';
+                }
                 contents += '    <img class="chatImg imgNo'+obj.prodNo+'" src="" alt="">';
+                contents +='</div>';
                 contents += '</li>';
 
                 //그리드에 삽입
                 container.append(contents)
                 getProdDetail(obj.prodNo);
                 getMbrDetail(mbrId);
+                getReadCount();
             })
         } else {
             container.empty();
             contents = '<span>채팅 목록이 없습습니다.</span>';
             container.append(contents);
         }
+
     }
 
+    //채팅 목록 마지막 메세지 그리기
+    function drawLastMessage(data) {
+            $.each(data.chatList, function (index, obj) {
+                var year = obj.sendtime.substring(0, 4);
+                var month = obj.sendtime.substring(5, 7);
+                var day = obj.sendtime.substring(8, 10);
+                var date = year + '년' + ' ' + month + '월' + day + '' + '일';
+                var hour = obj.sendtime.substring(11, 13);
+                var minute = obj.sendtime.substring(14, 16);
+                var second = obj.sendtime.substring(17, 19);
+                var sendtime = year+month+day+hour+minute+second;
+                console.log("objMassageSendTime",sendtime);
+              $('.chatRoomMessage'+obj.prodNo+'-'+obj.roomNo).text(obj.content);
+            })
+        $('#chatRoomLength').val(data.chatList.length);
+
+    }
+
+    //상품 이미지 그리기
     function drawChatImg(data) {
         if (typeof data.dataDetail !== 'undefined') {
             var imgPath = '';
@@ -197,10 +332,29 @@
         }
     }
 
+    //안읽은 메세지 그리기
+    function drawReadCount(data) {
+        var loginId = $('#login_id').text();
+
+            $.each(data.readCountList, function (index, obj) {
+                    $('.readCount' + obj.prodNo + '-' + obj.roomNo + '-' + loginId).text(obj.readCount);
+
+        })
+    }
+
+
     function drawAddr(data) {
         if (typeof data.memberDetail !== 'undefined') {
             //메인 이미지 html
-            $('.addrName'+ data.memberDetail.mbrId).text(data.memberDetail.mbrAddr);
+            var address = new Array();
+            address = data.memberDetail.mbrAddr.split(" ");
+            var mbrAddr = [2];
+            for(var i=1;i<3;i++){
+                mbrAddr[i-1]=address[i];
+            }
+            var mbrAddress = mbrAddr[0] +' '+ mbrAddr[1];
+
+            $('.addrName'+ data.memberDetail.mbrId).text(mbrAddress);
             //디테일 정보들
 
         }
@@ -224,6 +378,7 @@
         window.open('/member/chatting/chat?prodNo='+prodNo+'&sendId='+sendId+'&roomNo='+roomNo+'', newName,
             'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top='+top+',left='+left+'');
     }
+
 
 </script>
 </body>
