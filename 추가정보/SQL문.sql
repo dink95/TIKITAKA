@@ -98,3 +98,5 @@ foreign key(RECIPIENT_ID) references MBR(MBR_ID) on update cascade on delete CAS
 );
 
 alter table prod add ROOM_COUNT int default 0;
+
+alter table chat add READ_COUNT int default 1;
