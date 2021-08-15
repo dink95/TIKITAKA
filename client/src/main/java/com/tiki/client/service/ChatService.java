@@ -3,6 +3,7 @@ package com.tiki.client.service;
 import com.tiki.client.domain.AuctionChatDTO;
 import com.tiki.client.domain.ChatDTO;
 import com.tiki.client.domain.InsertProductDTO;
+import com.tiki.client.domain.ProductDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -38,12 +39,50 @@ public class ChatService {
     }
 
     //룸넘버
-    public int getRoomNo(ChatDTO chatDTO) throws Exception {
+    public int getRoomNo(int prodNo, String sendId, String recipientId) throws Exception {
         return webClient.get()
-                .uri("/chat/roomNo")
+                .uri("/chat/roomNo/{prodNo}/{sendId}/{recipientId}",prodNo,sendId,recipientId)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
                 .block();
     }
+
+    //채팅 목록 -> 특정 아이디로 조회
+    public List chatListById(String sendId) throws Exception {
+        return webClient.get()
+                .uri("/chat/existChat/{sendId}",sendId)
+                .retrieve()
+                .bodyToMono(List.class) //반환정보
+                .block();
+    }
+
+    public int updateViewChat(int prodNo, int roomNo, String loginId ) {
+        return webClient.patch()
+                .uri("/chat/updateView/{prodNo}/{roomNo}/{loginId}",prodNo,roomNo,loginId)
+                .retrieve()
+                .bodyToMono(Integer.class) //반환정보
+                .block();
+    }
+
+    public int selectReadCount(int prodNo, int roomNo, String loginId ) {
+        return webClient.get()
+                .uri("/chat/readCount/{prodNo}/{roomNo}/{loginId}",prodNo,roomNo,loginId)
+                .retrieve()
+                .bodyToMono(Integer.class) //반환정보
+                .block();
+    }
+
+    public int selectReadCountInChat(int prodNo, int roomNo) {
+        return webClient.get()
+                .uri("/chat/readCountInChat/{prodNo}/{roomNo}",prodNo,roomNo)
+                .retrieve()
+                .bodyToMono(Integer.class) //반환정보
+                .block();
+    }
+
+
+
+
+
 
 }

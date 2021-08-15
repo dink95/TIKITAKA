@@ -19,18 +19,11 @@ public class ChattingController {
     @Autowired
     private ChatService chatService;
 
-
+    /******* 채팅방 *******/
     @GetMapping(value = "/member/chatting/chat") /*채팅방 페이지*/
     public ModelAndView chat() {
         ModelAndView view = new ModelAndView();
         view.setViewName("member/chatting/chat");
-        return view;
-    }
-
-    @GetMapping(value = "/member/chatting/room") /*채팅방 페이지*/
-    public ModelAndView room() {
-        ModelAndView view = new ModelAndView();
-        view.setViewName("member/chatting/room");
         return view;
     }
 
@@ -54,6 +47,24 @@ public class ChattingController {
         return resultMap;
     }
 
+    @RequestMapping("/chat/getRoomNo")  /*룸넘버 조회 */
+    @ResponseBody
+    public Map<String, Object> getRoomNo(@RequestParam(value = "prodNo") int prodNo,
+                                         @RequestParam(value = "sendId") String sendId,
+                                         @RequestParam(value = "recipientId") String recipientId) {
+        Map<String, Object> resultMap = new HashMap<>();
+        int result = 0;
+
+        try {
+            result = chatService.getRoomNo(prodNo, sendId, recipientId);
+            resultMap.put("roomNo", result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return resultMap;
+    }
+
     @RequestMapping("/chat/list")  /*채팅 리스트 보기 */
     @ResponseBody
     public Map<String, Object> chatList(@RequestParam(value = "prodNo") int prodNo,
@@ -62,7 +73,7 @@ public class ChattingController {
         List<Object> list = null;
 
         try {
-            list= chatService.chatList(prodNo, roomNo);
+            list = chatService.chatList(prodNo, roomNo);
             resultMap.put("chatList", list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,20 +82,77 @@ public class ChattingController {
         return resultMap;
     }
 
-    @RequestMapping("/chat/getRoomNo")  /*룸넘버 조회 */
+    @RequestMapping("/chat/updateView")  /*읽은 채팅 업데이트*/
     @ResponseBody
-    public Map<String, Object> getRoomNo(ChatDTO chatDTO) {
-        Map<String, Object> resultMap = new HashMap<>();
-        int result=0;
-        System.out.println(chatDTO);
+    public int updateViewChat(@RequestParam(value="prodNo") int prodNo,
+                              @RequestParam(value="roomNo") int roomNo,
+                              @RequestParam(value="loginId") String loginId) {
+        HashMap<String,Object> resultMap = new HashMap<>();
+        int result = 0;
         try {
-            result = chatService.getRoomNo(chatDTO);
-            resultMap.put("roomNo", result);
+            result = chatService.updateViewChat(prodNo,roomNo,loginId);
+        } catch (Exception e) {
+
+        }
+        return result;
+    }
+
+
+    /******* 채팅방 목록 ******/
+    @GetMapping(value = "/member/chatting/room") /*채팅방 목록 페이지*/
+    public ModelAndView room() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("member/chatting/room");
+        return view;
+    }
+
+
+    @RequestMapping("/chat/list/id")  /*채팅방 목록 보기 */
+    @ResponseBody
+    public Map<String, Object> chatListById(@RequestParam(value = "sendId") String sendId) {
+        Map<String, Object> resultMap = new HashMap<>();
+        List<Object> list = null;
+        try {
+            list = chatService.chatListById(sendId);
+            resultMap.put("chatList", list);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return resultMap;
     }
+
+
+    @RequestMapping("/chat/readCount")  /*안읽은 메세지 개수 */
+    @ResponseBody
+    public Map<String, Object> selectReadCount(@RequestParam(value="prodNo") int prodNo,
+                                               @RequestParam(value="roomNo") int roomNo,
+                                               @RequestParam(value="loginId") String loginId) {
+        HashMap<String,Object> resultMap = new HashMap<>();
+        int readCount = 0;
+        try {
+            readCount = chatService.selectReadCount(prodNo,roomNo,loginId);
+            resultMap.put("readCount",readCount);
+        } catch (Exception e) {
+
+        }
+        return resultMap;
+    }
+
+    @RequestMapping("/chat/readCountInChat")  /*채팅방에서 안읽은 메세지 개수 */
+    @ResponseBody
+    public Map<String, Object> selectReadCountInChat(@RequestParam(value="prodNo") int prodNo,
+                                               @RequestParam(value="roomNo") int roomNo) {
+        HashMap<String,Object> resultMap = new HashMap<>();
+        int readCount = 0;
+        try {
+            readCount = chatService.selectReadCountInChat(prodNo,roomNo);
+            resultMap.put("readCountInChat",readCount);
+        } catch (Exception e) {
+
+        }
+        return resultMap;
+    }
+
 
 }

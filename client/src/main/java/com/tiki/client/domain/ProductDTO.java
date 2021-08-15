@@ -52,7 +52,7 @@ public class ProductDTO {
     //** 채팅 룸 갯수 **//
     private int roomCount;
 
-    public ProductDTO(String prodNm,int prodPrc, int catNo, String selId, String way, int nego, String prodCo, String content, int imgCount, int roomCount){
+    public ProductDTO(String prodNm,int prodPrc, int catNo, String selId, String way, int nego, String prodCo, String content, int imgCount){
         this.prodNm=prodNm;
         this.prodPrc= prodPrc;
         this.catNo=catNo;
@@ -62,7 +62,7 @@ public class ProductDTO {
         this.prodCo=prodCo;
         this.content=content;
         this.imgCount = imgCount;
-        this.roomCount = roomCount;
+//        this.roomCount = roomCount;
     };
 
     public ProductDTO(){};

@@ -69,11 +69,20 @@ public class ChatController {
 
     }
 
+
     // prodNo + sendId + recipientId 에 해당하는 룸 넘버 보내기
-    @GetMapping("/chat/roomNo")
-    public int selectRoomNumber(@RequestBody ChatDTO chatDTO) {
+    @GetMapping(value="/chat/roomNo/{prodNo}/{sendId}/{recipientId}")
+    public int selectRoomNumber(@PathVariable("prodNo") int prodNo,
+                                @PathVariable("sendId") String sendId,
+                                @PathVariable("recipientId") String recipientId) {
+
 
         int roomNo;
+        ChatDTO chatDTO = new ChatDTO();
+        chatDTO.setProdNo(prodNo);
+        chatDTO.setSendId(sendId);
+        chatDTO.setRecipientId(recipientId);
+
         Integer check = chatService.findRoomNoSendId(chatDTO);
 
         if(check == null) {
@@ -99,11 +108,45 @@ public class ChatController {
         return chatList;
     }
 
+
     // 특정 chatIdx에 해당하는 채팅만 보기
     @GetMapping("/chat/{chatIdx}")
     public ChatDTO selectChatDetail(@PathVariable("chatIdx") int chatIdx) {
         return chatService.selectChatDetail(chatIdx);
     }
+
+
+    // 읽은 메세지 업데이트
+    @PatchMapping("/chat/updateView/{prodNo}/{roomNo}/{loginId}")
+    public int updateViewChat(@PathVariable("prodNo") int prodNo,
+                              @PathVariable("roomNo") int roomNo,
+                              @PathVariable("loginId") String loginId) {
+
+        ChatDTO chatDTO = new ChatDTO();
+        chatDTO.setProdNo(prodNo);
+        chatDTO.setRoomNo(roomNo);
+        chatDTO.setRecipientId(loginId);
+
+        return chatService.updateViewChat(chatDTO);
+    }
+
+    //
+    //
+    @GetMapping(value = "/chat/readCount/{prodNo}/{roomNo}/{loginId}")
+    public int selectReadCount(@PathVariable("prodNo") int prodNo,
+                               @PathVariable("roomNo") int roomNo,
+                               @PathVariable("loginId") String loginId) {
+
+        int readCount;
+        ChatDTO chatDTO = new ChatDTO();
+        chatDTO.setProdNo(prodNo);
+        chatDTO.setRoomNo(roomNo);
+        chatDTO.setRecipientId(loginId);
+
+        readCount = chatService.selectReadCount(chatDTO);
+        return readCount;
+    }
+
 
 
 }

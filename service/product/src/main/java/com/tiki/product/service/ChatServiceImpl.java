@@ -32,7 +32,6 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public int insertChat(ChatDTO params) {
-
         return chatMapper.insertChat(params);
     }
 
@@ -54,9 +53,27 @@ public class ChatServiceImpl implements ChatService {
         return chatMapper.selectExistChatList(sendId);
     }
 
+
     @Override
     public int selectChatTotalCount() {
 
         return chatMapper.selectChatTotalCount();
     }
+
+
+
+    @Override
+    public int updateViewChat(ChatDTO params) {
+
+        return chatMapper.updateViewChat(params);
+    }
+
+
+    @Override
+    public int selectReadCount(ChatDTO chatDTO) {
+
+        return chatMapper.selectReadCount(chatDTO);
+    }
+
+
 }

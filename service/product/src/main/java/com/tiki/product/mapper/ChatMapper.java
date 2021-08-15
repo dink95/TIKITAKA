@@ -20,7 +20,19 @@ public interface ChatMapper {
 
     public List<ChatDTO> selectExistChatList(String sendId);
 
+
+
     public int selectChatTotalCount();
+
+    public int updateChatReadCount(ChatDTO chatDTO);
+
+    public int updateViewChat(ChatDTO chatDTO);
+
+
+
+
+    public int selectReadCount(ChatDTO chatDTO);
+
 
     // public Integer findRoomNoRecipientId(ChatDTO params);
 }

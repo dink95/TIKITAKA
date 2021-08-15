@@ -338,6 +338,13 @@ public class MemberController {
         return view;
     }
 
+    @GetMapping(value = "/member/userinfo") /*유저정보 페이지*/
+    public ModelAndView userinfo() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("member/information/userinfo");
+        return view;
+    }
+
     @RequestMapping(value = "/member/info/update")  /*개인정보수정 페이지*/
     public ModelAndView updateinfo() {
         ModelAndView view = new ModelAndView();
