@@ -109,47 +109,12 @@ public class ChatController {
     }
 
 
-    // prodNo, roomNo 로 마지막 대화 recipient Id 받아오기
-    @GetMapping(value = "/chat/lastChat/id/{prodNo}/{roomNo}")
-    public ChatDTO selectLastChatId(@PathVariable("prodNo") int prodNo,
-                                    @PathVariable("roomNo") int roomNo) {
-
-        ChatDTO chatDTO = new ChatDTO();
-        chatDTO.setProdNo(prodNo);
-        chatDTO.setRoomNo(roomNo);
-        return  chatService.selectLastChatId(chatDTO);
-
-    }
-
     // 특정 chatIdx에 해당하는 채팅만 보기
     @GetMapping("/chat/{chatIdx}")
     public ChatDTO selectChatDetail(@PathVariable("chatIdx") int chatIdx) {
         return chatService.selectChatDetail(chatIdx);
     }
 
-    // recipientId 에 해당하는 readCount 보기
-    @GetMapping(value = "/chat/chatReadCount/{recipientId}")
-    public List selectChatReadCount(@PathVariable("recipientId") String recipientId) {
-
-        List<ChatDTO> chatList;
-        ChatDTO chatDTO = new ChatDTO();
-        chatDTO.setRecipientId(recipientId);
-        chatList = chatService.selectChatReadCountById(chatDTO);
-        return chatList;
-    }
-
-    // prodNo,roomNo 에 해당하는 readCount 보기
-    @GetMapping(value = "/chat/chatReadCount/{prodNo}/{roomNo}")
-    public int selectChatReadCountByProdNoRoomNo(@PathVariable("prodNo") int prodNo,
-                                    @PathVariable("roomNo") int roomNo) {
-
-        int readCount;
-        ChatDTO chatDTO = new ChatDTO();
-        chatDTO.setProdNo(prodNo);
-        chatDTO.setRoomNo(roomNo);
-        readCount = chatService.selectChatReadCountByProdNoRoomNo(chatDTO);
-        return readCount;
-    }
 
     // 읽은 메세지 업데이트
     @PatchMapping("/chat/updateView/{prodNo}/{roomNo}/{loginId}")
@@ -168,21 +133,20 @@ public class ChatController {
     //
     //
     @GetMapping(value = "/chat/readCount/{prodNo}/{roomNo}/{loginId}")
-    public int selectChatReadCountByProdNoRoomNo(@PathVariable("prodNo") int prodNo,
-                                                 @PathVariable("roomNo") int roomNo,
-                                                 @PathVariable("loginId") String loginId) {
+    public int selectReadCount(@PathVariable("prodNo") int prodNo,
+                               @PathVariable("roomNo") int roomNo,
+                               @PathVariable("loginId") String loginId) {
 
         int readCount;
-
         ChatDTO chatDTO = new ChatDTO();
         chatDTO.setProdNo(prodNo);
         chatDTO.setRoomNo(roomNo);
         chatDTO.setRecipientId(loginId);
 
         readCount = chatService.selectReadCount(chatDTO);
-        
         return readCount;
     }
+
 
 
 }

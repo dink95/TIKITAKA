@@ -18,19 +18,15 @@ public interface ChatService {
 
     public List<ChatDTO> selectExistChatList(String sendId);
 
-    public ChatDTO selectLastChatId(ChatDTO params);
-
     public int selectChatTotalCount();
 
-    public List<ChatDTO> selectChatReadCountById(ChatDTO params);
-
-    public int selectChatReadCountByProdNoRoomNo(ChatDTO params);
-
-    public int updateChatReadCount(ChatDTO params);
 
     public int updateViewChat(ChatDTO params);
 
     public int selectReadCount(ChatDTO chatDTO);
+
+
+
     // public Integer findRoomNoRecipientId(ChatDTO params);
 
 }

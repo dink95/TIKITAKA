@@ -17,13 +17,12 @@
         </div>
     </header>
     <div class="chattingRoomContainer">
-        <div class="chattingRoomTitle d-flex-j-a-center padding-top-bottom-5">
-            <span class="font-weight-normal font-20 text-black">채팅 리스트</span>
+        <div class="chattingRoomTitle padding-top-bottom-5">
+            <span class="font-weight-normal font-20 text-black">채팅</span>
         </div>
         <ul class="chattingListNav">
 
         </ul>
-        <input type="text" id="chatRoomLength" value="0">
     </div>
 </div>
 
@@ -33,23 +32,33 @@
         padding: 0;
     }
     header{
-        display: none;
+       display: none;
     }
     .chattingRoomContainer {
         width: 400px;
         height: 700px;
     }
     .chattingRoomTitle{
-        border-bottom: 2px solid #5e0080;
+        display: flex;
+        justify-content: flex-start;
+        border-bottom: 1px solid #ecebf5;
+        position: sticky;
+        top: 0;
+        background: #fff;
+    }
+    .chattingRoomTitle > span{
+        font-weight: normal;
+        margin-left: 10px;
     }
     .chattingListNav{
         padding: 0;
         margin: 0;
     }
     .chattingListNav > li {
+        border-bottom: 1px solid #ecebf5;
         width: 100%;
         height: 80px;
-        border-bottom: 1px solid #ddd;
+   
     }
     .chatRecipientId{
         font-weight: bold;
@@ -82,6 +91,8 @@
         font-weight: normal;
         font-size: 16px;
         color: #000;
+        height: 24px;
+        margin-right: 5px;
     }
     .chatRoom{
         display: flex;
@@ -111,21 +122,10 @@
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script src="/js/main.js"></script>
 <script>
+    /********************** 실행 함수 ********************/
 
-    var chatRoomLoaded =false;
-
-    document.addEventListener("DOMContentLoaded", getLastMessage);
-    setInterval(getLastMessage, 100);
-
-    document.addEventListener("DOMContentLoaded", getReadCount);
-    setInterval(getReadCount, 100);
-
-
-
-    $(document).ready(function () {
-        getProdNoRoomNo();
-        // autoRefresh_div();
-    });
+    document.addEventListener("DOMContentLoaded", getChatRoomLength);
+    setInterval(getChatRoomLength, 100);
 
     function searchParam(key) {
         return new URLSearchParams(location.search).get(key);
@@ -139,6 +139,46 @@
         if($('#login_id').text() != searchParam('sendId')){
             window.close();
         }
+    }
+
+    /********************** 데이터 입력 조회 업데이트 ********************/
+
+    //방리스트 업데이트 시점
+    var chatRoomLength = 0;
+    var allChatCount = 0;
+    function getChatRoomLength(){
+        param = {
+            sendId: searchParam('sendId')
+        }
+        $.ajax({
+            url: '/chat/list/id',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            //1.채팅방 리스트의 길이가 달라짐 -> 새로운 채팅 목록이 생김 -> 방리스트 업데이트
+            if(chatRoomLength != data.chatList.length){
+                getProdNoRoomNo();
+                chatRoomLength = data.chatList.length;
+            }else {
+                //2. 또는 안읽은 메세지 개수가 바뀌었을 때 -> 새로운 채팅이 왔을 때 -> drawLastChat
+                //3. readCount가 바뀌었을 때 -> 상대방이 메세지를 읽었을 때 -> drawReadCount
+                var currentAllChatCount =0;
+                $.each(data.chatList, function (index, obj) {
+                    getReadCount(obj.prodNo,obj.roomNo);
+                    currentAllChatCount = currentAllChatCount + obj.chatIdx;
+                })
+                if (allChatCount != currentAllChatCount){
+                    drawLastMessage(data);
+
+                    allChatCount = currentAllChatCount;
+                }
+            }
+
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+
     }
 
     // 사용자 채팅방 정보 목록
@@ -159,27 +199,7 @@
         });
     }
 
-    //사용자 채팅방 정보목록중 마지막 채팅내용만
-    function getLastMessage(){
-        param = {
-            sendId: searchParam('sendId')
-        }
-        $.ajax({
-            url: '/chat/list/id',
-            data: param,
-            type: 'post',
-            dataType: 'json'
-        }).done(function (data) {
-            console.log(data.chatList.length)
-            if($('#chatRoomLength').val()!=data.chatList.length){
-                getProdNoRoomNo();
-            }
-            drawLastMessage(data);
-        }).fail(function (data, textStatus, errorThrown) {
-            console.log(textStatus);
-        });
-    }
-
+    //상품 정보 조회
     function getProdDetail(prodNo){
         var param = {
             prodNo: prodNo,
@@ -199,6 +219,7 @@
         });
     }
 
+    // 상대방 정보 조회
     function getMbrDetail(mbrId)
        {
             param = {
@@ -217,27 +238,30 @@
             });
     }
 
-    function getReadCount(){
+    //안읽은 메세지 개수 조회
+    function getReadCount(prodNo,roomNo){
         param = {
-            recipientId: searchParam('sendId')
+            prodNo:prodNo,
+            roomNo:roomNo,
+            loginId:$('#login_id').text()
         }
         $.ajax({
-            url: '/chat/readcount/id',
+            url: '/chat/readCount',
             data: param,
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            console.log("@@chatReadcountList",data.readCountList);
-            drawReadCount(data);
+            drawReadCount(data, prodNo, roomNo);
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
         });
     }
 
+
+    /********************** html 그리기 ********************/
     //채팅 목록 그리기
     function drawChatRoomList(data) {
         var container = $('.chattingListNav');
-        $('.queryTextCount').text(data.chatList.length);
         if (typeof data.chatList !== 'undefined' && data.chatList.length > 0) {
             container.empty();
             var contents = '';
@@ -256,6 +280,8 @@
                 var objTime= year+month+day+hour+minute+second;
                 //상품 정보 조회
                 // 매번 컨텐츠가 달라야하니 초기화
+                // 채팅목록 그리면서 readCount 조회 -> 각각의 prodNo, roomNo 넘겨줌
+                    getReadCount(obj.prodNo,obj.roomNo);
                 contents = '';
                 //상품 하나 html
                 contents += '<li class="chatRoom" onclick="goChat('+obj.prodNo+','+obj.roomNo+')">';
@@ -273,16 +299,14 @@
                 }
                 contents += '    <span class=" sendDay">'+sendDay+'</span>';
                 contents +='</div>';
-                contents +='<div>';
+                contents +='<div style="display: flex; align-items: flex-end;">';
                 contents += '    <span class="chatRoomMessage chatRoomMessage'+obj.prodNo+'-'+obj.roomNo+'">'+textLengthOverCut(obj.content, 15, '...')+'</span>';
                 contents += '    <span class="sendtime">'+sendTime+ '</span>';
                 contents +='</div>';
                 contents +='</div>';
 
                 contents +='<div class="imgContainer">';
-                if(obj.readCount!=0) {
-                    contents += '    <span class="readCount readCount' + obj.prodNo + '-' + obj.roomNo + '-'+obj.recipientId+'"></span>';
-                }
+                contents += '    <span class="readCount readCount' + obj.prodNo + '-' + obj.roomNo+'"></span>';
                 contents += '    <img class="chatImg imgNo'+obj.prodNo+'" src="" alt="">';
                 contents +='</div>';
                 contents += '</li>';
@@ -291,7 +315,6 @@
                 container.append(contents)
                 getProdDetail(obj.prodNo);
                 getMbrDetail(mbrId);
-                getReadCount();
             })
         } else {
             container.empty();
@@ -333,16 +356,15 @@
     }
 
     //안읽은 메세지 그리기
-    function drawReadCount(data) {
-        var loginId = $('#login_id').text();
-
-            $.each(data.readCountList, function (index, obj) {
-                    $('.readCount' + obj.prodNo + '-' + obj.roomNo + '-' + loginId).text(obj.readCount);
-
-        })
+    function drawReadCount(data,prodNo,roomNo) {
+        if(data.readCount !=0) {
+            $('.readCount' + prodNo + '-' + roomNo).text(data.readCount);
+        }else{
+            $('.readCount' + prodNo + '-' + roomNo).text('');
+        }
     }
 
-
+    //주소그리기
     function drawAddr(data) {
         if (typeof data.memberDetail !== 'undefined') {
             //메인 이미지 html
@@ -368,6 +390,14 @@
         n = n + 1;
         newName = value + n;
     }
+
+    //팝업창 조절 제한
+    function popResizer() {
+        window.resizeTo(400,700);
+    };
+    popResizer();
+    $(window).resize(popResizer);
+
 
     function goChat(prodNo,roomNo)
     {

@@ -32,7 +32,6 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public int insertChat(ChatDTO params) {
-//        chatMapper.updateChatReadCount(params);
         return chatMapper.insertChat(params);
     }
 
@@ -54,11 +53,6 @@ public class ChatServiceImpl implements ChatService {
         return chatMapper.selectExistChatList(sendId);
     }
 
-    @Override
-    public ChatDTO selectLastChatId(ChatDTO params) {
-
-        return chatMapper.selectLastChatId(params);
-    }
 
     @Override
     public int selectChatTotalCount() {
@@ -66,17 +60,7 @@ public class ChatServiceImpl implements ChatService {
         return chatMapper.selectChatTotalCount();
     }
 
-    @Override
-    public List<ChatDTO> selectChatReadCountById(ChatDTO params) {
 
-        return chatMapper.selectChatReadCountById(params);
-    }
-
-    @Override
-    public int selectChatReadCountByProdNoRoomNo(ChatDTO params) {
-
-        return chatMapper.selectChatReadCountByProdNoRoomNo(params);
-    }
 
     @Override
     public int updateViewChat(ChatDTO params) {
@@ -84,15 +68,12 @@ public class ChatServiceImpl implements ChatService {
         return chatMapper.updateViewChat(params);
     }
 
-    @Override
-    public int updateChatReadCount(ChatDTO params) {
-
-        return chatMapper.updateChatReadCount(params);
-    }
 
     @Override
     public int selectReadCount(ChatDTO chatDTO) {
 
         return chatMapper.selectReadCount(chatDTO);
     }
+
+
 }
