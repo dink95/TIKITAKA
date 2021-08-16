@@ -130,6 +130,21 @@
             read_count = 1;
     </select>
 
+    <select id="selectSendCount" parameterType="ChatDTO" resultType="int">
+        SELECT
+            COUNT(read_count)
+        FROM
+            chat
+        WHERE
+            prod_no = #{prodNo}
+          AND
+            room_no = #{roomNo}
+          AND
+            send_id = #{sendId}
+          AND
+            read_count = 1;
+    </select>
+
 
 
 

@@ -72,6 +72,14 @@ public class ChatService {
                 .block();
     }
 
+    public int selectSendCount(int prodNo, int roomNo, String loginId ) {
+        return webClient.get()
+                .uri("/chat/sendCount/{prodNo}/{roomNo}/{loginId}",prodNo,roomNo,loginId)
+                .retrieve()
+                .bodyToMono(Integer.class) //반환정보
+                .block();
+    }
+
     public int selectReadCountInChat(int prodNo, int roomNo) {
         return webClient.get()
                 .uri("/chat/readCountInChat/{prodNo}/{roomNo}",prodNo,roomNo)

@@ -147,6 +147,21 @@ public class ChatController {
         return readCount;
     }
 
+    @GetMapping(value = "/chat/sendCount/{prodNo}/{roomNo}/{loginId}")
+    public int selectSendCount(@PathVariable("prodNo") int prodNo,
+                               @PathVariable("roomNo") int roomNo,
+                               @PathVariable("loginId") String loginId) {
+
+        int readCount;
+        ChatDTO chatDTO = new ChatDTO();
+        chatDTO.setProdNo(prodNo);
+        chatDTO.setRoomNo(roomNo);
+        chatDTO.setSendId(loginId);
+
+        readCount = chatService.selectSendCount(chatDTO);
+        return readCount;
+    }
+
 
 
 }
