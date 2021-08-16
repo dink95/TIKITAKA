@@ -75,5 +75,11 @@ public class ChatServiceImpl implements ChatService {
         return chatMapper.selectReadCount(chatDTO);
     }
 
+    @Override
+    public int selectSendCount(ChatDTO chatDTO) {
+
+        return chatMapper.selectSendCount(chatDTO);
+    }
+
 
 }

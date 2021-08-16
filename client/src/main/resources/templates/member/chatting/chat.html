@@ -249,6 +249,19 @@
     .sendtime{
         height: 15px;
     }
+    .sendDay{
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+    .sendDay > span{
+        width: 25%;
+        background: #8984b4;
+        border-radius: 15px;
+        color: #fff;
+        font-size: 11px;
+        text-align: center;
+    }
 </style>
 <script src="/js/jquery-3.3.1.min.js"></script>
 <script src="/js/jquery-ui.js"></script>
@@ -275,6 +288,7 @@
         if (searchParam('recipientId')) {
             getRoomId();
         }
+    readCount =1;
     });
 
     //주소 파라미터 정보
@@ -282,9 +296,31 @@
         return new URLSearchParams(location.search).get(key);
     };
 
+    var readCount = 0; //채팅 치는시점, 상대방이 읽는 시점에서 변화
+    var sendCount = 0; //상대방이 안읽은 채팅 개수 내가 확인
+    var ready = 0;// 상대방이 읽는 시점에서 변화
     setInterval(function (){
-        updateReadCount();
+       getReadCount();
+       getSendCount();
+        if(sendCount != 0) {
+            ready =1 ;
+        }
+        if(readCount != 0) {
+            updateReadCount();
+            getChatList();
+            readCount = 0;
+        }
+        if(ready == 1){
+            if(sendCount == 0){
+                updateReadCount();
+                getChatList();
+                ready =0;
+            }
+        }
+
     }, 100)
+
+
 
     //로그아웃하면 창 종료
     function autoRefresh_div() {
@@ -360,6 +396,7 @@
                 var url = '/member/chatting/chat?prodNo=' + prodNo + '&sendId=' + sendId + '&recipientId=' + recipientId + '&roomNo=' + data.roomNo;
                 history.pushState(state, title, url);
             }
+            getChatList(data.roomNo);
         }).fail(function (data, textStatus, errorThrown) {
             alert('메세지를 불러오는데 실패하였습니다. 관리자에게 문의하세요.');
             console.log(textStatus);
@@ -368,10 +405,17 @@
 
 
     //채팅 리스트 조회
-    function getChatList() {
-        param = {
-            roomNo: searchParam('roomNo'),
-            prodNo: searchParam('prodNo'),
+    function getChatList(roomNoProps) {
+        if(roomNoProps){
+            param = {
+                roomNo: roomNoProps,
+                prodNo: searchParam('prodNo'),
+            }
+        }else {
+            param = {
+                roomNo: searchParam('roomNo'),
+                prodNo: searchParam('prodNo'),
+            }
         }
         $.ajax({
             url: '/chat/list',
@@ -408,8 +452,8 @@
 
     }
 
-    document.addEventListener("DOMContentLoaded", getChatList);
-    setInterval(getChatList, 100);
+    // document.addEventListener("DOMContentLoaded", getChatList);
+    // setInterval(getChatList, 100);
 
 
     /*상품 정보 조회*/
@@ -446,6 +490,44 @@
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+    }
+
+    //안읽은 메세지 개수 조회
+    function getReadCount(){
+        param = {
+            prodNo:searchParam('prodNo'),
+            roomNo:searchParam('roomNo'),
+            loginId:$('#login_id').text()
+        }
+        $.ajax({
+            url: '/chat/readCount',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            readCount = data.readCount;
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+    }
+
+    //상대방이 안읽은 메세지 개수 조회
+    function getSendCount(){
+        param = {
+            prodNo:searchParam('prodNo'),
+            roomNo:searchParam('roomNo'),
+            loginId:$('#login_id').text()
+        }
+        $.ajax({
+            url: '/chat/sendCount',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            sendCount = data.sendCount;
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
         });
@@ -496,7 +578,8 @@
         if (typeof data.chatList !== 'undefined' && data.chatList.length > 0) {
             container.empty();
             var contents = '';
-            var currentTime = '';
+
+            var currentDay = 0;
             $.each(data.chatList, function (index, obj) {
                 // 매번 컨텐츠가 달라야하니 초기화
                 contents = '';
@@ -509,17 +592,27 @@
                 var hour = obj.sendtime.substring(11, 13);
                 var minute = obj.sendtime.substring(14, 16);
                 var second = obj.sendtime.substring(17, 19);
+                var sendDay = year + '년' +' ' + month + '월' + ' ' + day + '일';
+                var sendDayClassName = year+month+day;
                 var sendtime = hour + ':' + '' + minute;
                 var sendtimeClassName = hour + minute + obj.sendId; //같은 시간에 보낸 메세지 시간 하나만 보이게 하는 로직에 사용하는 변수
                 //채팅 html
                 var sendId = obj.sendId;
                 var currentTime = $('#currentTime').val(); //현재 시간 정보를 불러온다
 
+
                 //현재 시가정보와 입력된 시간이 같으면 안보이게
                 if (currentTime == sendtimeClassName) {
                     $('.' + currentTime).text('');
                 }
-
+                console.log("currentDay",currentDay);
+                console.log("sendDayClassName",sendDayClassName);
+                if(currentDay != sendDayClassName){
+                    contents += '<li class="sendDay">';
+                    contents += '<span class="sendDay'+ '-' + sendDayClassName + '-' +obj.chatIdx +'"></span>';
+                    contents += '</li>';
+                    currentDay = sendDayClassName;
+                }
                 //내 채팅 그리기
                 if (loginId == sendId) {
                     contents += '<li class="chatMessage" style="justify-content: flex-end;">';
@@ -538,7 +631,7 @@
                     contents += '<li class="chatMessage" style="justify-content:flex-start;">';
                     contents += '<span class="content" style="background: #fff; border: 1px solid #fff;">' + obj.content + '</span>';
                     contents += '<span class="sendtime'+' ' + sendtimeClassName + '" style="margin-right: 15px">' + sendtime + '</span>';
-                    if (obj.readCount != 0) {
+                    if (obj.readCount != 0 && sendCount != 0) {
                     contents += '<span class="readCount">'+ obj.readCount +'</span>';
                     }
                     contents += '</li><br>';
@@ -552,6 +645,8 @@
                     isScrolled = 1;
                 }
                 chatLength = data.chatList.length;
+                $('.sendDay-' + currentDay + '-'+ obj.chatIdx ).text(sendDay);
+
             })
 
             if(isScrolled ==1){
@@ -560,13 +655,12 @@
                 isScrolled = 0;
             }
 
+
         } else {
             container.empty();
             contents = '<span></span>';
             container.append(contents);
         }
-
-
     }
 
     /********************** 기능,체크 ********************/
