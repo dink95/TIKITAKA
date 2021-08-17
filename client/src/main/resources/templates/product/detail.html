@@ -74,12 +74,16 @@
                             <span id="wday" class="text-black" text="" style="line-height: 56px;"></span>
                         </div>
                     </div>
-                    <div class="aic2">
-                        <p>판매자아이디:&nbsp&nbsp<span id="selId"></span></p>
-                        <p>거래방법:&nbsp&nbsp<span id="detailWay"></span></p>
-                        <p>거래지역:&nbsp&nbsp<span id="detailAddr"></span><a href="///"
-                                                                          id="detailMap"><span>지도보기</span></a></p>
-                        <p>조회수:&nbsp&nbsp<span id="detailView"></span></p>
+                    <div class="row align-items-start" >
+                        <div class="aic2 col-12 col-md-6 order-1 order-md-1  text-left">
+                            <p>판매자아이디:&nbsp&nbsp<span id="selId"></span></p>
+                            <p>거래방법:&nbsp&nbsp<span id="detailWay"></span></p>
+                            <p>거래지역:&nbsp&nbsp<span id="detailAddr"></span></p>
+                            <p>조회수:&nbsp&nbsp<span id="detailView"></span></p>
+                        </div>
+                        <div id="map" class="col-12 col-md-6 order-2 order-md-2  text-left">
+
+                        </div>
                     </div>
                     <div class="aic3 ButtonNav">
                         <input class=" btn btn-primary" id="tradeProd"
@@ -288,6 +292,7 @@
         }
 
         .btn_finish {
+            cursor: pointer;
             border-style: none;
             padding: 6px 12px;
             margin: 1%;
@@ -304,6 +309,13 @@
             font-weight: normal;
         }
 
+        #map {
+            width: 300px;
+            height: 200px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
     </style>
 </div>
 </div>
@@ -317,8 +329,16 @@
 <script src="../js/aos.js"></script>
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script src="../js/main.js"></script>
+<!--지도 api-->
+<script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bd8b34df267f0252d602ca4d11e5ba47&libraries=services"></script>
 <script>
     $('#loading').css('display', 'block');
+
+
+    $(document).ready(function () {
+        getProductDetail();
+    });
 
     /*멤버정보*/
     function getMemberDetail() {
@@ -333,6 +353,7 @@
         }).done(function (data) {
             console.log("data.memberDetail", data.memberDetail);
             $('#detailAddr').text(data.memberDetail.mbrAddr);
+            getMap(data.memberDetail.mbrAddr);
 
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
@@ -360,7 +381,9 @@
                 $('#updateProd').attr('class', 'btn_finish ');
                 $('#updateProd').val('판매완료');
                 $('#updateProd').attr('onclick', '').unbind('click');
-
+                if($('#login_id').text() != $('#selId').text()){
+                    $('#tradeProd').css('display','none');
+                }
             }
             getMemberDetail();
 
@@ -483,10 +506,6 @@
     }
 
 
-    $(document).ready(function () {
-        getProductDetail();
-    });
-
     function goDetailPhoto(i) {
         var imgPath = $(i).attr("src");
         $('#img_modal').css('display', 'flex');
@@ -546,15 +565,15 @@
 
     //채팅 버튼 클릭시 채팅방 입장
     function goChat() {   //로그인 여부 확인
-        if ($('#p_id').val()){
+        if ($('#p_id').val()) {
             prodNo = searchParam('prodNo');
             var top = Math.random() * 100 + 100;
             var left = Math.random() * 100 + 600;
             newWindow("MyWindow");
             window.open('/member/chatting/chat?prodNo=' + prodNo + '&sendId=' + $('#p_id').val() + '&recipientId=' + $('#selId').text(), newName,
                 'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=' + top + ',left=' + left + '');
-        }else{
-            location.href='/login';
+        } else {
+            location.href = '/login';
         }
     }
 
@@ -562,6 +581,56 @@
     $(window).on('load', function () {
         $('#loading').css('display', 'none')
     });
+
+
+    //지도 api
+    function getMap(sellerAddr) {
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+    // 지도를 생성
+        var map = new kakao.maps.Map(mapContainer, mapOption);
+
+    // 주소-좌표 변환 객체를 생성
+        var geocoder = new kakao.maps.services.Geocoder();
+
+    // 주소로 좌표를 검색
+        geocoder.addressSearch(sellerAddr, function (result, status) {
+
+            // 정상적으로 검색이 완료됐으면
+            if (status === kakao.maps.services.Status.OK) {
+
+                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                // 결과값으로 받은 위치를 마커로 표시
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: coords
+                });
+
+                // 지도의 중심을 결과값으로 받은 위치로 이동
+                map.setCenter(coords);
+
+                $('#map').click(function(){
+
+                    var addrString =  'https://map.kakao.com/link/to/'+sellerAddr +',' + result[0].y +','+result[0].x;
+
+                    var sendId = searchParam('sendId');
+                    var top = Math.random()*100 + 100;
+                    var left = Math.random()*100 + 150;
+                    newWindow("MyWindow");
+                    window.open(addrString, newName,
+                        'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=1300,height=800,top='+top+',left='+left+'');
+
+                })
+
+            }
+        });
+
+    }
+
 
 
 </script>

@@ -24,6 +24,10 @@
 
         </ul>
     </div>
+    <!--    로딩창-->
+    <div class="loading" style="display: none">
+        <img id="loading-image" src="/images/ajax-loader.gif" alt="전송중..." />
+    </div>
 </div>
 
 <style>
@@ -84,8 +88,19 @@
         margin-left: 10px;
     }
     .readCount{
-        color: red;
+        display: none;
+        color: #fff;
         font-weight: bold;
+        font-size: 11px;
+        border: 1px solid #dc0303;
+        border-radius: 50px;
+        width: 15px;
+        height: 15px;
+        line-height: 15px;
+        text-align: center;
+        background: #dc0303;
+        position: absolute;
+        margin-left: -15px;
     }
     .chatRoomMessage{
         font-weight: normal;
@@ -123,6 +138,11 @@
 <script src="/js/main.js"></script>
 <script>
     /********************** 실행 함수 ********************/
+
+
+    $(document).ready(function () {
+        $('.loading').css('display','block');
+    });
 
     document.addEventListener("DOMContentLoaded", getChatRoomLength);
     setInterval(getChatRoomLength, 100);
@@ -284,7 +304,7 @@
                     getReadCount(obj.prodNo,obj.roomNo);
                 contents = '';
                 //상품 하나 html
-                contents += '<li class="chatRoom" onclick="goChat('+obj.prodNo+','+obj.roomNo+')">';
+                contents += '<li class="chatRoom" onclick="goChat('+obj.prodNo+','+obj.roomNo+');">';
                 contents += '<div class="chatRoomContent">';
                     contents += '<div>';
                 if(obj.sendId == searchParam('sendId')){
@@ -300,7 +320,7 @@
                 contents += '    <span class=" sendDay">'+sendDay+'</span>';
                 contents +='</div>';
                 contents +='<div style="display: flex; align-items: flex-end;">';
-                contents += '    <span class="chatRoomMessage chatRoomMessage'+obj.prodNo+'-'+obj.roomNo+'">'+textLengthOverCut(obj.content, 15, '...')+'</span>';
+                contents += '    <span class="chatRoomMessage chatRoomMessage'+obj.prodNo+'-'+obj.roomNo+'"></span>';
                 contents += '    <span class="sendtime">'+sendTime+ '</span>';
                 contents +='</div>';
                 contents +='</div>';
@@ -321,6 +341,7 @@
             contents = '<span>채팅 목록이 없습습니다.</span>';
             container.append(contents);
         }
+         $('.loading').css('display','none');
 
     }
 
@@ -336,7 +357,7 @@
                 var second = obj.sendtime.substring(17, 19);
                 var sendtime = year+month+day+hour+minute+second;
                 console.log("objMassageSendTime",sendtime);
-              $('.chatRoomMessage'+obj.prodNo+'-'+obj.roomNo).text(obj.content);
+              $('.chatRoomMessage'+obj.prodNo+'-'+obj.roomNo).text(textLengthOverCut(obj.content, 14 , '...'));
             })
         $('#chatRoomLength').val(data.chatList.length);
 
@@ -358,8 +379,10 @@
     //안읽은 메세지 그리기
     function drawReadCount(data,prodNo,roomNo) {
         if(data.readCount !=0) {
+            $('.readCount' + prodNo + '-' + roomNo).css('display','unset');
             $('.readCount' + prodNo + '-' + roomNo).text(data.readCount);
         }else{
+            $('.readCount' + prodNo + '-' + roomNo).css('display','none');
             $('.readCount' + prodNo + '-' + roomNo).text('');
         }
     }
@@ -408,7 +431,6 @@
         window.open('/member/chatting/chat?prodNo='+prodNo+'&sendId='+sendId+'&roomNo='+roomNo+'', newName,
             'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top='+top+',left='+left+'');
     }
-
 
 </script>
 </body>

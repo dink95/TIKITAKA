@@ -660,6 +660,32 @@ function goChatToId(userId) {
     window.open('/member/userinfo?userId=' + userId + '', 'TIKITAKA', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=100,left=100')
 }
 
+//로그인 한 사람이 안읽은 메세지 개수 조회
+function getAllReadCount(){
+    param = {
+        loginId:$('#login_id').text()
+    }
+    $.ajax({
+        url: '/chat/readAllCount',
+        data: param,
+        type: 'post',
+        dataType: 'json'
+    }).done(function (data) {
+        if(data.readAllCount == 0 || data.readAllCount == undefined){
+            $('.readAllCount').css('display','none');
+        }else {
+            $('.readAllCount').css('display','unset');
+            $('.readAllCountText').text(data.readAllCount);
+        }
+    }).fail(function (data, textStatus, errorThrown) {
+        console.log(textStatus);
+    });
+}
+
+setInterval(function (){
+    getAllReadCount();
+}, 1000)
+
 /**********************************************반응형******************************************/
 
 // 모바일 카테고리 반응

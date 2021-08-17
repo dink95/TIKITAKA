@@ -130,6 +130,17 @@
             read_count = 1;
     </select>
 
+    <select id="selectAllReadCount" parameterType="ChatDTO" resultType="int">
+        SELECT
+            COUNT(read_count)
+        FROM
+            chat
+        WHERE
+            recipient_id = #{recipientId}
+          AND
+            read_count = 1;
+    </select>
+
     <select id="selectSendCount" parameterType="ChatDTO" resultType="int">
         SELECT
             COUNT(read_count)
@@ -144,6 +155,9 @@
           AND
             read_count = 1;
     </select>
+
+
+
 
 
 

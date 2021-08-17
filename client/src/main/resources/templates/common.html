@@ -350,7 +350,9 @@
                 </svg>
                 <a th:if="${session.mbrId == null}" href="/login"><span>채팅</span></a>
                 <a th:if="${session.mbrId != null}" href="#"
-                   onclick="goChatRoom($('#login_id').text());"><span>채팅</span></a></li>
+                   onclick="goChatRoom($('#login_id').text());"><span>채팅</span></a>
+                <span class="readAllCount" style="display:none"><a class="readAllCountText" style="color: #fff; font-size: 12px;"></a></span></li>
+
             <li th:classappend="${menu}=='myinfo'? 'menu_active' : ''">
                 <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                      class="bi bi-person" viewBox="0 0 16 16">
