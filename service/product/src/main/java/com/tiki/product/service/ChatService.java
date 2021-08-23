@@ -25,6 +25,8 @@ public interface ChatService {
 
     public int selectReadCount(ChatDTO chatDTO);
 
+    public int selectAllReadCount(ChatDTO chatDTO);
+
     public int selectSendCount(ChatDTO chatDTO);
 
 

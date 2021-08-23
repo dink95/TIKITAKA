@@ -58,7 +58,7 @@
                         <span style="font-size: 16px; font-weight: bold;color: #000;">님</span>
                     </div>
                     <div>
-
+                        <span id="p_addr"></span>
                     </div>
                     <div>
                         <button onclick="goUpdateInfo()">
@@ -292,9 +292,19 @@
         padding: 10px 0;
         cursor: pointer;
     }
+    #p_addr{
+        font-size: 14px;
+        color: #000;
+    }
 </style>
 
 <script>
+
+    $(document).ready(function () {
+        getIdQueryList();
+        getMbrInfo();
+        mobileSiteTop('내정보');
+    });
 
     function finishCheck(props) {
         $('#finishCheck').val(props);
@@ -382,6 +392,8 @@
                 $('#p_grade').css("color", "#000");
             }
 
+            $('#p_addr').text(data.memberDetail.mbrAddr);
+
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
         });
@@ -457,10 +469,6 @@
         location.href = '/grade';
     }
 
-    $(document).ready(function () {
-        getIdQueryList();
-        getMbrInfo();
-    });
     $('#loading').css('display','block');
     $(window).on('load', function(){ $('#loading').css('display','none')});
 

@@ -139,6 +139,20 @@ public class ChattingController {
         return resultMap;
     }
 
+    @RequestMapping("/chat/readAllCount")  /*안읽은 메세지 개수 */
+    @ResponseBody
+    public Map<String, Object> selectAllReadCount(@RequestParam(value="loginId") String loginId) {
+        HashMap<String,Object> resultMap = new HashMap<>();
+        int readCount = 0;
+        try {
+            readCount = chatService.selectAllReadCount(loginId);
+            resultMap.put("readAllCount",readCount);
+        } catch (Exception e) {
+
+        }
+        return resultMap;
+    }
+
     @RequestMapping("/chat/sendCount")  /*상대방이 안읽은 메세지 개수 */
     @ResponseBody
     public Map<String, Object> selectSendCount(@RequestParam(value="prodNo") int prodNo,
@@ -155,20 +169,6 @@ public class ChattingController {
         return resultMap;
     }
 
-    @RequestMapping("/chat/readCountInChat")  /*채팅방에서 안읽은 메세지 개수 */
-    @ResponseBody
-    public Map<String, Object> selectReadCountInChat(@RequestParam(value="prodNo") int prodNo,
-                                               @RequestParam(value="roomNo") int roomNo) {
-        HashMap<String,Object> resultMap = new HashMap<>();
-        int readCount = 0;
-        try {
-            readCount = chatService.selectReadCountInChat(prodNo,roomNo);
-            resultMap.put("readCountInChat",readCount);
-        } catch (Exception e) {
-
-        }
-        return resultMap;
-    }
 
 
 }

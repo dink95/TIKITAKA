@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="../css/aos.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/icon.css">
+    <!--이미지슬라이드-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
 </head>
 
 <body>
@@ -45,10 +47,11 @@
     <!--모바일 검색창-->
     <div th:replace="common::mobile_search(home)"></div>
 
-    <div class="site-section margin-top-2">
+    <div class="site-section">
         <div class="col-md-12 mb-0"></div>
 
         <div class="container">
+
 
             <input type="hidden" id="p_id" th:value="${session.mbrId}">
             <input type="hidden" id="prodNo" value="">
@@ -59,12 +62,68 @@
             <input type="hidden" id="way" value="">
             <input type="hidden" id="nego" value="">
             <input type="hidden" id="prodCo" value="">
-            <div class="row align-items-start" style="border-bottom: 1px solid #ddd; padding:0 0 5% 0;">
-                <div class="col-12 col-md-6 order-1 order-md-1  text-center">
-                    <figure class="block-4-image">
-                        <img id="mainDetailImg" src="" alt="Image placeholder" class="img-fluid"
-                             style="max-height: 500px;">
-                    </figure>
+
+
+            <div class="row align-items-start" style="border-bottom: 1px solid #ddd;">
+                <div class="col-12 col-md-6 order-1 order-md-1  text-center" style="padding: 0;">
+                    <div class="bxslider bxslider1" style="display: none" >
+                            <img class="bxsliderImg1" src="" alt="슬라이드 이미지1" onclick="goDetailPhoto(1);">
+                    </div>
+
+                    <div class="bxslider bxslider2" style="display: none">
+                        <div class="bxsliderImgDiv bxsliderImgDiv1">
+                            <img class="bxsliderImg1" src="" alt="슬라이드 이미지1" onclick="goDetailPhoto(1);">
+                        </div>
+                        <div class="bxsliderImgDiv bxsliderImgDiv2">
+                            <img class="bxsliderImg2" src="" alt="슬라이드 이미지2" onclick="goDetailPhoto(2);">
+                        </div>
+                    </div>
+
+                    <div class="bxslider bxslider3" style="display: none">
+                        <div class="bxsliderImgDiv bxsliderImgDiv1">
+                            <img class="bxsliderImg1" src="" alt="슬라이드 이미지1" onclick="goDetailPhoto(1);">
+                        </div>
+
+                        <div class="bxsliderImgDiv bxsliderImgDiv2">
+                            <img class="bxsliderImg2" src="" alt="슬라이드 이미지2" onclick="goDetailPhoto(2);">
+                        </div>
+                        <div class="bxsliderImgDiv bxsliderImgDiv3">
+                            <img class="bxsliderImg3" src="" alt="슬라이드 이미지3" onclick="goDetailPhoto(3);">
+                        </div>
+                    </div>
+
+                    <div class="bxslider bxslider4" style="display: none">
+                        <div class="bxsliderImgDiv bxsliderImgDiv1">
+                            <img class="bxsliderImg1" src="" alt="슬라이드 이미지1" onclick="goDetailPhoto(1);">
+                        </div>
+                        <div class="bxsliderImgDiv bxsliderImgDiv2">
+                            <img class="bxsliderImg2" src="" alt="슬라이드 이미지2" onclick="goDetailPhoto(2);">
+                        </div>
+                        <div class="bxsliderImgDiv bxsliderImgDiv3">
+                            <img class="bxsliderImg3" src="" alt="슬라이드 이미지3" onclick="goDetailPhoto(3);">
+                        </div>
+                        <div class="bxsliderImgDiv bxsliderImgDiv4">
+                            <img class="bxsliderImg3" src="" alt="슬라이드 이미지4" onclick="goDetailPhoto(4);">
+                        </div>
+                    </div>
+
+                    <div class="bxslider bxslider5" style="display: none">
+                        <div class="bxsliderImgDiv bxsliderImgDiv1">
+                            <img class="bxsliderImg1" src="" alt="슬라이드 이미지1" onclick="goDetailPhoto(1);">
+                        </div>
+                        <div class="bxsliderImgDiv bxsliderImgDiv2">
+                            <img class="bxsliderImg2" src="" alt="슬라이드 이미지2" onclick="goDetailPhoto(2);">
+                        </div>
+                        <div class="bxsliderImgDiv bxsliderImgDiv3">
+                            <img class="bxsliderImg3" src="" alt="슬라이드 이미지3" onclick="goDetailPhoto(3);">
+                        </div>
+                        <div class="bxsliderImgDiv bxsliderImgDiv4">
+                            <img class="bxsliderImg4" src="" alt="슬라이드 이미지4" onclick="goDetailPhoto(4);">
+                        </div>
+                        <div class="bxsliderImgDiv bxsliderImgDiv5">
+                            <img class="bxsliderImg5" src="" alt="슬라이드 이미지5" onclick="goDetailPhoto(5);">
+                        </div>
+                    </div>
                 </div>
                 <div class="col-12 col-md-6 order-2 order-md-2  text-left">
                     <div class="aic1" style="border-bottom: 1px solid #dee2e6">
@@ -74,12 +133,16 @@
                             <span id="wday" class="text-black" text="" style="line-height: 56px;"></span>
                         </div>
                     </div>
-                    <div class="aic2">
-                        <p>판매자아이디:&nbsp&nbsp<span id="selId"></span></p>
-                        <p>거래방법:&nbsp&nbsp<span id="detailWay"></span></p>
-                        <p>거래지역:&nbsp&nbsp<span id="detailAddr"></span><a href="///"
-                                                                          id="detailMap"><span>지도보기</span></a></p>
-                        <p>조회수:&nbsp&nbsp<span id="detailView"></span></p>
+                    <div class="row align-items-start" >
+                        <div class="aic2 col-6 col-md-6 order-1 order-md-1  text-left">
+                            <p>판매자아이디:&nbsp&nbsp<span id="selId"></span></p>
+                            <p>거래방법:&nbsp&nbsp<span id="detailWay"></span></p>
+                            <p>거래지역:&nbsp&nbsp<span id="detailAddr"></span></p>
+                            <p>조회수:&nbsp&nbsp<span id="detailView"></span></p>
+                        </div>
+                        <div id="map" class="col-6 col-md-6 order-2 order-md-2  text-left">
+
+                        </div>
                     </div>
                     <div class="aic3 ButtonNav">
                         <input class=" btn btn-primary" id="tradeProd"
@@ -98,87 +161,10 @@
             </div>
 
 
-            <div class="site-section block-3 site-blocks-2 bg-light">
-                <div class="container">
-                    <div class="row justify-content-center">
-                    </div>
-                    <input type="hidden" id="imgCount">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class=" nonloop-block-3 owl-carousel">
-                                <div class="" data-aos="" data-aos-delay="">
-                                    <a class="block-2-item" onclick="goDetailPhoto('.img-fluid1')">
-                                        <div class="item">
-                                            <div class="block-4 text-center">
-                                                <figure class="block-4-image image">
-                                                    <img src="" class="img-fluid0 img-fluid1">
-                                                </figure>
-
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class=" aos-init aos-animate" data-aos="fade" data-aos-delay="">
-                                    <a class="block-2-item" onclick="goDetailPhoto('.img-fluid2')">
-                                        <div class="item">
-                                            <div class="block-4 text-center">
-                                                <figure class="block-4-image image">
-                                                    <img src="" class="img-fluid0 img-fluid2">
-                                                </figure>
-
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class=" aos-init aos-animate" data-aos="fade" data-aos-delay="">
-                                    <a class="block-2-item" onclick="goDetailPhoto('.img-fluid3')">
-                                        <div class="item">
-                                            <div class="block-4 text-center">
-                                                <figure class="block-4-image image">
-                                                    <img src="" class="img-fluid0 img-fluid3">
-                                                </figure>
-
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class=" aos-init aos-animate" data-aos="fade" data-aos-delay="">
-                                    <a class="block-2-item" onclick="goDetailPhoto('.img-fluid4')">
-                                        <div class="item">
-                                            <div class="block-4 text-center">
-                                                <figure class="block-4-image image">
-                                                    <img src="" class="img-fluid0 img-fluid4">
-                                                </figure>
-
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class=" aos-init aos-animate" data-aos="fade" data-aos-delay="">
-                                    <a class="block-2-item" onclick="goDetailPhoto('.img-fluid4')">
-                                        <div class="item">
-                                            <div class="block-4 text-center">
-                                                <figure class="block-4-image image">
-                                                    <img src="" class="img-fluid0 img-fluid5">
-                                                </figure>
-
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div class="row align-items-center"
-                 style="border-bottom: 1px solid #ddd;  margin:30px 0 10px 0; padding:30px 0 10px 0;">
-                <div class="col-12  order-1 order-md-1  text-left">
-                    <label for="prodContent">상세정보</label><span
-                        class="text-danger">*</span></div>
+                 style="border-bottom: 1px solid #ddd;">
                 <div class="col-12 col-md-12 order-2 order-md-2  text-left">
-                    <div class="p_content" style="border: 1px solid #ddd; height: 300px;">
+                    <div class="p_content" style=" min-height: 200px;">
                         <span id="prodContent" class="font-weight-normal"></span>
                     </div>
                 </div>
@@ -191,31 +177,91 @@
     <div th:replace="common::mobile(detail)"></div>
 
     <style>
+        @media screen and (max-width: 575px) {
+            .site-section {
+                padding: 0;
+            }
 
-        #detailMap {
-            margin: 10px;
+            .bx-viewport {
+                width: 100%;
+                display: block;!important:;
+                height: 400px;!important;
+                min-height: 400px;
+            }
+            .bx-wrapper img {
+                width: 100%;
+                display: block;
+                height: 100%;
+                min-height: 400px;!important;
+                border-radius: 1px;
+            }
+            #detailName {
+             margin-bottom: 0px;
+            }
+            .ButtonNav > .btn {
+                font-size: 15px;
+            }
+            .bxsliderImgDiv{
+                width: 3.2%;
+            }
         }
+        @media screen and (min-width: 575px) {
+            .bx-viewport {
+                width: 100%;
+                display: block;
+                height: 100%;
+                min-height: 500px;
+            !important;
+            }
 
+            .bx-wrapper img {
+                width: 100%;
+                display: block;
+                height: 100%;
+                min-height: 500px;
+            !important;
+                border-radius: 1px;
+            }
+            #detailName {
+                margin-bottom: 50px;
+            }
+            .ButtonNav > .btn {
+                font-size: 16px;
+            }
+        }
+        .bx-wrapper {
+            margin-bottom: 0;
+        }
         #detailMap > span {
             color: #a88d2c;
+        }
+        .bx-wrapper .bx-pager, .bx-wrapper .bx-controls-auto {
+            bottom: 5vh;!important;
+
+        }
+        .bx-wrapper {
+            -moz-box-shadow: none;
+             -webkit-box-shadow: none;
+             box-shadow: none;
+            border: 5px solid #fff;
+            background: #fff;
         }
 
 
         .ButtonNav > .btn {
             border-radius: 2px;
-            width: 30%;
+            width: 100%;
             font-weight: normal;
             margin: 1%;
             display: none;
         !important;
-            font-size: 16px;
+
             letter-spacing: 0;
         }
 
         #detailName {
             color: #000;
             font-size: 20px;
-            margin-bottom: 50px;
         }
 
         #detailPrice {
@@ -288,6 +334,7 @@
         }
 
         .btn_finish {
+            cursor: pointer;
             border-style: none;
             padding: 6px 12px;
             margin: 1%;
@@ -304,6 +351,13 @@
             font-weight: normal;
         }
 
+        #map {
+            width: 300px;
+            height: 200px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
     </style>
 </div>
 </div>
@@ -317,8 +371,33 @@
 <script src="../js/aos.js"></script>
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script src="../js/main.js"></script>
+<!--지도 api-->
+<script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bd8b34df267f0252d602ca4d11e5ba47&libraries=services"></script>
+<!--이미지슬라이드-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 <script>
     $('#loading').css('display', 'block');
+
+
+    $(document).ready(function () {
+        getProductDetail();
+    });
+
+    function doBxslider(props) {
+        $('.bxslider'+props).bxSlider({ // 클래스명 주의!
+            auto: false, // 자동으로 애니메이션 시작
+            speed: 500,  // 애니메이션 속도
+            pause: 5000,  // 애니메이션 유지 시간 (1000은 1초)
+            mode: 'horizontal', // 슬라이드 모드 ('fade', 'horizontal', 'vertical' 이 있음)
+            autoControls: true, // 시작 및 중지버튼 보여짐
+            pager: true, // 페이지 표시 보여짐
+            captions: true, // 이미지 위에 텍스트를 넣을 수 있음
+            infiniteLoop: false,
+            hideControlOnEnd: true,
+        });
+    }
 
     /*멤버정보*/
     function getMemberDetail() {
@@ -333,6 +412,7 @@
         }).done(function (data) {
             console.log("data.memberDetail", data.memberDetail);
             $('#detailAddr').text(data.memberDetail.mbrAddr);
+            getMap(data.memberDetail.mbrAddr);
 
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
@@ -354,13 +434,16 @@
             dataType: 'json'
         }).done(function (data) {
             drawPrdList(data);
+            mobileSiteTop(data.dataDetail.prodNm);
             console.log("data.dataDetail", data.dataDetail);
             if (data.dataDetail.prodFinish) {
                 $('#prodFinish').css('display', 'none');
                 $('#updateProd').attr('class', 'btn_finish ');
                 $('#updateProd').val('판매완료');
                 $('#updateProd').attr('onclick', '').unbind('click');
-
+                if($('#login_id').text() != $('#selId').text()){
+                    $('#tradeProd').css('display','none');
+                }
             }
             getMemberDetail();
 
@@ -407,9 +490,10 @@
 
 
     function drawPrdList(data) {
+
         if (typeof data.dataDetail !== 'undefined') {
             var imgPath = '';
-
+            var container = $('.bxslider');
             //이미지경로를 미리 만들어놓는다.
             imgPath = '/istatic/images/' + data.dataDetail.prodNo + '/1.jpg';
             //메인 이미지 html
@@ -440,16 +524,16 @@
 
 
             var imgDetailPath = '';
+            $('.bxslider'+data.dataDetail.imgCount).css('display','block');
+            doBxslider(data.dataDetail.imgCount);
             for (var i = 1; i < data.dataDetail.imgCount + 1; i++) {
                 imgDetailPath = '/istatic/images/' + data.dataDetail.prodNo + '/' + i + '.jpg';
                 $('.img-fluid' + i).attr("src", imgDetailPath);
-                $('.img-fluid' + i).css("display", '');
+                $('.img-fluid' + i).css("display", '')
+
+                $('.bxsliderImg'+i).attr("src",imgDetailPath);
             }
-
-
         }
-
-
     }
 
     function searchParam(key) {
@@ -483,12 +567,8 @@
     }
 
 
-    $(document).ready(function () {
-        getProductDetail();
-    });
-
     function goDetailPhoto(i) {
-        var imgPath = $(i).attr("src");
+        var imgPath = $('.bxsliderImg'+i).attr("src");
         $('#img_modal').css('display', 'flex');
         $('#img_modal').children('img').attr("src", imgPath);
 
@@ -546,15 +626,15 @@
 
     //채팅 버튼 클릭시 채팅방 입장
     function goChat() {   //로그인 여부 확인
-        if ($('#p_id').val()){
+        if ($('#p_id').val()) {
             prodNo = searchParam('prodNo');
             var top = Math.random() * 100 + 100;
             var left = Math.random() * 100 + 600;
             newWindow("MyWindow");
             window.open('/member/chatting/chat?prodNo=' + prodNo + '&sendId=' + $('#p_id').val() + '&recipientId=' + $('#selId').text(), newName,
                 'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=' + top + ',left=' + left + '');
-        }else{
-            location.href='/login';
+        } else {
+            location.href = '/login';
         }
     }
 
@@ -562,6 +642,56 @@
     $(window).on('load', function () {
         $('#loading').css('display', 'none')
     });
+
+
+    //지도 api
+    function getMap(sellerAddr) {
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+        // 지도를 생성
+        var map = new kakao.maps.Map(mapContainer, mapOption);
+
+        // 주소-좌표 변환 객체를 생성
+        var geocoder = new kakao.maps.services.Geocoder();
+
+        // 주소로 좌표를 검색
+        geocoder.addressSearch(sellerAddr, function (result, status) {
+
+            // 정상적으로 검색이 완료됐으면
+            if (status === kakao.maps.services.Status.OK) {
+
+                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                // 결과값으로 받은 위치를 마커로 표시
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: coords
+                });
+
+                // 지도의 중심을 결과값으로 받은 위치로 이동
+                map.setCenter(coords);
+
+                $('#map').click(function(){
+
+                    var addrString =  'https://map.kakao.com/link/to/'+sellerAddr +',' + result[0].y +','+result[0].x;
+
+                    var sendId = searchParam('sendId');
+                    var top = Math.random()*100 + 100;
+                    var left = Math.random()*100 + 150;
+                    newWindow("MyWindow");
+                    window.open(addrString, newName,
+                        'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=1300,height=800,top='+top+',left='+left+'');
+
+                })
+
+            }
+        });
+
+    }
+
 
 
 </script>

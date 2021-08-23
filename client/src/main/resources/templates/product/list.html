@@ -23,7 +23,7 @@
 <body>
 
 
-<div class="site-wrap" >
+<div class="site-wrap">
     <header class="site-navbar" role="banner">
         <!--replace 헤더-->
         <div class="site-navbar-top" th:replace="common::header(product_list)">
@@ -46,8 +46,8 @@
     <!------------------------->
     <div class="site-section block-3 site-blocks-2 bg-light">
         <div class="container">
-            <form id="innerSearchForm" action="/product/list" class="site-block-top-search input-search">
-                <input id="innerSearch" type="text" name="prodNm" class="form-control input-search" placeholder="">
+            <form id="innerSearchForm" action="/product/list" class="site-block-top-search">
+                <input id="innerSearch" type="text" name="prodNm" class="form-control" placeholder="">
                 <span type="submit" class="icon icon-search2"></span>
                 <button type="submit" class="btn btn-primary br-0">
                     <span class="font-14 font-weight-normal">검색</span></button>
@@ -75,7 +75,8 @@
                     </div>
 
                     <div class="conditionNav detailCategoryConditionNav">
-                        <div class="conditionTitle detailCategoryConditionTitle" onclick="getCondition('detailCategory')">
+                        <div class="conditionTitle detailCategoryConditionTitle"
+                             onclick="getCondition('detailCategory')">
                             <span class="text-black font-weight-normal">전체</span>
                             <img class="arrowDownIcon detailCategoryArrowDownIcon" src="/icons/arrowDown.svg" alt=""/>
                             </svg>
@@ -85,19 +86,9 @@
 
                         </div>
                     </div>
-                    <div>
-                        <span class="text-black" id="queryTextProdNm"></span>
-                        <span class="font-weight-normal text-black">검색 결과</span>
-
-                        <span class="font-weight-light queryTextCount font-14">0</span>
-                        <span class="font-weight-normal font-14">개</span>
-                    </div>
                 </div>
 
-
-
-
-                <div class="conditionNav orderConditionNav" >
+                <div class="conditionNav orderConditionNav">
                     <div class="conditionTitle orderConditionTitle" onclick="getCondition('order')">
                         <span class="text-black font-weight-normal">최근 날짜순</span>
                         <img class="arrowDownIcon orderArrowDownIcon" src="/icons/arrowDown.svg" alt=""/>
@@ -110,6 +101,15 @@
                     </div>
                 </div>
 
+            </div>
+            <div>
+                <div>
+                    <span class="text-black" id="queryTextProdNm"></span>
+                    <span class="font-weight-normal text-black">검색 결과</span>
+
+                    <span class="font-weight-light queryTextCount font-14">0</span>
+                    <span class="font-weight-normal font-14">개</span>
+                </div>
             </div>
 
             <div class="gridContainer">
@@ -129,15 +129,19 @@
         text-align: right;
         width: 110px;
     }
-    .mainCategoryConditionTitle{
-        margin:0 20px;
+
+    .mainCategoryConditionTitle {
+        margin: 0 20px;
     }
-    .detailCategoryConditionTitle{
-        margin-right:20px;
+
+    .detailCategoryConditionTitle {
+        margin-right: 20px;
     }
+
     .conditionTitle > span {
         font-size: 13px;
     }
+
     .conditionMenu {
         border-top: 2px solid #5f0080;
         text-align: right;
@@ -148,26 +152,31 @@
         position: absolute;
         width: 110px;
     }
-    .orderConditionTitle{
+
+    .orderConditionTitle {
         width: 90px;
-    }
-    .orderConditionMenu{
-        width: 90px;
-    }
-    .mainCategoryConditionMenu{
-        margin:10px 20px 0 20px;
-    }
-    .detailCategoryConditionMenu{
-        margin-top:10px;
-    }
-    .detailCategoryConditionNav{
-        display:none ;
     }
 
-    .mainCategoryConditionTitle, .detailCategoryConditionTitle{
+    .orderConditionMenu {
+        width: 90px;
+    }
+
+    .mainCategoryConditionMenu {
+        margin: 10px 20px 0 20px;
+    }
+
+    .detailCategoryConditionMenu {
+        margin-top: 10px;
+    }
+
+    .detailCategoryConditionNav {
+        display: none;
+    }
+
+    .mainCategoryConditionTitle, .detailCategoryConditionTitle {
         display: none;
         width: 110px;
-        padding:0 10px;
+        padding: 0 10px;
         background: #fff;
         box-shadow: 0 2px 4px rgb(0, 0, 0, .3);
     }
@@ -184,11 +193,10 @@
     }
 
 
-
     .mainCategoryTextNav {
         display: flex;
         justify-content: flex-start;
-        margin-left:1%;
+        margin-left: 1%;
 
     }
 
@@ -200,6 +208,7 @@
         position: relative;
 
     }
+
     .detailCategoryTextNav > span {
         display: inline-block;
         padding: 10px 10px 5px 10px;
@@ -305,25 +314,69 @@
         max-width: 225px;
     }
 
-    .categoryIcon2{
-        filter:invert(15%) sepia(73%) saturate(2372%) hue-rotate(270deg) brightness(98%) contrast(132%);
+    .categoryIcon2 {
+        filter: invert(15%) sepia(73%) saturate(2372%) hue-rotate(270deg) brightness(98%) contrast(132%);
     }
 
 
-    #innerSearchForm{
+    #innerSearchForm {
         display: none;
         width: 50%;
         min-width: 500px;
         margin: 0 auto;
     }
-    #innerSearch{
+
+    #innerSearch {
         border: 1px solid #5f0080;
         border-radius: 0;
     }
-    #innerSearchForm > button{
 
+    #innerSearchForm > button {
         margin: 1px 0px 1px 15px;
     }
+
+    @media screen and (max-width: 991px) {
+
+    }
+
+    @media screen and (max-width: 768px) {
+
+    }
+
+    @media screen and (max-width: 575px) {
+        #innerSearchForm {
+            display: none;
+            width: 90%;
+            min-width: 200px;
+            margin: 0 auto;
+        }
+
+        #innerSearchForm > button {
+            margin: 0px;
+        }
+
+        .input-search {
+            display: none;
+        }
+
+        .site-navbar-top {
+            height: 52px;
+        }
+
+        .site-navbar .site-navbar-top {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+    }
+
+    .detailCategoryTextNav {
+        -ms-overflow-style: none;
+    }
+
+    .detailCategoryTextNav::-webkit-scrollbar {
+        display: none;
+    }
+
 
     /*****************/
 </style>
@@ -340,22 +393,22 @@
     //상품 조건으로 조회 토글
     function getCondition(props) {
 
-        var conditionMenu = $('.' + props +'ConditionMenu');
-        var conditionTitle = $('.' +props+'ConditionTitle').children('span');
-        var fas =  $('.' + props +'ConditionTitle').children('img');
-        var fasOther = $('.conditionTitle').not($('.' + props +'ConditionTitle')).children('img');
-        var conditionTitleOther =$('.conditionTitle').not ($('.' +props+'ConditionTitle')).children('span');
+        var conditionMenu = $('.' + props + 'ConditionMenu');
+        var conditionTitle = $('.' + props + 'ConditionTitle').children('span');
+        var fas = $('.' + props + 'ConditionTitle').children('img');
+        var fasOther = $('.conditionTitle').not($('.' + props + 'ConditionTitle')).children('img');
+        var conditionTitleOther = $('.conditionTitle').not($('.' + props + 'ConditionTitle')).children('span');
         if (conditionMenu.css('display') == 'none') {
-            conditionMenu.not($('.conditionMenu').css('display','none'));
+            conditionMenu.not($('.conditionMenu').css('display', 'none'));
             conditionMenu.css('display', 'block');
             conditionTitle.css('color', '#5f0080');
-            conditionTitleOther.css('color','#000');
-            fas.attr("src","/icons/arrowUp.svg");
-            fasOther.attr("src","/icons/arrowDown.svg");
+            conditionTitleOther.css('color', '#000');
+            fas.attr("src", "/icons/arrowUp.svg");
+            fasOther.attr("src", "/icons/arrowDown.svg");
         } else {
             conditionMenu.css('display', 'none');
             conditionTitle.css('color', '#000');
-            fas.attr("src","/icons/arrowDown.svg");
+            fas.attr("src", "/icons/arrowDown.svg");
         }
     }
 
@@ -369,7 +422,7 @@
         conditionTitle.text(conditionMenuText);
         conditionMenu.css('display', 'none');
         conditionTitle.css('color', '#000');
-        fas.attr("src","/icons/arrowDown.svg");
+        fas.attr("src", "/icons/arrowDown.svg");
         if (searchParam('catNo')) {
             f_obj_cat['f_run_cat_' + conditionMenuId]();
         } else {
@@ -382,12 +435,12 @@
         //카테고리별 최근 날짜순
 
         f_run_cat_latestDay: function (props) {
-            $('#loading').css('display','block');
-            if(props){
-                param ={
-                    catNo:props,
+            $('#loading').css('display', 'block');
+            if (props) {
+                param = {
+                    catNo: props,
                 }
-            }else {
+            } else {
                 param = {
                     catNo: searchParam('catNo'),
                 }
@@ -400,10 +453,10 @@
             }).done(function (data) {
                 drawPrdList(data);
                 console.log(data);
-                $('#loading').css('display','none');
+                $('#loading').css('display', 'none');
             }).fail(function (data, textStatus, errorThrown) {
                 console.log(textStatus);
-                $('#loading').css('display','none');
+                $('#loading').css('display', 'none');
             });
 
         },
@@ -607,14 +660,14 @@
     function goSelectMainQuery(props) {
         if (searchParam('prodNm')) {
 
-            $('.detailCategoryTextNav').css('display','none');
+            $('.detailCategoryTextNav').css('display', 'none');
             var fas = $('.mainCategoryConditionTitle').children('img');
-            fas.attr("src","/icons/arrowDown.svg");
-            $(' .detailCategoryConditionNav').css('display','block');
+            fas.attr("src", "/icons/arrowDown.svg");
+            $(' .detailCategoryConditionNav').css('display', 'block');
             $(' .detailCategoryConditionTitle').children('span').text('전체');
             $(' .orderConditionTitle').children('span').text('최근 날짜순');
             var conditionMenu = $('.mainCategoryConditionMenu');
-            var conditionMenuText = $('#' +props).text();
+            var conditionMenuText = $('#' + props).text();
             var conditionTitle = $('.mainCategoryConditionTitle').children('span');
             conditionTitle.text(conditionMenuText);
             conditionMenu.css('display', 'none');
@@ -625,8 +678,8 @@
             f_obj_prodNm['f_run_prodNm_latestDay']();
             getAllCategory(props);
         } else {
-            $('.mainCategoryConditionNav').css('display','none');
-            $('.categoryNav').css('display','block');
+            $('.mainCategoryConditionNav').css('display', 'none');
+            $('.categoryNav').css('display', 'block');
             getCategory();
         }
     }
@@ -636,10 +689,10 @@
     function goSelectDetailQuery(props) {
         if (searchParam('prodNm')) {
             var fas = $('.detailCategoryConditionTitle').children('img');
-            fas.attr("src","/icons/arrowDown.svg");
+            fas.attr("src", "/icons/arrowDown.svg");
             $(' .orderConditionTitle').children('span').text('최근 날짜순');
             var conditionMenu = $('.detailCategoryConditionMenu');
-            var conditionMenuText = $('#' +props).text();
+            var conditionMenuText = $('#' + props).text();
             var fas = $('.detailCategoryConditionTitle').children('svg');
             var conditionTitle = $('.detailCategoryConditionTitle').children('span');
             conditionTitle.text(conditionMenuText);
@@ -659,13 +712,13 @@
 
 
     /*카테고리 이름*/
-    function getCategory(props,width) {
+    function getCategory(props, width) {
 
         //페이지 갱신 없이 현재 카테고리 번호로 주소 변경 하기 위한 변수
         var state = null;
         var title = null;
 
-        if(props){
+        if (props) {
             //페이지 갱신 없이 현재 카테고리 번호로 주소 변경
             var url = '/product/list?catNo=' + props;
             history.pushState(state, title, url);
@@ -674,10 +727,10 @@
                 catNo: props,
             }
             console.log(props);
-            $('.underLine').animate({'left':width },500);
-            $('#' +props).css('color','#5f0080');
-            $('.detailCategoryTextNav').children('span').not($('#' +props)).css('color','#000');
-        }else {
+            $('.underLine').animate({'left': width}, 500);
+            $('#' + props).css('color', '#5f0080');
+            $('.detailCategoryTextNav').children('span').not($('#' + props)).css('color', '#000');
+        } else {
 
             param = {
                 catNo: searchParam('catNo'),
@@ -715,7 +768,7 @@
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            drawDetailList2(data,searchParam('catNo'));
+            drawDetailList2(data, searchParam('catNo'));
             console.log("@@data.allcatList", data.allcatList);
             if (props) {
                 drawDetailList(data, props);
@@ -801,12 +854,12 @@
     }
 
     //메인 카테고리 이름 아이콘 그리기
-    function drawMainCategoryName(data){
+    function drawMainCategoryName(data) {
         var container = $('.mainCategoryTextNav');
         container.empty();
-        var mainCategoryNumber = parseInt(data.categoryDTO.catNo /10) *10;
-        var iconNumber = parseInt(data.categoryDTO.catNo/10-1);
-        var iconArr = ['fashionIcon.svg','digitalIcon.svg','furnitureIcon.svg','leisureIcon.svg','etcIcon.svg','buyIcon.svg']
+        var mainCategoryNumber = parseInt(data.categoryDTO.catNo / 10) * 10;
+        var iconNumber = parseInt(data.categoryDTO.catNo / 10 - 1);
+        var iconArr = ['fashionIcon.svg', 'digitalIcon.svg', 'furnitureIcon.svg', 'leisureIcon.svg', 'etcIcon.svg', 'buyIcon.svg']
         param = {
             catNo: mainCategoryNumber
         }
@@ -817,14 +870,14 @@
             dataType: 'json'
         }).done(function (data) {
             contents = '';
-            contents +='<img class="categoryIcon2" src="/icons/'+iconArr[iconNumber]+'" alt=""/>';
-            contents += '<span>'+data.categoryDTO.catNm+'</span>';
+            contents += '<img class="categoryIcon2" src="/icons/' + iconArr[iconNumber] + '" alt=""/>';
+            contents += '<span>' + data.categoryDTO.catNm + '</span>';
+            mobileSiteTop(data.categoryDTO.catNm);
             container.append(contents);
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
 
         });
-
 
 
     }
@@ -837,7 +890,7 @@
             var contents2 = '';
             $.each(data.allcatList, function (index, obj) {
                 if (obj.catNo > props && obj.catNo < props + 10) {
-                    contents2= '';
+                    contents2 = '';
                     contents2 += '<span id="' + obj.catNo + '"  class="text-black font-weight-normal" onclick="goSelectDetailQuery(' + obj.catNo + ')">' + obj.catNm + '</span>'
                     //그리드에 삽입
                     detailContainer2.append(contents2);
@@ -846,31 +899,30 @@
         }
     }
 
-
     //세부 카테고리 리스트 그리기
     function drawDetailList2(data, props) {
         var detailContainer = $('.detailCategoryTextNav');
         if (typeof data.allcatList !== 'undefined' && data.allcatList.length > 0) {
             detailContainer.empty();
             var contents = '';
-            if(searchParam('catNo')) {
+            if (searchParam('catNo')) {
                 var width = 0;
-                detailContainer.append('<span id="' + parseInt(props / 10) * 10 + '"  class="text-black font-weight-normal" onclick="goSelectDetailQuery(' + parseInt(props / 10) * 10 + ');  getCategory(' +  parseInt(props / 10) * 10 + ', '+width+')">전체보기</span>')
+                detailContainer.append('<span id="' + parseInt(props / 10) * 10 + '"  class="text-black font-weight-normal" onclick="goSelectDetailQuery(' + parseInt(props / 10) * 10 + ');  getCategory(' + parseInt(props / 10) * 10 + ', ' + width + ')">전체보기</span>')
             }
             $.each(data.allcatList, function (index, obj) {
-                if (obj.catNo>parseInt(props/10)*10 && obj.catNo < parseInt(props/10)*10 +10) {
+                if (obj.catNo > parseInt(props / 10) * 10 && obj.catNo < parseInt(props / 10) * 10 + 10) {
                     width += 80;
                     contents = '';
-                    contents += '<span id="' + obj.catNo + '"  class="text-black font-weight-normal" onclick="goSelectDetailQuery(' + obj.catNo + '); getCategory(' + obj.catNo + ','+ width +')">' + obj.catNm + '</span>'
+                    contents += '<span id="' + obj.catNo + '"  class="text-black font-weight-normal" onclick="goSelectDetailQuery(' + obj.catNo + '); getCategory(' + obj.catNo + ',' + width + ')">' + obj.catNm + '</span>'
                     //그리드에 삽입
                     detailContainer.append(contents);
                 }
 
             })
             //처음 페이지 접속시 세부 카테고리 active
-            getCategory(props , (props%10)*80);
+            getCategory(props, (props % 10) * 80);
             var detailCatActive = parseInt(searchParam('catNo'));
-            $('#' + detailCatActive).css('color','#5f0080');
+            $('#' + detailCatActive).css('color', '#5f0080');
 
         }
         // $('#' +searchParam('catNo')).removeClass('text-black');
@@ -892,13 +944,14 @@
     //파라미터 조회
     if (searchParam('prodNm')) {
         f_obj_prodNm['f_run_prodNm_latestDay']();
-        $('.conditionTitle').css('display','block');
-        $('#innerSearchForm').css('display','flex');
+        $('.conditionTitle').css('display', 'block');
+        $('#innerSearchForm').css('display', 'flex');
+        mobileSiteTop('검색');
 
     } else if (searchParam('catNo')) {
         f_obj_cat['f_run_cat_latestDay']();
-        $('.underLine').css('display','block');
-
+        $('.underLine').css('display', 'block');
+        // $('.site-section').css('padding','0px');//모바일에서만
     }
 
 
@@ -910,11 +963,10 @@
 
     });
 
-    $('#loading').css('display','block')
-    $(window).on('load', function(){ $('#loading').css('display','none')});
-
-
-
+    $('#loading').css('display', 'block')
+    $(window).on('load', function () {
+        $('#loading').css('display', 'none')
+    });
 
 
 </script>

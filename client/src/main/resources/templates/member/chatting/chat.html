@@ -25,6 +25,7 @@
                         <div>
                             <span class="titlePrice "></span>
                             <span>원</span>
+                            <span class="titleProdFinish"></span>
                         </div>
                     </div>
                 </div>
@@ -52,7 +53,10 @@
                 <input type="hidden" id="currentTime">
             </form>
         </div>
-
+    <!--    로딩창-->
+    <div class="loading" style="display: none">
+        <img id="loading-image" src="/images/ajax-loader.gif" alt="전송중..." />
+    </div>
 </div>
 
 
@@ -106,7 +110,7 @@
         margin-left: 20px;
         margin-top: 10px;
         margin-bottom: 10px;
-        width: 70%;
+        width: 85%;
     }
 
     .titleImg {
@@ -145,7 +149,7 @@
         margin-left: 20px;
         margin-top: 10px;
         margin-bottom: 10px;
-        width: 30%;
+        width: 15%;
     }
 
     .titleUserId {
@@ -230,11 +234,16 @@
 
     .content {
         border: 1px solid #000;
-        border-radius: 15px;
         margin: 0 5px;
         padding: 3px 10px;
         font-size: 13px;
         word-break: break-all;
+    }
+    .myContent{
+        border-radius: 15px 0px 15px 15px;
+    }
+    .oponentContent{
+        border-radius: 0px 15px 15px 15px;
     }
 
     .chatMessage {
@@ -252,7 +261,7 @@
     .sendDay{
         display: flex;
         justify-content: center;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
     }
     .sendDay > span{
         width: 25%;
@@ -279,6 +288,12 @@
     // if ($('.chatInput').val() == '') {
     //     inputHeightReset();
     // }
+
+
+    $(document).ready(function () {
+        $('.loading').css('display','block');
+    });
+
 
     //페이지 로드시 실행
     $(document).ready(function () {
@@ -318,7 +333,7 @@
             }
         }
 
-    }, 100)
+     }, 100)
 
 
 
@@ -545,11 +560,19 @@
             $('.titleImg').attr("src", imgPath);
             //디테일 정보들
             $('.titlePrice').text(data.dataDetail.prodPrc);
-            $('.titleProdName').text(data.dataDetail.prodNm);
+            // if(data.dataDetail.prodFinish) {
+            //     $('.titleProdFinish').text('(거래완료)');
+            //     $('.chatInput').attr('placeholder','거래완료된 상품입니다.');
+            //     $('.chatInput').attr('readonly', true);
+            // }else{
+            //     $('.titleProdFinish').text('(판매중)');
+            // }
+            $('.titleProdName').text(textLengthOverCut(data.dataDetail.prodNm, 14 , '...'));
             //title 상품 클릭
             $('.titleProdContainer').attr('onclick', 'goChatToProd(' + data.dataDetail.prodNo + ')');
 
         }
+        $('.loading').css('display','none');
     }
 
     function drawOpponentId() {
@@ -605,8 +628,6 @@
                 if (currentTime == sendtimeClassName) {
                     $('.' + currentTime).text('');
                 }
-                console.log("currentDay",currentDay);
-                console.log("sendDayClassName",sendDayClassName);
                 if(currentDay != sendDayClassName){
                     contents += '<li class="sendDay">';
                     contents += '<span class="sendDay'+ '-' + sendDayClassName + '-' +obj.chatIdx +'"></span>';
@@ -622,14 +643,14 @@
                     }
                     contents += '<span class="sendtime'+' '+ sendtimeClassName + '" style="margin-left: 15px;">' + sendtime + '</span>';
                     contents += '</div>';
-                    contents += '<span class="content" style="background: #5e0080; color: #fff; border: 1px solid #5e0080;">' + obj.content + '</span>';
+                    contents += '<span class="content myContent" style="background: #5e0080; color: #fff; border: 1px solid #5e0080;">' + obj.content + '</span>';
                     contents += '</li><br>';
 
                 }
                 // 상대채팅 그리기
                 else {
                     contents += '<li class="chatMessage" style="justify-content:flex-start;">';
-                    contents += '<span class="content" style="background: #fff; border: 1px solid #fff;">' + obj.content + '</span>';
+                    contents += '<span class="content oponentContent" style="background: #fff; border: 1px solid #fff;">' + obj.content + '</span>';
                     contents += '<span class="sendtime'+' ' + sendtimeClassName + '" style="margin-right: 15px">' + sendtime + '</span>';
                     if (obj.readCount != 0 && sendCount != 0) {
                     contents += '<span class="readCount">'+ obj.readCount +'</span>';
