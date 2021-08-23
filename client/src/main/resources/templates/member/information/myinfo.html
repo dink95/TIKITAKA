@@ -300,6 +300,12 @@
 
 <script>
 
+    $(document).ready(function () {
+        getIdQueryList();
+        getMbrInfo();
+        mobileSiteTop('내정보');
+    });
+
     function finishCheck(props) {
         $('#finishCheck').val(props);
         getIdQueryList();
@@ -463,10 +469,6 @@
         location.href = '/grade';
     }
 
-    $(document).ready(function () {
-        getIdQueryList();
-        getMbrInfo();
-    });
     $('#loading').css('display','block');
     $(window).on('load', function(){ $('#loading').css('display','none')});
 

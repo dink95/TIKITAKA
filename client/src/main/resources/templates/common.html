@@ -22,24 +22,27 @@
 
     <!--    로딩창-->
     <div id="loading" style="display: none">
-        <img id="loading-image" src="/images/ajax-loader.gif" alt="전송중..." />
+        <img id="loading-image" src="/images/ajax-loader.gif" alt="전송중..."/>
     </div>
 
 
     <div class="container">
         <div class="row align-items-center mobile_search_hide_text">
-            <div class="col-6 col-md-3 order-1 order-md-1 text-left">
+<!--            모바일에서 col-3 웹에서 col-6-->
+            <div class="col-3 col-md-3 order-1 order-md-1 text-left" style="padding: 0">
                 <div class="site-logo">
                     <a href="/" class="js-logo-clone">
-
+                        <img class="arrowLeftIcon" src="/icons/arrowLeft2.svg" alt="" onclick="locationBack();"
+                             style="display: none;">
                         <img class="logo_img" src="/images/TIKITAK4.png" alt="">
                     </a><!--로고크기 style-202-->
-                    <a style="display:flex; justify-content: center; align-items: center;">
-                        <span class="mobile_search_icon icon icon-search2"></span></a>
                 </div>
             </div>
 
-            <div class="col-12 col-md-6 order-3 order-md-2  text-center">
+            <div class="pageName col-6 col-md-3 order-1 order-md-1 text-center">
+                <span style="color: #000; font-weight: normal;"></span>
+            </div>
+            <div class="col-12 col-md-6 order-3 order-md-2  text-center mobileSearchDiv">
                 <form action="/product/list" class="site-block-top-search input-search">
                     <input type="text" name="prodNm" class="form-control input-search" placeholder="원하는 상품을 검색해보세요">
                     <span type="submit" class="icon icon-search2"></span>
@@ -48,15 +51,33 @@
                 <!------------------------------------------------------------------------------->
             </div>
 
-            <div class="col-6 col-md-3 order-2 order-md-3 text-right">
+<!--            모바일에서 col-3 웹에서 col-6-->
+            <div class="col-3 col-md-3 order-2 order-md-3 text-right" style="padding: 0">
                 <!--메뉴 padding 수정-style-260-->
                 <div class="site-top-icons"> <!--버튼 사이즈 수정 style-218-->
-                    <ul>
+                    <ul class="mobile_category_icon_ul">
+                        <li>
+                            <a style="display:flex; justify-content: center; align-items: center;">
+                                <span class="mobile_search_icon icon icon-search2"></span></a></li>
+                        <li class="mobile_category_icon">
+                            <a>
+                                <svg id="svg"
+                                     xmlns="http://www.w3.org/2000/svg" width="25" height="20" fill="currentColor"
+                                     class="bi bi-list category_svg"
+                                     viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                          d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                                </svg>
+                            </a>
+                            <a class="cate_a"></a></li>
+                    </ul>
+                    <ul class="login_ul">
 
                         <li th:if="${session.mbrId == null}"><a href="signup"><span
                                 class="sign-in font-weight-normal">&nbsp;회원가입</span></a>
                         </li> <!--로그인 전-->
-                        <li th:if="${session.mbrId != null}"><a><span class="sign-in-id font-weight-normal" id="login_id"
+                        <li th:if="${session.mbrId != null}"><a><span class="sign-in-id font-weight-normal"
+                                                                      id="login_id"
                                                                       th:text="${session.mbrId}"></span></a>
                         </li> <!--로그인 후-->
                         <li>/&nbsp;&nbsp;</li>
@@ -75,18 +96,26 @@
         </div>
     </div>
 </div>
+
 <!-------------------->
 
 <!--모바일 검색창-->
 <div class=" input-mobile-search_div" th:fragment="mobile_search(header)">
     <div class="input-mobile-search_nav">
-        <div class="mobile_search_close_btn"><img class="arrowLeftIcon" src="/icons/arrowLeft2.svg" alt="" /></div>
-        <form action="/product/list" class="site-block-top-search input-mobile-search">
-            <input type="text" name="prodNm" class="form-control " placeholder="원하는 상품을 검색해보세요"/>
+        <div class="mobile_search_close_btn"><img class="arrowLeftIcon" src="/icons/arrowLeft2.svg" alt=""/></div>
+        <span class="input-mobile-category-text">
+            검색
+        </span>
+        <div class="mobile_category_empty"></div>
+    </div>
+        <div class="input-mobile-search_nav">
+        <form action="/product/list" class="site-block-top-search input-mobile-search"
+              style="justify-content: center;">
+            <input type="text" name="prodNm" class="form-control " placeholder="원하는 상품을 검색해보세요"
+            style="border-radius: 15px; height: 40px;"/>
             <span type="submit" class="icon icon-search2"></span>
         </form>
-
-    </div>
+        </div>
     <div class="input-mobile-search_content">
     </div>
 </div>
@@ -94,21 +123,106 @@
 <!--모바일 카테고리 메뉴-->
 <div class=" input-mobile-category_div" th:fragment="mobile_search(header)">
     <div class="input-mobile-category_nav">
-        <div class="mobile_category_close_btn"><img class="arrowLeftIcon" src="/icons/arrowLeft2.svg" alt="" /></div>
+        <div class="mobile_category_close_btn"><img class="arrowLeftIcon" src="/icons/arrowLeft2.svg" alt=""/></div>
         <span class="input-mobile-category-text">
             카테고리
         </span>
         <div class="mobile_category_empty"></div>
     </div>
     <div class="input-mobile-category_content">
-        <div class="input-mobile-category-content-text"><span>패션</span><img class="arrowDownIcon" src="/icons/arrowDown.svg" alt="" />
+        <div class="input-mobile-category-content-text " onclick="mobileCategoryClick('fashion')">
+            <div class="d-flex-j-a-center">
+                <img class="categoryIcon" src="/icons/fashionIcon.svg" alt=""/>
+                <span>패션</span>
+            </div>
+            <img class="arrowDownIcon" id="arrowDownIcon-fashion" src="/icons/arrowDown.svg" alt=""/>
         </div>
-        <div class="input-mobile-category-content-item" style=" display:none; height: 300px;"></div>
-        <div class="input-mobile-category-content-text"><span>디지털∙가전</span><img class="arrowDownIcon" src="/icons/arrowDown.svg" alt="" /></div>
-        <div class="input-mobile-category-content-text"><span>가구∙인테리어</span><img class="arrowDownIcon" src="/icons/arrowDown.svg" alt="" /></div>
-        <div class="input-mobile-category-content-text"><span>여가활동</span><img class="arrowDownIcon" src="/icons/arrowDown.svg" alt="" /></div>
-        <div class="input-mobile-category-content-text"><span>기타</span><img class="arrowDownIcon" src="/icons/arrowDown.svg" alt="" /></div>
-        <div class="input-mobile-category-content-text"><span>삽니다</span><img class="arrowDownIcon" src="/icons/arrowDown.svg" alt="" /></div>
+        <div class="input-mobile-category-content-item" id="input-mobile-category-content-item-fashion"
+             style=" display:none;">
+            <span onclick="goCatDetail(10)">전체</span>
+            <span onclick="goCatDetail(11)">남성의류</span>
+            <span onclick="goCatDetail(12)">여성의류</span>
+            <span onclick="goCatDetail(13)">아동의류</span>
+            <span onclick="goCatDetail(14)">가방</span>
+            <span onclick="goCatDetail(15)">신발</span>
+            <span onclick="goCatDetail(16)">모자</span>
+            <span onclick="goCatDetail(17)">액세서리</span>
+            <span onclick="goCatDetail(18)">화장품</span>
+            <span onclick="goCatDetail(19)">기타</span>
+        </div>
+
+        <div class="input-mobile-category-content-text" onclick="mobileCategoryClick('digital')">
+            <div class="d-flex-j-a-center">
+                <img class="categoryIcon" src="/icons/digitalIcon.svg" alt=""/>
+                <span>디지털∙가전</span>
+            </div>
+            <img class="arrowDownIcon" id="arrowDownIcon-digital" src="/icons/arrowDown.svg" alt=""/></div>
+        <div class="input-mobile-category-content-item" id="input-mobile-category-content-item-digital"
+             style=" display:none;">
+            <span onclick="goCatDetail(20)">전체</span>
+            <span onclick="goCatDetail(21)">pc∙노트북</span>
+            <span onclick="goCatDetail(22)">휴대폰∙태블릿</span>
+            <span onclick="goCatDetail(23)">카메라</span>
+            <span onclick="goCatDetail(24)">게임</span>
+            <span onclick="goCatDetail(25)">기타</span>
+        </div>
+
+        <div class="input-mobile-category-content-text" onclick="mobileCategoryClick('furniture')">
+            <div class="d-flex-j-a-center">
+                <img class="categoryIcon" src="/icons/furnitureIcon.svg" alt=""/>
+                <span>가구∙인테리어</span>
+            </div>
+            <img class="arrowDownIcon" id="arrowDownIcon-furniture" src="/icons/arrowDown.svg" alt=""/></div>
+        <div class="input-mobile-category-content-item" id="input-mobile-category-content-item-furniture"
+             style=" display:none;">
+            <span onclick="goCatDetail(30)">전체</span>
+            <span onclick="goCatDetail(31)">침실</span>
+            <span onclick="goCatDetail(32)">주방</span>
+            <span onclick="goCatDetail(33)">거실</span>
+            <span onclick="goCatDetail(34)">DIY</span>
+            <span onclick="goCatDetail(35)">서재∙사무용</span>
+            <span onclick="goCatDetail(36)">기타</span>
+        </div>
+
+        <div class="input-mobile-category-content-text" onclick="mobileCategoryClick('leisure')">
+            <div class="d-flex-j-a-center">
+                <img class="categoryIcon" src="/icons/leisureIcon.svg" alt=""/>
+                <span>여가활동</span>
+            </div>
+            <img class="arrowDownIcon" id="arrowDownIcon-leisure" src="/icons/arrowDown.svg" alt=""/></div>
+        <div class="input-mobile-category-content-item" id="input-mobile-category-content-item-leisure"
+             style=" display:none;">
+            <span onclick="goCatDetail(40)">전체</span>
+            <span onclick="goCatDetail(41)">등산</span>
+            <span onclick="goCatDetail(42)">캠핑</span>
+            <span onclick="goCatDetail(43)">골프</span>
+            <span onclick="goCatDetail(44)">헬스</span>
+            <span onclick="goCatDetail(45)">공연∙티켓</span>
+            <span onclick="goCatDetail(46)">여행</span>
+            <span onclick="goCatDetail(47)">기타</span>
+        </div>
+
+        <div class="input-mobile-category-content-text" onclick="mobileCategoryClick('etc')">
+            <div class="d-flex-j-a-center">
+                <img class="categoryIcon" src="/icons/etcIcon.svg" alt=""/>
+                <span>기타</span>
+            </div>
+            <img class="arrowDownIcon" id="arrowDownIcon-etc" src="/icons/arrowDown.svg" alt=""/></div>
+        <div class="input-mobile-category-content-item" id="input-mobile-category-content-item-etc"
+             style=" display:none;">
+            <span onclick="goCatDetail(50)">전체</span>
+            <span onclick="goCatDetail(51)">반려동물용품</span>
+            <span onclick="goCatDetail(52)">차량용품</span>
+            <span onclick="goCatDetail(53)">출산∙유아용품</span>
+        </div>
+
+        <div class="input-mobile-category-content-text" onclick="goCatDetail(60)">
+            <div class="d-flex-j-a-center">
+                <img class="categoryIcon" src="/icons/buyIcon.svg" alt=""/>
+                <span>삽니다</span>
+            </div>
+            <img class="arrowDownIcon" src="/icons/arrowDown.svg" alt=""/>
+        </div>
     </div>
 </div>
 
@@ -129,14 +243,16 @@
 
         <li class="mobile_category_icon" th:classappend="${menu}=='product_list'? 'active' : ''">
             <a>
-                <svg id="svg"
-                     xmlns="http://www.w3.org/2000/svg" width="25" height="20" fill="currentColor" class="bi bi-list"
-                     viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                          d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                <svg id="svg" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 -5 64 80" x="0px"
+                     y="0px" witdh="24" height="24">
+                    <g fill="currentColor" stroke="currentColor">
+                        <path d="M51.16,33.09H46.32a3.25,3.25,0,0,0-3.25,3.25v5a15.44,15.44,0,0,0-9.16-3.69,13.28,13.28,0,1,0-13.79,0A14.87,14.87,0,0,0,6.53,52.46v4.87a1,1,0,0,0,1,1H51.16a3.25,3.25,0,0,0,3.25-3.25V36.34A3.25,3.25,0,0,0,51.16,33.09ZM15.71,26.32A11.28,11.28,0,1,1,27,37.6H27A11.3,11.3,0,0,1,15.71,26.32Zm36.7,28.76a1.25,1.25,0,0,1-1.25,1.25H8.53V52.46A12.87,12.87,0,0,1,21.39,39.6H33a13.5,13.5,0,0,1,10.29,4.79,1,1,0,0,0,1.76-.65v-7.4a1.25,1.25,0,0,1,1.25-1.25h4.83a1.25,1.25,0,0,1,1.25,1.25Z"/>
+                        <path d="M48.53,5.67a8.94,8.94,0,0,0-3.37,17.22V30.3a1,1,0,0,0,1,1h4.75a1,1,0,0,0,1-1V22.89A8.94,8.94,0,0,0,48.53,5.67Zm2.08,15.56a1,1,0,0,0-.7,1V29.3H47.16V22.19a1,1,0,0,0-.7-1,6.94,6.94,0,1,1,4.15,0Z"/>
+                        <path stroke-width="10"></path>
+                    </g>
                 </svg>
             </a>
-            <a class="cate_a">카테고리</a></li>
+            <a class="cate_a">경매장터</a></li>
 
         <li th:classappend="${menu}=='product_create'? 'active' : ''">
             <a th:if="${session.mbrId == null}" href="/login">
@@ -167,7 +283,7 @@
                 </svg>
             </a>
             <a th:if="${session.mbrId == null}" href="login">채팅</a>
-            <a th:if="${session.mbrId != null}"  onclick="goChatRoomMobile($('#login_id').text());">채팅</a></li>
+            <a th:if="${session.mbrId != null}" onclick="goChatRoomMobile($('#login_id').text());">채팅</a></li>
         <li th:classappend="${menu}=='myinfo'? 'active' : ''">
             <a th:if="${session.mbrId == null}" href="login">
                 <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="25" height="20" fill="currentColor"
@@ -333,7 +449,8 @@
                 <a th:if="${session.mbrId != null}" href="/product/create"><span>판매하기</span></a></li>
 
             <li th:classappend="${menu}=='auction_list'? 'menu_active' : ''">
-                <svg id="svg" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 -5 64 80" x="0px" y="0px" witdh="24" height="24">
+                <svg id="svg" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 -5 64 80" x="0px"
+                     y="0px" witdh="24" height="24">
                     <g fill="currentColor" stroke="currentColor">
                         <path d="M51.16,33.09H46.32a3.25,3.25,0,0,0-3.25,3.25v5a15.44,15.44,0,0,0-9.16-3.69,13.28,13.28,0,1,0-13.79,0A14.87,14.87,0,0,0,6.53,52.46v4.87a1,1,0,0,0,1,1H51.16a3.25,3.25,0,0,0,3.25-3.25V36.34A3.25,3.25,0,0,0,51.16,33.09ZM15.71,26.32A11.28,11.28,0,1,1,27,37.6H27A11.3,11.3,0,0,1,15.71,26.32Zm36.7,28.76a1.25,1.25,0,0,1-1.25,1.25H8.53V52.46A12.87,12.87,0,0,1,21.39,39.6H33a13.5,13.5,0,0,1,10.29,4.79,1,1,0,0,0,1.76-.65v-7.4a1.25,1.25,0,0,1,1.25-1.25h4.83a1.25,1.25,0,0,1,1.25,1.25Z"/>
                         <path d="M48.53,5.67a8.94,8.94,0,0,0-3.37,17.22V30.3a1,1,0,0,0,1,1h4.75a1,1,0,0,0,1-1V22.89A8.94,8.94,0,0,0,48.53,5.67Zm2.08,15.56a1,1,0,0,0-.7,1V29.3H47.16V22.19a1,1,0,0,0-.7-1,6.94,6.94,0,1,1,4.15,0Z"/>
@@ -351,7 +468,9 @@
                 <a th:if="${session.mbrId == null}" href="/login"><span>채팅</span></a>
                 <a th:if="${session.mbrId != null}" href="#"
                    onclick="goChatRoom($('#login_id').text());"><span>채팅</span></a>
-                <span class="readAllCount" style="display:none"><a class="readAllCountText" style="color: #fff; font-size: 12px;"></a></span></li>
+                <span class="readAllCount" style="display:none"><a class="readAllCountText"
+                                                                   style="color: #fff; font-size: 12px;"></a></span>
+            </li>
 
             <li th:classappend="${menu}=='myinfo'? 'menu_active' : ''">
                 <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"

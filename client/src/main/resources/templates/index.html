@@ -40,12 +40,7 @@
 
     <!--상품사진-->
     <div class="container">
-      <div class="prodContainer">
-        <div class="prod" onclick="finishCheck(0)">
-          오늘의 상품
-        </div>
 
-      </div>
       <div class="gridContainer">
 
       </div>
@@ -133,6 +128,11 @@
     alert($('#modelMsg').val());
   }
 
+  $(document).ready(function () {
+    getProductList();
+    mobileSiteTop('home');
+  });
+
   function getProductList() {
 
     var param = {
@@ -151,8 +151,6 @@
     }).fail(function (data, textStatus, errorThrown) {
       console.log(textStatus);
     });
-
-
   }
 
 
@@ -205,10 +203,6 @@
   function goDetail(prodNo) {
     location.href = '/product/detail?prodNo=' + prodNo;
   }
-
-  $(document).ready(function () {
-    getProductList();
-  });
 
   $('#loading').css('display','block');
   $(window).on('load', function(){ $('#loading').css('display','none')});

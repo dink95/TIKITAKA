@@ -646,24 +646,24 @@ function goChatRoom(props) {
 }
 
 function goChatRoomMobile(props) {
-    location.href = '/member/chatting/room?sendId='+props+'';
+    location.href = '/member/chatting/room?sendId=' + props + '';
     // window.open('/member/chatting/room?sendId=' + props + '', '채팅방', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=100,left=100')
 }
 
 //채팅에서 상품 클릭
 function goChatToProd(prodNo) {
-    window.open('/product/detail?prodNo=' + prodNo + '', 'TIKITAKA', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no');
+    window.open('/product/detail?prodNo=' + prodNo + '', 'TIKITAKA', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,width=1500,height=1500,directories=no');
 }
 
 //채팅에서 아이디 클릭
 function goChatToId(userId) {
-    window.open('/member/userinfo?userId=' + userId + '', 'TIKITAKA', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=100,left=100')
+    window.open('/member/userinfo?userId=' + userId + '', 'TIKITAKA', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=420,height=700,top=100,left=100')
 }
 
 //로그인 한 사람이 안읽은 메세지 개수 조회
-function getAllReadCount(){
+function getAllReadCount() {
     param = {
-        loginId:$('#login_id').text()
+        loginId: $('#login_id').text()
     }
     $.ajax({
         url: '/chat/readAllCount',
@@ -671,10 +671,10 @@ function getAllReadCount(){
         type: 'post',
         dataType: 'json'
     }).done(function (data) {
-        if(data.readAllCount == 0 || data.readAllCount == undefined){
-            $('.readAllCount').css('display','none');
-        }else {
-            $('.readAllCount').css('display','unset');
+        if (data.readAllCount == 0 || data.readAllCount == undefined) {
+            $('.readAllCount').css('display', 'none');
+        } else {
+            $('.readAllCount').css('display', 'unset');
             $('.readAllCountText').text(data.readAllCount);
         }
     }).fail(function (data, textStatus, errorThrown) {
@@ -682,9 +682,29 @@ function getAllReadCount(){
     });
 }
 
-setInterval(function (){
+setInterval(function () {
     getAllReadCount();
 }, 1000)
+
+function locationBack() {
+    history.back();
+}
+
+function mobileSiteTop(props) {
+    console.log('siteTopMobile',props);
+
+        var width = $(window).width();
+        if (width <= 575) {
+            if (props == 'home') {
+                $('.mobile_search_hide_text').find('.arrowLeftIcon').css('display', 'none');
+                $('.mobile_search_hide_text').find('.logo_img').css('display', 'block');
+            } else {
+                $('.mobile_search_hide_text').find('.arrowLeftIcon').css('display', 'block');
+                $('.mobile_search_hide_text').find('.logo_img').css('display', 'none');
+                $('.mobile_search_hide_text').find('.pageName').children('span').text(props);
+            }
+        }
+}
 
 /**********************************************반응형******************************************/
 
@@ -705,23 +725,29 @@ $('.mobile_category_close_btn').click(function () {
     }, 300, 'swing');
     mobile_category_toggle.css('position', 'fixed');
 })
-$('.input-mobile-category-content-text').click(function () {
 
-    const mobile_category_toggle = $('.input-mobile-category-content-item');
+// $('.input-mobile-category-content-text-'+props).click(function () {
+function mobileCategoryClick(props) {
+    const mobile_category_toggle = $('#input-mobile-category-content-item-' + props);
+    const other_mobile_category_toggle = $('.input-mobile-category-content-item').not('#input-mobile-category-content-item-' + props);
+    const other_mobile_arrowDownIcon = $('.arrowDownIcon').not('#arrowDownIcon-' + props);
     if (mobile_category_toggle.css('display') == 'none') {
         mobile_category_toggle.css('display', 'flex');
-        mobile_category_toggle.css('border-bottom', '1px solid #ddd');
-        $('.arrowDownIcon').attr('src', '/icons/arrowUp.svg');
+        $('#arrowDownIcon-' + props).attr('src', '/icons/arrowUp.svg');
 
+        other_mobile_category_toggle.css('display', 'none');
+        other_mobile_category_toggle.css('border-bottom', 'none');
+        other_mobile_arrowDownIcon.attr('src', '/icons/arrowDown.svg');
         // mobile_category_toggle.animate({
         //     right: '-100vh',
         // }, 300, 'swing');
     } else {
         mobile_category_toggle.css('display', 'none');
         mobile_category_toggle.css('border-bottom', 'none');
-        $('.arrowDownIcon').attr('src', '/icons/arrowDown.svg');
+        $('#arrowDownIcon-' + props).attr('src', '/icons/arrowDown.svg');
     }
-})
+
+}
 
 
 // 모바일 검색 반응
