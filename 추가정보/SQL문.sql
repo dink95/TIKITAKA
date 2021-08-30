@@ -33,13 +33,12 @@ CONTENT mediumtext,
 WDAY DATETIME default CURRENT_TIMESTAMP,
 PROD_CO varchar(60),
 PROD_VIEW int default 0,
+IMG_COUNT int default 0;
+PROD_FINISH boolean default false;
 primary key(PROD_NO),
 foreign key(CAT_NO) references CAT(CAT_NO) on update cascade on delete CASCADE,
 foreign key(SEL_ID) references MBR(MBR_ID) on update cascade on delete CASCADE
 );
-
-alter table prod add IMG_COUNT int default '0'; 
-alter table prod add PROD_FINISH boolean default false;
 
 CREATE TABLE MANAGER(
 MAN_ID varchar(20) primary KEY,
@@ -78,7 +77,7 @@ AUC_START_TIME DATETIME default CURRENT_TIMESTAMP,
 AUC_END_TIME datetime,
 STARTING_BID int default 0,
 END_BID int default 0,
-PROD_NO INT,
+PROD_NO INT unique,
 MBR_ID varchar(20),
 foreign key(PROD_NO) references PROD(PROD_NO) on update cascade on delete CASCADE,
 foreign key(MBR_ID) references MBR(MBR_ID) on update cascade on delete CASCADE
@@ -92,11 +91,9 @@ SEND_ID varchar(20),
 RECIPIENT_ID varchar(20),
 CONTENT TEXT,
 SENDTIME DATETIME default CURRENT_TIMESTAMP,
+READ_COUNT INT DEFAULT 1;
 foreign key(PROD_NO) references PROD(PROD_NO) on update cascade on delete CASCADE,
 foreign key(SEND_ID) references MBR(MBR_ID) on update cascade on delete CASCADE,
 foreign key(RECIPIENT_ID) references MBR(MBR_ID) on update cascade on delete CASCADE
 );
 
-alter table prod add ROOM_COUNT int default 0;
-
-alter table chat add READ_COUNT int default 1;
