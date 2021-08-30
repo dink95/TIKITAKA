@@ -57,3 +57,6 @@ values
 
 insert into cat(cat_nm, cat_no)
 values('기타', 60);
+
+insert into cat(cat_nm, cat_no)
+valuse('경매', 99);
