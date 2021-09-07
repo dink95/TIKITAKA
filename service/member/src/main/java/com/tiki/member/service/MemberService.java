@@ -1,8 +1,9 @@
 package com.tiki.member.service;
 
 import com.tiki.member.domain.MemberDTO;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface MemberService {
+public interface MemberService extends UserDetailsService {
 
     public MemberDTO selectMemberDetail(String id);
 
