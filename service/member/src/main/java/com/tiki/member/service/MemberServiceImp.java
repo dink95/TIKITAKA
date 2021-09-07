@@ -2,10 +2,16 @@ package com.tiki.member.service;
 
 import com.tiki.member.domain.MemberDTO;
 import com.tiki.member.mapper.MemberMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 
+@Slf4j
 @Service
 public class MemberServiceImp implements MemberService{
 
@@ -76,4 +82,18 @@ public class MemberServiceImp implements MemberService{
     }
 
 
+    //springSecurity 로그인
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        System.out.println(username);
+        log.debug("{}",username);
+         MemberDTO memberDTO = mapper.selectMemberDetail(username);
+         if(memberDTO==null)
+             throw new UsernameNotFoundException(username);
+
+
+         return new User(memberDTO.getMbrId(),memberDTO.getMbrPwd(),true,true,true,true,
+                 new ArrayList<>());
+    }
 }
