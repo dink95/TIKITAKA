@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.tiki.complain.mapper.ComplainMapper">
+
+
+    <insert id="insertComplain" parameterType="ComplainDTO">
+        insert comp(comp_nm,comp_con,spt,repo)
+        values(#{compNm, jdbcType=VARCHAR},
+        #{compCon, jdbcType=VARCHAR},
+        #{spt, jdbcType=VARCHAR},
+        #{repo, jdbcType=VARCHAR})
+    </insert>
+
+    <delete id="deleteComplain" parameterType="int">
+        delete from comp
+        where comp_idx = #{compIdx, jdbcType=INTEGER}
+    </delete>
+
+    <select id="getTotalCount" parameterType="com.tiki.complain.domain.paging.SearchDTO" resultType="int">
+
+                select count(*) as cnt
+                from comp
+
+            </select>
+
+    <select id="selectAllComplains" parameterType="com.tiki.complain.domain.paging.SearchDTO" resultType="ComplainDTO">
+        select       comp_idx  as compIdx,
+                     comp_nm as compNm,
+                     comp_con as compCon,
+                     spt as spt,
+                     repo as repo,
+                     DATE_FORMAT(writing_time, '%Y-%m-%d %H:%i:%s')  as writingTime,
+                    read_check as readCheck
+        from comp
+        order by comp_idx desc
+        LIMIT #{start}, #{end}
+
+    </select>
+
+    <select id="selectComplainDetail" resultType="ComplainDTO" parameterType="int">
+        select *
+        from comp
+        where comp_idx = #{compIdx, jdbcType=INTEGER}
+    </select>
+
+    <select id="selectListNotRead" resultType="ComplainDTO">
+        select *
+        from comp
+        where read_check = false
+    </select>
+
+    <select id="selectListAlreadyRead" resultType="ComplainDTO">
+        select *
+        from comp
+        where read_check = true
+    </select>
+
+    <update id="updateReadCheck" parameterType="int">
+        update comp
+        set read_check = true
+        where comp_idx = #{compIdx, jdbcType=INTEGER}
+    </update>
+
+</mapper>
