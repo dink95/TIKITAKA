@@ -28,6 +28,13 @@ spring:
             - Path=/mbr/unAuth/**
           filters:
             - RemoveRequestHeader=Cookie
+        - id: manager-service
+            uri: http://localhost:8081/
+            predicates:
+              - Path=/man/**
+            filters:
+              - RemoveRequestHeader=Cookie
+              - AuthorizationHeaderFilter
         - id: product-service-auth
             uri: http://localhost:8082/
             predicates:
@@ -41,6 +48,33 @@ spring:
               - Path=/prd/**
             filters:
               - RemoveRequestHeader=Cookie
+        - id: product-service-chat
+            uri: http://localhost:8082/
+            predicates:
+              - Path=/prd/**
+            filters:
+              - RemoveRequestHeader=Cookie
+              - AuthorizationHeaderFilter
+        - id: category-service
+            uri: http://localhost:8082/
+            predicates:
+              - Path=/cat/**
+            filters:
+              - RemoveRequestHeader=Cookie
+        - id: complain-service
+          uri: http://localhost:8084/
+          predicates:
+            - Path=/comp/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - AuthorizationHeaderFilter
+        - id: blackList-service
+            uri: http://localhost:8084/
+            predicates:
+              - Path=/black/**
+            filters:
+              - RemoveRequestHeader=Cookie
+              - AuthorizationHeaderFilter
 
 
 

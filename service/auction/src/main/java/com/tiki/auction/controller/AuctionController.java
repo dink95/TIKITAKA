@@ -22,6 +22,8 @@ public class AuctionController {
         return service.updateBid(auctionDTO);
     }
 
+
+
     @GetMapping("/auction/{prodNo}")
     public AuctionDTO selectAuction(@PathVariable("prodNo") int prodNo){
         return service.selectAuction(prodNo);

@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono;
 public class AuctionService {
 
     private WebClient webClient = WebClient.builder() //공통적으로 모든 요청에 사용되는 webclient 정보
-            .baseUrl("http://localhost:8070") //gateway url
+            .baseUrl("http://localhost:8079") //gateway url
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .build();
 

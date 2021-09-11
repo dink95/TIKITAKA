@@ -238,7 +238,7 @@ public class ProductController {
     }
 
     // 등록된 상품 삭제하기
-    @DeleteMapping("/prd/{prodNo}/{selId}")
+    @DeleteMapping("/prod/{prodNo}/{selId}")
     public int deleteMember(@PathVariable("prodNo") int prodNo,
                             @PathVariable("selId") String selId ) {
         ProductDTO productDTO = new ProductDTO();
@@ -254,7 +254,7 @@ public class ProductController {
     }
 
     // 판매완료 상품 업데이트
-    @PatchMapping("/prd/prodfinish")
+    @PatchMapping("/prod/prodfinish")
     public int updateProductFinish(@RequestBody ProductDTO productDTO) {
         return productService.updateProductFinish(productDTO);
     }
