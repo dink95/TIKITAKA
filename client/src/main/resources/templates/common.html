@@ -112,7 +112,7 @@
         <form action="/product/list" class="site-block-top-search input-mobile-search"
               style="justify-content: center;">
             <input type="text" name="prodNm" class="form-control " placeholder="원하는 상품을 검색해보세요"
-            style="border-radius: 15px; height: 40px;"/>
+            style="border-radius: 50px; height: 40px;"/>
             <span type="submit" class="icon icon-search2"></span>
         </form>
         </div>
@@ -241,7 +241,7 @@
         </a>
             <a href="/">HOME</a></li>
 
-        <li class="mobile_category_icon" th:classappend="${menu}=='product_list'? 'active' : ''">
+        <li  th:classappend="${menu}=='auction_list'? 'active' : ''" onclick="goAuction();">
             <a>
                 <svg id="svg" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 -5 64 80" x="0px"
                      y="0px" witdh="24" height="24">

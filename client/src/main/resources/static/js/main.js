@@ -780,6 +780,10 @@ $('.mobile_search_close_btn').click(function () {
 
 })
 
+function goAuction(){
+    location.href="/auction/list";
+}
+
 /**********************************************************************************************/
 
 
@@ -800,3 +804,5 @@ $(document).ready(function () {
 /*모바일 버튼클릭 active*/
 $(document).on("touchstart", function () {
 });
+
+

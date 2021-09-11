@@ -176,7 +176,8 @@
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            //1.채팅방 리스트의 길이가 달라짐 -> 새로운 채팅 목록이 생김 -> 방리스트 업데이트
+            console.log(data.chatList);
+            // 1.채팅방 리스트의 길이가 달라짐 -> 새로운 채팅 목록이 생김 -> 방리스트 업데이트
             if(chatRoomLength != data.chatList.length){
                 getProdNoRoomNo();
                 chatRoomLength = data.chatList.length;

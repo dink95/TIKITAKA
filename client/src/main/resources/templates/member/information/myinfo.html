@@ -54,7 +54,7 @@
             <div class="myinfoContainer">
                 <div class="myinfoMainNav">
                     <div class="myinfoMainId">
-                        <span id="p_id" th:text="${session.mbrId}" style="color: #5f0080; font-size: 20px;"></span>
+                        <span id="p_id" th:text="${session.mbrId}"></span>
                         <span style="font-size: 16px; font-weight: bold;color: #000;">님</span>
                     </div>
                     <div>
@@ -165,10 +165,10 @@
 
     .myinfoMainNav > div:nth-child(2) {
         margin-left: 30px;
-        font-size: 30px;
         color: #5f0080;
         font-weight: normal;
         height: 50%;
+        font-size: 30px;
     }
 
     .myinfoMainNav > div:nth-child(3) {
@@ -194,6 +194,11 @@
 
     .myinfoMainNav > div:nth-child(3) > button:nth-child(2) {
         color: red;
+    }
+
+    .myinfoMainId > span:nth-child(1){
+        font-size: 20px;
+        color: #5e0080;
     }
 
     .myinfoSubNav > div:nth-child(1) {
@@ -295,6 +300,57 @@
     #p_addr{
         font-size: 14px;
         color: #000;
+    }
+
+    /*화면사이즈 991px*/
+    @media screen and (max-width: 991px){
+        .myinfoMainNav > div:nth-child(3) > button {
+            padding: 5px 15px;
+        }
+    }
+
+    /*화면사이즈 768px*/
+    @media screen and (max-width: 768px){
+        .myinfoMainNav > div:nth-child(2) {
+            font-size: unset;
+        }
+        .myinfoMainNav > div:nth-child(3) > button {
+            padding: 5px 5px;
+        }
+    }
+
+    /*화면사이즈 575px*/
+    @media screen and (max-width: 575px) {
+        /*.myinfoMainNav > div:nth-child(1) {*/
+        /*    margin-left: 0px;*/
+        /*}*/
+        /*.myinfoMainNav > div:nth-child(2) {*/
+        /*    margin-left: 0px;*/
+        /*}*/
+        .myinfoMainNav > div:nth-child(3) > button {
+            padding: 5px 30px;
+            margin: 0 2px;
+        }
+        .myinfoContainer{
+            flex-direction: column;
+        }
+        .myinfoMainNav, .myinfoSubNav{
+            width: 100%;
+        }
+        .myinfoMainNav{
+            height: 150px;
+        }
+        .myinfoSubNav{
+            height: unset;
+        }
+        .myinfoMainNav > div:nth-child(3) {
+            justify-content: flex-end;
+        }
+    }
+    @media screen and (max-width: 300px) {
+        .myinfoMainNav > div:nth-child(3) > button {
+            font-size: 11px;
+        }
     }
 </style>
 
