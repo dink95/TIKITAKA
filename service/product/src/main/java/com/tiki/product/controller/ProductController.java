@@ -248,7 +248,7 @@ public class ProductController {
     }
 
     // 등록된 상품 업데이트
-    @PatchMapping("/prd/update")
+    @PatchMapping("/prod/update")
     public int updateProductRegister(@RequestBody ProductDTO productDTO){
         return productService.updateProduct(productDTO);
     }
@@ -260,7 +260,7 @@ public class ProductController {
     }
 
     // 상품 등록하기
-    @PostMapping("/prd")
+    @PostMapping("/prod")
     public int insertProduct(@RequestBody InsertProdDTO insertProdDTO) {
 
         ProductDTO productDTO = new ProductDTO(insertProdDTO.getProdNm(), insertProdDTO.getProdPrc(),
