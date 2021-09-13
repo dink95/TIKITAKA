@@ -14,7 +14,7 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: user-service
+        - id: user-service-Auth
           uri: http://localhost:8081/
           predicates:
             - Path=/mbr/Auth/**
@@ -22,19 +22,25 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - AuthorizationHeaderFilter
-        - id: user-service2
+        - id: user-service2-unAuth
           uri: http://localhost:8081/
           predicates:
             - Path=/mbr/unAuth/**
           filters:
             - RemoveRequestHeader=Cookie
-        - id: manager-service
+        - id: manager-service-Auth
             uri: http://localhost:8081/
             predicates:
-              - Path=/man/**
+              - Path=/man/Auth/**
             filters:
               - RemoveRequestHeader=Cookie
               - AuthorizationHeaderFilter
+        - id: manager-service-unAuth
+            uri: http://localhost:8081/
+            predicates:
+              - Path=/man/unAuth/**
+            filters:
+              - RemoveRequestHeader=Cookie
         - id: product-service-auth
             uri: http://localhost:8082/
             predicates:

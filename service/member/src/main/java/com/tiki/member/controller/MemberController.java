@@ -37,7 +37,7 @@ public class MemberController {
      * @param id
      * @return
      */
-    @DeleteMapping("/mbr/{id}")
+    @DeleteMapping("/mbr/Auth/{id}")
     public int deleteMember(@PathVariable("id") String id){
         return memberService.deleteMember(id);
     }
@@ -48,7 +48,7 @@ public class MemberController {
      * @param id
      * @return
      */
-    @GetMapping("/mbr/emailrollcheck/{id}") // 이메일 보내기
+    @GetMapping("/mbr/Auth/emailrollcheck/{id}") // 이메일 보내기
     public String sendMail(@PathVariable("id") String id) {
 
         MemberDTO dto = memberService.selectMemberDetail(id);
@@ -80,7 +80,7 @@ public class MemberController {
      * @param id
      * @return
      */
-    @GetMapping("/mbr/{id}")
+    @GetMapping("/mbr/Auth/{id}")
     public MemberDTO selectMemberById(@PathVariable("id") String id){
         return memberService.selectMemberDetail(id);
     }
@@ -90,7 +90,7 @@ public class MemberController {
      * @param id
      * @return
      */
-    @GetMapping("/mbr/existence/id/{id}")
+    @GetMapping("/mbr/unAuth/existence/id/{id}")
     public boolean existIdCheck(@PathVariable("id") String id){
         if(memberService.existId(id)!=null){
             return true;
@@ -104,7 +104,7 @@ public class MemberController {
      * @param phone
      * @return
      */
-    @GetMapping("/mbr/existence/phone/{phone}")
+    @GetMapping("/mbr/unAuth/existence/phone/{phone}")
     public boolean existPhoneCheck(@PathVariable("phone") String phone){
         if(memberService.existPhone(phone)!=null){
             return true;
@@ -113,7 +113,7 @@ public class MemberController {
         }
     }
 
-    @GetMapping("/mbr/existence/email/{email}")
+    @GetMapping("/mbr/unAuth/existence/email/{email}")
     public boolean existEmailCheck(@PathVariable("email") String email){
         if(memberService.existEmail(email)!=null){
             return true;
@@ -129,7 +129,7 @@ public class MemberController {
      * @param phone
      * @return
      */
-    @GetMapping("/mbr/{id}/{name}/{phone}")
+    @GetMapping("/mbr/unAuth/{id}/{name}/{phone}")
     public Boolean memberPasswordChecking(@PathVariable("id") String id,
                                           @PathVariable("name") String name,
                                           @PathVariable("phone") String phone){
@@ -146,7 +146,7 @@ public class MemberController {
 
     }
     /*회원가입*/
-    @PostMapping("/mbr")
+    @PostMapping("/mbr/unAuth/")
     public int insertMember(@RequestBody MemberDTO memberDTO){
         MemberDTO dto = memberDTO;
         dto.setMbrPwd(passwordEncoder.encode(dto.getMbrPwd()));
@@ -160,7 +160,7 @@ public class MemberController {
      * @param memberDTO
      * @return
      */
-    @PostMapping("/mbr/login")
+    @PostMapping("/mbr/unAuth/login")
     public String loginChecking(@RequestBody MemberDTO memberDTO, HttpServletResponse response) {
         MemberDTO dto = memberService.selectMemberDetail(memberDTO.getMbrId());
         if (dto != null && passwordEncoder.matches( memberDTO.getMbrPwd(),dto.getMbrPwd())) {
@@ -187,7 +187,7 @@ public class MemberController {
      * @param memberDTO
      * @return
      */
-    @PostMapping("/mbr/idcheck")
+    @PostMapping("/mbr/unAuth/idcheck")
     public String idChecking(@RequestBody MemberDTO memberDTO) {
         MemberDTO dto = memberService.selectMemberDetail(memberDTO.getMbrId());
         if (dto != null) {
@@ -205,7 +205,7 @@ public class MemberController {
      * @param memberDTO
      * @return
      */
-    @PostMapping("/mbr/id")
+    @PostMapping("/mbr/unAuth/id")
     public String findMemberId(@RequestBody MemberDTO memberDTO){
         return  memberService.findMemberId(memberDTO);
     }
@@ -216,7 +216,7 @@ public class MemberController {
      * @param memberDTO
      * @return mybatis는 update완료 시 성공한 행의 개수 반환
      */
-    @PatchMapping("/mbr/role")
+    @PatchMapping("/mbr/Auth/role")
     public int updateEmailRole(@RequestBody MemberDTO memberDTO){
         return memberService.updateRole(memberDTO);
     }
@@ -226,7 +226,7 @@ public class MemberController {
      * @param memberDTO
      * @return mybatis는 update완료 시 성공한 행의 개수 반환
      */
-    @PatchMapping("/mbr/password")
+    @PatchMapping("/mbr/unAuth/password")
     public int updatePassword(@RequestBody MemberDTO memberDTO){
         memberDTO.setMbrPwd(passwordEncoder.encode(memberDTO.getMbrPwd()));
         return memberService.updateMemberPwd(memberDTO);
@@ -237,7 +237,7 @@ public class MemberController {
      * @param memberDTO
      * @return mybatis는 update완료 시 성공한 행의 개수 반환
      */
-    @PatchMapping("/mbr/info")
+    @PatchMapping("/mbr/Auth/info")
     public int updateMemberInformation(@RequestBody MemberDTO memberDTO){
         return memberService.updateMemberInfo(memberDTO);
     }
@@ -249,7 +249,7 @@ public class MemberController {
      * @param memberDTO
      * @return mybatis는 update완료 시 성공한 행의 개수 반환
      */
-    @PatchMapping("/mbr/points")
+    @PatchMapping("/mbr/Auth/points")
     public int updateMemberPoints(@RequestBody MemberDTO memberDTO){
         return memberService.updateMemberPoints(memberDTO);
     }
@@ -259,7 +259,7 @@ public class MemberController {
      * @param memberDTO
      * @return ybatis는 update완료 시 성공한 행의 개수 반환
      */
-    @PatchMapping("/mbr/grade")
+    @PatchMapping("/mbr/Auth/grade")
     public int updateMemberGrade(@RequestBody MemberDTO memberDTO){
         return memberService.updateMemberGrade(memberDTO);
     }
