@@ -30,20 +30,20 @@
 <div class="site-wrap">
     <header class="site-navbar" role="banner">
         <!--replace 헤더-->
-        <div class="site-navbar-top" th:replace="common::header(product_view)">
+        <div class="site-navbar-top" th:replace="common::header(auction_list)">
         </div>
         <!------------->
         <!--replace-login-------------------------------->
 
         <nav class="site-navigation text-right text-md-center" role="navigation"
-             th:replace="common::menu(product_view)">
+             th:replace="common::menu(auction_list)">
         </nav>
         <!----------------------------------------------------------->
     </header>
     <!--replace logo-login-->
 
     <!--모바일 검색창-->
-    <div th:replace="common::mobile_search(home)"></div>
+    <div th:replace="common::mobile_search(auction_list)"></div>
 
     <div class="site-section margin-top-2">
         <div class="col-md-12 mb-0"></div>
@@ -106,11 +106,7 @@
                         <input class="send btn btn-primary width-80p margin-left-right-10" id="tradeProd"
                                value="입찰하기">
                     </div>
-
                 </div>
-
-
-
             </div>
 
 
@@ -204,7 +200,7 @@
     <a id="arrow_up" class="scroll_up" onclick="scroll_up()"> </a>
 
     <!-- 모바일 메뉴-->
-    <div th:replace="common::mobile(detail)"></div>
+    <div th:replace="common::mobile(auction_list)"></div>
 
     <style>
         tr {
