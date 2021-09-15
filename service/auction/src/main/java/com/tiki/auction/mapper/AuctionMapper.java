@@ -9,7 +9,6 @@ import java.util.List;
 @Mapper
 public interface AuctionMapper {
 
-
     public int insertAuction(AuctionDTO auctionDTO);
 
     public int updateBid(AuctionDTO auctionDTO);

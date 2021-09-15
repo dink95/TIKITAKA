@@ -1,16 +1,15 @@
 package com.tiki.client.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tiki.client.domain.AuctionDTO;
-import com.tiki.client.domain.BlackListDTO;
-import com.tiki.client.domain.ComplainDTO;
-import com.tiki.client.domain.MemberDTO;
+import com.tiki.client.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -47,4 +46,29 @@ public class AuctionService {
                 .block();
     }
 
+    public int insertBiddingProduct(BidDTO bidDTO){
+        return webClient.post()
+                .uri("/auction/bid")
+                .body(Mono.just(bidDTO), BidDTO.class)
+                .retrieve()
+                .bodyToMono(Integer.class) //반환정보
+                .block();
+    }
+
+    public int updateBiddingProduct(BidDTO bidDTO){
+        return webClient.patch()
+                .uri("/auction/bid")
+                .body(Mono.just(bidDTO), BidDTO.class)
+                .retrieve()
+                .bodyToMono(Integer.class) //반환정보
+                .block();
+    }
+
+    public List<String> selectAllBiddingProduct(String mbrId){
+        return webClient.get()
+                .uri("/auction/bid/{id}",mbrId)
+                .retrieve()
+                .bodyToMono(List.class) //반환정보
+                .block();
+    }
 }

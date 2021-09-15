@@ -146,7 +146,7 @@ public class MemberController {
 
     }
     /*회원가입*/
-    @PostMapping("/mbr/unAuth/")
+    @PostMapping("/mbr/unAuth")
     public int insertMember(@RequestBody MemberDTO memberDTO){
         MemberDTO dto = memberDTO;
         dto.setMbrPwd(passwordEncoder.encode(dto.getMbrPwd()));

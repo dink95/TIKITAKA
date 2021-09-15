@@ -22,7 +22,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - AuthorizationHeaderFilter
-        - id: user-service2-unAuth
+        - id: user-service-unAuth
           uri: http://localhost:8081/
           predicates:
             - Path=/mbr/unAuth/**
