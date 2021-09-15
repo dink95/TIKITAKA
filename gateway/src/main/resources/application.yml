@@ -18,7 +18,6 @@ spring:
           uri: http://localhost:8081/
           predicates:
             - Path=/mbr/Auth/**
-            - Method=POST
           filters:
             - RemoveRequestHeader=Cookie
             - AuthorizationHeaderFilter
@@ -26,6 +25,7 @@ spring:
           uri: http://localhost:8081/
           predicates:
             - Path=/mbr/unAuth/**
+            - Method=POST,GET
           filters:
             - RemoveRequestHeader=Cookie
         - id: manager-service-Auth
