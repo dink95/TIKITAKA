@@ -27,4 +27,29 @@
             prod_no = #{prodNo}
     </select>
 
+    <select id="selectAllBiddingProduct" resultType="String" parameterType="String">
+        select bid_bidder
+        from bid
+        where
+            bid_bidder = #{bidBidder}
+    </select>
+
+    <insert id="insertBiddingProduct" parameterType="BidDTO">
+        INSERT INTO bid ( bid_prod_no, bid_bidder, bid_bid
+        ) VALUES
+            (#{bidProdNo}, #{bidBidder},#{bidBid})
+    </insert>
+
+    <update id="updateBiddingProduct" parameterType="BidDTO">
+        update
+            bid
+        set
+            bid_bid = #{bidBid}
+        where
+            bid_prod_no = #{bidProdNo}
+        and
+            bid_bidder=#{bidBidder}
+    </update>
+
+
 </mapper>

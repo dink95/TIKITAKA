@@ -14,21 +14,73 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: user-service
+        - id: user-service-Auth
           uri: http://localhost:8081/
           predicates:
-            - Path=/mbr/login
-            - Method=POST
+            - Path=/mbr/Auth/**
           filters:
             - RemoveRequestHeader=Cookie
-        - id: user-service2
-          uri: http://localhost:8081/
-          predicates:
-            - Path=/mbr/**
-            - Method=GET,POST
-          filters:
             - AuthorizationHeaderFilter
+        - id: user-service-unAuth
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/mbr/unAuth/**
+            - Method=POST,GET
+          filters:
             - RemoveRequestHeader=Cookie
+        - id: manager-service-Auth
+            uri: http://localhost:8081/
+            predicates:
+              - Path=/man/Auth/**
+            filters:
+              - RemoveRequestHeader=Cookie
+              - AuthorizationHeaderFilter
+        - id: manager-service-unAuth
+            uri: http://localhost:8081/
+            predicates:
+              - Path=/man/unAuth/**
+            filters:
+              - RemoveRequestHeader=Cookie
+        - id: product-service-auth
+            uri: http://localhost:8082/
+            predicates:
+              - Path=/prod/**
+            filters:
+              - RemoveRequestHeader=Cookie
+              - AuthorizationHeaderFilter
+        - id: product-service-unauth
+            uri: http://localhost:8082/
+            predicates:
+              - Path=/prd/**
+            filters:
+              - RemoveRequestHeader=Cookie
+        - id: product-service-chat
+            uri: http://localhost:8082/
+            predicates:
+              - Path=/prd/**
+            filters:
+              - RemoveRequestHeader=Cookie
+              - AuthorizationHeaderFilter
+        - id: category-service
+            uri: http://localhost:8082/
+            predicates:
+              - Path=/cat/**
+            filters:
+              - RemoveRequestHeader=Cookie
+        - id: complain-service
+          uri: http://localhost:8084/
+          predicates:
+            - Path=/comp/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - AuthorizationHeaderFilter
+        - id: blackList-service
+            uri: http://localhost:8084/
+            predicates:
+              - Path=/black/**
+            filters:
+              - RemoveRequestHeader=Cookie
+              - AuthorizationHeaderFilter
 
 
 

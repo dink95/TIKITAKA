@@ -21,7 +21,7 @@ public class ProductService {
 
     public int createProduct(InsertProductDTO productDTO) throws Exception {
         return webClient.post()
-                .uri("/prd")
+                .uri("/prod")
                 .body(Mono.just(productDTO), InsertProductDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
@@ -30,7 +30,7 @@ public class ProductService {
 
     public int updateProduct(ProductDTO productDTO) {
         return webClient.patch()
-                .uri("/prd/update")
+                .uri("/prod/update")
                 .body(Mono.just(productDTO), ProductDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
@@ -39,7 +39,7 @@ public class ProductService {
 
     public int deleteProduct(Integer prodNo,String selId) {
         return webClient.delete()
-                .uri("/prd/{prodNo}/{selId}",prodNo,selId)
+                .uri("/prod/{prodNo}/{selId}",prodNo,selId)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
                 .block();
@@ -153,7 +153,7 @@ public class ProductService {
 
     public int updateProdfinish(ProductDTO productDTO) {
         return webClient.patch()
-                .uri("/prd/prodfinish")
+                .uri("/prod/prodfinish")
                 .body(Mono.just(productDTO), ProductDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보

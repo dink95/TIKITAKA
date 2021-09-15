@@ -19,7 +19,7 @@ public class MemberService {
 
     public int createMember(MemberDTO memberDTO) throws Exception{
         return webClient.post()
-                .uri("/mbr")
+                .uri("/mbr/unAuth")
                 .body(Mono.just(memberDTO), MemberDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
@@ -28,7 +28,7 @@ public class MemberService {
 
     public String login(MemberDTO memberDTO){
         return webClient.post()
-                .uri("/mbr/login")
+                .uri("/mbr/unAuth/login")
                 .body(Mono.just(memberDTO), MemberDTO.class)
                 .retrieve()
                 .bodyToMono(String.class) //반환정보
@@ -37,7 +37,7 @@ public class MemberService {
 
     public MemberDTO Detail(String userId){
         return webClient.get()
-                .uri("/mbr/{id}",userId)
+                .uri("/mbr/Auth/{id}",userId)
                 .retrieve()
                 .bodyToMono(MemberDTO.class) //반환정보
                 .block();
@@ -45,7 +45,7 @@ public class MemberService {
 
     public int deleteMember(String mbrId){
         return webClient.delete()
-                .uri("/mbr/{mbrId}",mbrId)
+                .uri("/mbr/Auth/{mbrId}",mbrId)
                 .retrieve()
                 .bodyToMono(Integer.class)
                 .block();
@@ -53,7 +53,7 @@ public class MemberService {
 
     public String findId(MemberDTO memberDTO){
         return webClient.post()
-                .uri("/mbr/id")
+                .uri("/mbr/unAuth/id")
                 .body(Mono.just(memberDTO), MemberDTO.class)
                 .retrieve()
                 .bodyToMono(String.class) //반환정보
@@ -62,7 +62,7 @@ public class MemberService {
 
     public Boolean findPwd(String id, String name ,String phone){
         return webClient.get()
-                .uri("/mbr/{id}/{name}/{phone}",id,name,phone)
+                .uri("/mbr/unAuth/{id}/{name}/{phone}",id,name,phone)
                 //.body(Mono.just(memberDTO), MemberDTO.class)
                 .retrieve()
                 .bodyToMono(Boolean.class) //반환정보
@@ -71,7 +71,7 @@ public class MemberService {
 
     public int updatePwd(MemberDTO memberDTO) {
         return webClient.patch()
-                .uri("/mbr/password")
+                .uri("/mbr/unAuth/password")
                 .body(Mono.just(memberDTO), MemberDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
@@ -80,7 +80,7 @@ public class MemberService {
 
     public boolean existId(String id){
         return webClient.get()
-                .uri("/mbr/existence/id/{id}",id)
+                .uri("/mbr/unAuth/existence/id/{id}",id)
                 //.body(Mono.just(memberDTO), MemberDTO.class)
                 .retrieve()
                 .bodyToMono(Boolean.class) //반환정보
@@ -89,7 +89,7 @@ public class MemberService {
 
     public boolean existPhone(String phone){
         return webClient.get()
-                .uri("/mbr/existence/phone/{phone}",phone)
+                .uri("/mbr/unAuth/existence/phone/{phone}",phone)
                 //.body(Mono.just(memberDTO), MemberDTO.class)
                 .retrieve()
                 .bodyToMono(Boolean.class) //반환정보
@@ -98,7 +98,7 @@ public class MemberService {
 
     public boolean existEmail(String email){
         return webClient.get()
-                .uri("/mbr/existence/email/{email}",email)
+                .uri("/mbr/unAuth/existence/email/{email}",email)
                 //.body(Mono.just(memberDTO), MemberDTO.class)
                 .retrieve()
                 .bodyToMono(Boolean.class) //반환정보
@@ -107,7 +107,7 @@ public class MemberService {
 
     public String certifyEmail(String id){
         return webClient.get()
-                .uri("/mbr/emailrollcheck/{id}",id)
+                .uri("/mbr/Auth/emailrollcheck/{id}",id)
                 //.body(Mono.just(memberDTO), MemberDTO.class)
                 .retrieve()
                 .bodyToMono(String.class) //반환정보
