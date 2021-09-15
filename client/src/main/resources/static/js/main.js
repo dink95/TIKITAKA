@@ -693,17 +693,17 @@ function locationBack() {
 function mobileSiteTop(props) {
     console.log('siteTopMobile',props);
 
-        var width = $(window).width();
-        if (width <= 575) {
-            if (props == 'home') {
-                $('.mobile_search_hide_text').find('.arrowLeftIcon').css('display', 'none');
-                $('.mobile_search_hide_text').find('.logo_img').css('display', 'block');
-            } else {
-                $('.mobile_search_hide_text').find('.arrowLeftIcon').css('display', 'block');
-                $('.mobile_search_hide_text').find('.logo_img').css('display', 'none');
-                $('.mobile_search_hide_text').find('.pageName').children('span').text(props);
-            }
+    var width = $(window).width();
+    if (width <= 575) {
+        if (props == 'home') {
+            $('.mobile_search_hide_text').find('.arrowLeftIcon').css('display', 'none');
+            $('.mobile_search_hide_text').find('.logo_img').css('display', 'block');
+        } else {
+            $('.mobile_search_hide_text').find('.arrowLeftIcon').css('display', 'block');
+            $('.mobile_search_hide_text').find('.logo_img').css('display', 'none');
+            $('.mobile_search_hide_text').find('.pageName').children('span').text(props);
         }
+    }
 }
 
 /**********************************************반응형******************************************/
@@ -780,6 +780,10 @@ $('.mobile_search_close_btn').click(function () {
 
 })
 
+function goAuction(){
+    location.href="/auction/list";
+}
+
 /**********************************************************************************************/
 
 
@@ -800,3 +804,5 @@ $(document).ready(function () {
 /*모바일 버튼클릭 active*/
 $(document).on("touchstart", function () {
 });
+
+

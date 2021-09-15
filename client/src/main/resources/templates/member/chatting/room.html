@@ -36,7 +36,7 @@
         padding: 0;
     }
     header{
-       display: none;
+        display: none;
     }
     .chattingRoomContainer {
         width: 400px;
@@ -62,7 +62,7 @@
         border-bottom: 1px solid #ecebf5;
         width: 100%;
         height: 80px;
-   
+
     }
     .chatRecipientId{
         font-weight: bold;
@@ -163,7 +163,7 @@
 
     /********************** 데이터 입력 조회 업데이트 ********************/
 
-    //방리스트 업데이트 시점
+        //방리스트 업데이트 시점
     var chatRoomLength = 0;
     var allChatCount = 0;
     function getChatRoomLength(){
@@ -176,7 +176,8 @@
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            //1.채팅방 리스트의 길이가 달라짐 -> 새로운 채팅 목록이 생김 -> 방리스트 업데이트
+            console.log(data.chatList);
+            // 1.채팅방 리스트의 길이가 달라짐 -> 새로운 채팅 목록이 생김 -> 방리스트 업데이트
             if(chatRoomLength != data.chatList.length){
                 getProdNoRoomNo();
                 chatRoomLength = data.chatList.length;
@@ -241,21 +242,21 @@
 
     // 상대방 정보 조회
     function getMbrDetail(mbrId)
-       {
-            param = {
-                userId: mbrId,
-            }
-            $.ajax({
-                url: '/member/detail',
-                data: param,
-                type: 'post',
-                dataType: 'json'
-            }).done(function (data) {
-                console.log("@@memberDetail",data.memberDetail)
-                drawAddr(data)
-            }).fail(function (data, textStatus, errorThrown) {
-                console.log(textStatus);
-            });
+    {
+        param = {
+            userId: mbrId,
+        }
+        $.ajax({
+            url: '/member/detail',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            console.log("@@memberDetail",data.memberDetail)
+            drawAddr(data)
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
     }
 
     //안읽은 메세지 개수 조회
@@ -301,12 +302,12 @@
                 //상품 정보 조회
                 // 매번 컨텐츠가 달라야하니 초기화
                 // 채팅목록 그리면서 readCount 조회 -> 각각의 prodNo, roomNo 넘겨줌
-                    getReadCount(obj.prodNo,obj.roomNo);
+                getReadCount(obj.prodNo,obj.roomNo);
                 contents = '';
                 //상품 하나 html
                 contents += '<li class="chatRoom" onclick="goChat('+obj.prodNo+','+obj.roomNo+');">';
                 contents += '<div class="chatRoomContent">';
-                    contents += '<div>';
+                contents += '<div>';
                 if(obj.sendId == searchParam('sendId')){
                     contents += '    <span class="chatRecipientId">' +obj.recipientId + '</span>';
                     contents += '    <span class="chatAddr addrName'+obj.recipientId+'"></span>';
@@ -341,24 +342,24 @@
             contents = '<span>채팅 목록이 없습습니다.</span>';
             container.append(contents);
         }
-         $('.loading').css('display','none');
+        $('.loading').css('display','none');
 
     }
 
     //채팅 목록 마지막 메세지 그리기
     function drawLastMessage(data) {
-            $.each(data.chatList, function (index, obj) {
-                var year = obj.sendtime.substring(0, 4);
-                var month = obj.sendtime.substring(5, 7);
-                var day = obj.sendtime.substring(8, 10);
-                var date = year + '년' + ' ' + month + '월' + day + '' + '일';
-                var hour = obj.sendtime.substring(11, 13);
-                var minute = obj.sendtime.substring(14, 16);
-                var second = obj.sendtime.substring(17, 19);
-                var sendtime = year+month+day+hour+minute+second;
-                console.log("objMassageSendTime",sendtime);
-              $('.chatRoomMessage'+obj.prodNo+'-'+obj.roomNo).text(textLengthOverCut(obj.content, 14 , '...'));
-            })
+        $.each(data.chatList, function (index, obj) {
+            var year = obj.sendtime.substring(0, 4);
+            var month = obj.sendtime.substring(5, 7);
+            var day = obj.sendtime.substring(8, 10);
+            var date = year + '년' + ' ' + month + '월' + day + '' + '일';
+            var hour = obj.sendtime.substring(11, 13);
+            var minute = obj.sendtime.substring(14, 16);
+            var second = obj.sendtime.substring(17, 19);
+            var sendtime = year+month+day+hour+minute+second;
+            console.log("objMassageSendTime",sendtime);
+            $('.chatRoomMessage'+obj.prodNo+'-'+obj.roomNo).text(textLengthOverCut(obj.content, 14 , '...'));
+        })
         $('#chatRoomLength').val(data.chatList.length);
 
     }
