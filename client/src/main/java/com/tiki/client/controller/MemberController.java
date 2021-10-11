@@ -1,13 +1,20 @@
 package com.tiki.client.controller;
 
+import com.tiki.client.config.CryptAES256;
 import com.tiki.client.domain.MemberDTO;
 import com.tiki.client.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,39 +39,54 @@ public class MemberController {
 
     @PostMapping("/login/process") /*로그인*/
     @ResponseBody
-
     public Map<String, Object> loginAccess(@RequestParam(value = "userId") String userId,
                                            @RequestParam(value = "userPw") String userPw,
-                                           HttpServletRequest request) {
+                                           HttpServletResponse response) throws Exception {
         MemberDTO memberDTO = new MemberDTO();
 
         Map<String, Object> resultMap = new HashMap<>();
-
         memberDTO.setMbrId(userId);
         memberDTO.setMbrPwd(userPw);
 
-        String mbrId = memberService.login(memberDTO);
 
-        try {
-            if (mbrId != null) {
-                request.getSession().setAttribute("mbrId", mbrId );
-                resultMap.put("resultCode", 200);
-                resultMap.put("resultMsg", "OK");
-            } else {
-                resultMap.put("resultCode", 400);
-                resultMap.put("resultMsg", "아이디 또는 비밀번호가 일치하지 않습니다");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            resultMap.put("resultCode", 500);
-            resultMap.put("resultMsg", e.getMessage());
+        String token = memberService.login(memberDTO);
+
+        if(token==null){
+
+
+        }else{
+            String mbrId= userId;
+            String jwt = CryptAES256.decryptAES256(token,mbrId);
+            Cookie cookie = new Cookie("token",jwt);
+            cookie.setHttpOnly(true);
+            cookie.setSecure(true);
+            Cookie id = new Cookie("mbrId",mbrId);
+            response.addCookie(id);
+            response.addCookie(cookie);
+//            response.addHeader("token",jwt);
         }
+
+//        try {
+//            if (mbrId != null) {
+//
+//                resultMap.put("resultCode", 200);
+//                resultMap.put("resultMsg", "OK");
+//            } else {
+//                resultMap.put("resultCode", 400);
+//                resultMap.put("resultMsg", "아이디 또는 비밀번호가 일치하지 않습니다");
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            resultMap.put("resultCode", 500);
+//            resultMap.put("resultMsg", e.getMessage());
+//        }
         return resultMap;
     }
 
     @GetMapping(value = "/logout") /*로그아웃*/
     public ModelAndView logout(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
+
 
         if (request.getSession().getAttribute("mbrId") != null) {
             request.getSession().removeAttribute("mbrId");
