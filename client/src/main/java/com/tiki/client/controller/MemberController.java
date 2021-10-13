@@ -113,21 +113,16 @@ public class MemberController {
     @RequestMapping("/member/detail") /*멤버 정보 조회*/
     @ResponseBody
     public Map<String, Object> memberDetail(@RequestParam(value = "userId") String userId,
+                                            HttpServletResponse response,
                                             HttpServletRequest request) {
 
-        // 헤더 전체정보 보기
-        Enumeration<String> em = request.getHeaderNames();
-
-        while(em.hasMoreElements()){
-            String name = em.nextElement() ;
-            String val = request.getHeader(name) ;
-
-            System.out.println(name + " : " + val) ;
-        }
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
+        response.addHeader("Authorization",tokenCookie.getValue());
 
 
         Map<String, Object> resultMap = new HashMap<>();
-        MemberDTO memberDTO = memberService.Detail(userId);
+        MemberDTO memberDTO = memberService.Detail(idCookie.getValue());
 
         try {
             resultMap.put("memberDetail", memberDTO);
