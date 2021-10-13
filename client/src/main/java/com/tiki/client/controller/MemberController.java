@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +42,8 @@ public class MemberController {
     @ResponseBody
     public Map<String, Object> loginAccess(@RequestParam(value = "userId") String userId,
                                            @RequestParam(value = "userPw") String userPw,
-                                           HttpServletResponse response) throws Exception {
+                                           HttpServletResponse response
+                                          ) throws Exception {
         MemberDTO memberDTO = new MemberDTO();
 
         Map<String, Object> resultMap = new HashMap<>();
@@ -52,17 +54,21 @@ public class MemberController {
         String token = memberService.login(memberDTO);
 
         if(token==null){
-
+            resultMap.put("resultCode", 400);
 
         }else{
+            resultMap.put("resultCode", 200);
             String mbrId= userId;
             String jwt = CryptAES256.decryptAES256(token,mbrId);
             Cookie cookie = new Cookie("token",jwt);
             cookie.setHttpOnly(true);
             cookie.setSecure(true);
             Cookie id = new Cookie("mbrId",mbrId);
+            cookie.setPath("/");
+            id.setPath("/");
             response.addCookie(id);
             response.addCookie(cookie);
+
 //            response.addHeader("token",jwt);
         }
 
@@ -84,12 +90,21 @@ public class MemberController {
     }
 
     @GetMapping(value = "/logout") /*로그아웃*/
-    public ModelAndView logout(HttpServletRequest request) {
+    public ModelAndView logout(HttpServletRequest request,
+                               HttpServletResponse response) {
         ModelAndView view = new ModelAndView();
 
 
-        if (request.getSession().getAttribute("mbrId") != null) {
-            request.getSession().removeAttribute("mbrId");
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        if(idCookie != null){ // 쿠키가 한개라도 있으면 실행
+            idCookie.setMaxAge(0);
+                response.addCookie(idCookie); // 응답 헤더에 추가
+        }
+
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
+        if(tokenCookie != null){ // 쿠키가 한개라도 있으면 실행
+            tokenCookie.setMaxAge(0);
+            response.addCookie(tokenCookie); // 응답 헤더에 추가
         }
         view.setViewName("redirect:/");
         return view;
@@ -97,9 +112,23 @@ public class MemberController {
 
     @RequestMapping("/member/detail") /*멤버 정보 조회*/
     @ResponseBody
-    public Map<String, Object> memberDetail(@RequestParam(value = "userId") String userId) {
+    public Map<String, Object> memberDetail(@RequestParam(value = "userId") String userId,
+                                            HttpServletRequest request) {
+
+        // 헤더 전체정보 보기
+        Enumeration<String> em = request.getHeaderNames();
+
+        while(em.hasMoreElements()){
+            String name = em.nextElement() ;
+            String val = request.getHeader(name) ;
+
+            System.out.println(name + " : " + val) ;
+        }
+
+
         Map<String, Object> resultMap = new HashMap<>();
         MemberDTO memberDTO = memberService.Detail(userId);
+
         try {
             resultMap.put("memberDetail", memberDTO);
         } catch (Exception e) {
@@ -354,7 +383,8 @@ public class MemberController {
     }
 
     @GetMapping(value = "/member/myinfo") /*내정보 페이지*/
-    public ModelAndView myinfo() {
+    public ModelAndView myinfo(HttpServletResponse response,
+                               HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("member/information/myinfo");
         return view;
