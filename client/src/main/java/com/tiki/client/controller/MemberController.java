@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -53,19 +54,23 @@ public class MemberController {
 
         if(token==null){
 
+            resultMap.put("resultCode", 400);
 
         }else{
+            resultMap.put("resultCode", 200);
             String mbrId= userId;
             String jwt = CryptAES256.decryptAES256(token,mbrId);
             Cookie cookie = new Cookie("token",jwt);
             cookie.setHttpOnly(true);
             cookie.setSecure(true);
             Cookie id = new Cookie("mbrId",mbrId);
+            cookie.setPath("/");
+            id.setPath("/");
             response.addCookie(id);
             response.addCookie(cookie);
+
 //            response.addHeader("token",jwt);
         }
-
 //        try {
 //            if (mbrId != null) {
 //
@@ -97,8 +102,12 @@ public class MemberController {
 
     @RequestMapping("/member/detail") /*멤버 정보 조회*/
     @ResponseBody
-    public Map<String, Object> memberDetail(@RequestParam(value = "userId") String userId) {
+    public Map<String, Object> memberDetail(@RequestParam(value = "userId") String userId,HttpServletRequest request) {
         Map<String, Object> resultMap = new HashMap<>();
+
+        Cookie cookie =WebUtils.getCookie(request,"token");
+        System.out.println(cookie.getName()+":"+cookie.getValue());
+
         MemberDTO memberDTO = memberService.Detail(userId);
         try {
             resultMap.put("memberDetail", memberDTO);
