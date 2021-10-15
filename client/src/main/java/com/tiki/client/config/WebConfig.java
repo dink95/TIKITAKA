@@ -28,13 +28,6 @@ public class WebConfig implements WebMvcConfigurer {
 //    @Override
 //    public void addInterceptors(InterceptorRegistry registry) {
 //        registry.addInterceptor(localeChangeInterceptor())
-////                .addPathPatterns("/")
-//                .addPathPatterns("/auction/detail")
-//                .addPathPatterns("/product/create")
-//                .addPathPatterns("/member/myinfo")
-//                .addPathPatterns("/complain/index")
-//                .excludePathPatterns("/main/**", "/webjars/**", "/dist/**", "/plugins/**", "/css/**")
-//                .excludePathPatterns("/images/**", "/js/**", "/fonts", "/webfonts/**", "/scss/**");
 //    }
 
     @Bean
@@ -67,6 +60,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new ProcessInterceptor())
+                .addPathPatterns("/auction/create")
                 .addPathPatterns("/auction/detail")
                 .addPathPatterns("/product/create")
                 .addPathPatterns("/member/myinfo")

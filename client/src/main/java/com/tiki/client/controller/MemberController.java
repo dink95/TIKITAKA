@@ -71,21 +71,6 @@ public class MemberController {
 
 //            response.addHeader("token",jwt);
         }
-
-//        try {
-//            if (mbrId != null) {
-//
-//                resultMap.put("resultCode", 200);
-//                resultMap.put("resultMsg", "OK");
-//            } else {
-//                resultMap.put("resultCode", 400);
-//                resultMap.put("resultMsg", "아이디 또는 비밀번호가 일치하지 않습니다");
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            resultMap.put("resultCode", 500);
-//            resultMap.put("resultMsg", e.getMessage());
-//        }
         return resultMap;
     }
 
@@ -112,17 +97,13 @@ public class MemberController {
 
     @RequestMapping("/member/detail") /*멤버 정보 조회*/
     @ResponseBody
-    public Map<String, Object> memberDetail(@RequestParam(value = "userId") String userId,
-                                            HttpServletResponse response,
-                                            HttpServletRequest request) {
+    public Map<String, Object> memberDetail(HttpServletRequest request) {
 
         Cookie idCookie =WebUtils.getCookie(request, "mbrId");
         Cookie tokenCookie =WebUtils.getCookie(request, "token");
-        response.addHeader("Authorization",tokenCookie.getValue());
-
 
         Map<String, Object> resultMap = new HashMap<>();
-        MemberDTO memberDTO = memberService.Detail(idCookie.getValue());
+        MemberDTO memberDTO = memberService.Detail(idCookie.getValue(),tokenCookie.getValue());
 
         try {
             resultMap.put("memberDetail", memberDTO);
@@ -346,7 +327,7 @@ public class MemberController {
     @RequestMapping("/login/update")  /*비밀번호 재설정*/
     @ResponseBody
     public Map<String, Object> updatePwd(@RequestParam(value = "userId") String userId,
-                                         @RequestParam(value = "userPwd") String userPwd) {
+                                        @RequestParam(value = "userPwd") String userPwd) {
 
         MemberDTO memberDTO = new MemberDTO();
 
@@ -452,18 +433,16 @@ public class MemberController {
 
     @RequestMapping("/info/delete")  /*회원탈퇴*/
     @ResponseBody
-    public Map<String, Object> deleteInfo(@RequestParam(value = "userId") String userId) {
+    public Map<String, Object> deleteInfo(HttpServletRequest request) {
 
-        MemberDTO memberDTO = new MemberDTO();
-
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
         Map<String, Object> resultMap = new HashMap<>();
-        memberDTO.setMbrId(userId);
-
         int result = 0;
 
         try {
 
-            result = memberService.deleteMember(userId);
+            result = memberService.deleteMember(idCookie.getValue(),tokenCookie.getValue());
 
             if (result > 0) {
                 resultMap.put("resultCode", 200);
@@ -491,11 +470,13 @@ public class MemberController {
 
     @RequestMapping("/info/certify") // 이메일 인증
     @ResponseBody
-    public Map<String, Object> certifyEmail(@RequestParam(value = "id") String id) {
+    public Map<String, Object> certifyEmail(HttpServletRequest request) {
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
         Map<String, Object> resultMap = new HashMap<>();
         String emailKey;
         try {
-            emailKey = memberService.certifyEmail(id);
+            emailKey = memberService.certifyEmail(idCookie.getValue(),tokenCookie.getValue());
             resultMap.put("resultCode", 200);
             resultMap.put("resultMsg", emailKey);
 

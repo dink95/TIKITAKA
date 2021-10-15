@@ -37,17 +37,21 @@ public class MemberService {
                 .block();
     }
 
-    public MemberDTO Detail(String userId){
+    public MemberDTO Detail(String userId, String token){
         return webClient.get()
                 .uri("/mbr/Auth/{id}",userId)
+                .header(HttpHeaders.AUTHORIZATION,userId)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 .retrieve()
                 .bodyToMono(MemberDTO.class) //반환정보
                 .block();
     }
 
-    public int deleteMember(String mbrId){
+    public int deleteMember(String mbrId, String token){
         return webClient.delete()
                 .uri("/mbr/Auth/{mbrId}",mbrId)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 .retrieve()
                 .bodyToMono(Integer.class)
                 .block();
@@ -107,9 +111,11 @@ public class MemberService {
                 .block();
     }
 
-    public String certifyEmail(String id){
+    public String certifyEmail(String id, String token){
         return webClient.get()
                 .uri("/mbr/Auth/emailrollcheck/{id}",id)
+                .header(HttpHeaders.AUTHORIZATION,id)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 //.body(Mono.just(memberDTO), MemberDTO.class)
                 .retrieve()
                 .bodyToMono(String.class) //반환정보

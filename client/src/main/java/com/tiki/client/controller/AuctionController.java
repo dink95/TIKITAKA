@@ -16,7 +16,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.web.util.WebUtils;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashMap;
@@ -92,8 +96,13 @@ public class AuctionController {
 
     @RequestMapping(value = "/auction/select.do") /*경매 상품 상세 정보*/
     @ResponseBody
-    public Map<String,Object> productDetail(@RequestParam(value = "prodNo") Integer prodNo) {
+    public Map<String,Object> productDetail(@RequestParam(value = "prodNo") Integer prodNo,
+                                            HttpServletRequest request,
+                                            HttpServletResponse response) {
         Map<String ,Object> resultMap = new HashMap<>();
+        Cookie idCookie = WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
+        response.addHeader("Authorization",tokenCookie.getValue());
         try {
             AuctionDTO auctionDTO = auctionService.selectAuctionByProdNo(prodNo);
             resultMap.put("auctionDetail", auctionDTO);

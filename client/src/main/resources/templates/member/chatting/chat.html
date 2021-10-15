@@ -8,60 +8,80 @@
     <link rel="stylesheet" href="/fonts/icomoon/style.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/icon.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/jquery-ui.css">
+
 </head>
 <body>
-
 <div class="site-wrap">
+    <div class="popupLayout">
+        <div class="popup">
+            <div class="popupTitleNav">
+                <span id="popupTitle"></span>
+            </div>
+            <div class="popupContentNav">
+                <span id="popupContent"></span>
+            </div>
+            <div class="popupConfirm">
+                <button id="confirmBtn">확인</button>
+            </div>
+        </div>
+    </div>
     <header>
         <!--replace 헤더-->
         <div th:replace="common::header(myinfo)">
         </div>
     </header>
-            <div class="chattingRoomTitle">
-                <div class="titleProdContainer font-weight-normal font-20">
-                    <img class="titleImg" src="" alt="">
-                    <div class="titleInfo">
-                        <span class="titleProdName"></span>
-                        <div>
-                            <span class="titlePrice "></span>
-                            <span>원</span>
-                            <span class="titleProdFinish"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="titleUserIdDiv">
-                    <span class="titleUserId "></span>
+    <div class="chattingRoomTitle">
+        <div class="titleProdContainer font-weight-normal font-20">
+            <img class="titleImg" src="" alt="">
+            <div class="titleInfo">
+                <span class="titleProdName"></span>
+                <div>
+                    <span class="titlePrice "></span>
+                    <span>원</span>
+                    <span class="titleProdFinish"></span>
                 </div>
             </div>
+        </div>
+        <div class="titleUserIdDiv d-flex-j-center">
+            <button type="button" class="btn btn-light titleProdFinishBtn"  onclick="goProdFinish()">판매완료하기</button>
+            <span class="titleUserId "></span>
+        </div>
+    </div>
+    <ul class="chatContent" id="chatContent">
 
-            <ul class="chatContent" id="chatContent">
+    </ul>
 
-            </ul>
-
-        <div class="chatInputContainer">
-            <form onsubmit="return false"
-                  class="chatForm col-12 col-md-6 order-3 order-md-2  text-center d-flex-j-center">
-                <div class="textareaContainer" onkeydown="resize(this);" onkeyup="resize(this);">
+    <div class="chatInputContainer">
+        <form onsubmit="return false"
+              class="chatForm col-12 col-md-6 order-3 order-md-2  text-center d-flex-j-center">
+            <div class="textareaContainer" onkeydown="resize(this);" onkeyup="resize(this);">
                     <textarea class="chatInput autosize" onkeydown="resize(this); validation();"
                               onkeyup="resize(this); validation();" name="chatText" id="chatText"
                               rows="3" cols="10" wrap="hard" placeholder="메세지를 입력하세요."></textarea></div>
 
-                <span type="button" id="submitSpan" class="submitSpan"><img type="button" class="submitIcon"
-                                                                            id="submitIcon"
-                                                                            src="/icons/submitIcon.svg" alt=""
-                                                                            onclick="CreateChat();"/></span>
-                <input type="hidden" id="currentTime">
-            </form>
-        </div>
+            <span type="button" id="submitSpan" class="submitSpan"><img type="button" class="submitIcon"
+                                                                        id="submitIcon"
+                                                                        src="/icons/submitIcon.svg" alt=""
+                                                                        onclick="CreateChat();"/></span>
+            <input type="hidden" id="currentTime">
+        </form>
+    </div>
+
     <!--    로딩창-->
     <div class="loading" style="display: none">
-        <img id="loading-image" src="/images/ajax-loader.gif" alt="전송중..." />
+        <img id="loading-image" src="/images/ajax-loader.gif" alt="전송중..."/>
     </div>
 </div>
 
-
 </body>
 <style>
+    .popup{
+        width: 300px;
+        height: 150px;
+    }
     body {
         margin: 0;
         padding: 0;
@@ -144,20 +164,30 @@
     }
 
     .titleUserIdDiv {
+        flex-direction: column;
         display: flex;
         justify-content: flex-end;
-        margin-left: 20px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        width: 15%;
+        align-items: flex-end;
+        width: 30%;
+        margin: 10px 20px;
     }
 
     .titleUserId {
         font-size: 16px;
         font-weight: bold;
         color: #5e0080;
-        margin-right: 20px;
         cursor: pointer;
+        margin-right: 3px;
+    }
+
+    .titleProdFinishBtn {
+        font-size: 13px;
+        padding:5px 7px;
+        margin: 0;
+        border: 1px solid #eae9e9;
+    }
+    .titleProdFinishBtn:active{
+        background: #fff;
     }
 
     .chatInputContainer {
@@ -172,7 +202,7 @@
         /*position: absolute;*/
         width: 100%;
         overflow: scroll;
-        height: 480px;
+        height: 500px;
         padding-inline-start: 0;
         list-style-type: none;
         margin-block-start: 0;
@@ -229,7 +259,7 @@
     .submitIcon {
         visibility: hidden;
         margin-left: -43px;
-        margin-bottom: 5px;
+        margin-bottom: 14px;
     }
 
     .content {
@@ -239,10 +269,12 @@
         font-size: 13px;
         word-break: break-all;
     }
-    .myContent{
+
+    .myContent {
         border-radius: 15px 0px 15px 15px;
     }
-    .oponentContent{
+
+    .oponentContent {
         border-radius: 0px 15px 15px 15px;
     }
 
@@ -251,19 +283,23 @@
         align-items: flex-end;
         margin: -10px 0;
     }
-    .readCount{
+
+    .readCount {
         color: #5e0080;
         height: 10px;
     }
-    .sendtime{
+
+    .sendtime {
         height: 15px;
     }
-    .sendDay{
+
+    .sendDay {
         display: flex;
         justify-content: center;
         margin-bottom: 20px;
     }
-    .sendDay > span{
+
+    .sendDay > span {
         width: 25%;
         background: #8984b4;
         border-radius: 15px;
@@ -291,9 +327,8 @@
 
 
     $(document).ready(function () {
-        $('.loading').css('display','block');
+        $('.loading').css('display', 'block');
     });
-
 
     //페이지 로드시 실행
     $(document).ready(function () {
@@ -303,7 +338,7 @@
         if (searchParam('recipientId')) {
             getRoomId();
         }
-    readCount =1;
+        readCount = 1;
     });
 
     //주소 파라미터 정보
@@ -314,27 +349,26 @@
     var readCount = 0; //채팅 치는시점, 상대방이 읽는 시점에서 변화
     var sendCount = 0; //상대방이 안읽은 채팅 개수 내가 확인
     var ready = 0;// 상대방이 읽는 시점에서 변화
-    setInterval(function (){
-       getReadCount();
-       getSendCount();
-        if(sendCount != 0) {
-            ready =1 ;
+    setInterval(function () {
+        getReadCount();
+        getSendCount();
+        if (sendCount != 0) {
+            ready = 1;
         }
-        if(readCount != 0) {
+        if (readCount != 0) {
             updateReadCount();
             getChatList();
             readCount = 0;
         }
-        if(ready == 1){
-            if(sendCount == 0){
+        if (ready == 1) {
+            if (sendCount == 0) {
                 updateReadCount();
                 getChatList();
-                ready =0;
+                ready = 0;
             }
         }
 
-     }, 100)
-
+    }, 100)
 
 
     //로그아웃하면 창 종료
@@ -421,12 +455,12 @@
 
     //채팅 리스트 조회
     function getChatList(roomNoProps) {
-        if(roomNoProps){
+        if (roomNoProps) {
             param = {
                 roomNo: roomNoProps,
                 prodNo: searchParam('prodNo'),
             }
-        }else {
+        } else {
             param = {
                 roomNo: searchParam('roomNo'),
                 prodNo: searchParam('prodNo'),
@@ -473,7 +507,7 @@
 
     /*상품 정보 조회*/
     function getProductDetail() {
-         param = {
+        param = {
             prodNo: searchParam('prodNo'),
         }
 
@@ -485,6 +519,17 @@
         }).done(function (data) {
             drawTitle(data);
             console.log("data.dataDetail", data.dataDetail);
+            if(data.dataDetail.prodFinish == 1) {
+                $('.titleProdFinishBtn').text('거래완료');
+                $('.titleProdFinishBtn').attr('disabled',true);
+                $('.titleProdFinishBtn' ).removeClass( 'btn' );
+            }
+            else if(data.dataDetail.selId != $('#login_id').text()){
+                $('.titleProdFinishBtn').text('판매중');
+                $('.titleProdFinishBtn').attr('disabled',true);
+                $('.titleProdFinishBtn' ).removeClass( 'btn' );
+            }
+
 
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
@@ -493,7 +538,7 @@
 
     //읽으면 readCount 0으로 만듬
     function updateReadCount() {
-         param = {
+        param = {
             prodNo: searchParam('prodNo'),
             roomNo: searchParam('roomNo'),
             loginId: $('#login_id').text()
@@ -511,11 +556,11 @@
     }
 
     //안읽은 메세지 개수 조회
-    function getReadCount(){
+    function getReadCount() {
         param = {
-            prodNo:searchParam('prodNo'),
-            roomNo:searchParam('roomNo'),
-            loginId:$('#login_id').text()
+            prodNo: searchParam('prodNo'),
+            roomNo: searchParam('roomNo'),
+            loginId: $('#login_id').text()
         }
         $.ajax({
             url: '/chat/readCount',
@@ -530,11 +575,11 @@
     }
 
     //상대방이 안읽은 메세지 개수 조회
-    function getSendCount(){
+    function getSendCount() {
         param = {
-            prodNo:searchParam('prodNo'),
-            roomNo:searchParam('roomNo'),
-            loginId:$('#login_id').text()
+            prodNo: searchParam('prodNo'),
+            roomNo: searchParam('roomNo'),
+            loginId: $('#login_id').text()
         }
         $.ajax({
             url: '/chat/sendCount',
@@ -543,6 +588,47 @@
             dataType: 'json'
         }).done(function (data) {
             sendCount = data.sendCount;
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+    }
+
+    // 거래완료 업데이트
+    function goProdFinish() {
+        if (confirm("해당 이용자와 거래를 완료하였습니끼?") == true) {    //확인
+            param = {
+                prodNo: searchParam('prodNo'),
+                selId: $('#login_id').text(),
+            }
+            $.ajax({
+                url: '/product/prodfinish',
+                data: param,
+                type: 'post',
+                dataType: 'json'
+            }).done(function (data) {
+                //점수 업데이트
+                updatePoint($('#login_id').text());
+                popup('알림메세지', '거래가 완료되었습니다.','reload');
+            }).fail(function (textStatus) {
+                console.log(textStatus);
+            });
+        }else{ //취소
+            return false;
+        }
+    }
+
+    //점수 업데이트
+    function updatePoint(id) {
+        param = {
+            userId: id,
+        }
+        $.ajax({
+            url: '/member/update/point',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            console.log(data.resultMsg);
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
         });
@@ -567,12 +653,12 @@
             // }else{
             //     $('.titleProdFinish').text('(판매중)');
             // }
-            $('.titleProdName').text(textLengthOverCut(data.dataDetail.prodNm, 14 , '...'));
+            $('.titleProdName').text(textLengthOverCut(data.dataDetail.prodNm, 14, '...'));
             //title 상품 클릭
             $('.titleProdContainer').attr('onclick', 'goChatToProd(' + data.dataDetail.prodNo + ')');
 
         }
-        $('.loading').css('display','none');
+        $('.loading').css('display', 'none');
     }
 
     function drawOpponentId() {
@@ -594,7 +680,8 @@
     }
 
     var chatLength;
-    var isScrolled=0;
+    var isScrolled = 0;
+
     //채팅 내용 리스트 그리기
     function drawChatList(data) {
         var container = $('.chatContent');
@@ -615,8 +702,8 @@
                 var hour = obj.sendtime.substring(11, 13);
                 var minute = obj.sendtime.substring(14, 16);
                 var second = obj.sendtime.substring(17, 19);
-                var sendDay = year + '년' +' ' + month + '월' + ' ' + day + '일';
-                var sendDayClassName = year+month+day;
+                var sendDay = year + '년' + ' ' + month + '월' + ' ' + day + '일';
+                var sendDayClassName = year + month + day;
                 var sendtime = hour + ':' + '' + minute;
                 var sendtimeClassName = hour + minute + obj.sendId; //같은 시간에 보낸 메세지 시간 하나만 보이게 하는 로직에 사용하는 변수
                 //채팅 html
@@ -628,9 +715,9 @@
                 if (currentTime == sendtimeClassName) {
                     $('.' + currentTime).text('');
                 }
-                if(currentDay != sendDayClassName){
+                if (currentDay != sendDayClassName) {
                     contents += '<li class="sendDay">';
-                    contents += '<span class="sendDay'+ '-' + sendDayClassName + '-' +obj.chatIdx +'"></span>';
+                    contents += '<span class="sendDay' + '-' + sendDayClassName + '-' + obj.chatIdx + '"></span>';
                     contents += '</li>';
                     currentDay = sendDayClassName;
                 }
@@ -639,9 +726,9 @@
                     contents += '<li class="chatMessage" style="justify-content: flex-end;">';
                     contents += '<div style="display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end">';
                     if (obj.readCount != 0) {
-                        contents += '<span class="readCount">'+ obj.readCount +'</span>';
+                        contents += '<span class="readCount">' + obj.readCount + '</span>';
                     }
-                    contents += '<span class="sendtime'+' '+ sendtimeClassName + '" style="margin-left: 15px;">' + sendtime + '</span>';
+                    contents += '<span class="sendtime' + ' ' + sendtimeClassName + '" style="margin-left: 15px;">' + sendtime + '</span>';
                     contents += '</div>';
                     contents += '<span class="content myContent" style="background: #5e0080; color: #fff; border: 1px solid #5e0080;">' + obj.content + '</span>';
                     contents += '</li><br>';
@@ -651,9 +738,9 @@
                 else {
                     contents += '<li class="chatMessage" style="justify-content:flex-start;">';
                     contents += '<span class="content oponentContent" style="background: #fff; border: 1px solid #fff;">' + obj.content + '</span>';
-                    contents += '<span class="sendtime'+' ' + sendtimeClassName + '" style="margin-right: 15px">' + sendtime + '</span>';
+                    contents += '<span class="sendtime' + ' ' + sendtimeClassName + '" style="margin-right: 15px">' + sendtime + '</span>';
                     if (obj.readCount != 0 && sendCount != 0) {
-                    contents += '<span class="readCount">'+ obj.readCount +'</span>';
+                        contents += '<span class="readCount">' + obj.readCount + '</span>';
                     }
                     contents += '</li><br>';
 
@@ -662,15 +749,15 @@
                 container.append(contents)
                 $('#currentTime').val(sendtimeClassName);
 
-                if(chatLength != data.chatList.length){
+                if (chatLength != data.chatList.length) {
                     isScrolled = 1;
                 }
                 chatLength = data.chatList.length;
-                $('.sendDay-' + currentDay + '-'+ obj.chatIdx ).text(sendDay);
+                $('.sendDay-' + currentDay + '-' + obj.chatIdx).text(sendDay);
 
             })
 
-            if(isScrolled ==1){
+            if (isScrolled == 1) {
                 var scrollHeight = $('.chatContent')[0].scrollHeight;
                 $('.chatContent').scrollTop(scrollHeight);
                 isScrolled = 0;
@@ -698,15 +785,17 @@
         if ($('.textareaContainer').height() > 129) {
             $('.textareaContainer').css('white-space', 'nowrap');
             $('.textareaContainer').css('overflow', 'scroll');
-        } else {
+        } else{
             obj.style.height = "1px";
-            obj.style.height = (1 + obj.scrollHeight) + "px";
+            obj.style.height = (3 + obj.scrollHeight) + "px";
+            var chatContentHeight = (obj.scrollHeight-30) + "px";
+            $('.chatContent').css('padding-block-end',chatContentHeight);
         }
     }
 
     //팝업창 조절 제한
     function popResizer() {
-        window.resizeTo(400,700);
+        window.resizeTo(400, 700);
     };
     popResizer();
     $(window).resize(popResizer);

@@ -20,9 +20,11 @@ public class ChatService {
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .build();
 
-    public int createChat(ChatDTO chatDTO) throws Exception {
+    public int createChat(ChatDTO chatDTO,String mbrId, String token) throws Exception {
         return webClient.post()
                 .uri("/chat")
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 .body(Mono.just(chatDTO), ChatDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
@@ -30,59 +32,73 @@ public class ChatService {
     }
 
     //채팅 리스트
-    public List chatList(int prodNo , int roomNo) throws Exception {
+    public List chatList(int prodNo , int roomNo,String mbrId, String token) throws Exception {
         return webClient.get()
                 .uri("/chat/allChat/{prodNo}/{roomNo}",prodNo,roomNo)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 .retrieve()
                 .bodyToMono(List.class) //반환정보
                 .block();
     }
 
     //룸넘버
-    public int getRoomNo(int prodNo, String sendId, String recipientId) throws Exception {
+    public int getRoomNo(int prodNo, String sendId, String recipientId,String mbrId, String token) throws Exception {
         return webClient.get()
                 .uri("/chat/roomNo/{prodNo}/{sendId}/{recipientId}",prodNo,sendId,recipientId)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
                 .block();
     }
 
     //채팅 목록 -> 특정 아이디로 조회
-    public List chatListById(String sendId) throws Exception {
+    public List chatListById(String sendId,String mbrId, String token) throws Exception {
         return webClient.get()
                 .uri("/chat/existChat/{sendId}",sendId)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 .retrieve()
                 .bodyToMono(List.class) //반환정보
                 .block();
     }
 
-    public int updateViewChat(int prodNo, int roomNo, String loginId ) {
+    public int updateViewChat(int prodNo, int roomNo, String loginId ,String mbrId, String token) {
         return webClient.patch()
                 .uri("/chat/updateView/{prodNo}/{roomNo}/{loginId}",prodNo,roomNo,loginId)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
                 .block();
     }
 
-    public int selectReadCount(int prodNo, int roomNo, String loginId ) {
+    public int selectReadCount(int prodNo, int roomNo, String loginId,String mbrId, String token ) {
         return webClient.get()
                 .uri("/chat/readCount/{prodNo}/{roomNo}/{loginId}",prodNo,roomNo,loginId)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
                 .block();
     }
 
-    public int selectAllReadCount(String loginId ) {
+    public int selectAllReadCount(String loginId ,String mbrId, String token) {
         return webClient.get()
                 .uri("/chat/readAllCount/{loginId}",loginId)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
                 .block();
     }
 
-    public int selectSendCount(int prodNo, int roomNo, String loginId ) {
+    public int selectSendCount(int prodNo, int roomNo, String loginId ,String mbrId, String token) {
         return webClient.get()
                 .uri("/chat/sendCount/{prodNo}/{roomNo}/{loginId}",prodNo,roomNo,loginId)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
                 .block();

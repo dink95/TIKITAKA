@@ -21,9 +21,11 @@ public class ComplainService {
             .build();
 
 
-    public int insertComplain(ComplainDTO complainDTO){
+    public int insertComplain(ComplainDTO complainDTO,String mbrId, String token){
         return webClient.post()
                 .uri("/comp/insert")
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 .body(Mono.just(complainDTO), ComplainDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
@@ -35,43 +37,53 @@ public class ComplainService {
      * @param idx : 게시판 PK
      * @return 성공 시, 1 아닐 시 , 0
      */
-    public int deleteComplain(int idx){
+    public int deleteComplain(int idx, String mbrId, String token){
         return webClient.delete()
                 .uri("/comp/{idx}",idx)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 .retrieve()
                 .bodyToMono(Integer.class)
                 .block();
     }
 
-    public List<ComplainDTO> selectBySpt(String spt){
+    public List<ComplainDTO> selectBySpt(String spt,String mbrId, String token){
         return webClient.get()
                 .uri("/comp/spt/{spt}",spt)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 .retrieve()
                 .bodyToMono(List.class) //반환정보
                 .block();
     }
 
-    public List<ComplainDTO> selectByRepo(String repo){
+    public List<ComplainDTO> selectByRepo(String repo,String mbrId, String token){
         return webClient.get()
                 .uri("/comp/repo/{repo}",repo)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 .retrieve()
                 .bodyToMono(List.class) //반환정보
                 .block();
     }
 
 
-    public int getTotalCount(SearchDTO searchDTO){
+    public int getTotalCount(SearchDTO searchDTO,String mbrId ,String token){
         return webClient.post()
                 .uri("/comp/totalcount")
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 .body(Mono.just(searchDTO), SearchDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class)
                 .block();
     }
 
-    public List<ComplainDTO> selectAllComplains(SearchDTO searchDTO){
+    public List<ComplainDTO> selectAllComplains(SearchDTO searchDTO, String mbrId, String token){
         return webClient.post()
                 .uri("/comp")
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 .body(Mono.just(searchDTO), SearchDTO.class)
                 .retrieve()
                 .bodyToMono(List.class) //반환정보
@@ -80,9 +92,11 @@ public class ComplainService {
     }
 
 
-    public ComplainDTO selectComplainDetailByIndex(int idx){
+    public ComplainDTO selectComplainDetailByIndex(int idx, String mbrId, String token){
         return webClient.get()
                 .uri("/comp/{idx}",idx)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 .retrieve()
                 .bodyToMono(ComplainDTO.class) //반환정보
                 .block();

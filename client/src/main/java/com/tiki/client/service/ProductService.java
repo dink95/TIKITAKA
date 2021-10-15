@@ -19,27 +19,33 @@ public class ProductService {
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .build();
 
-    public int createProduct(InsertProductDTO productDTO) throws Exception {
+    public int createProduct(InsertProductDTO productDTO, String mbrId, String token) throws Exception {
         return webClient.post()
                 .uri("/prod")
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 .body(Mono.just(productDTO), InsertProductDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
                 .block();
     }
 
-    public int updateProduct(ProductDTO productDTO) {
+    public int updateProduct(ProductDTO productDTO, String mbrId, String token) {
         return webClient.patch()
                 .uri("/prod/update")
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 .body(Mono.just(productDTO), ProductDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
                 .block();
     }
 
-    public int deleteProduct(Integer prodNo,String selId) {
+    public int deleteProduct(Integer prodNo,String selId,String token) {
         return webClient.delete()
                 .uri("/prod/{prodNo}/{selId}",prodNo,selId)
+                .header(HttpHeaders.AUTHORIZATION,selId)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
                 .block();
@@ -151,9 +157,11 @@ public class ProductService {
                 .block();
     }
 
-    public int updateProdfinish(ProductDTO productDTO) {
+    public int updateProdfinish(ProductDTO productDTO, String mbrId, String token) {
         return webClient.patch()
                 .uri("/prod/prodfinish")
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 .body(Mono.just(productDTO), ProductDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
