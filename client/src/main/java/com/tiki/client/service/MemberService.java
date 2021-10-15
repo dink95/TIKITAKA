@@ -37,10 +37,10 @@ public class MemberService {
                 .block();
     }
 
-    public MemberDTO Detail(String userId, String token){
+    public MemberDTO Detail(String id, String token){
         return webClient.get()
-                .uri("/mbr/Auth/{id}",userId)
-                .header(HttpHeaders.AUTHORIZATION,userId)
+                .uri("/mbr/Auth/{id}",id)
+                .header(HttpHeaders.AUTHORIZATION,id)
                 .header(HttpHeaders.AUTHORIZATION,token)
                 .retrieve()
                 .bodyToMono(MemberDTO.class) //반환정보
