@@ -28,7 +28,7 @@
 
     <div class="container">
         <div class="row align-items-center mobile_search_hide_text">
-<!--            모바일에서 col-3 웹에서 col-6-->
+            <!--            모바일에서 col-3 웹에서 col-6-->
             <div class="col-3 col-md-3 order-1 order-md-1 text-left" style="padding: 0">
                 <div class="site-logo">
                     <a href="/" class="js-logo-clone">
@@ -51,7 +51,7 @@
                 <!------------------------------------------------------------------------------->
             </div>
 
-<!--            모바일에서 col-3 웹에서 col-6-->
+            <!--            모바일에서 col-3 웹에서 col-6-->
             <div class="col-3 col-md-3 order-2 order-md-3 text-right" style="padding: 0">
                 <!--메뉴 padding 수정-style-260-->
                 <div class="site-top-icons"> <!--버튼 사이즈 수정 style-218-->
@@ -113,14 +113,14 @@
         </span>
         <div class="mobile_category_empty"></div>
     </div>
-        <div class="input-mobile-search_nav">
+    <div class="input-mobile-search_nav">
         <form action="/product/list" class="site-block-top-search input-mobile-search"
               style="justify-content: center;">
             <input type="text" name="prodNm" class="form-control " placeholder="원하는 상품을 검색해보세요"
-            style="border-radius: 15px; height: 40px;"/>
+                   style="border-radius: 50px; height: 40px;"/>
             <span type="submit" class="icon icon-search2"></span>
         </form>
-        </div>
+    </div>
     <div class="input-mobile-search_content">
     </div>
 </div>
@@ -246,7 +246,7 @@
         </a>
             <a href="/">HOME</a></li>
 
-        <li class="mobile_category_icon" th:classappend="${menu}=='product_list'? 'active' : ''">
+        <li  th:classappend="${menu}=='auction_list'? 'active' : ''" onclick="goAuction();">
             <a>
                 <svg id="svg" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 -5 64 80" x="0px"
                      y="0px" witdh="24" height="24">
