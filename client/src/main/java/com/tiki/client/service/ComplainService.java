@@ -82,8 +82,8 @@ public class ComplainService {
     public List<ComplainDTO> selectAllComplains(SearchDTO searchDTO, String mbrId, String token){
         return webClient.post()
                 .uri("/comp")
-                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .body(Mono.just(searchDTO), SearchDTO.class)
                 .retrieve()
                 .bodyToMono(List.class) //반환정보
@@ -95,8 +95,8 @@ public class ComplainService {
     public ComplainDTO selectComplainDetailByIndex(int idx, String mbrId, String token){
         return webClient.get()
                 .uri("/comp/{idx}",idx)
-                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .retrieve()
                 .bodyToMono(ComplainDTO.class) //반환정보
                 .block();

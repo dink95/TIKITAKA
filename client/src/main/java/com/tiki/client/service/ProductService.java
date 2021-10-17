@@ -22,8 +22,8 @@ public class ProductService {
     public int createProduct(InsertProductDTO productDTO, String mbrId, String token) throws Exception {
         return webClient.post()
                 .uri("/prod")
-                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .body(Mono.just(productDTO), InsertProductDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
@@ -33,8 +33,8 @@ public class ProductService {
     public int updateProduct(ProductDTO productDTO, String mbrId, String token) {
         return webClient.patch()
                 .uri("/prod/update")
-                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .body(Mono.just(productDTO), ProductDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
@@ -44,8 +44,8 @@ public class ProductService {
     public int deleteProduct(Integer prodNo,String selId,String token) {
         return webClient.delete()
                 .uri("/prod/{prodNo}/{selId}",prodNo,selId)
-                .header(HttpHeaders.AUTHORIZATION,selId)
                 .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,selId)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
                 .block();
@@ -108,18 +108,22 @@ public class ProductService {
                 .block();
     }
 
-    //판매중
-    public List productQuerySelIdList(String selId) throws Exception {
+    //사용자 화면에서 보는 판매중
+    public List productQuerySelIdList(String selId,String token) throws Exception {
         return webClient.get()
-                .uri("/prd/result/selId/{selId}",selId)
+                .uri("/prod/result/selId/{selId}",selId)
+                .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,selId)
                 .retrieve()
                 .bodyToMono(List.class) //반환정보
                 .block();
     }
-    //판매완료
-    public List productQuerySelIdListFinish(String selId) throws Exception {
+    //사용자화면에서 보는 판매완료
+    public List productQuerySelIdListFinish(String selId,String token) throws Exception {
         return webClient.get()
-                .uri("/prd/result/selId/finish/{selId}",selId)
+                .uri("/prod/result/selId/finish/{selId}",selId)
+                .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,selId)
                 .retrieve()
                 .bodyToMono(List.class) //반환정보
                 .block();
@@ -160,8 +164,8 @@ public class ProductService {
     public int updateProdfinish(ProductDTO productDTO, String mbrId, String token) {
         return webClient.patch()
                 .uri("/prod/prodfinish")
-                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .body(Mono.just(productDTO), ProductDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보

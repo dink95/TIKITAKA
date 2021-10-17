@@ -21,8 +21,8 @@ public class BlackListService {
     public int insertBlackList(BlackListDTO blackListDTO,String mbrId, String token){
         return webClient.post()
                 .uri("/black")
-                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
 
                 .body(Mono.just(blackListDTO), BlackListDTO.class)
                 .retrieve()
@@ -33,8 +33,8 @@ public class BlackListService {
     public List<BlackListDTO> selectAllBlackList(String mbrId, String token){
         return webClient.get()
                 .uri("/black")
-                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
 
                 .retrieve()
                 .bodyToMono(List.class) //반환정보

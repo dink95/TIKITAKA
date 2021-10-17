@@ -2060,9 +2060,15 @@ figure > img {
   .pageName{
     display: none;
   }
+  #infoLogoutBtn{
+    display: none;
+  }
 }
 
 @media screen and (max-width: 575px) {
+  #infoLogoutBtn{
+    display: unset;
+  }
   .col-3.col-md-3.order-2.order-md-3.text-right{
     max-width: unset;
     min-width: unset;

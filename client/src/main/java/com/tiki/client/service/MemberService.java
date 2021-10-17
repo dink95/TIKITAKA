@@ -40,8 +40,8 @@ public class MemberService {
     public MemberDTO Detail(String id, String token){
         return webClient.get()
                 .uri("/mbr/Auth/{id}",id)
-                .header(HttpHeaders.AUTHORIZATION,id)
                 .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,id)
                 .retrieve()
                 .bodyToMono(MemberDTO.class) //반환정보
                 .block();
@@ -50,8 +50,8 @@ public class MemberService {
     public int deleteMember(String mbrId, String token){
         return webClient.delete()
                 .uri("/mbr/Auth/{mbrId}",mbrId)
-                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .retrieve()
                 .bodyToMono(Integer.class)
                 .block();
@@ -114,8 +114,8 @@ public class MemberService {
     public String certifyEmail(String id, String token){
         return webClient.get()
                 .uri("/mbr/Auth/emailrollcheck/{id}",id)
-                .header(HttpHeaders.AUTHORIZATION,id)
                 .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,id)
                 //.body(Mono.just(memberDTO), MemberDTO.class)
                 .retrieve()
                 .bodyToMono(String.class) //반환정보
@@ -140,18 +140,22 @@ public class MemberService {
                 .block();
     }
 
-    public int updateMemberPoints(MemberDTO memberDTO){
+    public int updateMemberPoints(MemberDTO memberDTO,String token){
         return webClient.patch()
-                .uri("/mbr/points")
+                .uri("/mbr/Auth/points")
+                .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,memberDTO.getMbrId())
                 .body(Mono.just(memberDTO), MemberDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
                 .block();
     }
 
-    public int updateMemberGrade(MemberDTO memberDTO){
+    public int updateMemberGrade(MemberDTO memberDTO, String token){
         return webClient.patch()
-                .uri("/mbr/grade")
+                .uri("/mbr/Auth/grade")
+                .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,memberDTO.getMbrId())
                 .body(Mono.just(memberDTO), MemberDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보

@@ -35,8 +35,8 @@ public class ChatService {
     public List chatList(int prodNo , int roomNo,String mbrId, String token) throws Exception {
         return webClient.get()
                 .uri("/chat/allChat/{prodNo}/{roomNo}",prodNo,roomNo)
-                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .retrieve()
                 .bodyToMono(List.class) //반환정보
                 .block();
@@ -46,8 +46,8 @@ public class ChatService {
     public int getRoomNo(int prodNo, String sendId, String recipientId,String mbrId, String token) throws Exception {
         return webClient.get()
                 .uri("/chat/roomNo/{prodNo}/{sendId}/{recipientId}",prodNo,sendId,recipientId)
-                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
                 .block();
@@ -57,8 +57,8 @@ public class ChatService {
     public List chatListById(String sendId,String mbrId, String token) throws Exception {
         return webClient.get()
                 .uri("/chat/existChat/{sendId}",sendId)
-                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .retrieve()
                 .bodyToMono(List.class) //반환정보
                 .block();
@@ -67,8 +67,8 @@ public class ChatService {
     public int updateViewChat(int prodNo, int roomNo, String loginId ,String mbrId, String token) {
         return webClient.patch()
                 .uri("/chat/updateView/{prodNo}/{roomNo}/{loginId}",prodNo,roomNo,loginId)
-                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
                 .block();
@@ -77,8 +77,8 @@ public class ChatService {
     public int selectReadCount(int prodNo, int roomNo, String loginId,String mbrId, String token ) {
         return webClient.get()
                 .uri("/chat/readCount/{prodNo}/{roomNo}/{loginId}",prodNo,roomNo,loginId)
-                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
                 .block();
@@ -87,8 +87,8 @@ public class ChatService {
     public int selectAllReadCount(String loginId ,String mbrId, String token) {
         return webClient.get()
                 .uri("/chat/readAllCount/{loginId}",loginId)
-                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
                 .block();
@@ -97,8 +97,8 @@ public class ChatService {
     public int selectSendCount(int prodNo, int roomNo, String loginId ,String mbrId, String token) {
         return webClient.get()
                 .uri("/chat/sendCount/{prodNo}/{roomNo}/{loginId}",prodNo,roomNo,loginId)
-                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
                 .block();

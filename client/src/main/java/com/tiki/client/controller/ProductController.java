@@ -308,14 +308,15 @@ public class ProductController {
 
     @RequestMapping("/product/list.selId")  /*상품 아이디 검색 리스트 */
     @ResponseBody
-    public Map<String,Object> IdQuerytList(@RequestParam(value = "selId") String selId) {
+    public Map<String,Object> IdQuerytList(HttpServletRequest request) {
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
 
         Map<String,Object> resultMap = new HashMap<>();
         List<Object> list = null;
-        System.out.println(selId);
         try {
-            list= productService.productQuerySelIdList(selId);
-            System.out.println("@QueryList"+ list);
+            list= productService.productQuerySelIdList(idCookie.getValue(),tokenCookie.getValue());
+
             resultMap.put("dataQueryList", list);
 
         } catch (Exception e) {
@@ -326,13 +327,13 @@ public class ProductController {
 
     @RequestMapping("/product/finish/list.selId")  /*상품 아이디 검색 리스트(판매완료) */
     @ResponseBody
-    public Map<String,Object> IdQuerytListFinish(@RequestParam(value = "selId") String selId) {
-
+    public Map<String,Object> IdQuerytListFinish(HttpServletRequest request) {
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
         Map<String,Object> resultMap = new HashMap<>();
         List<Object> list = null;
-        System.out.println(selId);
         try {
-            list= productService.productQuerySelIdListFinish(selId);
+            list= productService.productQuerySelIdListFinish(idCookie.getValue(),tokenCookie.getValue());
             System.out.println("@QueryList"+ list);
             resultMap.put("dataQueryList", list);
 

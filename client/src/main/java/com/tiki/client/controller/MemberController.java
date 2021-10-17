@@ -523,20 +523,21 @@ public class MemberController {
 
     @RequestMapping("/member/update/point") //점수 업데이트
     @ResponseBody
-    public Map<String,Object> updatePoint(@RequestParam(value = "userId") String userId){
+    public Map<String,Object> updatePoint(HttpServletRequest request){
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie = WebUtils.getCookie(request, "token");
         MemberDTO memberDTO = new MemberDTO();
         Map<String, Object> resultMap = new HashMap<>();
-        memberDTO.setMbrId(userId);
+        memberDTO.setMbrId(idCookie.getValue());
 
         int result = 0;
 
         try {
 
-            result = memberService.updateMemberPoints(memberDTO);
+            result = memberService.updateMemberPoints(memberDTO,tokenCookie.getValue());
 
             if (result > 0) {
                 resultMap.put("resultCode", 200);
-                resultMap.put("resultMsg","점수 업데이트");
             } else {
                 resultMap.put("resultCode", 400);
                 resultMap.put("resultMsg","점수 업데이트 400");
@@ -552,23 +553,24 @@ public class MemberController {
 
     @RequestMapping("/member/update/grade") //등급 업데이트
     @ResponseBody
-    public Map<String,Object> updateGrade(@RequestParam(value = "userId") String userId,
-                                            @RequestParam(value = "userPoint") int userPoint){
+    public Map<String,Object> updateGrade(@RequestParam(value = "userPoint") int userPoint,
+                                          HttpServletRequest request){
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie = WebUtils.getCookie(request, "token");
         MemberDTO memberDTO = new MemberDTO();
 
         Map<String, Object> resultMap = new HashMap<>();
-        memberDTO.setMbrId(userId);
+        memberDTO.setMbrId(idCookie.getValue());
         memberDTO.setMbrPoints(userPoint);
 
         int result = 0;
 
         try {
 
-            result = memberService.updateMemberGrade(memberDTO);
+            result = memberService.updateMemberGrade(memberDTO,tokenCookie.getValue());
 
             if (result > 0) {
                 resultMap.put("resultCode", 200);
-                resultMap.put("resultMsg","등급 업데이트");
             } else {
                 resultMap.put("resultCode", 400);
                 resultMap.put("resultMsg","등급 업데이트 400");
