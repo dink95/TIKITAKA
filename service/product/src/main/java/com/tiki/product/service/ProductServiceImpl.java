@@ -172,6 +172,20 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<ProductDTO> resultByIdAuc(String catNm) {
+
+        List<ProductDTO> productList = Collections.emptyList();
+
+        int productTotalCount = productMapper.selectProductTotalCount();
+
+        if (productTotalCount > 0) {
+            productList = productMapper.resultByIdAuc(catNm);
+        }
+
+        return productList;
+    }
+
+    @Override
     public List<ProductDTO> resultByIdFinish(String catNm) {
 
         List<ProductDTO> productList = Collections.emptyList();

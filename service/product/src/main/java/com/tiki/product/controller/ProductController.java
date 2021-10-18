@@ -178,6 +178,14 @@ public class ProductController {
         return productList;
     }
 
+    // 경매 상품 결과 보기 판매자 이름으로
+    @GetMapping(value = "/prod/result/selId/auc/{selId}")
+    public List resultSelIdListAuc(@PathVariable("selId") String selId) {
+        List<ProductDTO> productList = productService.resultByIdAuc(selId);
+
+        return productList;
+    }
+
     // 검색 결과 보기 판매자 이름으로(판매완료)
     @GetMapping(value = "/prod/result/selId/finish/{selId}")
     public List resultSelIdListFinish(@PathVariable("selId") String selId) {
