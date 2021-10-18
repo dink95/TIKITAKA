@@ -54,7 +54,7 @@
             <div class="myinfoContainer">
                 <div class="myinfoMainNav">
                     <div class="myinfoMainId">
-                        <span id="p_id" th:text="${session.mbrId}"></span>
+                        <span id="p_id" th:text="${#locale}"></span>
                         <span style="font-size: 16px; font-weight: bold;color: #000;">님</span>
                     </div>
                     <div>
@@ -340,11 +340,7 @@
         /*    margin-left: 0px;*/
         /*}*/
         .myinfoMainNav > div:nth-child(3) > button {
-
-            padding: 5px 6%;
-
-            padding: 5px 30px;
-
+            padding: 5px 5%;
             margin: 0 2px;
         }
         .myinfoContainer{
@@ -414,13 +410,8 @@
     }
 
     function getIdQueryList() {
-
         //판매중 상품 조회
         if($('#finishCheck').val() == 'myProd') {
-
-
-        if($('#finishCheck').val() == 0) {
-
             param = {
                 selId: $('#p_id').text(),
             }
@@ -459,7 +450,20 @@
         }
         //경매중 상품 조회
         else if($('#finishCheck').val() == 'auctionProd'){
-            alert('경매중 상품 조회');
+            param = {
+                selId: $('#p_id').text(),
+            }
+            $.ajax({
+                url: '/product/auc/list.selId',
+                data: param,
+                type: 'post',
+                dataType: 'json'
+            }).done(function (data) {
+                drawPrdList(data);
+
+            }).fail(function (data, textStatus, errorThrown) {
+                console.log(textStatus);
+            });
         }
         //입찰중 상품 조회
         else if($('#finishCheck').val() == 'bidProd'){
@@ -610,4 +614,5 @@
 
 </body>
 </html>
+
 

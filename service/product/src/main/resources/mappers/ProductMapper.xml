@@ -226,6 +226,24 @@
         FROM
         prod
         WHERE
+        NOT
+        cat_no = 99
+        AND
+        sel_id = #{selId}
+        AND NOT
+        prod_finish = true
+        ORDER BY
+        wday DESC
+    </select>
+
+    <select id="resultByIdAuc" parameterType="String" resultType="ProductDTO">
+        SELECT
+        <include refid="productColumns" />
+        FROM
+        prod
+        WHERE
+        cat_no = 99
+        AND
         sel_id = #{selId}
         AND NOT
         prod_finish = true

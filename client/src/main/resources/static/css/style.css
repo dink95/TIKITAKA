@@ -150,11 +150,6 @@ a:hover {
   padding: 2.5em 0 2.5em 0;
 }
 
-@media (min-width: 768px) {
-  .site-section {
-    /*  padding: 0em 0 5em 0;*/
-  }
-}
 
 /*상품 박스 위에 padding값 수정*/
 /*site-section 배경색 수정*/
@@ -1712,7 +1707,7 @@ figure > img {
 
 .mobile_nav {
   width: 100%;
-  position: sticky;
+  position: fixed;
   bottom: 0;
   border-top: 1px solid #dddddd5e;
   z-index: 2000;
@@ -2064,9 +2059,15 @@ figure > img {
     display: none;
   }
 }
-
+/* 모바일 수평 스크롤 금지 */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
 @media screen and (max-width: 575px) {
-
+  .pageName{
+    display: flex;
+  }
   #infoLogoutBtn{
     display: unset;
   }
@@ -2077,6 +2078,7 @@ figure > img {
   }
   .mobile_search_hide_text{
     height: 53px;
+    margin-left: 0;
   }
   .mobile_category_icon_ul{
     display:flex;
