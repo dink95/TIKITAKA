@@ -14,7 +14,7 @@ public interface BuylistMapper {
 
     public BuylistDTO selectBuylistDetail(String buyerId);
 
-    public List<BuylistDTO> selectBuylistList();
+    public List<BuylistDTO> selectBuylistList(String buyerId);
 
     public int selectBuylistTotalCount();
 

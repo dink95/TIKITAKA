@@ -33,14 +33,14 @@ public class BuylistServiceImpl implements BuylistService {
     }
 
     @Override
-    public List<BuylistDTO> getBuylistList() {
+    public List<BuylistDTO> getBuylistList(String buyerId) {
 
         List<BuylistDTO> buylistList = Collections.emptyList();
 
         int buylistTotalCount = buylistMapper.selectBuylistTotalCount();
 
         if (buylistTotalCount > 0) {
-            buylistList = buylistMapper.selectBuylistList();
+            buylistList = buylistMapper.selectBuylistList(buyerId);
         }
 
         return buylistList;
