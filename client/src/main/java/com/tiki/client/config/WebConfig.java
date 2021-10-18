@@ -9,16 +9,45 @@ import org.springframework.util.unit.DataUnit;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 
 import javax.servlet.Filter;
 import javax.servlet.MultipartConfigElement;
+import java.util.Locale;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+    private static final Locale DEFAULT_LOCALE = new Locale("en");
+
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(localeChangeInterceptor())
+//    }
+
+    @Bean
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+        localeChangeInterceptor.setParamName("mbrId");
+        return localeChangeInterceptor;
+    }
+
+    @Bean
+    public LocaleResolver localeResolver() {
+        CookieLocaleResolver localeResolver = new CookieLocaleResolver();
+        localeResolver.setCookieName("mbrId");
+        localeResolver.setCookieMaxAge(60*60*24*7);
+        // 쿠키 유지 시간 (초)
+        localeResolver.setDefaultLocale(DEFAULT_LOCALE);
+        // 기본 로케일
+        return localeResolver;
+    }
+
 
     @Value("/istatic/images/")
     private String imgStatic;
@@ -31,6 +60,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new ProcessInterceptor())
+                .addPathPatterns("/auction/create")
                 .addPathPatterns("/auction/detail")
                 .addPathPatterns("/product/create")
                 .addPathPatterns("/member/myinfo")
@@ -72,7 +102,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public MultipartResolver multipartResolver(){
+    public MultipartResolver multipartResolver() {
         return new StandardServletMultipartResolver();
     }
 

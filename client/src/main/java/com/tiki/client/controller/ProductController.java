@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.WebUtils;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashMap;
@@ -29,12 +34,15 @@ public class ProductController {
     }
 
     @RequestMapping("/product/create.do")  /*상품등록*/
-    public ModelAndView createProduct(InsertProductDTO productDTO, MultipartHttpServletRequest multi) {
+    public ModelAndView createProduct(InsertProductDTO productDTO, MultipartHttpServletRequest multi,
+                                      HttpServletRequest request) {
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
         ModelAndView view = new ModelAndView();
         int result = 0;
         System.out.println(productDTO);
         try {
-            result = productService.createProduct(productDTO);
+            result = productService.createProduct(productDTO,idCookie.getValue(),tokenCookie.getValue());
             List<MultipartFile> fileList = multi.getFiles("file");
 //           String path = "c:/tmp/"+Integer.toString(result)+"/";
             String path = "/Users/gimmugyeong/tmp/" +Integer.toString(result)+"/";
@@ -74,12 +82,15 @@ public class ProductController {
     }
 
     @RequestMapping("/product/update.do")  /*상품업데이트*/
-    public ModelAndView updateProduct(ProductDTO productDTO) {
+    public ModelAndView updateProduct(ProductDTO productDTO,
+                                      HttpServletRequest request) {
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
         ModelAndView view = new ModelAndView();
         int result = 0;
         System.out.println(productDTO);
         try {
-            result = productService.updateProduct(productDTO);
+            result = productService.updateProduct(productDTO, idCookie.getValue(), tokenCookie.getValue());
 
             if (result > 0) {
                 view.addObject("resultCode", 201);
@@ -95,12 +106,15 @@ public class ProductController {
 
     @RequestMapping("/product/delete")  /*상품삭제*/
     @ResponseBody
-    public Map<String,Object>deleteProduct(@RequestParam(value = "prodNo") Integer prodNo, @RequestParam(value = "selId") String selId) {
+    public Map<String,Object>deleteProduct(@RequestParam(value = "prodNo") Integer prodNo,
+                                           HttpServletRequest request) {
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
         Map<String,Object> resultMap = new HashMap<>();
         int result = 0;
 
         try {
-            result = productService.deleteProduct(prodNo,selId);
+            result = productService.deleteProduct(prodNo,idCookie.getValue(),tokenCookie.getValue());
             System.out.println(result);
             if (result > 0) {
                 resultMap.put("resultCode", 200);
@@ -294,13 +308,15 @@ public class ProductController {
 
     @RequestMapping("/product/list.selId")  /*상품 아이디 검색 리스트 */
     @ResponseBody
-    public Map<String,Object> IdQuerytList(@RequestParam(value = "selId") String selId) {
+    public Map<String,Object> IdQuerytList(HttpServletRequest request) {
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
+
         Map<String,Object> resultMap = new HashMap<>();
         List<Object> list = null;
-        System.out.println(selId);
         try {
-            list= productService.productQuerySelIdList(selId);
-            System.out.println("@QueryList"+ list);
+            list= productService.productQuerySelIdList(idCookie.getValue(),tokenCookie.getValue());
+
             resultMap.put("dataQueryList", list);
 
         } catch (Exception e) {
@@ -311,12 +327,13 @@ public class ProductController {
 
     @RequestMapping("/product/finish/list.selId")  /*상품 아이디 검색 리스트(판매완료) */
     @ResponseBody
-    public Map<String,Object> IdQuerytListFinish(@RequestParam(value = "selId") String selId) {
+    public Map<String,Object> IdQuerytListFinish(HttpServletRequest request) {
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
         Map<String,Object> resultMap = new HashMap<>();
         List<Object> list = null;
-        System.out.println(selId);
         try {
-            list= productService.productQuerySelIdListFinish(selId);
+            list= productService.productQuerySelIdListFinish(idCookie.getValue(),tokenCookie.getValue());
             System.out.println("@QueryList"+ list);
             resultMap.put("dataQueryList", list);
 
@@ -351,15 +368,17 @@ public class ProductController {
 
     @RequestMapping("/product/prodfinish")  /*판매완료업데이트*/
     @ResponseBody
-    public Map<String,Object> updateProdfinish(@RequestParam(value="selId") String selId,
-                                               @RequestParam(value="prodNo") int prodNo) {
+    public Map<String,Object> updateProdfinish(@RequestParam(value="prodNo") int prodNo,
+                                               HttpServletRequest request) {
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
         HashMap<String,Object> resultMap = new HashMap<>();
         ProductDTO productDTO = new ProductDTO();
-        productDTO.setSelId(selId);
+        productDTO.setSelId(idCookie.getValue());
         productDTO.setProdNo(prodNo);
         int result = 0;
         try {
-            result = productService.updateProdfinish(productDTO);
+            result = productService.updateProdfinish(productDTO,idCookie.getValue(), tokenCookie.getValue());
             if (result > 0) {
                 resultMap.put("resultCode", 200);
                 resultMap.put("resultMsg", "판매완료");

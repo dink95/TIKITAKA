@@ -49,11 +49,9 @@
 
     <div class="site-section">
         <div class="col-md-12 mb-0"></div>
-
         <div class="container">
 
-
-            <input type="hidden" id="p_id" th:value="${session.mbrId}">
+            <input type="hidden" id="p_id" th:value="${#locale}">
             <input type="hidden" id="prodNo" value="">
             <input type="hidden" id="query" value="">
             <input type="hidden" id="prodNm" value="">
@@ -66,8 +64,10 @@
 
             <div class="row align-items-start" style="border-bottom: 1px solid #ddd;">
                 <div class="col-12 col-md-6 order-1 order-md-1  text-center" style="padding: 0;">
-                    <div class="bxslider bxslider1" style="display: none" >
-                            <img class="bxsliderImg1" src="" alt="슬라이드 이미지1" onclick="goDetailPhoto(1);">
+                    <div class="bxslider bxslider1" style="display: none;">
+                        <div class="bxsliderImgDiv bxsliderImgDiv1">
+                            <img class="bxsliderImg1" src="" alt="슬라이드 이미지1" onclick="">
+                        </div>
                     </div>
 
                     <div class="bxslider bxslider2" style="display: none">
@@ -149,13 +149,13 @@
                                value="거래하기" onclick="goChat()">
                         <input class="  btn btn-primary" id="updateProd"
                                value="수정하기" onclick="goRegist()">
-                        <input class=" btn btn-danger"
+                        <input class=" btn btn-danger" id="certifyProd"
                                value="신고하기" onclick="goReport()">
                         <input class=" btn btn-danger" id="deleteProd"
                                value="삭제하기" onclick="removeCheck()">
                         <input type="hidden">
-                        <input class="btn btn-dark" id="prodFinish"
-                               value="거래완료로 변경" onclick="goProdFinish()">
+                        <!--                        <input class="btn btn-dark" id="prodFinish"-->
+                        <!--                               value="거래완료로 변경" onclick="goProdFinish()">-->
                     </div>
                 </div>
             </div>
@@ -196,7 +196,7 @@
                 border-radius: 1px;
             }
             #detailName {
-             margin-bottom: 0px;
+                margin-bottom: 0px;
             }
             .ButtonNav > .btn {
                 font-size: 15px;
@@ -241,8 +241,8 @@
         }
         .bx-wrapper {
             -moz-box-shadow: none;
-             -webkit-box-shadow: none;
-             box-shadow: none;
+            -webkit-box-shadow: none;
+            box-shadow: none;
             border: 5px solid #fff;
             background: #fff;
         }
@@ -338,7 +338,7 @@
             border-style: none;
             padding: 6px 12px;
             margin: 1%;
-            width: 30%;
+            width: 100%;
             background: #ddd;
             color: #000;
             font-weight: normal;
@@ -571,7 +571,10 @@
         var imgPath = $('.bxsliderImg'+i).attr("src");
         $('#img_modal').css('display', 'flex');
         $('#img_modal').children('img').attr("src", imgPath);
+    }
 
+    function goDetailPhoto() {
+        alert('클릭 확인');
     }
 
     function closeModalImg() {
