@@ -12,6 +12,6 @@ public interface BuylistService {
 
     public BuylistDTO getBuylistDetail(String buyerId);
 
-    public List<BuylistDTO> getBuylistList();
+    public List<BuylistDTO> getBuylistList(String buyerId);
 
 }
