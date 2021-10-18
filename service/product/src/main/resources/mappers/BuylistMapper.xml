@@ -36,13 +36,15 @@
     </select>
 
 
-    <select id="selectBuylistList" parameterType="BuylistDTO" resultType="BuylistDTO">
+    <select id="selectBuylistList" parameterType="string" resultType="BuylistDTO">
         SELECT
             <include refid="buylistColumns" />
         FROM
             buylist
+        WHERE
+            buyer_id = #{buyerId}
         ORDER BY
-            buyerId ASC
+            prod_no ASC
     </select>
 
     <select id="selectBuylistTotalCount" parameterType="BuylistDTO" resultType="int">
