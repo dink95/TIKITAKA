@@ -6,6 +6,8 @@ import com.tiki.client.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -97,22 +99,23 @@ public class MemberController {
 
     @RequestMapping("/member/detail") /*멤버 정보 조회*/
     @ResponseBody
-    public Map<String, Object> memberDetail(HttpServletRequest request) {
+    public Map<String, Object> memberDetail(HttpServletRequest request, HttpStatus status) {
 
         Cookie idCookie =WebUtils.getCookie(request, "mbrId");
         Cookie tokenCookie =WebUtils.getCookie(request, "token");
 
         Map<String, Object> resultMap = new HashMap<>();
-        MemberDTO memberDTO = memberService.Detail(idCookie.getValue(),tokenCookie.getValue());
+        MemberDTO memberDTO = memberService.Detail(idCookie.getValue(),"123");
 
         try {
             resultMap.put("memberDetail", memberDTO);
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("detail error");
+
         }
         return resultMap;
     }
+
 
     @GetMapping(value = "/signup") /*회원가입 페이지*/
     public ModelAndView signup() {
