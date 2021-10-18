@@ -447,12 +447,9 @@
     }
 
     function getMbrInfo() {
-        param = {
-            userId: $('#p_id').val(),
-        }
         $.ajax({
             url: '/member/detail',
-            data: param,
+            data: null,
             type: 'post',
             dataType: 'json'
         }).done(function (data) {

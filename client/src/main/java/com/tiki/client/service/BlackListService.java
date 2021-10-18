@@ -18,18 +18,24 @@ public class BlackListService {
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .build();
 
-    public int insertBlackList(BlackListDTO blackListDTO){
+    public int insertBlackList(BlackListDTO blackListDTO,String mbrId, String token){
         return webClient.post()
                 .uri("/black")
+                .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
+
                 .body(Mono.just(blackListDTO), BlackListDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보
                 .block();
     }
 
-    public List<BlackListDTO> selectAllBlackList(){
+    public List<BlackListDTO> selectAllBlackList(String mbrId, String token){
         return webClient.get()
                 .uri("/black")
+                .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
+
                 .retrieve()
                 .bodyToMono(List.class) //반환정보
                 .block();

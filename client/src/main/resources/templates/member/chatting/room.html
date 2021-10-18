@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="/fonts/icomoon/style.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/icon.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/jquery-ui.css">
 </head>
 <body>
 
@@ -125,6 +128,12 @@
         white-space: nowrap;
         overflow: hidden;
     }
+    .titleProdFinishBtn{
+        font-size: 12px;
+        border-radius: 2px;
+        border-style: none;
+        display: none;
+    }
 </style>
 <script src="/js/jquery-3.3.1.min.js"></script>
 <script src="/js/jquery-ui.js"></script>
@@ -140,7 +149,7 @@
 
 
     $(document).ready(function () {
-        $('.loading').css('display','block');
+
         mobileSiteTop('채팅');
     });
 
@@ -233,6 +242,9 @@
             dataType: 'json'
         }).done(function (data) {
             console.log("data.dataDetail", data.dataDetail);
+            if(data.dataDetail.prodFinish == 1){
+                $('.titleProdFinishBtn'+prodNo).css('display','unset');
+            }
             drawChatImg(data);
 
         }).fail(function (data, textStatus, errorThrown) {
@@ -284,6 +296,7 @@
     function drawChatRoomList(data) {
         var container = $('.chattingListNav');
         if (typeof data.chatList !== 'undefined' && data.chatList.length > 0) {
+            $('.loading').css('display','block');
             container.empty();
             var contents = '';
             var mbrId;
@@ -319,6 +332,7 @@
                     mbrId=obj.sendId;
                 }
                 contents += '    <span class=" sendDay">'+sendDay+'</span>';
+                contents += ' <button class="btn-dark titleProdFinishBtn titleProdFinishBtn'+obj.prodNo+'">거래완료</button>';
                 contents +='</div>';
                 contents +='<div style="display: flex; align-items: flex-end;">';
                 contents += '    <span class="chatRoomMessage chatRoomMessage'+obj.prodNo+'-'+obj.roomNo+'"></span>';
@@ -341,6 +355,7 @@
             container.empty();
             contents = '<span>채팅 목록이 없습습니다.</span>';
             container.append(contents);
+            alert("없음");
         }
         $('.loading').css('display','none');
 

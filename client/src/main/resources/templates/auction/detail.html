@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="../css/aos.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/icon.css">
+    <!--이미지슬라이드-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
 </head>
 
 <body>
@@ -59,18 +61,82 @@
             <input type="hidden" id="way" value="">
             <input type="hidden" id="nego" value="">
             <input type="hidden" id="prodCo" value="">
+
+
             <div class="row align-items-start" style="border-bottom: 1px solid #ddd; padding:0 0 5% 0;">
                 <div class="col-12 col-md-6 order-1 order-md-1  text-center">
-                    <figure class="block-4-image">
-                        <img id="mainDetailImg" src="" alt="Image placeholder" class="img-fluid"
-                             style="max-height: 500px;">
-                    </figure>
+                    <!--                    <figure class="block-4-image">-->
+                    <!--                        <img id="mainDetailImg" src="" alt="Image placeholder" class="img-fluid"-->
+                    <!--                             style="max-height: 500px;">-->
+                    <!--                    </figure>-->
+                    <div class="bxslider bxslider1" style="display: none">
+                        <div class="bxsliderImgDiv bxsliderImgDiv1">
+                            <img class="bxsliderImg1" src="" alt="슬라이드 이미지1" onclick="goDetailPhoto(1);">
+                        </div>
+                    </div>
+
+                    <div class="bxslider bxslider2 " style="display: none">
+                        <div class="bxsliderImgDiv bxsliderImgDiv1">
+                            <img class="bxsliderImg1" src="" alt="슬라이드 이미지1" onclick="goDetailPhoto(1);">
+                        </div>
+                        <div class="bxsliderImgDiv bxsliderImgDiv2">
+                            <img class="bxsliderImg2" src="" alt="슬라이드 이미지2" onclick="goDetailPhoto(2);">
+                        </div>
+                    </div>
+
+                    <div class="bxslider bxslider3" style="display: none">
+                        <div class="bxsliderImgDiv bxsliderImgDiv1">
+                            <img class="bxsliderImg1" src="" alt="슬라이드 이미지1" onclick="goDetailPhoto(1);">
+                        </div>
+
+                        <div class="bxsliderImgDiv bxsliderImgDiv2">
+                            <img class="bxsliderImg2" src="" alt="슬라이드 이미지2" onclick="goDetailPhoto(2);">
+                        </div>
+                        <div class="bxsliderImgDiv bxsliderImgDiv3">
+                            <img class="bxsliderImg3" src="" alt="슬라이드 이미지3" onclick="goDetailPhoto(3);">
+                        </div>
+                    </div>
+
+                    <div class="bxslider bxslider4" style="display: none">
+                        <div class="bxsliderImgDiv bxsliderImgDiv1">
+                            <img class="bxsliderImg1" src="" alt="슬라이드 이미지1" onclick="goDetailPhoto(1);">
+                        </div>
+                        <div class="bxsliderImgDiv bxsliderImgDiv2">
+                            <img class="bxsliderImg2" src="" alt="슬라이드 이미지2" onclick="goDetailPhoto(2);">
+                        </div>
+                        <div class="bxsliderImgDiv bxsliderImgDiv3">
+                            <img class="bxsliderImg3" src="" alt="슬라이드 이미지3" onclick="goDetailPhoto(3);">
+                        </div>
+                        <div class="bxsliderImgDiv bxsliderImgDiv4">
+                            <img class="bxsliderImg3" src="" alt="슬라이드 이미지4" onclick="goDetailPhoto(4);">
+                        </div>
+                    </div>
+
+                    <div class="bxslider bxslider5" style="display: none">
+                        <div class="bxsliderImgDiv bxsliderImgDiv1">
+                            <img class="bxsliderImg1" src="" alt="슬라이드 이미지1" onclick="goDetailPhoto(1);">
+                        </div>
+                        <div class="bxsliderImgDiv bxsliderImgDiv2">
+                            <img class="bxsliderImg2" src="" alt="슬라이드 이미지2" onclick="goDetailPhoto(2);">
+                        </div>
+                        <div class="bxsliderImgDiv bxsliderImgDiv3">
+                            <img class="bxsliderImg3" src="" alt="슬라이드 이미지3" onclick="goDetailPhoto(3);">
+                        </div>
+                        <div class="bxsliderImgDiv bxsliderImgDiv4">
+                            <img class="bxsliderImg4" src="" alt="슬라이드 이미지4" onclick="goDetailPhoto(4);">
+                        </div>
+                        <div class="bxsliderImgDiv bxsliderImgDiv5">
+                            <img class="bxsliderImg5" src="" alt="슬라이드 이미지5" onclick="goDetailPhoto(5);">
+                        </div>
+                    </div>
 
                     <div class="aic1" style="border-bottom: 1px solid #dee2e6">
                         <h1 id="detailName"></h1>
                         <div class="d-flex-j-between">
                             <div><p>현재가:&nbsp&nbsp
-                                <span class="text-black" id="currentPrice"></span><span class="text-black">원</span></div></p>
+                                <span class="text-black" id="currentPrice"></span><span class="text-black">원</span>
+                            </div>
+                            </p>
                             <input type="hidden" id="detailPrice">
                             <div class="d-flex-j-a-center">
                                 <p>
@@ -99,13 +165,28 @@
                     <div class="auctionTitle">실시간 입찰 현황</div>
                     <ul class="auction_box">
                     </ul>
-                    <div class="d-flex-j-between content">
+                    <div class="d-flex-j-between content auction_button">
                         <input id="priceInput" type="number" name="message"
                                class="width-80p margin-left-right-10 text-black" step="1000" pattern="[0-9]*"
                                inputmode="numeric" min="0">
                         <input class="send btn btn-primary width-80p margin-left-right-10" id="tradeProd"
                                value="입찰하기">
                     </div>
+
+                    <div class="d-flex-j-between content auction_button_finish_sender"
+                         style="display: none; cursor: pointer;">
+                        <span class="width-80p margin-left-right-10 text-black">상품이 낙찰되었습니다!</span>
+                        <input class="goChat btn btn-primary width-80p margin-left-right-10"
+                               onclick="goChatToSenderId()"
+                               value="채팅으로 거래하기">
+                    </div>
+
+                    <div class="d-flex-j-between content auction_button_finish_buyer"
+                         style="display: none; align-items: center; cursor: pointer;">
+                        <span class="width-80p margin-left-right-10 text-black">상품이 낙찰되었습니다!</span>
+                        <input class="goChat btn btn-primary width-80p margin-left-right-10" onclick="goChatToBidId()"
+                               value="채팅으로 거래하기">
+
                 </div>
             </div>
 
@@ -113,84 +194,22 @@
             <div class="site-section block-3 site-blocks-2 bg-light">
                 <div class="container">
                     <div class="row justify-content-center">
+
                     </div>
-                    <input type="hidden" id="imgCount">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class=" nonloop-block-3 owl-carousel">
-                                <div class="" data-aos="" data-aos-delay="">
-                                    <a class="block-2-item" onclick="goDetailPhoto('.img-fluid1')">
-                                        <div class="item">
-                                            <div class="block-4 text-center">
-                                                <figure class="block-4-image image">
-                                                    <img src="" class="img-fluid0 img-fluid1">
-                                                </figure>
 
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class=" aos-init aos-animate" data-aos="fade" data-aos-delay="">
-                                    <a class="block-2-item" onclick="goDetailPhoto('.img-fluid2')">
-                                        <div class="item">
-                                            <div class="block-4 text-center">
-                                                <figure class="block-4-image image">
-                                                    <img src="" class="img-fluid0 img-fluid2">
-                                                </figure>
-
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class=" aos-init aos-animate" data-aos="fade" data-aos-delay="">
-                                    <a class="block-2-item" onclick="goDetailPhoto('.img-fluid3')">
-                                        <div class="item">
-                                            <div class="block-4 text-center">
-                                                <figure class="block-4-image image">
-                                                    <img src="" class="img-fluid0 img-fluid3">
-                                                </figure>
-
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class=" aos-init aos-animate" data-aos="fade" data-aos-delay="">
-                                    <a class="block-2-item" onclick="goDetailPhoto('.img-fluid4')">
-                                        <div class="item">
-                                            <div class="block-4 text-center">
-                                                <figure class="block-4-image image">
-                                                    <img src="" class="img-fluid0 img-fluid4">
-                                                </figure>
-
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class=" aos-init aos-animate" data-aos="fade" data-aos-delay="">
-                                    <a class="block-2-item" onclick="goDetailPhoto('.img-fluid4')">
-                                        <div class="item">
-                                            <div class="block-4 text-center">
-                                                <figure class="block-4-image image">
-                                                    <img src="" class="img-fluid0 img-fluid5">
-                                                </figure>
-
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                    <div class=" content auction_button_finish"
+                         style="display: none; justify-content: flex-start; cursor: pointer;">
+                        <span class=" margin-left-right-10 text-black">낙찰자 아이디: </span>
+                        <span id="bidId" class=" margin-left-right-10 text-black"></span>
                     </div>
+
                 </div>
             </div>
 
             <div class="row align-items-center"
-                 style="border-bottom: 1px solid #ddd;  margin:30px 0 10px 0; padding:30px 0 10px 0;">
-                <div class="col-12  order-1 order-md-1  text-left">
-                    <label for="prodContent">상세정보</label><span
-                        class="text-danger">*</span></div>
+                 style="border-bottom: 1px solid #ddd;">
                 <div class="col-12 col-md-12 order-2 order-md-2  text-left">
-                    <div class="p_content" style="border: 1px solid #ddd; height: 300px;">
+                    <div class="p_content" style=" min-height: 200px;">
                         <span id="prodContent" class="font-weight-normal"></span>
                     </div>
                 </div>
@@ -203,11 +222,72 @@
     <div th:replace="common::mobile(auction_list)"></div>
 
     <style>
+        @media screen and (max-width: 575px) {
+            .site-section {
+                padding: 0;
+            }
+
+            .bx-viewport {
+                width: 100%;
+                display: block;
+            !important:;
+                height: 400px;
+            !important;
+                min-height: 400px;
+            }
+
+            .bx-wrapper img {
+                width: 100%;
+                display: block;
+                height: 100%;
+                min-height: 400px;
+            !important;
+                border-radius: 1px;
+            }
+        }
+
+        @media screen and (min-width: 575px) {
+            .bx-viewport {
+                width: 100%;
+                display: block;
+                height: 100%;
+                min-height: 500px;
+            !important;
+            }
+
+            .bx-wrapper img {
+                width: 100%;
+                display: block;
+                height: 100%;
+                min-height: 500px;
+            !important;
+                border-radius: 1px;
+            }
+        }
+
+        .bx-wrapper {
+            margin-bottom: 0;
+        }
+
+        .bx-wrapper .bx-pager, .bx-wrapper .bx-controls-auto {
+            bottom: 5vh;
+        !important;
+
+        }
+
+        .bx-wrapper {
+            -moz-box-shadow: none;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            border: 5px solid #fff;
+            background: #fff;
+        }
+
         tr {
             color: black;
         }
 
-        .auctionTitle{
+        .auctionTitle {
             height: 30px;
             background: #a7a1f71c;
             color: black;
@@ -216,6 +296,7 @@
             text-align: center;
             font-weight: normal;
         }
+
         .auction_box {
             white-space: nowrap;
             overflow: scroll;
@@ -327,6 +408,9 @@
 <script src="../js/main.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
+<!--이미지슬라이드-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 <script>
     $('#loading').css('display', 'block');
 
@@ -336,11 +420,25 @@
         selectAuction();
     });
 
+    function doBxslider(props) {
+        $('.bxslider' + props).bxSlider({ // 클래스명 주의!
+            auto: false, // 자동으로 애니메이션 시작
+            speed: 500,  // 애니메이션 속도
+            pause: 5000,  // 애니메이션 유지 시간 (1000은 1초)
+            mode: 'horizontal', // 슬라이드 모드 ('fade', 'horizontal', 'vertical' 이 있음)
+            autoControls: true, // 시작 및 중지버튼 보여짐
+            pager: true, // 페이지 표시 보여짐
+            captions: true, // 이미지 위에 텍스트를 넣을 수 있음
+            infiniteLoop: false,
+            hideControlOnEnd: true,
+        });
+    }
+
     /*옥션 insert*/
     function insertAuction(startPrice) {
         var param = {
             startingBid: startPrice, //시작가
-            prodNo:searchParam('prodNo'), //상품번호
+            prodNo: searchParam('prodNo'), //상품번호
         }
         $.ajax({
             url: '/auction/create.do',
@@ -354,11 +452,11 @@
     }
 
     /*옥션 update*/
-    function updateAuction(mbrId , endBid) {
+    function updateAuction(mbrId, endBid) {
         var param = {
             endBid: endBid, //현재가
             mbrId: mbrId,  //입찰자
-            prodNo:searchParam('prodNo')//상품번호
+            prodNo: searchParam('prodNo')//상품번호
         }
         $.ajax({
             url: '/auction/update.do',
@@ -374,7 +472,7 @@
     /*옥션 select*/
     function selectAuction() {
         var param = {
-            prodNo:searchParam('prodNo')//상품번호
+            prodNo: searchParam('prodNo')//상품번호
         }
         $.ajax({
             url: '/auction/select.do',
@@ -382,18 +480,18 @@
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            console.log("@@auctionDetail",data.auctionDetail);
-            var year = data.auctionDetail.aucEndTime.substring(0,4);
-            var month = data.auctionDetail.aucEndTime.substring(6,7)-1;
-            var day = data.auctionDetail.aucEndTime.substring(8,10);
-            var hour = data.auctionDetail.aucEndTime.substring(11,13);
-            var minute = data.auctionDetail.aucEndTime.substring(14,16);
-            var second = data.auctionDetail.aucEndTime.substring(17,19);
+            console.log("@@auctionDetail", data.auctionDetail);
+            var year = data.auctionDetail.aucEndTime.substring(0, 4);
+            var month = data.auctionDetail.aucEndTime.substring(6, 7) - 1;
+            var day = data.auctionDetail.aucEndTime.substring(8, 10);
+            var hour = data.auctionDetail.aucEndTime.substring(11, 13);
+            var minute = data.auctionDetail.aucEndTime.substring(14, 16);
+            var second = data.auctionDetail.aucEndTime.substring(17, 19);
             var dateObj = new Date(year, month, day, hour, minute, second);
             dateObj.setDate(dateObj.getDate());
             countDownTimer('sample01', dateObj);
 
-            $('#currentPrice').text(data.auctionDetail.endBid);
+            $('#currentPrice').text(data.auctionDetail.startingBid);
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
         });
@@ -451,47 +549,10 @@
 
     }
 
-    /*삭제 여부 체크*/
-    function removeCheck() {
-
-        if (confirm("정말 삭제하시겠습니까??") == true) {    //확인
-            goRemove();
-        } else {   //취소
-            return false;
-        }
-    }
-
-    /*삭제*/
-    function goRemove() {
-
-        var param = {
-            prodNo: $('#query').val(),
-            selId: $('#p_id').val()
-        }
-
-        $.ajax({
-            url: '/product/delete',
-            data: param,
-            type: 'post',
-            dataType: 'json'
-        }).done(function (data) {
-            if (data.resultCode == 200) {
-                popup('알림메세지', '상품이 삭제되었습니다.');
-                location.href = '/member/myinfo'
-            } else {
-                popup('알림메세지', '삭제에 실패하였습니다. 관리자에게 문의하세요.');
-            }
-        }).fail(function (textStatus) {
-            console.log(textStatus);
-        });
-
-    }
-
-
     function drawPrdList(data) {
         if (typeof data.dataDetail !== 'undefined') {
             var imgPath = '';
-
+            var container = $('.bxslider');
             //이미지경로를 미리 만들어놓는다.
             imgPath = '/istatic/images/' + data.dataDetail.prodNo + '/1.jpg';
             //메인 이미지 html
@@ -500,7 +561,7 @@
             $('#selNmLogo').text(data.dataDetail.prodNm);
             $('#detailName').text(data.dataDetail.prodNm);
             $('#startPrice').text(data.dataDetail.prodPrc);
-            $('#priceInput').val(parseInt($('#currentPrice').text())+1000);
+            $('#priceInput').val(parseInt($('#currentPrice').text()) + 1000);
             $('#selId').text(data.dataDetail.selId);
             $('#detailView').text(data.dataDetail.prodView);
             if (data.dataDetail.selId == $('#p_id').val()) {
@@ -523,10 +584,14 @@
 
 
             var imgDetailPath = '';
+            $('.bxslider' + data.dataDetail.imgCount).css('display', 'block');
+            doBxslider(data.dataDetail.imgCount);
             for (var i = 1; i < data.dataDetail.imgCount + 1; i++) {
                 imgDetailPath = '/istatic/images/' + data.dataDetail.prodNo + '/' + i + '.jpg';
                 $('.img-fluid' + i).attr("src", imgDetailPath);
                 $('.img-fluid' + i).css("display", '');
+
+                $('.bxsliderImg' + i).attr("src", imgDetailPath);
             }
 
 
@@ -561,7 +626,7 @@
 
 
     function goDetailPhoto(i) {
-        var imgPath = $(i).attr("src");
+        var imgPath = $('.bxsliderImg' + i).attr("src");
         $('#img_modal').css('display', 'flex');
         $('#img_modal').children('img').attr("src", imgPath);
 
@@ -572,7 +637,6 @@
     }
 
 
-
     $('#loading').css('display', 'block');
     $(window).on('load', function () {
         $('#loading').css('display', 'none')
@@ -580,7 +644,7 @@
 
 
     //남은시간 계산
-    const countDownTimer = function (id, date ) {
+    const countDownTimer = function (id, date) {
         var _vDate = new Date(date);
         var _second = 1000;
         var _minute = _second * 60;
@@ -593,7 +657,44 @@
             var distDt = _vDate - now;
             if (distDt < 0) {
                 clearInterval(timer);
-                document.getElementById(id).textContent = '해당 이벤트가 종료 되었습니다!';
+                document.getElementById(id).textContent = '경매가 종료되었습니다!';
+                $('.auction_button').css('display', 'none');
+                //경매 종료시 판매자 버튼 활성화
+                var param = {
+                    prodNo: $('#query').val(),
+                }
+                $.ajax({
+                    url: '/product/detail.do',
+                    data: param,
+                    type: 'post',
+                    dataType: 'json'
+                }).done(function (data) {
+                    if (data.dataDetail.selId == $('#login_id').text()) {
+                        $('.auction_button_finish_sender').css('display', 'flex');
+                    }
+                }).fail(function (data, textStatus, errorThrown) {
+                    console.log(textStatus);
+                });
+                //경매 종료시 구매자 버튼 활성화
+                var param = {
+                    prodNo: searchParam('prodNo')//상품번호
+                }
+                $.ajax({
+                    url: '/auction/select.do',
+                    data: param,
+                    type: 'post',
+                    dataType: 'json'
+                }).done(function (data) {
+                    console.log("@@auctionDetail", data.auctionDetail);
+                    if ($('#login_id').text() == data.auctionDetail.mbrId) {
+                        $('.auction_button_finish_buyer').css('display', 'flex');
+                    }
+                    $('.auction_button_finish').css('display', 'flex');
+                    $('#bidId').text(data.auctionDetail.mbrId);
+                }).fail(function (data, textStatus, errorThrown) {
+                    console.log(textStatus);
+                });
+                $('.auction_text').text('경매가 종료되었습니다.');
                 return;
             }
             var days = Math.floor(distDt / _day);
@@ -629,7 +730,7 @@
         client.connect({}, function () {
             client.subscribe('/subscribe/chat/room/first' + prodNo, function (chat) {
                 var content = JSON.parse(chat.body);
-                chatBox.append('<li class="text-black active-color-purple text-right">' + content.mbrId + '님이 입장하였습니다.');
+                chatBox.append('<li class="text-black active-color-purple text-right auction_text">' + content.mbrId + '님이 입장하였습니다.');
             });
             $('#priceInput').change(function () {
                 // 시작시
@@ -652,7 +753,7 @@
 
         });
 
-        function getSendSubscribe(){
+        function getSendSubscribe() {
             // 3. send(path, header, message)로 메시지를 보낼 수 있다.-->
             client.send('/publish/chat/join', {}, JSON.stringify({prodNo: prodNo, mbrId: mbrId}));
             // 4. subscribe(path, callback)로 메시지를 받을 수 있다. callback 첫번째 파라미터의 body로 메시지의 내용이 들어온다.-->
@@ -683,10 +784,9 @@
 
 
         sendBtn.click(function () {
-            if($('#p_id').val() == $('#selId').text())
-            {
-                popup('알림메세지','판매자는 입찰할 수 없습니다.');
-            }else {
+            if ($('#p_id').val() == $('#selId').text()) {
+                popup('알림메세지', '판매자는 입찰할 수 없습니다.');
+            } else {
                 var message = messageInput.val();
                 client.send('/publish/chat/message', {}, JSON.stringify({
                     prodNo: prodNo,
@@ -699,11 +799,42 @@
         });
     });
 
+    var newName, n = 0;
+
+    //팝업 창 제목 만들기 함수(다중 팝업을 위한..)
+    function newWindow(value) {
+        n = n + 1;
+        newName = value + n;
+    }
+
+    //채팅 버튼 클릭시 채팅방 입장 -> 낙찰자 화면
+    function goChatToSenderId() {
+        prodNo = searchParam('prodNo');
+        var top = Math.random() * 100 + 100;
+        var left = Math.random() * 100 + 600;
+        newWindow("MyWindow");
+        window.open('/member/chatting/chat?prodNo=' + prodNo + '&sendId=' + $('#bidId').text() + '&recipientId=' + $('#selId').text(), newName,
+            'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=' + top + ',left=' + left + '');
+
+    }
+
+    //채팅 버튼 클릭시 채팅방 입장 -> 판매자 화면
+    function goChatToBidId() {
+        prodNo = searchParam('prodNo');
+        var top = Math.random() * 100 + 100;
+        var left = Math.random() * 100 + 600;
+        newWindow("MyWindow");
+        window.open('/member/chatting/chat?prodNo=' + prodNo + '&sendId=' + $('#selId').text() + '&recipientId=' + $('#bidId').text(), newName,
+            'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=' + top + ',left=' + left + '');
+
+    }
+
 
 </script>
 
 </body>
 </html>
+
 
 
 

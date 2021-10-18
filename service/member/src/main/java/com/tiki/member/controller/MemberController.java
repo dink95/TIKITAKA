@@ -1,5 +1,6 @@
 package com.tiki.member.controller;
 
+import com.tiki.member.configuration.CryptAES256;
 import com.tiki.member.domain.MemberDTO;
 import com.tiki.member.service.MemberService;
 import io.jsonwebtoken.Jwts;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.resource.HttpResource;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Member;
 import java.util.Date;
@@ -161,7 +163,7 @@ public class MemberController {
      * @return
      */
     @PostMapping("/mbr/unAuth/login")
-    public String loginChecking(@RequestBody MemberDTO memberDTO, HttpServletResponse response) {
+    public String loginChecking(@RequestBody MemberDTO memberDTO, HttpServletResponse response) throws Exception {
         MemberDTO dto = memberService.selectMemberDetail(memberDTO.getMbrId());
         if (dto != null && passwordEncoder.matches( memberDTO.getMbrPwd(),dto.getMbrPwd())) {
             String mbrId= dto.getMbrId();
@@ -173,10 +175,14 @@ public class MemberController {
                     .signWith(SignatureAlgorithm.HS512,"tiki")
                     .compact();
 
-            response.addHeader("token", token);
-            response.addHeader("userId",mbrId);
 
-            return dto.getMbrId();
+//            Cookie cookie = new Cookie("token",token);
+//            cookie.setSecure(true);
+//            cookie.setHttpOnly(true);
+
+            String result = CryptAES256.encryptAES256(token,mbrId);
+
+            return result;
         } else {
             return null;
         }
