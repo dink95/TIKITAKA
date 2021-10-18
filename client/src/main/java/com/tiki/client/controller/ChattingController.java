@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.WebUtils;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,13 +32,14 @@ public class ChattingController {
 
     @PostMapping("/chat/create")  /*채팅 생성*/
     @ResponseBody
-    public Map<String, Object> createChat(ChatDTO chatDTO) {
-
+    public Map<String, Object> createChat(ChatDTO chatDTO, HttpServletRequest request) {
+        Cookie idCookie = WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
         Map<String, Object> resultMap = new HashMap<>();
         int result = 0;
         System.out.println(chatDTO);
         try {
-            result = chatService.createChat(chatDTO);
+            result = chatService.createChat(chatDTO,idCookie.getValue(),tokenCookie.getValue());
             if (result > 0) {
                 resultMap.put("resultCode", 200);
             } else {
@@ -51,12 +55,15 @@ public class ChattingController {
     @ResponseBody
     public Map<String, Object> getRoomNo(@RequestParam(value = "prodNo") int prodNo,
                                          @RequestParam(value = "sendId") String sendId,
-                                         @RequestParam(value = "recipientId") String recipientId) {
+                                         @RequestParam(value = "recipientId") String recipientId,
+                                         HttpServletRequest request) {
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
         Map<String, Object> resultMap = new HashMap<>();
         int result = 0;
 
         try {
-            result = chatService.getRoomNo(prodNo, sendId, recipientId);
+            result = chatService.getRoomNo(prodNo, sendId, recipientId, idCookie.getValue(),tokenCookie.getValue());
             resultMap.put("roomNo", result);
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,12 +75,15 @@ public class ChattingController {
     @RequestMapping("/chat/list")  /*채팅 리스트 보기 */
     @ResponseBody
     public Map<String, Object> chatList(@RequestParam(value = "prodNo") int prodNo,
-                                        @RequestParam(value = "roomNo") int roomNo) {
+                                        @RequestParam(value = "roomNo") int roomNo,
+                                        HttpServletRequest request) {
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
         Map<String, Object> resultMap = new HashMap<>();
         List<Object> list = null;
 
         try {
-            list = chatService.chatList(prodNo, roomNo);
+            list = chatService.chatList(prodNo, roomNo,idCookie.getValue(),tokenCookie.getValue());
             resultMap.put("chatList", list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -86,11 +96,14 @@ public class ChattingController {
     @ResponseBody
     public int updateViewChat(@RequestParam(value="prodNo") int prodNo,
                               @RequestParam(value="roomNo") int roomNo,
-                              @RequestParam(value="loginId") String loginId) {
+                              @RequestParam(value="loginId") String loginId,
+                              HttpServletRequest request) {
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
         HashMap<String,Object> resultMap = new HashMap<>();
         int result = 0;
         try {
-            result = chatService.updateViewChat(prodNo,roomNo,loginId);
+            result = chatService.updateViewChat(prodNo,roomNo,loginId,idCookie.getValue(),tokenCookie.getValue());
         } catch (Exception e) {
 
         }
@@ -109,11 +122,14 @@ public class ChattingController {
 
     @RequestMapping("/chat/list/id")  /*채팅방 목록 보기 */
     @ResponseBody
-    public Map<String, Object> chatListById(@RequestParam(value = "sendId") String sendId) {
+    public Map<String, Object> chatListById(@RequestParam(value = "sendId") String sendId,
+                                            HttpServletRequest request) {
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
         Map<String, Object> resultMap = new HashMap<>();
         List<Object> list = null;
         try {
-            list = chatService.chatListById(sendId);
+            list = chatService.chatListById(sendId,idCookie.getValue(),tokenCookie.getValue());
             resultMap.put("chatList", list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -127,11 +143,14 @@ public class ChattingController {
     @ResponseBody
     public Map<String, Object> selectReadCount(@RequestParam(value="prodNo") int prodNo,
                                                @RequestParam(value="roomNo") int roomNo,
-                                               @RequestParam(value="loginId") String loginId) {
+                                               @RequestParam(value="loginId") String loginId,
+                                               HttpServletRequest request) {
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
         HashMap<String,Object> resultMap = new HashMap<>();
         int readCount = 0;
         try {
-            readCount = chatService.selectReadCount(prodNo,roomNo,loginId);
+            readCount = chatService.selectReadCount(prodNo,roomNo,loginId,idCookie.getValue(),tokenCookie.getValue());
             resultMap.put("readCount",readCount);
         } catch (Exception e) {
 
@@ -141,11 +160,14 @@ public class ChattingController {
 
     @RequestMapping("/chat/readAllCount")  /*안읽은 메세지 개수 */
     @ResponseBody
-    public Map<String, Object> selectAllReadCount(@RequestParam(value="loginId") String loginId) {
+    public Map<String, Object> selectAllReadCount(@RequestParam(value="loginId") String loginId,
+                                                  HttpServletRequest request) {
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
         HashMap<String,Object> resultMap = new HashMap<>();
         int readCount = 0;
         try {
-            readCount = chatService.selectAllReadCount(loginId);
+            readCount = chatService.selectAllReadCount(loginId,idCookie.getValue(),tokenCookie.getValue());
             resultMap.put("readAllCount",readCount);
         } catch (Exception e) {
 
@@ -157,11 +179,14 @@ public class ChattingController {
     @ResponseBody
     public Map<String, Object> selectSendCount(@RequestParam(value="prodNo") int prodNo,
                                                @RequestParam(value="roomNo") int roomNo,
-                                               @RequestParam(value="loginId") String loginId) {
+                                               @RequestParam(value="loginId") String loginId,
+                                               HttpServletRequest request) {
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
         HashMap<String,Object> resultMap = new HashMap<>();
         int sendCount = 0;
         try {
-            sendCount = chatService.selectSendCount(prodNo,roomNo,loginId);
+            sendCount = chatService.selectSendCount(prodNo,roomNo,loginId,idCookie.getValue(),tokenCookie.getValue());
             resultMap.put("sendCount",sendCount);
         } catch (Exception e) {
 

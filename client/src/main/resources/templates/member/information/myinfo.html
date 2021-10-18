@@ -61,6 +61,9 @@
                         <span id="p_addr"></span>
                     </div>
                     <div>
+                        <button id="infoLogoutBtn">
+                            <a href="/logout">로그아웃</a>
+                        </button>
                         <button onclick="goUpdateInfo()">
                             개인정보수정
                         </button>
@@ -102,14 +105,24 @@
     </div>
     <div class="container">
         <div class="prodContainer">
-            <div class="prod myProd" onclick="finishCheck(0)">
+            <div class="prod myProd" onclick="finishCheck('myProd')">
                 판매중
             </div>
-            <div class="prod finishProd" onclick="finishCheck(1)">
+            <div class="prod finishProd" onclick="finishCheck('finishProd')">
                 판매완료
             </div>
+            <div class="prod buyProd" onclick="finishCheck('buyProd')">
+                구매상품
+            </div>
+            <div class="prod auctionProd" onclick="finishCheck('auctionProd')">
+                경매중
+            </div>
+            <div class="prod bidProd" onclick="finishCheck('bidProd')">
+                입찰중
+            </div>
         </div>
-        <input id="finishCheck" type="hidden" value="0">
+        <!--      판매중, 판매완료, 구매상품, 경매중, 입찰중 상품 조회-->
+        <input id="finishCheck" type="hidden" value="myProd">
         <div class="gridContainer" style="">
 
         </div>
@@ -285,10 +298,9 @@
         border-bottom: 1px solid black;
         color: #000;
     }
-    .finishProd{
+    .finishProd,.buyProd,.auctionProd,.bidProd{
         color: #a09e9e;
         font-weight: normal;
-
     }
     .prod {
         margin-bottom: 10px;
@@ -328,7 +340,11 @@
         /*    margin-left: 0px;*/
         /*}*/
         .myinfoMainNav > div:nth-child(3) > button {
+
+            padding: 5px 6%;
+
             padding: 5px 30px;
+
             margin: 0 2px;
         }
         .myinfoContainer{
@@ -362,27 +378,49 @@
         mobileSiteTop('내정보');
     });
 
+    <!--      판매중, 판매완료, 구매상품, 경매중, 입찰중 상품 조회-->
     function finishCheck(props) {
         $('#finishCheck').val(props);
         getIdQueryList();
-        if ($('#finishCheck').val() == 0) {
-            $('.myProd').css('border-bottom', '1px solid black');
-            $('.myProd').css('color', 'black');
-            $('.myProd').css('font-weight','normal');
-            $('.finishProd').css('border-bottom', 'none');
-            $('.finishProd').css('font-weight','lighter');
-        } else {
-            $('.finishProd').css('border-bottom', '1px solid black');
-            $('.finishProd').css('color', 'black');
-            $('.finishProd').css('font-weight','normal');
-            $('.myProd').css('border-bottom', 'none');
-            $('.myProd').css('font-weight','lighter');
-        }
+        $('.'+props).css('border-bottom', '1px solid black');
+        $('.'+props).css('color', 'black');
+        $('.'+props).css('font-weight','normal');
+        $('.prod').not('.'+props).css('border-bottom', 'none');
+        $('.prod').not('.'+props).css('color','#a09e9e');
+        // //판매중
+        // if ($('#finishCheck').val() == 0) {
+        //     $('.myProd').css('border-bottom', '1px solid black');
+        //     $('.myProd').css('color', 'black');
+        //     $('.myProd').css('font-weight','normal');
+        //     $('.prod').not('.myProd').css('border-bottom', 'none');
+        //     $('.prod').not('.myProd').css('color','#a09e9e');
+        // }
+        // //판매완료
+        // else if($('#finishCheck').val() == 1){
+        //     $('.finishProd').css('border-bottom', '1px solid black');
+        //     $('.finishProd').css('color', 'black');
+        //     $('.finishProd').css('font-weight','normal');
+        //     $('.prod').not('.finishProd').css('border-bottom', 'none');
+        //     $('.prod').not('.finishProd').css('color','#a09e9e');
+        // }
+        // //구매상품
+        // else if($('#finishCheck').val() == 2){
+        //     $('.buyProd').css('border-bottom', '1px solid black');
+        //     $('.buyProd').css('color', 'black');
+        //     $('.buyProd').css('font-weight','normal');
+        //     $('.prod').not('.buyProd').css('border-bottom', 'none');
+        //     $('.prod').not('.buyProd').css('color','#a09e9e');
+        // }
     }
 
     function getIdQueryList() {
 
+        //판매중 상품 조회
+        if($('#finishCheck').val() == 'myProd') {
+
+
         if($('#finishCheck').val() == 0) {
+
             param = {
                 selId: $('#p_id').text(),
             }
@@ -397,7 +435,9 @@
             }).fail(function (data, textStatus, errorThrown) {
                 console.log(textStatus);
             });
-        }else{
+        }
+        //판매완로 상품 조회
+        else if($('#finishCheck').val() == 'finishProd'){
             param = {
                 selId: $('#p_id').text(),
             }
@@ -412,17 +452,25 @@
             }).fail(function (data, textStatus, errorThrown) {
                 console.log(textStatus);
             });
-
+        }
+        //구매완료 상품 조회
+        else if($('#finishCheck').val() == 'buyProd'){
+            alert('구매완료 상품 조회');
+        }
+        //경매중 상품 조회
+        else if($('#finishCheck').val() == 'auctionProd'){
+            alert('경매중 상품 조회');
+        }
+        //입찰중 상품 조회
+        else if($('#finishCheck').val() == 'bidProd'){
+            alert('입찰중 상품 조회');
         }
     }
 
     function getMbrInfo() {
-        param = {
-            userId: $('#p_id').text(),
-        }
         $.ajax({
             url: '/member/detail',
-            data: param,
+            data: null,
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
@@ -430,7 +478,6 @@
                 $('#emailCheck').text('이메일 인증 완료');
                 $("#emailCheck").attr('onclick', '').unbind('click');
                 $("#emailCheck").css('cursor', 'initial');
-
             }
             updateGrade(data.memberDetail.mbrPoints);
             $('#p_point').text(data.memberDetail.mbrPoints);
@@ -563,3 +610,4 @@
 
 </body>
 </html>
+

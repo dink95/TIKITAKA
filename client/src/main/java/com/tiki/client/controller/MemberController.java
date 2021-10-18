@@ -1,13 +1,21 @@
 package com.tiki.client.controller;
 
+import com.tiki.client.config.CryptAES256;
 import com.tiki.client.domain.MemberDTO;
 import com.tiki.client.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.WebUtils;
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,42 +40,56 @@ public class MemberController {
 
     @PostMapping("/login/process") /*로그인*/
     @ResponseBody
-
     public Map<String, Object> loginAccess(@RequestParam(value = "userId") String userId,
                                            @RequestParam(value = "userPw") String userPw,
-                                           HttpServletRequest request) {
+                                           HttpServletResponse response
+                                          ) throws Exception {
         MemberDTO memberDTO = new MemberDTO();
 
         Map<String, Object> resultMap = new HashMap<>();
-
         memberDTO.setMbrId(userId);
         memberDTO.setMbrPwd(userPw);
 
-        String mbrId = memberService.login(memberDTO);
 
-        try {
-            if (mbrId != null) {
-                request.getSession().setAttribute("mbrId", mbrId );
-                resultMap.put("resultCode", 200);
-                resultMap.put("resultMsg", "OK");
-            } else {
-                resultMap.put("resultCode", 400);
-                resultMap.put("resultMsg", "아이디 또는 비밀번호가 일치하지 않습니다");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            resultMap.put("resultCode", 500);
-            resultMap.put("resultMsg", e.getMessage());
+        String token = memberService.login(memberDTO);
+
+        if(token==null){
+            resultMap.put("resultCode", 400);
+
+        }else{
+            resultMap.put("resultCode", 200);
+            String mbrId= userId;
+            String jwt = CryptAES256.decryptAES256(token,mbrId);
+            Cookie cookie = new Cookie("token",jwt);
+            cookie.setHttpOnly(true);
+            cookie.setSecure(true);
+            Cookie id = new Cookie("mbrId",mbrId);
+            cookie.setPath("/");
+            id.setPath("/");
+            response.addCookie(id);
+            response.addCookie(cookie);
+
+//            response.addHeader("token",jwt);
         }
         return resultMap;
     }
 
     @GetMapping(value = "/logout") /*로그아웃*/
-    public ModelAndView logout(HttpServletRequest request) {
+    public ModelAndView logout(HttpServletRequest request,
+                               HttpServletResponse response) {
         ModelAndView view = new ModelAndView();
 
-        if (request.getSession().getAttribute("mbrId") != null) {
-            request.getSession().removeAttribute("mbrId");
+
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        if(idCookie != null){ // 쿠키가 한개라도 있으면 실행
+            idCookie.setMaxAge(0);
+                response.addCookie(idCookie); // 응답 헤더에 추가
+        }
+
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
+        if(tokenCookie != null){ // 쿠키가 한개라도 있으면 실행
+            tokenCookie.setMaxAge(0);
+            response.addCookie(tokenCookie); // 응답 헤더에 추가
         }
         view.setViewName("redirect:/");
         return view;
@@ -75,9 +97,14 @@ public class MemberController {
 
     @RequestMapping("/member/detail") /*멤버 정보 조회*/
     @ResponseBody
-    public Map<String, Object> memberDetail(@RequestParam(value = "userId") String userId) {
+    public Map<String, Object> memberDetail(HttpServletRequest request) {
+
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
+
         Map<String, Object> resultMap = new HashMap<>();
-        MemberDTO memberDTO = memberService.Detail(userId);
+        MemberDTO memberDTO = memberService.Detail(idCookie.getValue(),tokenCookie.getValue());
+
         try {
             resultMap.put("memberDetail", memberDTO);
         } catch (Exception e) {
@@ -300,7 +327,7 @@ public class MemberController {
     @RequestMapping("/login/update")  /*비밀번호 재설정*/
     @ResponseBody
     public Map<String, Object> updatePwd(@RequestParam(value = "userId") String userId,
-                                         @RequestParam(value = "userPwd") String userPwd) {
+                                        @RequestParam(value = "userPwd") String userPwd) {
 
         MemberDTO memberDTO = new MemberDTO();
 
@@ -332,7 +359,8 @@ public class MemberController {
     }
 
     @GetMapping(value = "/member/myinfo") /*내정보 페이지*/
-    public ModelAndView myinfo() {
+    public ModelAndView myinfo(HttpServletResponse response,
+                               HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("member/information/myinfo");
         return view;
@@ -405,18 +433,16 @@ public class MemberController {
 
     @RequestMapping("/info/delete")  /*회원탈퇴*/
     @ResponseBody
-    public Map<String, Object> deleteInfo(@RequestParam(value = "userId") String userId) {
+    public Map<String, Object> deleteInfo(HttpServletRequest request) {
 
-        MemberDTO memberDTO = new MemberDTO();
-
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
         Map<String, Object> resultMap = new HashMap<>();
-        memberDTO.setMbrId(userId);
-
         int result = 0;
 
         try {
 
-            result = memberService.deleteMember(userId);
+            result = memberService.deleteMember(idCookie.getValue(),tokenCookie.getValue());
 
             if (result > 0) {
                 resultMap.put("resultCode", 200);
@@ -444,11 +470,13 @@ public class MemberController {
 
     @RequestMapping("/info/certify") // 이메일 인증
     @ResponseBody
-    public Map<String, Object> certifyEmail(@RequestParam(value = "id") String id) {
+    public Map<String, Object> certifyEmail(HttpServletRequest request) {
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie =WebUtils.getCookie(request, "token");
         Map<String, Object> resultMap = new HashMap<>();
         String emailKey;
         try {
-            emailKey = memberService.certifyEmail(id);
+            emailKey = memberService.certifyEmail(idCookie.getValue(),tokenCookie.getValue());
             resultMap.put("resultCode", 200);
             resultMap.put("resultMsg", emailKey);
 
@@ -495,20 +523,21 @@ public class MemberController {
 
     @RequestMapping("/member/update/point") //점수 업데이트
     @ResponseBody
-    public Map<String,Object> updatePoint(@RequestParam(value = "userId") String userId){
+    public Map<String,Object> updatePoint(HttpServletRequest request){
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie = WebUtils.getCookie(request, "token");
         MemberDTO memberDTO = new MemberDTO();
         Map<String, Object> resultMap = new HashMap<>();
-        memberDTO.setMbrId(userId);
+        memberDTO.setMbrId(idCookie.getValue());
 
         int result = 0;
 
         try {
 
-            result = memberService.updateMemberPoints(memberDTO);
+            result = memberService.updateMemberPoints(memberDTO,tokenCookie.getValue());
 
             if (result > 0) {
                 resultMap.put("resultCode", 200);
-                resultMap.put("resultMsg","점수 업데이트");
             } else {
                 resultMap.put("resultCode", 400);
                 resultMap.put("resultMsg","점수 업데이트 400");
@@ -524,23 +553,24 @@ public class MemberController {
 
     @RequestMapping("/member/update/grade") //등급 업데이트
     @ResponseBody
-    public Map<String,Object> updateGrade(@RequestParam(value = "userId") String userId,
-                                            @RequestParam(value = "userPoint") int userPoint){
+    public Map<String,Object> updateGrade(@RequestParam(value = "userPoint") int userPoint,
+                                          HttpServletRequest request){
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
+        Cookie tokenCookie = WebUtils.getCookie(request, "token");
         MemberDTO memberDTO = new MemberDTO();
 
         Map<String, Object> resultMap = new HashMap<>();
-        memberDTO.setMbrId(userId);
+        memberDTO.setMbrId(idCookie.getValue());
         memberDTO.setMbrPoints(userPoint);
 
         int result = 0;
 
         try {
 
-            result = memberService.updateMemberGrade(memberDTO);
+            result = memberService.updateMemberGrade(memberDTO,tokenCookie.getValue());
 
             if (result > 0) {
                 resultMap.put("resultCode", 200);
-                resultMap.put("resultMsg","등급 업데이트");
             } else {
                 resultMap.put("resultCode", 400);
                 resultMap.put("resultMsg","등급 업데이트 400");

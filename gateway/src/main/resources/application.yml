@@ -29,44 +29,44 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
         - id: manager-service-Auth
-            uri: http://localhost:8081/
-            predicates:
-              - Path=/man/Auth/**
-            filters:
-              - RemoveRequestHeader=Cookie
-              - AuthorizationHeaderFilter
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/man/Auth/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - AuthorizationHeaderFilter
         - id: manager-service-unAuth
-            uri: http://localhost:8081/
-            predicates:
-              - Path=/man/unAuth/**
-            filters:
-              - RemoveRequestHeader=Cookie
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/man/unAuth/**
+          filters:
+             - RemoveRequestHeader=Cookie
         - id: product-service-auth
-            uri: http://localhost:8082/
-            predicates:
-              - Path=/prod/**
-            filters:
-              - RemoveRequestHeader=Cookie
-              - AuthorizationHeaderFilter
+          uri: http://localhost:8082/
+          predicates:
+            - Path=/prod/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - AuthorizationHeaderFilter
         - id: product-service-unauth
-            uri: http://localhost:8082/
-            predicates:
-              - Path=/prd/**
-            filters:
-              - RemoveRequestHeader=Cookie
+          uri: http://localhost:8082/
+          predicates:
+             - Path=/prd/**
+          filters:
+            - RemoveRequestHeader=Cookie
         - id: product-service-chat
-            uri: http://localhost:8082/
-            predicates:
-              - Path=/prd/**
-            filters:
-              - RemoveRequestHeader=Cookie
-              - AuthorizationHeaderFilter
+          uri: http://localhost:8082/
+          predicates:
+            - Path=/chat/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - AuthorizationHeaderFilter
         - id: category-service
-            uri: http://localhost:8082/
-            predicates:
-              - Path=/cat/**
-            filters:
-              - RemoveRequestHeader=Cookie
+          uri: http://localhost:8082/
+          predicates:
+            - Path=/cat/**
+          filters:
+            - RemoveRequestHeader=Cookie
         - id: complain-service
           uri: http://localhost:8084/
           predicates:
@@ -75,12 +75,12 @@ spring:
             - RemoveRequestHeader=Cookie
             - AuthorizationHeaderFilter
         - id: blackList-service
-            uri: http://localhost:8084/
-            predicates:
-              - Path=/black/**
-            filters:
-              - RemoveRequestHeader=Cookie
-              - AuthorizationHeaderFilter
+          uri: http://localhost:8084/
+          predicates:
+            - Path=/black/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - AuthorizationHeaderFilter
 
 
 
