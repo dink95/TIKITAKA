@@ -70,8 +70,6 @@ public class MemberController {
             id.setPath("/");
             response.addCookie(id);
             response.addCookie(cookie);
-
-//            response.addHeader("token",jwt);
         }
         return resultMap;
     }
@@ -85,7 +83,7 @@ public class MemberController {
         Cookie idCookie =WebUtils.getCookie(request, "mbrId");
         if(idCookie != null){ // 쿠키가 한개라도 있으면 실행
             idCookie.setMaxAge(0);
-                response.addCookie(idCookie); // 응답 헤더에 추가
+            response.addCookie(idCookie); // 응답 헤더에 추가
         }
 
         Cookie tokenCookie =WebUtils.getCookie(request, "token");
