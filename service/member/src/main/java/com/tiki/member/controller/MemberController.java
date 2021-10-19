@@ -176,10 +176,6 @@ public class MemberController {
                     .compact();
 
 
-//            Cookie cookie = new Cookie("token",token);
-//            cookie.setSecure(true);
-//            cookie.setHttpOnly(true);
-
             String result = CryptAES256.encryptAES256(token,mbrId);
 
             return result;

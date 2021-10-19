@@ -39,11 +39,14 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
             }
 
             String authorizationHeader = request.getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
+            String mbrId =  request.getHeaders().get(HttpHeaders.AUTHORIZATION).get(1);
 
             String jwt = authorizationHeader.replace("Bearer ", "");
-            log.info("{}",jwt);
 
-            if (!isJwtValid(jwt)) {
+            String token = isJwtValid(jwt);
+
+            //id와 디코드한 토큰의 값은 같아야 한다.
+            if (token==null||(token!=mbrId)) {
                 return onError(exchange, "JWT token is not valid", HttpStatus.UNAUTHORIZED);
             }
 
@@ -59,9 +62,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
             return response.setComplete();
         }
 
-        private boolean isJwtValid(String jwt) {
-            boolean returnValue = true;
-
+        private String isJwtValid(String jwt) {
 
             String subject = null;
 
@@ -69,17 +70,16 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
                 subject = Jwts.parser().setSigningKey("tiki")
                         .parseClaimsJws(jwt).getBody()
                         .getSubject();
-                //log.info("{}",subject);
 
             } catch (Exception ex) {
-                returnValue = false;
+                subject = null;
             }
 
             if (subject == null || subject.isEmpty()) {
-                returnValue = false;
+                subject = null;
             }
 
-            return returnValue;
+            return subject;
         }
 
 
