@@ -1707,7 +1707,7 @@ figure > img {
 
 .mobile_nav {
   width: 100%;
-  position: fixed;
+  position: sticky;
   bottom: 0;
   border-top: 1px solid #dddddd5e;
   z-index: 2000;
@@ -2060,9 +2060,8 @@ figure > img {
   }
 }
 /* 모바일 수평 스크롤 금지 */
-html, body {
-  max-width: 100%;
-  overflow-x: hidden;
+.container {
+  /*overflow-x: hidden;*/
 }
 @media screen and (max-width: 575px) {
   .pageName{
