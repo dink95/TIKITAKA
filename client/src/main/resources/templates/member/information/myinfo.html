@@ -383,30 +383,6 @@
         $('.'+props).css('font-weight','normal');
         $('.prod').not('.'+props).css('border-bottom', 'none');
         $('.prod').not('.'+props).css('color','#a09e9e');
-        // //판매중
-        // if ($('#finishCheck').val() == 0) {
-        //     $('.myProd').css('border-bottom', '1px solid black');
-        //     $('.myProd').css('color', 'black');
-        //     $('.myProd').css('font-weight','normal');
-        //     $('.prod').not('.myProd').css('border-bottom', 'none');
-        //     $('.prod').not('.myProd').css('color','#a09e9e');
-        // }
-        // //판매완료
-        // else if($('#finishCheck').val() == 1){
-        //     $('.finishProd').css('border-bottom', '1px solid black');
-        //     $('.finishProd').css('color', 'black');
-        //     $('.finishProd').css('font-weight','normal');
-        //     $('.prod').not('.finishProd').css('border-bottom', 'none');
-        //     $('.prod').not('.finishProd').css('color','#a09e9e');
-        // }
-        // //구매상품
-        // else if($('#finishCheck').val() == 2){
-        //     $('.buyProd').css('border-bottom', '1px solid black');
-        //     $('.buyProd').css('color', 'black');
-        //     $('.buyProd').css('font-weight','normal');
-        //     $('.prod').not('.buyProd').css('border-bottom', 'none');
-        //     $('.prod').not('.buyProd').css('color','#a09e9e');
-        // }
     }
 
     function getIdQueryList() {
@@ -446,7 +422,20 @@
         }
         //구매완료 상품 조회
         else if($('#finishCheck').val() == 'buyProd'){
-            alert('구매완료 상품 조회');
+            param = {
+                buyerId: $('#p_id').text(),
+            }
+            $.ajax({
+                url: '/buyList/all',
+                data: param,
+                type: 'post',
+                dataType: 'json'
+            }).done(function (data) {
+                drawPrdList2(data);
+
+            }).fail(function (data, textStatus, errorThrown) {
+                console.log(textStatus);
+            });
         }
         //경매중 상품 조회
         else if($('#finishCheck').val() == 'auctionProd'){
@@ -508,49 +497,103 @@
 
     function drawPrdList(data) {
 
-        console.log("@@product data", data);
+            if (typeof data.dataQueryList !== 'undefined' && data.dataQueryList.length > 0) {
+                var container = $('.gridContainer');
+                container.empty();
 
+                $.each(data.dataQueryList, function (index, obj) {
+                    $('#objCatNo').val(obj.catNo); //카테고리 상품 디테일 -> 카테고리 번호 저장
+                    //매번 컨텐츠가 달라야하니 초기화
+                    var contents = '';
+                    var wday = timeForToday(obj.wday);
+                    //이미지경로를 미리 만들어놓는다.
+                    var imgPath = '/istatic/images/' + obj.prodNo + '/1.jpg';
+
+                    //제품 html
+                    contents += '<div class="gridItem">';
+                    contents += '    <div class="item">';
+                    contents += '       <div class="block-4 text-center">';
+                    contents += '          <a href="#" onclick="goDetail(' + obj.prodNo + ')">';
+                    contents += '               <figure class="block-4-image" >';
+                    contents += '                    <img src="' + imgPath + '"  alt="Image placeholder"  class="img-fluid">';
+                    contents += '                </figure>';
+                    contents += '                <div class="block-4-text">';
+                    contents += '                    <h3 class="ItemName"><a href="#"  onclick="goDetail(' + obj.prodNo + ')">' + textLengthOverCut(obj.prodNm, 11, '...') + ' </a></h3>';
+                    contents += '                    <div class=priceContent>';
+                    contents += '                    <p class="text-primary font-weight-bold">' + obj.prodPrc + '원</p>';
+                    contents += '                    <span class="font-weight-normal">' + wday + '</span>';
+                    contents += '                    </div>';
+                    contents += '                </div>';
+                    contents += '            </a>';
+                    contents += '        </div>';
+                    contents += '    </div>';
+                    contents += '</div>';
+
+                    //그리드에 삽입
+                    container.append(contents);
+                })
+
+            } else {
+                $('.gridContainer').empty();
+            }
+
+    }
+
+    function drawPrdList2(data) {
+        var container = $('.gridContainer');
+        container.empty();
         if (typeof data.dataQueryList !== 'undefined' && data.dataQueryList.length > 0) {
-            var container = $('.gridContainer');
-            container.empty();
-            var contents = '';
-            var imgPath = '';
 
+            console.log("@DDD",data.dataQueryList);
             $.each(data.dataQueryList, function (index, obj) {
-                $('#objCatNo').val(obj.catNo); //카테고리 상품 디테일 -> 카테고리 번호 저장
-                //매번 컨텐츠가 달라야하니 초기화
-                contents = '';
-                var wday = timeForToday(obj.wday);
-                //이미지경로를 미리 만들어놓는다.
-                imgPath = '/istatic/images/' + obj.prodNo + '/1.jpg';
+                /*정보*/
+                var contents= ' ';
+                param={
+                    prodNo:obj.prodNo
+                }
+                $.ajax({
+                    url: '/product/detail.do',
+                    data: param,
+                    type: 'post',
+                    dataType: 'json'
+                }).done(function (data) {
+                    //매번 컨텐츠가 달라야하니 초기화
+                    console.log(data.dataDetail.prodNo);
+                    var wday = timeForToday(data.dataDetail.wday);
+                    //이미지경로를 미리 만들어놓는다.
+                    var imgPath = '/istatic/images/' + data.dataDetail.prodNo + '/1.jpg';
 
-                //제품 html
-                contents += '<div class="gridItem">';
-                contents += '    <div class="item">';
-                contents += '       <div class="block-4 text-center">';
-                contents += '          <a href="#" onclick="goDetail(' + obj.prodNo + ')">';
-                contents += '               <figure class="block-4-image" >';
-                contents += '                    <img src="' + imgPath + '"  alt="Image placeholder"  class="img-fluid">';
-                contents += '                </figure>';
-                contents += '                <div class="block-4-text">';
-                contents += '                    <h3 class="ItemName"><a href="#"  onclick="goDetail(' + obj.prodNo + ')">' + textLengthOverCut(obj.prodNm, 11, '...') + ' </a></h3>';
-                contents += '                    <div class=priceContent>';
-                contents += '                    <p class="text-primary font-weight-bold">' + obj.prodPrc + '원</p>';
-                contents += '                    <span class="font-weight-normal">' + wday + '</span>';
-                contents += '                    </div>';
-                contents += '                </div>';
-                contents += '            </a>';
-                contents += '        </div>';
-                contents += '    </div>';
-                contents += '</div>';
+                    //제품 html
+                    contents += '<div class="gridItem">';
+                    contents += '    <div class="item">';
+                    contents += '       <div class="block-4 text-center">';
+                    contents += '          <a href="#" onclick="goDetail(' + data.dataDetail.prodNo + ')">';
+                    contents += '               <figure class="block-4-image" >';
+                    contents += '                    <img src="' + imgPath + '"  alt="Image placeholder"  class="img-fluid">';
+                    contents += '                </figure>';
+                    contents += '                <div class="block-4-text">';
+                    contents += '                    <h3 class="ItemName"><a href="#"  onclick="goDetail(' + data.dataDetail.prodNo + ')">' + textLengthOverCut(data.dataDetail.prodNm, 11, '...') + ' </a></h3>';
+                    contents += '                    <div class=priceContent>';
+                    contents += '                    <p class="text-primary font-weight-bold">' + data.dataDetail.prodPrc + '원</p>';
+                    contents += '                    <span class="font-weight-normal">' + wday + '</span>';
+                    contents += '                    </div>';
+                    contents += '                </div>';
+                    contents += '            </a>';
+                    contents += '        </div>';
+                    contents += '    </div>';
+                    contents += '</div>';
 
-                //그리드에 삽입
-                container.append(contents);
+                    //그리드에 삽입
+                    container.append(contents);
+                }).fail(function (data, textStatus, errorThrown) {
+                    console.log(textStatus);
+                });;
             })
 
-        }else{
+        } else {
             $('.gridContainer').empty();
         }
+
     }
 
 
@@ -604,7 +647,7 @@
             }).fail(function (data, textStatus, errorThrown) {
                 console.log(textStatus);
             });
-            console.log(data.resultMsg);
+
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
         });

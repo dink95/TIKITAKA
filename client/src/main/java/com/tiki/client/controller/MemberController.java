@@ -1,8 +1,11 @@
 package com.tiki.client.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.tiki.client.config.CryptAES256;
 import com.tiki.client.domain.MemberDTO;
+import com.tiki.client.exception.*;
 import com.tiki.client.service.MemberService;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
@@ -20,16 +23,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
-@Controller
+@RestController
 public class MemberController {
 
     @Autowired
     private MemberService memberService;
 
     @RequestMapping("/")
-    public String Home() {
-        return "/index";
+    public  ModelAndView Home() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("/index");
+        return view;
     }
 
     @GetMapping(value = "/login") /*로그인 페이지*/
@@ -96,22 +102,20 @@ public class MemberController {
         view.setViewName("redirect:/");
         return view;
     }
-
     @RequestMapping("/member/detail") /*멤버 정보 조회*/
     @ResponseBody
-    public Map<String, Object> memberDetail(HttpServletRequest request, HttpStatus status) {
+    public Map<String, Object> memberDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         Cookie idCookie =WebUtils.getCookie(request, "mbrId");
         Cookie tokenCookie =WebUtils.getCookie(request, "token");
 
         Map<String, Object> resultMap = new HashMap<>();
-        MemberDTO memberDTO = memberService.Detail(idCookie.getValue(),"123");
+        MemberDTO memberDTO = memberService.Detail(idCookie.getValue(),tokenCookie.getValue());
 
         try {
             resultMap.put("memberDetail", memberDTO);
         } catch (Exception e) {
             e.printStackTrace();
-
         }
         return resultMap;
     }
@@ -127,7 +131,7 @@ public class MemberController {
 
     @RequestMapping("/login/join")  /*회원가입*/
     @ResponseBody
-    public Map<String, Object> joinMember(@RequestBody MemberDTO memberDTO) {
+    public Map<String, Object> joinMember(@RequestBody MemberDTO memberDTO){
 
         Map<String, Object> resultMap = new HashMap<>();
 
@@ -362,12 +366,12 @@ public class MemberController {
     }
 
     @GetMapping(value = "/member/myinfo") /*내정보 페이지*/
-    public ModelAndView myinfo(HttpServletResponse response,
-                               HttpServletRequest request) {
-        ModelAndView view = new ModelAndView();
-        view.setViewName("member/information/myinfo");
-        return view;
-    }
+        public ModelAndView throwException() {
+            ModelAndView view = new ModelAndView();
+            view.setViewName("/member/information/myInfo");
+            return view;
+
+        }
 
     @GetMapping(value = "/member/userinfo") /*유저정보 페이지*/
     public ModelAndView userinfo() {

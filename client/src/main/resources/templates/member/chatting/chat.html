@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/magnific-popup.css">
     <link rel="stylesheet" href="/css/jquery-ui.css">
-
 </head>
 <body>
 <div class="site-wrap">
@@ -46,7 +45,7 @@
             </div>
         </div>
         <div class="titleUserIdDiv d-flex-j-center">
-            <button type="button" class="btn btn-light titleProdFinishBtn"  onclick="goProdFinish()">판매완료하기</button>
+            <button type="button" class="btn btn-light titleProdFinishBtn"  onclick="goProdFinBtn()">판매완료하기</button>
             <span class="titleUserId "></span>
         </div>
     </div>
@@ -593,9 +592,38 @@
         });
     }
 
+    function goProdFinBtn(){
+        if (confirm("해당 이용자와 거래를 완료하였습니끼?") == true) {
+            goBuyList();
+        }else{
+            return false;  //취소
+        }
+    }
+
+    //구매완료 업데이트
+    function goBuyList(){
+        param = {
+            prodNo: searchParam('prodNo'),
+            buyerId: searchParam('recipientId'),
+        }
+        $.ajax({
+            url: '/buyList/insert',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            if(data.resultCode==200) {
+                goProdFinish();
+            }else{
+                alert("실패하였습니다. 관리자에게 문의하세요.");
+            }
+        }).fail(function (textStatus) {
+            console.log(textStatus);
+        });
+
+    }
     // 거래완료 업데이트
     function goProdFinish() {
-        if (confirm("해당 이용자와 거래를 완료하였습니끼?") == true) {    //확인
             param = {
                 prodNo: searchParam('prodNo'),
                 selId: $('#login_id').text(),
@@ -606,15 +634,17 @@
                 type: 'post',
                 dataType: 'json'
             }).done(function (data) {
-                //점수 업데이트
-                updatePoint($('#login_id').text());
-                popup('알림메세지', '거래가 완료되었습니다.','reload');
+                if(data.resultCode == 200) {
+                    //점수 업데이트
+                    updatePoint($('#login_id').text());
+                    popup('알림메세지', '거래가 완료되었습니다.', 'reload');
+                }else{
+                    alert("실패하였습니다. 관리자에게 문의하세요.");
+                }
             }).fail(function (textStatus) {
                 console.log(textStatus);
             });
-        }else{ //취소
-            return false;
-        }
+
     }
 
     //점수 업데이트

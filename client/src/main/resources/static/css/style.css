@@ -1379,7 +1379,8 @@ textarea:focus{
 
 .gridContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, auto));
+  /*grid-template-columns: repeat(auto-fill, minmax(200px, auto));*/
+  grid-template-columns: repeat(5,1fr);
   row-gap: 10px;
   column-gap: 10px;
 }
@@ -1746,10 +1747,6 @@ figure > img {
 }
 
 
-
-
-
-
 /*모바일 검색창*/
 .input-mobile-search_div {
   top: 0;
@@ -2019,8 +2016,23 @@ figure > img {
   .aic2 >span{
     font-size: 14px;
   }
+  .gridContainer {
+    display: grid;
+    /*grid-template-columns: repeat(auto-fill, minmax(200px, auto));*/
+    grid-template-columns: repeat(4,1fr);
+    row-gap: 10px;
+    column-gap: 10px;
+  }
 }
 @media screen and (max-width: 991px){
+
+  .gridContainer {
+    display: grid;
+    /*grid-template-columns: repeat(auto-fill, minmax(200px, auto));*/
+    grid-template-columns: repeat(3,1fr);
+    row-gap: 10px;
+    column-gap: 10px;
+  }
   .site-navbar .site-top-icons ul, .site-navbar .site-top-icons ul li {
     font-size: 12px;
   }
@@ -2175,7 +2187,7 @@ figure > img {
   .gridContainer {
     display: grid;
     /*grid-template-columns: repeat(auto-fill, minmax(150px, auto));*/
-    grid-template-columns: repeat(auto-fill, minmax(165px, auto));
+    grid-template-columns: repeat(2,1fr);
     row-gap: 10px;
     column-gap: 10px;
   }
@@ -2226,7 +2238,7 @@ figure > img {
   }
   .gridContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, auto));
+    grid-template-columns: repeat(1,1fr);
     row-gap: 10px;
     column-gap: 10px;
   }

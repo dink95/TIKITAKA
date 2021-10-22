@@ -374,6 +374,7 @@ public class ProductController {
     @RequestMapping(value = "/product/detail.do") /*상품 상세 정보*/
     @ResponseBody
     public Map<String,Object> productDetail(@RequestParam(value = "prodNo") Integer prodNo) {
+
         Map<String ,Object> resultMap = new HashMap<>();
         try {
             ProductDTO productDTO = productService.productDetail(prodNo);

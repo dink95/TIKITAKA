@@ -51,7 +51,7 @@ public class ChattingController {
         return resultMap;
     }
 
-    @RequestMapping("/chat/getRoomNo")  /*룸넘버 조회 */
+    @PostMapping("/chat/getRoomNo")  /*룸넘버 조회 */
     @ResponseBody
     public Map<String, Object> getRoomNo(@RequestParam(value = "prodNo") int prodNo,
                                          @RequestParam(value = "sendId") String sendId,
