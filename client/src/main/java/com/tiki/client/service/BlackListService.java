@@ -23,7 +23,6 @@ public class BlackListService {
                 .uri("/black")
                 .header(HttpHeaders.AUTHORIZATION,token)
                 .header(HttpHeaders.AUTHORIZATION,mbrId)
-
                 .body(Mono.just(blackListDTO), BlackListDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보

@@ -7,7 +7,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@Component
+/* SESSSION 사용 시, 방식 */
 public class ProcessInterceptor_manager implements HandlerInterceptor {
 
     @Override

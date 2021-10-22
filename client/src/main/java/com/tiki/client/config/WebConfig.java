@@ -29,24 +29,24 @@ public class WebConfig implements WebMvcConfigurer {
 //    public void addInterceptors(InterceptorRegistry registry) {
 //        registry.addInterceptor(localeChangeInterceptor())
 //    }
-
-    @Bean
-    public LocaleChangeInterceptor localeChangeInterceptor() {
-        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-        localeChangeInterceptor.setParamName("mbrId");
-        return localeChangeInterceptor;
-    }
-
-    @Bean
-    public LocaleResolver localeResolver() {
-        CookieLocaleResolver localeResolver = new CookieLocaleResolver();
-        localeResolver.setCookieName("mbrId");
-        localeResolver.setCookieMaxAge(60*60*24*7);
-        // 쿠키 유지 시간 (초)
-        localeResolver.setDefaultLocale(DEFAULT_LOCALE);
-        // 기본 로케일
-        return localeResolver;
-    }
+//
+//    @Bean
+//    public LocaleChangeInterceptor localeChangeInterceptor() {
+//        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+//        localeChangeInterceptor.setParamName("mbrId");
+//        return localeChangeInterceptor;
+//    }
+//
+//    @Bean
+//    public LocaleResolver localeResolver() {
+//        CookieLocaleResolver localeResolver = new CookieLocaleResolver();
+//        localeResolver.setCookieName("mbrId");
+//        localeResolver.setCookieMaxAge(60*60*24*7);
+//        // 쿠키 유지 시간 (초)
+//        localeResolver.setDefaultLocale(DEFAULT_LOCALE);
+//        // 기본 로케일
+//        return localeResolver;
+//    }
 
 
     @Value("/istatic/images/")
