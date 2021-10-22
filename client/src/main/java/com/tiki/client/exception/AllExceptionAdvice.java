@@ -13,7 +13,7 @@ public class AllExceptionAdvice {
 
     @ExceptionHandler(Exception.class)
     public String errorException(Model model, Exception e){
-        log.warn(e.getMessage());
+        log.warn(e.toString());
 
         model.addAttribute("error","로그인하여야 이용할 수 있는 기능입니다.");
         return "member/login";
