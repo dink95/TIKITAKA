@@ -1,6 +1,7 @@
 package com.tiki.client.controller;
 
 import com.tiki.client.domain.AuctionDTO;
+import com.tiki.client.domain.BidDTO;
 import com.tiki.client.domain.InsertProductDTO;
 import com.tiki.client.domain.ProductDTO;
 import com.tiki.client.service.AuctionService;
@@ -78,6 +79,7 @@ public class AuctionController {
     @RequestMapping("/auction/update.do")  /*경매업데이트*/
     public ModelAndView updateAuction(AuctionDTO auctionDTO) {
         ModelAndView view = new ModelAndView();
+
         int result = 0;
         try {
             result = auctionService.updateBid(auctionDTO);
@@ -102,13 +104,30 @@ public class AuctionController {
         Map<String ,Object> resultMap = new HashMap<>();
         Cookie idCookie = WebUtils.getCookie(request, "mbrId");
         Cookie tokenCookie =WebUtils.getCookie(request, "token");
-        response.addHeader("Authorization",tokenCookie.getValue());
         try {
             AuctionDTO auctionDTO = auctionService.selectAuctionByProdNo(prodNo);
             resultMap.put("auctionDetail", auctionDTO);
         }catch (Exception e) {
             e.printStackTrace();
             System.out.println("detail error");
+        }
+        return resultMap;
+    }
+
+    @RequestMapping(value = "/bid/select") /*입찰중 상품들 번호 조회*/
+    @ResponseBody
+    public Map<String,Object> selectAllBiddingProduct(@RequestParam(value = "mbrId") String mbrId,
+                                            HttpServletRequest request,
+                                            HttpServletResponse response) {
+        List<Object> list = null;
+        Map<String ,Object> resultMap = new HashMap<>();
+        Cookie idCookie = WebUtils.getCookie(request, "mbrId");
+        try {
+            list= auctionService.selectAllBiddingProduct(mbrId);
+            resultMap.put("dataBidList", list);
+
+        }catch (Exception e) {
+            e.printStackTrace();
         }
         return resultMap;
     }

@@ -456,7 +456,20 @@
         }
         //입찰중 상품 조회
         else if($('#finishCheck').val() == 'bidProd'){
-            alert('입찰중 상품 조회');
+            param={
+                mbrId:"user"
+            }
+            $.ajax({
+                url: '/bid/select',
+                data: param,
+                type: 'post',
+                dataType: 'json'
+            }).done(function (data) {
+                drawPrdList2(data);
+
+            }).fail(function (data, textStatus, errorThrown) {
+                console.log(textStatus);
+            });
         }
     }
 
@@ -543,13 +556,57 @@
         var container = $('.gridContainer');
         container.empty();
         if (typeof data.dataQueryList !== 'undefined' && data.dataQueryList.length > 0) {
-
-            console.log("@DDD",data.dataQueryList);
             $.each(data.dataQueryList, function (index, obj) {
                 /*정보*/
                 var contents= ' ';
                 param={
                     prodNo:obj.prodNo
+                }
+                $.ajax({
+                    url: '/product/detail.do',
+                    data: param,
+                    type: 'post',
+                    dataType: 'json'
+                }).done(function (data) {
+                    //매번 컨텐츠가 달라야하니 초기화
+                    console.log(data.dataDetail.prodNo);
+                    var wday = timeForToday(data.dataDetail.wday);
+                    //이미지경로를 미리 만들어놓는다.
+                    var imgPath = '/istatic/images/' + data.dataDetail.prodNo + '/1.jpg';
+
+                    //제품 html
+                    contents += '<div class="gridItem">';
+                    contents += '    <div class="item">';
+                    contents += '       <div class="block-4 text-center">';
+                    contents += '          <a href="#" onclick="goDetail(' + data.dataDetail.prodNo + ')">';
+                    contents += '               <figure class="block-4-image" >';
+                    contents += '                    <img src="' + imgPath + '"  alt="Image placeholder"  class="img-fluid">';
+                    contents += '                </figure>';
+                    contents += '                <div class="block-4-text">';
+                    contents += '                    <h3 class="ItemName"><a href="#"  onclick="goDetail(' + data.dataDetail.prodNo + ')">' + textLengthOverCut(data.dataDetail.prodNm, 11, '...') + ' </a></h3>';
+                    contents += '                    <div class=priceContent>';
+                    contents += '                    <p class="text-primary font-weight-bold">' + data.dataDetail.prodPrc + '원</p>';
+                    contents += '                    <span class="font-weight-normal">' + wday + '</span>';
+                    contents += '                    </div>';
+                    contents += '                </div>';
+                    contents += '            </a>';
+                    contents += '        </div>';
+                    contents += '    </div>';
+                    contents += '</div>';
+
+                    //그리드에 삽입
+                    container.append(contents);
+                }).fail(function (data, textStatus, errorThrown) {
+                    console.log(textStatus);
+                });;
+            })
+
+        }else if (typeof data.dataBidList !== 'undefined' && data.dataBidList.length > 0) {
+            $.each(data.dataBidList, function (index, obj) {
+                /*정보*/
+                var contents= ' ';
+                param={
+                    prodNo:obj.bidProdNo
                 }
                 $.ajax({
                     url: '/product/detail.do',

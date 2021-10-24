@@ -27,8 +27,8 @@
             prod_no = #{prodNo}
     </select>
 
-    <select id="selectAllBiddingProduct" resultType="String" parameterType="String">
-        select bid_bidder
+    <select id="selectAllBiddingProduct" resultType="BidDTO" parameterType="String">
+        select *
         from bid
         where
             bid_bidder = #{bidBidder}

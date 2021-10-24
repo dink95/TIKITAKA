@@ -19,7 +19,7 @@ public interface AuctionMapper {
 
     public int updateBiddingProduct(BidDTO bidDTO);
 
-    public List<String> selectAllBiddingProduct(String mbrId);
+    public List<BidDTO> selectAllBiddingProduct(String mbrId);
 
 
 }
