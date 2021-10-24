@@ -52,17 +52,17 @@
                 <button type="submit" class="btn btn-primary br-0">
                     <span class="font-14 font-weight-normal">검색</span></button>
             </form>
-            <div class="categoryNav" style="position:relative;">
-                <div class="mainCategoryTextNav gridNav">
+            <div class="categoryNav" style="position:sticky; top: 60px;background: #fff;">
+                <div class="mainCategoryTextNav gridNav" style="background: #fff;">
 
                 </div>
-                <div class="detailCategoryConditionArrow">
-                    <span><img class="arrowLeft1Icon" src="/icons/arrowLeft1.svg"></span>
-                    <span><img class="arrowRightIcon" src="/icons/arrowRight.svg"></span>
-                        </div>
-                <div class="detailCategoryTextNav gridNav" style="position:relative;;">
-                </div>
-                <div class="underLine"></div>
+                    <div class="detailCategoryConditionArrow">
+                        <span class="arrowLeft1IconSpan"><img class="arrowLeft1Icon" src="/icons/arrowLeft1.svg"></span>
+                        <span class="arrowRightIconSpan"><img class="arrowRightIcon" src="/icons/arrowRight.svg"></span>
+                    </div>
+                    <div class="detailCategoryTextNav gridNav" style="position:relative;;">
+                    </div>
+                    <div class="underLine"></div>
             </div>
             <div class="queryTextNav">
                 <div style="display:flex; justify-content: center;">
@@ -174,12 +174,13 @@
     .detailCategoryConditionNav {
         display: none;
     }
-    .detailCategoryConditionArrow{
-        display:none;
+
+    .detailCategoryConditionArrow {
+        display: none;
         justify-content: space-between;
         position: absolute;
         width: 100%;
-        margin-top: 1.5%;
+        margin-top: 1.9%;
     }
 
     .mainCategoryConditionTitle, .detailCategoryConditionTitle {
@@ -250,10 +251,11 @@
         font-weight: normal;
     }
 
-    .mainCategoryTextNav{
+    .mainCategoryTextNav {
         margin-top: 10px;
     }
-    .pageName > span ,.mainCategoryTextNav > span{
+
+    .pageName > span, .mainCategoryTextNav > span {
         display: inline-block;
         padding: 7px 10px 5px 5px;
         text-align: center;
@@ -343,7 +345,7 @@
         margin: 1px 0px 1px 15px;
     }
 
-    .arrowLeftIcon .arrowRightIcon{
+    .arrowLeftIcon .arrowRightIcon {
         display: none;
     }
 
@@ -352,24 +354,44 @@
     }
 
     @media screen and (max-width: 768px) {
-        .site-section {
-            padding: 0em 0 5em 0;
-        }
-        .detailCategoryConditionArrow{
-            display: flex;
-        }
-        .arrowLeftIcon .arrowRightIcon{
-            display: unset;
-        }
-        .underLine{
-            display: none!important;
-        }
-        .detailCategoryTextNav{
-            margin: 0 3%;
+
+        .detailCategoryTextNav > span , .underLine{
+            width: 60px;
         }
     }
 
     @media screen and (max-width: 575px) {
+        .mainCategoryTextNav{
+            display: none;
+        }
+        .site-section {
+            padding: 0em 0 5em 0;
+        }
+
+        .detailCategoryConditionArrow {
+            display: flex;
+        }
+
+        .arrowLeft1Icon .arrowRightIcon {
+            display: unset;
+        }
+
+        .arrowLeft1IconSpan, .arrowRightIconSpan {
+            background: radial-gradient(#e9ecef, transparent);
+        }
+
+        .underLine {
+            display: none !important;
+        }
+
+        .detailCategoryTextNav {
+            margin: 0 3%;
+        }
+
+        .categoryIcon2 {
+            width: 20px;
+            height: 40px;
+        }
 
         #innerSearchForm {
             display: none;
@@ -418,22 +440,29 @@
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script>
 
+    //페이지 로딩시 카테고리 조회
+    $(document).ready(function () {
+        getAllCategory();
+        $('#innerSearch').val(searchParam('prodNm'));
+        var props = parseInt(searchParam('catNo'));
+        moveScrollLeft(searchParam('catNo'));
+    });
+
     //모바일에서 화면크기에따라 상단 카테고리 메뉴바 클릭시 슬라이드
     var WinW = $(window).width();
     var TextWidth = $('.detailCategoryTextNav').width();
     // var TextWidthCut = 35*(WinW/90/2-1);
-    var TextWidthCut = Math.round(($('.detailCategoryConditionArrow').width()-40)/80)/2-2;
-    console.log("@TextWidthCut",TextWidthCut);
-    moveScrollLeft = function(props) {
-        if (WinW <=768 ) { //768px 보다 작을 경을~
+    var TextWidthCut = Math.round(($('.detailCategoryConditionArrow').width() - 40) / 60) / 2 - 2;
+    moveScrollLeft = function (props) {
+        if (WinW <= 575) { //768px 보다 작을 경을~
             var _scrollX = $('.detailCategoryTextNav').scrollLeft();
             // $('.detailCategoryTextNav').scrollLeft($(window).width());
-                console.log(WinW);
-                $('.detailCategoryTextNav').animate({scrollLeft: (props % 10 - 1) * 80 - 40- TextWidthCut*80}, "slow");
+            $('.detailCategoryTextNav').animate({scrollLeft: (props % 10 - 1) * 60 - 40 - TextWidthCut * 60}, "slow");
 
 
         }
     };
+
     //상품 조건으로 조회 토글
     function getCondition(props) {
 
@@ -692,8 +721,8 @@
         $('#prodNm').val(searchParam('prodNm'));
         $('#queryTextProdNm').text('"' + searchParam('prodNm') + '"');
         $('#selectCat').val(searchParam('catNo'));
-        $('.arrowLeft1Icon').css('display','none');
-        $('.arrowRightIcon').css('display','none');
+        $('.arrowLeft1Icon').css('display', 'none');
+        $('.arrowRightIcon').css('display', 'none');
     }
 
     //카테고리 검색시
@@ -776,7 +805,7 @@
             $('.underLine').animate({'left': width}, 500);
             $('#' + props).css('color', '#5f0080');
             $('.detailCategoryTextNav').children('span').not($('#' + props)).css('color', '#000');
-            if (WinW <=768 ) { //768px 보다 작을 경을~
+            if (WinW <= 575) { //768px 보다 작을 경을~
                 $('#' + props).css('border-bottom', ' 1px solid #5f0080');
                 $('.detailCategoryTextNav').children('span').not($('#' + props)).css('border-bottom', '1px solid #e5e3e3');
             }
@@ -905,9 +934,9 @@
 
     //메인 카테고리 이름 아이콘 그리기
     function drawMainCategoryName(data) {
-        if(WinW<=575){
+        if (WinW <= 575) {
             var container = $('.pageName');
-        }else {
+        } else {
             var container = $('.mainCategoryTextNav');
         }
         container.empty();
@@ -963,18 +992,56 @@
                 var width = 0;
                 detailContainer.append('<span id="' + parseInt(props / 10) * 10 + '"  class="text-black font-weight-normal" onclick="goSelectDetailQuery(' + parseInt(props / 10) * 10 + ');  getCategory(' + parseInt(props / 10) * 10 + ', ' + width + ')">전체보기</span>')
             }
+            var WinW = $(window).width();
+            var count = 0;
             $.each(data.allcatList, function (index, obj) {
                 if (obj.catNo > parseInt(props / 10) * 10 && obj.catNo < parseInt(props / 10) * 10 + 10) {
-                    width += 80;
+                        if (WinW <= 768) {
+                            width += 60;
+                        }else{
+                            width +=80;
+                        }
                     contents = '';
                     contents += '<span id="' + obj.catNo + '"  class="text-black font-weight-normal" onclick="goSelectDetailQuery(' + obj.catNo + '); getCategory(' + obj.catNo + ',' + width + '); moveScrollLeft(' + obj.catNo + '); ">' + obj.catNm + '</span>'
                     //그리드에 삽입
                     detailContainer.append(contents);
+                    count++;
+                }
+            })
+            var position = $('.detailCategoryTextNav').scrollLeft();
+            console.log("@#!#!@#!@#!@#!@",((count+1)*60-$('.detailCategoryTextNav').width())-1)
+            if (position == 0) {
+                $('.arrowLeft1Icon').css('display', 'none');
+            } else {
+                $('.arrowLeft1Icon').css('display', 'unset');
+            }
+            if(position > (count+1)*60-$('.detailCategoryTextNav').width()-1){
+                $('.arrowRightIcon').css('display', 'none');
+            }else{
+                $('.arrowRightIcon').css('display', 'unset');
+            }
+
+            $('.detailCategoryTextNav').scroll(function () {
+                var position = $('.detailCategoryTextNav').scrollLeft();
+                console.log(position);
+                if (position <= 0) {
+                    $('.arrowLeft1Icon').css('display', 'none');
+                } else {
+                    $('.arrowLeft1Icon').css('display', 'unset');
+                }
+                if(position >(count+1)*60-$('.detailCategoryTextNav').width()-1){
+                    $('.arrowRightIcon').css('display', 'none');
+                }else{
+                    $('.arrowRightIcon').css('display', 'unset');
                 }
 
-            })
+            });
             //처음 페이지 접속시 세부 카테고리 active
-            getCategory(props, (props % 10) * 80);
+            if (WinW <= 768) {
+                getCategory(props, (props % 10) * 60);
+            }else{
+                getCategory(props, (props % 10) * 80);
+            }
             var detailCatActive = parseInt(searchParam('catNo'));
             $('#' + detailCatActive).css('color', '#5f0080');
 
@@ -1003,21 +1070,13 @@
         mobileSiteTop('검색');
 
     } else if (searchParam('catNo')) {
-        $('.selectNav').css("margin-top","5%");
-        $('.queryTextNav').css('display','none');
+        $('.selectNav').css("margin-top", "5%");
+        $('.queryTextNav').css('display', 'none');
         f_obj_cat['f_run_cat_latestDay']();
         $('.underLine').css('display', 'block');
         // $('.site-section').css('padding','0px');//모바일에서만
     }
 
-
-    //페이지 로딩시 카테고리 조회
-    $(document).ready(function () {
-        getAllCategory();
-        $('#innerSearch').val(searchParam('prodNm'));
-        var props = parseInt(searchParam('catNo'));
-        moveScrollLeft(searchParam('catNo'));
-    });
 
     $('#loading').css('display', 'block')
     $(window).on('load', function () {

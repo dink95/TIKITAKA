@@ -49,21 +49,18 @@
 
     <div class="site-section margin-top-2">
         <div class="col-md-12 mb-0"></div>
-
+        <input type="hidden" id="p_id" th:value="${#locale}">
+        <input type="hidden" id="prodNo" value="">
+        <input type="hidden" id="query" value="">
+        <input type="hidden" id="prodNm" value="">
+        <input type="hidden" id="prodPrc" value="">
+        <input type="hidden" id="catNo" value="">
+        <input type="hidden" id="way" value="">
+        <input type="hidden" id="nego" value="">
+        <input type="hidden" id="prodCo" value="">
         <div class="container">
 
-            <input type="hidden" id="p_id" th:value="${session.mbrId}">
-            <input type="hidden" id="prodNo" value="">
-            <input type="hidden" id="query" value="">
-            <input type="hidden" id="prodNm" value="">
-            <input type="hidden" id="prodPrc" value="">
-            <input type="hidden" id="catNo" value="">
-            <input type="hidden" id="way" value="">
-            <input type="hidden" id="nego" value="">
-            <input type="hidden" id="prodCo" value="">
-
-
-            <div class="row align-items-start" style="border-bottom: 1px solid #ddd; padding:0 0 5% 0;">
+            <div class="row align-items-start" style=" border-bottom:  1px solid #ddd; padding:0 0 5% 0;">
                 <div class="col-12 col-md-6 order-1 order-md-1  text-center">
                     <!--                    <figure class="block-4-image">-->
                     <!--                        <img id="mainDetailImg" src="" alt="Image placeholder" class="img-fluid"-->
@@ -186,215 +183,215 @@
                         <span class="width-80p margin-left-right-10 text-black">상품이 낙찰되었습니다!</span>
                         <input class="goChat btn btn-primary width-80p margin-left-right-10" onclick="goChatToBidId()"
                                value="채팅으로 거래하기">
-
-                </div>
-            </div>
-
-
-            <div class="site-section block-3 site-blocks-2 bg-light">
-                <div class="container">
-                    <div class="row justify-content-center">
-
                     </div>
-
-                    <div class=" content auction_button_finish"
-                         style="display: none; justify-content: flex-start; cursor: pointer;">
-                        <span class=" margin-left-right-10 text-black">낙찰자 아이디: </span>
-                        <span id="bidId" class=" margin-left-right-10 text-black"></span>
-                    </div>
-
+                    <span class=" margin-left-right-10 text-black">낙찰자 아이디: </span>
+                    <span id="bidId" class=" margin-left-right-10 text-black"></span>
                 </div>
-            </div>
 
-            <div class="row align-items-center"
-                 style="border-bottom: 1px solid #ddd;">
-                <div class="col-12 col-md-12 order-2 order-md-2  text-left">
-                    <div class="p_content" style=" min-height: 200px;">
-                        <span id="prodContent" class="font-weight-normal"></span>
-                    </div>
-                </div>
+
+                <!--            <div class="site-section block-3 site-blocks-2 bg-light">-->
+                <!--                <div class="container">-->
+                <!--                    <div class="row justify-content-center">-->
+
+                <!--                    </div>-->
+                <!--                    <div class=" content auction_button_finish"-->
+                <!--                         style="display: none; justify-content: flex-start; cursor: pointer;">-->
+                <!--                        <span class=" margin-left-right-10 text-black">낙찰자 아이디: </span>-->
+                <!--                        <span id="bidId" class=" margin-left-right-10 text-black"></span>-->
+                <!--                    </div>-->
+
+                <!--                </div>-->
+                <!--            </div>-->
+
+                <!--            <div class="row align-items-center"-->
+                <!--                 style="border-bottom: 1px solid #ddd;">-->
+                <!--                <div class="col-12 col-md-12 order-2 order-md-2  text-left">-->
+                <!--                    <div class="p_content" style=" min-height: 200px;">-->
+                <!--                        <span id="prodContent" class="font-weight-normal"></span>-->
+                <!--                    </div>-->
+                <!--                </div>-->
+                <!--            </div>-->
             </div>
         </div>
+        <a id="arrow_up" class="scroll_up" onclick="scroll_up()"> </a>
+
+        <!-- 모바일 메뉴-->
+        <div th:replace="common::mobile(auction_list)"></div>
+
+        <style>
+            @media screen and (max-width: 575px) {
+                .site-section {
+                    padding: 0;
+                }
+
+                .bx-viewport {
+                    width: 100%;
+                    display: block;
+                !important:;
+                    height: 400px;
+                !important;
+                    min-height: 400px;
+                }
+
+                .bx-wrapper img {
+                    width: 100%;
+                    display: block;
+                    height: 100%;
+                    min-height: 400px;
+                !important;
+                    border-radius: 1px;
+                }
+            }
+
+            @media screen and (min-width: 575px) {
+                .bx-viewport {
+                    width: 100%;
+                    display: block;
+                    height: 100%;
+                    min-height: 500px;
+                !important;
+                }
+
+                .bx-wrapper img {
+                    width: 100%;
+                    display: block;
+                    height: 100%;
+                    min-height: 500px;
+                !important;
+                    border-radius: 1px;
+                }
+            }
+
+            .bx-wrapper {
+                margin-bottom: 0;
+            }
+
+            .bx-wrapper .bx-pager, .bx-wrapper .bx-controls-auto {
+                bottom: 5vh;
+            !important;
+
+            }
+
+            .bx-wrapper {
+                -moz-box-shadow: none;
+                -webkit-box-shadow: none;
+                box-shadow: none;
+                border: 5px solid #fff;
+                background: #fff;
+            }
+
+            tr {
+                color: black;
+            }
+
+            .auctionTitle {
+                height: 30px;
+                background: #a7a1f71c;
+                color: black;
+                border: 1px solid #ddd;
+                border-bottom: none;
+                text-align: center;
+                font-weight: normal;
+            }
+
+            .auction_box {
+                white-space: nowrap;
+                overflow: scroll;
+                padding: 0 20px;
+                border: 1px solid #ddd;
+            }
+
+            #detailMap > span {
+                color: #a88d2c;
+            }
+
+            #detailName {
+                color: #000;
+                font-size: 20px;
+                margin-bottom: 50px;
+            }
+
+            #currentPrice {
+                font-size: 20px;
+                color: #000;
+                display: inline-block;
+            }
+
+            #currentPrice + span {
+
+                font-size: 20px;
+                color: #000;
+            }
+
+            #selId, #detailWay, #detailAddr, #detailView {
+                color: #000;
+            }
+
+            .aic1 {
+                padding-top: 2%;
+            }
+
+            .aic2 {
+                padding-top: 2%;
+            }
+
+            #prodContent {
+                color: #000;
+            }
+
+            figure {
+                overflow: hidden;
+            }
+
+            #img_modal {
+                position: fixed;
+                top: 0;
+                left: 0;
+                background: rgba(0, 0, 0, 0.9);
+                display: none;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+                z-index: 20000;
+            }
+
+            #img_modal_content {
+                background-size: cover;
+                max-height: 95%;
+                max-width: 95%;
+                z-index: 10000;
+                position: relative;
+            }
+
+            #img_close_button {
+                position: absolute;
+                z-index: 10001;
+                color: #fff;
+                font-size: 30px;
+                font-weight: bold;
+                top: 3%;
+                right: 10%;
+                cursor: pointer;
+            }
+
+            .img-fluid0 {
+                display: none;
+                border-radius: 5px;
+                max-height: 207.5px;
+            }
+
+
+            p, label {
+                font-weight: normal;
+            }
+
+            #sample01 {
+                color: red;
+            }
+
+        </style>
     </div>
-    <a id="arrow_up" class="scroll_up" onclick="scroll_up()"> </a>
-
-    <!-- 모바일 메뉴-->
-    <div th:replace="common::mobile(auction_list)"></div>
-
-    <style>
-        @media screen and (max-width: 575px) {
-            .site-section {
-                padding: 0;
-            }
-
-            .bx-viewport {
-                width: 100%;
-                display: block;
-            !important:;
-                height: 400px;
-            !important;
-                min-height: 400px;
-            }
-
-            .bx-wrapper img {
-                width: 100%;
-                display: block;
-                height: 100%;
-                min-height: 400px;
-            !important;
-                border-radius: 1px;
-            }
-        }
-
-        @media screen and (min-width: 575px) {
-            .bx-viewport {
-                width: 100%;
-                display: block;
-                height: 100%;
-                min-height: 500px;
-            !important;
-            }
-
-            .bx-wrapper img {
-                width: 100%;
-                display: block;
-                height: 100%;
-                min-height: 500px;
-            !important;
-                border-radius: 1px;
-            }
-        }
-
-        .bx-wrapper {
-            margin-bottom: 0;
-        }
-
-        .bx-wrapper .bx-pager, .bx-wrapper .bx-controls-auto {
-            bottom: 5vh;
-        !important;
-
-        }
-
-        .bx-wrapper {
-            -moz-box-shadow: none;
-            -webkit-box-shadow: none;
-            box-shadow: none;
-            border: 5px solid #fff;
-            background: #fff;
-        }
-
-        tr {
-            color: black;
-        }
-
-        .auctionTitle {
-            height: 30px;
-            background: #a7a1f71c;
-            color: black;
-            border: 1px solid #ddd;
-            border-bottom: none;
-            text-align: center;
-            font-weight: normal;
-        }
-
-        .auction_box {
-            white-space: nowrap;
-            overflow: scroll;
-            padding: 0 20px;
-            border: 1px solid #ddd;
-        }
-
-        #detailMap > span {
-            color: #a88d2c;
-        }
-
-        #detailName {
-            color: #000;
-            font-size: 20px;
-            margin-bottom: 50px;
-        }
-
-        #currentPrice {
-            font-size: 20px;
-            color: #000;
-            display: inline-block;
-        }
-
-        #currentPrice + span {
-
-            font-size: 20px;
-            color: #000;
-        }
-
-        #selId, #detailWay, #detailAddr, #detailView {
-            color: #000;
-        }
-
-        .aic1 {
-            padding-top: 2%;
-        }
-
-        .aic2 {
-            padding-top: 2%;
-        }
-
-        #prodContent {
-            color: #000;
-        }
-
-        figure {
-            overflow: hidden;
-        }
-
-        #img_modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            background: rgba(0, 0, 0, 0.9);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-            z-index: 20000;
-        }
-
-        #img_modal_content {
-            background-size: cover;
-            max-height: 95%;
-            max-width: 95%;
-            z-index: 10000;
-            position: relative;
-        }
-
-        #img_close_button {
-            position: absolute;
-            z-index: 10001;
-            color: #fff;
-            font-size: 30px;
-            font-weight: bold;
-            top: 3%;
-            right: 10%;
-            cursor: pointer;
-        }
-
-        .img-fluid0 {
-            display: none;
-            border-radius: 5px;
-            max-height: 207.5px;
-        }
-
-
-        p, label {
-            font-weight: normal;
-        }
-
-        #sample01 {
-            color: red;
-        }
-
-    </style>
-</div>
 </div>
 </span>
 <script src="../js/jquery-3.3.1.min.js"></script>
@@ -434,23 +431,6 @@
         });
     }
 
-    /*옥션 insert*/
-    function insertAuction(startPrice) {
-        var param = {
-            startingBid: startPrice, //시작가
-            prodNo: searchParam('prodNo'), //상품번호
-        }
-        $.ajax({
-            url: '/auction/create.do',
-            data: param,
-            type: 'post',
-            dataType: 'json'
-        }).done(function (data) {
-        }).fail(function (data, textStatus, errorThrown) {
-            console.log(textStatus);
-        });
-    }
-
     /*옥션 update*/
     function updateAuction(mbrId, endBid) {
         var param = {
@@ -482,16 +462,17 @@
         }).done(function (data) {
             console.log("@@auctionDetail", data.auctionDetail);
             var year = data.auctionDetail.aucEndTime.substring(0, 4);
-            var month = data.auctionDetail.aucEndTime.substring(6, 7) - 1;
+            var month = data.auctionDetail.aucEndTime.substring(5, 7)-1;
             var day = data.auctionDetail.aucEndTime.substring(8, 10);
             var hour = data.auctionDetail.aucEndTime.substring(11, 13);
             var minute = data.auctionDetail.aucEndTime.substring(14, 16);
             var second = data.auctionDetail.aucEndTime.substring(17, 19);
+            console.log("@year",year," ",month," ", day ," ",hour," ",minute, " ",second);
             var dateObj = new Date(year, month, day, hour, minute, second);
             dateObj.setDate(dateObj.getDate());
             countDownTimer('sample01', dateObj);
 
-            $('#currentPrice').text(data.auctionDetail.startingBid);
+            $('#currentPrice').text(data.auctionDetail.endBid);
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
         });
@@ -533,7 +514,6 @@
             drawPrdList(data);
             console.log("data.dataDetail", data.dataDetail);
             $('#startPrice').text(data.dataDetail.prodPrc);
-            insertAuction(data.dataDetail.prodPrc);
             if (data.dataDetail.prodFinish) {
                 $('#prodFinish').css('display', 'none');
                 $('#updateProd').attr('class', 'btn_finish ');
@@ -655,7 +635,7 @@
         function showRemaining() {
             var now = new Date();
             var distDt = _vDate - now;
-            if (distDt < 0) {
+            if (distDt == 0) {
                 clearInterval(timer);
                 document.getElementById(id).textContent = '경매가 종료되었습니다!';
                 $('.auction_button').css('display', 'none');
@@ -834,6 +814,7 @@
 
 </body>
 </html>
+
 
 
 

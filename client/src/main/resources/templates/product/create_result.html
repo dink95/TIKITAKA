@@ -52,6 +52,23 @@
 
         if(resultCode === 200 || resultCode === '200' ) {
                 popup('알림메세지', '상품이 등록되었습니다.', '/');
+                // if(resultCode.catNo==99){
+                //     /*옥션 insert*/
+                //         var param = {
+                //             startingBid: resultCode.prodPrc, //시작가
+                //             prodNo: , //상품번호
+                //         }
+                //         $.ajax({
+                //             url: '/auction/create.do',
+                //             data: param,
+                //             type: 'post',
+                //             dataType: 'json'
+                //         }).done(function (data) {
+                //         }).fail(function (data, textStatus, errorThrown) {
+                //             console.log(textStatus);
+                //         });
+                //     }
+
         }
         else if(resultCode === 201 || resultCode === '201' ) {
             popup('알림메세지','상품이 수정되었습니다.','/member/myinfo');

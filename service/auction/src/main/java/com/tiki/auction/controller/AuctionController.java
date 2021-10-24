@@ -46,8 +46,9 @@ public class AuctionController {
 
 
     @GetMapping("/auction/bid/{id}")
-    public List<String> selectAllBiddingProduct(@PathVariable("id") String mbrId){
-        return service.selectAllBiddingProduct(mbrId);
+    public List selectAllBiddingProduct(@PathVariable("id") String id){
+        List<BidDTO> bidList= service.selectAllBiddingProduct(id);
+        return bidList;
     }
 
 }

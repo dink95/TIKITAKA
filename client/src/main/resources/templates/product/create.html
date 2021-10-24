@@ -52,7 +52,7 @@
 
             <form action="/product/create.do" method="post" enctype="multipart/form-data"
                   onsubmit="return Validation()">
-                <input type="hidden" id="p_id" name="selId" th:value="${session.mbrId}">
+                <input type="hidden" id="p_id" name="selId" th:value="${#locale}">
                 <div class="text-black font-25 font-weight-normal bb-1-p padding-all-30 row"> 상품등록</div>
 
                 <input class="form-control-file" onchange="chk_file_type(this)" type="file" name="file" id="file"

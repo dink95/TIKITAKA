@@ -41,7 +41,7 @@ public class AuctionServiceImp implements AuctionService {
     }
 
     @Override
-    public List<String> selectAllBiddingProduct(String mbrId) {
+    public List<BidDTO> selectAllBiddingProduct(String mbrId) {
         return mapper.selectAllBiddingProduct(mbrId);
     }
 }

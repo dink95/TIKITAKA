@@ -67,6 +67,12 @@ spring:
             - Path=/cat/**
           filters:
             - RemoveRequestHeader=Cookie
+        - id: buylist-service
+          uri: http://localhost:8082/
+          predicates:
+            - Path=/buylist/**
+          filters:
+            - RemoveRequestHeader=Cookie
         - id: complain-service
           uri: http://localhost:8084/
           predicates:
@@ -81,6 +87,13 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - AuthorizationHeaderFilter
+        - id: auction-service
+          uri: http://localhost:8083/
+          predicates:
+            - Path=/auction/**
+          filters:
+            - RemoveRequestHeader=Cookie
+
 
 
 

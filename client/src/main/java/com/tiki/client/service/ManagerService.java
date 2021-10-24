@@ -27,9 +27,11 @@ public class ManagerService {
                 .block();
     }
 
-    public ManagerDTO selectManagerDetail(String manId){
+    public ManagerDTO selectManagerDetail(String manId,String token){
         return webClient.get()
                 .uri("/mbr/{manId}",manId)
+                .header(HttpHeaders.AUTHORIZATION,manId)
+                .header(HttpHeaders.AUTHORIZATION,token)
                 .retrieve()
                 .bodyToMono(ManagerDTO.class) //반환정보
                 .block();
