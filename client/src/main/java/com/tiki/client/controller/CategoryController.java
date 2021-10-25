@@ -28,7 +28,6 @@ public class CategoryController {
 
         try {
             CategoryDTO categoryDTO = categoryService.getCategory(catNo);
-            System.out.println(categoryDTO);
             resultMap.put("categoryDTO",categoryDTO);
         } catch (Exception e) {
             e.printStackTrace();

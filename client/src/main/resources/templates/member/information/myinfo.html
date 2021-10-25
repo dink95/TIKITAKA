@@ -106,7 +106,7 @@
     <div class="container">
         <div class="prodContainer">
             <div class="prod myProd" onclick="finishCheck('myProd')">
-                판매중
+                판매상품
             </div>
             <div class="prod finishProd" onclick="finishCheck('finishProd')">
                 판매완료
@@ -115,10 +115,10 @@
                 구매상품
             </div>
             <div class="prod auctionProd" onclick="finishCheck('auctionProd')">
-                경매중
+                경매상품
             </div>
             <div class="prod bidProd" onclick="finishCheck('bidProd')">
-                입찰중
+                입찰상픔
             </div>
         </div>
         <!--      판매중, 판매완료, 구매상품, 경매중, 입찰중 상품 조회-->
@@ -622,16 +622,17 @@
                     contents += '<div class="gridItem">';
                     contents += '    <div class="item">';
                     contents += '       <div class="block-4 text-center">';
-                    contents += '          <a href="#" onclick="goDetail(' + data.dataDetail.prodNo + ')">';
+                    contents += '          <a href="#" onclick="goAuction(' + data.dataDetail.prodNo + ')">';
                     contents += '               <figure class="block-4-image" >';
                     contents += '                    <img src="' + imgPath + '"  alt="Image placeholder"  class="img-fluid">';
                     contents += '                </figure>';
                     contents += '                <div class="block-4-text">';
-                    contents += '                    <h3 class="ItemName"><a href="#"  onclick="goDetail(' + data.dataDetail.prodNo + ')">' + textLengthOverCut(data.dataDetail.prodNm, 11, '...') + ' </a></h3>';
+                    contents += '                    <h3 class="ItemName"><a href="#"  onclick="goAuction(' + data.dataDetail.prodNo + ')">' + textLengthOverCut(data.dataDetail.prodNm, 11, '...') + ' </a></h3>';
                     contents += '                    <div class=priceContent>';
                     contents += '                    <p class="text-primary font-weight-bold">' + data.dataDetail.prodPrc + '원</p>';
-                    contents += '                    <span class="font-weight-normal">' + wday + '</span>';
-                    contents += '                    </div>';
+                    contents += '                    <p class="text-primary font-weight-normal">입찰가:' + obj.bidBid + '원</p>';
+                    contents += '                 </div>';
+                    contents += '                      <div class="priceContent" style="display:flex; justify-content: flex-end;"><span class="font-weight-normal">' + wday + '</span></div>';
                     contents += '                </div>';
                     contents += '            </a>';
                     contents += '        </div>';
@@ -655,6 +656,11 @@
     //상세페이지
     function goDetail(prodNo) {
         location.href = '/product/detail?prodNo=' + prodNo;
+    }
+
+    //상세페이지
+    function goAuction(prodNo) {
+        location.href = '/auction/detail?prodNo=' + prodNo;
     }
 
     function goUpdateInfo() {

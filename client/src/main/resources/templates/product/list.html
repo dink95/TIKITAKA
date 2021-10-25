@@ -44,22 +44,26 @@
     <input type="hidden" id="prodNm" value="">
 
     <!------------------------->
+    <div class="innerSearchFormDiv" style="display: flex; justify-content: center; position: sticky; top: 50px; z-index: 1000; background: #fff;">
+    <form id="innerSearchForm" action="/product/list" class="site-block-top-search">
+        <input id="innerSearch" type="text" name="prodNm" class="form-control" placeholder="">
+        <span type="submit" class="icon icon-search2"></span>
+        <button type="submit" class="btn btn-primary br-0">
+            <span class="font-14 font-weight-normal">검색</span></button>
+    </form>
+    </div>
     <div class="site-section block-3 site-blocks-2 bg-light">
         <div class="container">
-            <form id="innerSearchForm" action="/product/list" class="site-block-top-search">
-                <input id="innerSearch" type="text" name="prodNm" class="form-control" placeholder="">
-                <span type="submit" class="icon icon-search2"></span>
-                <button type="submit" class="btn btn-primary br-0">
-                    <span class="font-14 font-weight-normal">검색</span></button>
-            </form>
-            <div class="categoryNav" style="position:sticky; top: 60px;background: #fff;">
+
+            <div class="categoryNav" style="position:sticky; top: 50px;background: #fff;">
+                <div class="detailCategoryConditionArrow">
+                    <span class="arrowLeft1IconSpan"><img class="arrowLeft1Icon" src="/icons/arrowLeft1.svg"></span>
+                    <span class="arrowRightIconSpan"><img class="arrowRightIcon" src="/icons/arrowRight.svg"></span>
+                </div>
                 <div class="mainCategoryTextNav gridNav" style="background: #fff;">
 
                 </div>
-                    <div class="detailCategoryConditionArrow">
-                        <span class="arrowLeft1IconSpan"><img class="arrowLeft1Icon" src="/icons/arrowLeft1.svg"></span>
-                        <span class="arrowRightIconSpan"><img class="arrowRightIcon" src="/icons/arrowRight.svg"></span>
-                    </div>
+
                     <div class="detailCategoryTextNav gridNav" style="position:relative;;">
                     </div>
                     <div class="underLine"></div>
@@ -269,9 +273,9 @@
     .queryTextNav {
         display: flex;
         justify-content: space-between;
-        padding: 20px 0;
+        padding: 0 0 20px 0;
         border-bottom: 1px solid #e5e3e3;
-        margin: 20px 0;
+        margin: 0 0 20px 0;
     }
 
     #queryTextProdNm {
@@ -333,7 +337,7 @@
         display: none;
         width: 50%;
         min-width: 500px;
-        margin: 0 auto;
+        /*margin: 5% auto 0 auto;*/
     }
 
     #innerSearch {
@@ -348,6 +352,9 @@
     .arrowLeftIcon .arrowRightIcon {
         display: none;
     }
+    .innerSearchFormDiv{
+        padding: 5% 0 0 0
+    }
 
     @media screen and (max-width: 991px) {
 
@@ -361,6 +368,12 @@
     }
 
     @media screen and (max-width: 575px) {
+        .detailCategoryTextNav > span{
+            width: 80px;
+        }
+        .innerSearchFormDiv{
+            padding: 5% 0 5% 0;
+        }
         .mainCategoryTextNav{
             display: none;
         }
@@ -395,9 +408,9 @@
 
         #innerSearchForm {
             display: none;
-            width: 90%;
+            width: 80%;
             min-width: 200px;
-            margin: 5% auto 0 auto;
+            /*margin: 5% auto 5% auto;*/
         }
 
         #innerSearchForm > button {
@@ -452,12 +465,12 @@
     var WinW = $(window).width();
     var TextWidth = $('.detailCategoryTextNav').width();
     // var TextWidthCut = 35*(WinW/90/2-1);
-    var TextWidthCut = Math.round(($('.detailCategoryConditionArrow').width() - 40) / 60) / 2 - 2;
+    var TextWidthCut = Math.round(($('.detailCategoryConditionArrow').width() - 40) / 80) / 2 - 2;
     moveScrollLeft = function (props) {
         if (WinW <= 575) { //768px 보다 작을 경을~
             var _scrollX = $('.detailCategoryTextNav').scrollLeft();
             // $('.detailCategoryTextNav').scrollLeft($(window).width());
-            $('.detailCategoryTextNav').animate({scrollLeft: (props % 10 - 1) * 60 - 40 - TextWidthCut * 60}, "slow");
+            $('.detailCategoryTextNav').animate({scrollLeft: (props % 10 - 1) * 80 - 40 - TextWidthCut * 80}, "slow");
 
 
         }
@@ -723,10 +736,12 @@
         $('#selectCat').val(searchParam('catNo'));
         $('.arrowLeft1Icon').css('display', 'none');
         $('.arrowRightIcon').css('display', 'none');
+        $('.detailCategoryConditionArrow').css('display','none');
     }
 
     //카테고리 검색시
     if (searchParam('catNo')) {
+        $('.innerSearchFormDiv').css('display','none');
         $('#selectCat').val(searchParam('catNo'));
         goSelectMainQuery(searchParam('catNo'));
     }
@@ -822,7 +837,6 @@
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            console.log("@@data.categoryDTO", data.categoryDTO);
             drawMainCategoryName(data);
             if (data.categoryDTO.catNo % 10 == 0) {
                 $('#queryTextProdNm').text(data.categoryDTO.catNm + " 〉 " + '전체');
@@ -848,7 +862,6 @@
             dataType: 'json'
         }).done(function (data) {
             drawDetailList2(data, searchParam('catNo'));
-            console.log("@@data.allcatList", data.allcatList);
             if (props) {
                 drawDetailList(data, props);
             } else {
@@ -1015,7 +1028,7 @@
             } else {
                 $('.arrowLeft1Icon').css('display', 'unset');
             }
-            if(position > (count+1)*60-$('.detailCategoryTextNav').width()-1){
+            if(position > (count+1)*80-$('.detailCategoryTextNav').width()-1){
                 $('.arrowRightIcon').css('display', 'none');
             }else{
                 $('.arrowRightIcon').css('display', 'unset');
@@ -1029,7 +1042,7 @@
                 } else {
                     $('.arrowLeft1Icon').css('display', 'unset');
                 }
-                if(position >(count+1)*60-$('.detailCategoryTextNav').width()-1){
+                if(position >(count+1)*80-$('.detailCategoryTextNav').width()-1){
                     $('.arrowRightIcon').css('display', 'none');
                 }else{
                     $('.arrowRightIcon').css('display', 'unset');

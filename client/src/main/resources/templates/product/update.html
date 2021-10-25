@@ -312,7 +312,6 @@
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            console.log("@@data.allcatList", data.allcatList);
             if (props) {
                 drawDetailList(data, props);
             } else {
@@ -561,7 +560,6 @@
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            console.log("@@data.categoryDTO", data.categoryDTO);
             $('#DetailCatNm').text(data.categoryDTO.catNm);
             console.log(Math.floor(data.categoryDTO.catNo / 10) * 10);
 
@@ -576,7 +574,6 @@
                 dataType: 'json'
             }).done(function (data) {
                 $('#MainCatNm').text(data.categoryDTO.catNm);
-                console.log("@@mainCatNm", data.categoryDTO.catNm)
             }).fail(function (data, textStatus, errorThrown) {
                 console.log(textStatus);
 

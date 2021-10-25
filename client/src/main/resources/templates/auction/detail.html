@@ -167,7 +167,7 @@
                                class="width-80p margin-left-right-10 text-black" step="1000" pattern="[0-9]*"
                                inputmode="numeric" min="0">
                         <input class="send btn btn-primary width-80p margin-left-right-10" id="tradeProd"
-                               value="입찰하기">
+                               value="입찰하기" inputmode="none">
                     </div>
 
                     <div class="d-flex-j-between content auction_button_finish_sender"
@@ -175,14 +175,14 @@
                         <span class="width-80p margin-left-right-10 text-black">상품이 낙찰되었습니다!</span>
                         <input class="goChat btn btn-primary width-80p margin-left-right-10"
                                onclick="goChatToSenderId()"
-                               value="낙찰자와 거래하기">
+                               value="낙찰자와 거래하기" inputmode="none">
                     </div>
 
                     <div class="d-flex-j-between content auction_button_finish_buyer"
                          style="display: none; align-items: center; cursor: pointer;">
                         <span class="width-80p margin-left-right-10 text-black">상품이 낙찰되었습니다!</span>
                         <input class="goChat btn btn-primary width-80p margin-left-right-10" onclick="goChatToBidId()"
-                               value="판매자와 거래하기">
+                               value="판매자와 거래하기" inputmode="none">
                     </div>
                     <div class="auction_finish" style="display: none;">
                         <span class="margin-left-right-10 text-black">낙찰자 아이디: </span>
@@ -391,6 +391,9 @@
             #sample01 {
                 color: red;
             }
+            #selId{
+                cursor: pointer;
+            }
 
         </style>
     </div>
@@ -417,6 +420,7 @@
     $(document).ready(function () {
         getProductDetail();
         selectAuction();
+
     });
 
     function doBxslider(props) {
@@ -565,6 +569,7 @@
             $('#startPrice').text(data.dataDetail.prodPrc);
             $('#priceInput').val(parseInt($('#currentPrice').text()) + 1000);
             $('#selId').text(data.dataDetail.selId);
+            $('#selId').attr('onclick', 'goChatToId("' + data.dataDetail.selId + '")');
             $('#detailView').text(data.dataDetail.prodView);
             if (data.dataDetail.selId == $('#p_id').val()) {
                 buttonCheck(1);

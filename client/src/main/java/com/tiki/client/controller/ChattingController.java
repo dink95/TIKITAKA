@@ -37,7 +37,6 @@ public class ChattingController {
         Cookie tokenCookie =WebUtils.getCookie(request, "token");
         Map<String, Object> resultMap = new HashMap<>();
         int result = 0;
-        System.out.println(chatDTO);
         try {
             result = chatService.createChat(chatDTO,idCookie.getValue(),tokenCookie.getValue());
             if (result > 0) {

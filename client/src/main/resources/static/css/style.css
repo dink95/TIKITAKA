@@ -1669,7 +1669,10 @@ figure > img {
   border: 1px solid #e02828;
   border-radius: 100px;
 }
-
+ header {
+  max-width: 100%;
+  overflow-x: hidden;
+}
 /********************************반응형********************************/
 
 .site-wrap{
@@ -2053,7 +2056,7 @@ figure > img {
   }
   .col-3.col-md-3.order-2.order-md-3.text-right{
     max-width: unset;
-    min-width: 75%;
+
   }
   .site-navbar .site-navigation .site-menu > li {
     margin: 0 1%;
@@ -2210,7 +2213,7 @@ figure > img {
     border: 1px solid #fff;
   }
   .form-control{
-    height: 50px;
+    height: 40px;
   }
 
 }

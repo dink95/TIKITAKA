@@ -177,6 +177,9 @@
     <div th:replace="common::mobile(detail)"></div>
 
     <style>
+        #selId{
+            cursor: pointer;
+        }
         @media screen and (max-width: 575px) {
             .site-section {
                 padding: 0;
@@ -413,7 +416,6 @@
             console.log("data.memberDetail", data.memberDetail);
             $('#detailAddr').text(data.memberDetail.mbrAddr);
             getMap(data.memberDetail.mbrAddr);
-
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
         });
@@ -503,6 +505,7 @@
             $('#detailName').text(data.dataDetail.prodNm);
             $('#detailPrice').text(data.dataDetail.prodPrc);
             $('#selId').text(data.dataDetail.selId);
+            $('#selId').attr('onclick', 'goChatToId("' + data.dataDetail.selId + '")');
             $('#detailView').text(data.dataDetail.prodView);
             if (data.dataDetail.selId == $('#p_id').val()) {
                 buttonCheck(1);
