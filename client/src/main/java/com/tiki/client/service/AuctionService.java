@@ -47,6 +47,7 @@ public class AuctionService {
     }
 
     public int insertBiddingProduct(BidDTO bidDTO){
+        System.out.println(bidDTO);
         return webClient.post()
                 .uri("/auction/bid")
                 .body(Mono.just(bidDTO), BidDTO.class)

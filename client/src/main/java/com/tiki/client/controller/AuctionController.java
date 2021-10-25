@@ -116,19 +116,38 @@ public class AuctionController {
 
     @RequestMapping(value = "/bid/select") /*입찰중 상품들 번호 조회*/
     @ResponseBody
-    public Map<String,Object> selectAllBiddingProduct(@RequestParam(value = "mbrId") String mbrId,
-                                            HttpServletRequest request,
+    public Map<String,Object> selectAllBiddingProduct(HttpServletRequest request,
                                             HttpServletResponse response) {
         List<Object> list = null;
         Map<String ,Object> resultMap = new HashMap<>();
         Cookie idCookie = WebUtils.getCookie(request, "mbrId");
         try {
-            list= auctionService.selectAllBiddingProduct(mbrId);
+            list= auctionService.selectAllBiddingProduct(idCookie.getValue());
             resultMap.put("dataBidList", list);
 
         }catch (Exception e) {
             e.printStackTrace();
         }
+        return resultMap;
+    }
+
+    @RequestMapping("/bid/create")  /*입찰중 insert*/
+    @ResponseBody
+    public Map<String,Object> insertBiddingProduct(BidDTO bidDTO) {
+        Map<String,Object> resultMap = new HashMap<>();
+        int result = 0;
+
+        try {
+            result = auctionService.insertBiddingProduct(bidDTO);
+            if (result > 0) {
+                resultMap.put("resultCode", 200);
+            }else {
+                resultMap.put("resultCode", 400);
+            }
+        } catch (Exception e) {
+            resultMap.put("resultCode", 500);
+        }
+
         return resultMap;
     }
 
