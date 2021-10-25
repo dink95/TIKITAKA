@@ -39,11 +39,12 @@ public class BuyListController {
 
     @RequestMapping("/buyList/all")  /*상품 아이디 검색 리스트(구매완료) */
     @ResponseBody
-    public Map<String,Object> buyList(@RequestParam(value="buyerId") String buyerId ) {
+    public Map<String,Object> buyList(HttpServletRequest request ) {
+        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
         Map<String,Object> resultMap = new HashMap<>();
         List<Object> list = null;
         try {
-            list= buyListService.selectBuyList(buyerId);
+            list= buyListService.selectBuyList(idCookie.getValue());
             resultMap.put("dataQueryList", list);
         } catch (Exception e) {
             e.printStackTrace();

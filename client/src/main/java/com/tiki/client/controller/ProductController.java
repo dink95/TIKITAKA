@@ -66,6 +66,8 @@ public class ProductController {
                 view.addObject("resultCode", 200);
                 view.addObject("catNo", productDTO.getCatNo());
                 view.addObject("prodPrc",productDTO.getProdPrc());
+                view.addObject("prodNo",result);
+
             }else {
                 view.addObject("resultCode", 400);
             }
@@ -179,7 +181,6 @@ public class ProductController {
 
         try {
             list= productService.productQuerytListHighPrice(prodNm, catNo);
-            System.out.println("@QueryList"+ list);
             resultMap.put("dataQueryList", list);
 
         } catch (Exception e) {
@@ -196,7 +197,6 @@ public class ProductController {
 
         try {
             list= productService.productQuerytListLowPrice(prodNm, catNo);
-            System.out.println("@QueryList"+ list);
             resultMap.put("dataQueryList", list);
 
         } catch (Exception e) {
@@ -213,7 +213,6 @@ public class ProductController {
         System.out.println(prodNm);
         try {
             list= productService.productQueryProdNmList(prodNm);
-            System.out.println("@QueryList"+ list);
             resultMap.put("dataQueryList", list);
 
         } catch (Exception e) {
@@ -263,7 +262,6 @@ public class ProductController {
         System.out.println(catNo);
         try {
             list= productService.productQueryCatNoList(catNo);
-            System.out.println("@QueryList"+ list);
             resultMap.put("dataQueryList", list);
 
         } catch (Exception e) {
@@ -280,7 +278,6 @@ public class ProductController {
         System.out.println(catNo);
         try {
             list= productService.productQueryCatNoListHighPrice(catNo);
-            System.out.println("@QueryList"+ list);
             resultMap.put("dataQueryList", list);
 
         } catch (Exception e) {
@@ -297,7 +294,6 @@ public class ProductController {
         System.out.println(catNo);
         try {
             list= productService.productQueryCatNoListLowPrice(catNo);
-            System.out.println("@QueryList"+ list);
             resultMap.put("dataQueryList", list);
 
         } catch (Exception e) {
@@ -353,7 +349,6 @@ public class ProductController {
         List<Object> list = null;
         try {
             list= productService.productQuerySelIdListFinish(idCookie.getValue(),tokenCookie.getValue());
-            System.out.println("@QueryList"+ list);
             resultMap.put("dataQueryList", list);
 
         } catch (Exception e) {

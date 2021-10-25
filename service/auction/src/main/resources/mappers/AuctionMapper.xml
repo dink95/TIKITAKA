@@ -6,9 +6,9 @@
 
 
     <insert id="insertAuction" parameterType="AuctionDTO">
-        INSERT INTO auction ( auc_end_time, starting_bid, prod_no
+        INSERT INTO auction ( auc_end_time, starting_bid, prod_no, end_bid
         ) VALUES
-         ((select date_add(current_timestamp(),interval 1 day)), #{startingBid},#{prodNo})
+         ((select date_add(current_timestamp(),interval 1 day)), #{startingBid},#{prodNo},#{startingBid})
     </insert>
 
     <update id="updateBid" parameterType="AuctionDTO">
@@ -35,8 +35,7 @@
     </select>
 
     <insert id="insertBiddingProduct" parameterType="BidDTO">
-        INSERT INTO bid ( bid_prod_no, bid_bidder, bid_bid
-        ) VALUES
+        INSERT INTO bid ( bid_prod_no, bid_bidder, bid_bid) VALUES
             (#{bidProdNo}, #{bidBidder},#{bidBid})
     </insert>
 
