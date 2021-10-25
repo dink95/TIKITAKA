@@ -423,7 +423,6 @@
         //구매완료 상품 조회
         else if($('#finishCheck').val() == 'buyProd'){
             param = {
-                buyerId: $('#p_id').text(),
             }
             $.ajax({
                 url: '/buyList/all',
@@ -457,7 +456,6 @@
         //입찰중 상품 조회
         else if($('#finishCheck').val() == 'bidProd'){
             param={
-                mbrId:"user"
             }
             $.ajax({
                 url: '/bid/select',

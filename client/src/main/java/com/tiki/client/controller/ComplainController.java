@@ -79,7 +79,7 @@ import java.util.Map;
 
         try{
             int totalCount = complainService.getTotalCount(searchDTO,idCookie.getValue(),tokenCookie.getValue());
-            System.out.println("@@totalCount:" + totalCount);
+
             //페이징 처리 객체를 선언한다.
             PagingDTO pagingDTO = new PagingDTO();
             //구해온 전체 리스트 개수를 페이지처리 객체에 넣는다.
@@ -89,7 +89,6 @@ import java.util.Map;
 
             searchDTO.setStart(pagingDTO.getStartRow());
             searchDTO.setEnd(pagingDTO.getCountPerPage());
-            System.out.println("@@start:" + searchDTO.getStart() + " " + "@@end:" + searchDTO.getEnd());
 
             //페이지에 뿌릴 데이터를 가져온다.
             compList = complainService.selectAllComplains(searchDTO,idCookie.getValue(),tokenCookie.getValue());
@@ -184,7 +183,7 @@ import java.util.Map;
 
             try{
                 int totalCount = complainService.getTotalCount(searchDTO,idCookie.getValue(),tokenCookie.getValue());
-                System.out.println("@@totalCount:" + totalCount);
+
                 //페이징 처리 객체를 선언한다.
                 PagingDTO pagingDTO = new PagingDTO();
                 //구해온 전체 리스트 개수를 페이지처리 객체에 넣는다.
@@ -194,7 +193,7 @@ import java.util.Map;
 
                 searchDTO.setStart(pagingDTO.getStartRow());
                 searchDTO.setEnd(pagingDTO.getCountPerPage());
-                System.out.println("@@start:" + searchDTO.getStart() + " " + "@@end:" + searchDTO.getEnd());
+
 
                 //페이지에 뿌릴 데이터를 가져온다.
                 compList = complainService.selectByRepo(repo,idCookie.getValue(),tokenCookie.getValue());
