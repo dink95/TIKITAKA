@@ -630,7 +630,7 @@
     //채팅 버튼 클릭시 채팅방 입장
     function goChat() {   //로그인 여부 확인
         if ($('#p_id').val()) {
-            prodNo = searchParam('prodNo');
+            var prodNo = searchParam('prodNo');
             var top = Math.random() * 100 + 100;
             var left = Math.random() * 100 + 600;
             newWindow("MyWindow");

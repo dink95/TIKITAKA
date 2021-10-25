@@ -171,7 +171,7 @@ public class ProductController {
 
 
     // 검색 결과 보기 판매자 이름으로
-    @GetMapping(value = "/prod/result/selId/{selId}")
+    @GetMapping(value = "/prd/result/selId/{selId}")
     public List resultSelIdList(@PathVariable("selId") String selId) {
         List<ProductDTO> productList = productService.resultById(selId);
 
@@ -179,7 +179,7 @@ public class ProductController {
     }
 
     // 경매 상품 결과 보기 판매자 이름으로
-    @GetMapping(value = "/prod/result/selId/auc/{selId}")
+    @GetMapping(value = "/prd/result/selId/auc/{selId}")
     public List resultSelIdListAuc(@PathVariable("selId") String selId) {
         List<ProductDTO> productList = productService.resultByIdAuc(selId);
 
@@ -187,7 +187,7 @@ public class ProductController {
     }
 
     // 검색 결과 보기 판매자 이름으로(판매완료)
-    @GetMapping(value = "/prod/result/selId/finish/{selId}")
+    @GetMapping(value = "/prd/result/selId/finish/{selId}")
     public List resultSelIdListFinish(@PathVariable("selId") String selId) {
         List<ProductDTO> productList = productService.resultByIdFinish(selId);
 

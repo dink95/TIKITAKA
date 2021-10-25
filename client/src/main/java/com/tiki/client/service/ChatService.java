@@ -23,8 +23,8 @@ public class ChatService {
     public int createChat(ChatDTO chatDTO,String mbrId, String token) throws Exception {
         return webClient.post()
                 .uri("/chat")
-                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .header(HttpHeaders.AUTHORIZATION,token)
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .body(Mono.just(chatDTO), ChatDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보

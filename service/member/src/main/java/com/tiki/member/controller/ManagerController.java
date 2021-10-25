@@ -1,6 +1,7 @@
 package com.tiki.member.controller;
 
 
+import com.tiki.member.configuration.CryptAES256;
 import com.tiki.member.domain.ManagerDTO;
 import com.tiki.member.service.ManagerService;
 import io.jsonwebtoken.Jwts;
@@ -28,7 +29,7 @@ public class ManagerController {
     }
 
     @PostMapping("/man/unAuth/login")
-    public String managerLogin(@RequestBody ManagerDTO managerDTO, HttpServletResponse response){
+    public String managerLogin(@RequestBody ManagerDTO managerDTO, HttpServletResponse response) throws Exception {
         ManagerDTO dto = service.selectManagerDetail(managerDTO.getManId());
 
         if(dto!=null && managerDTO.getManPwd().equals(dto.getManPwd())){
@@ -41,11 +42,10 @@ public class ManagerController {
                     .signWith(SignatureAlgorithm.HS512,"tiki")
                     .compact();
 
-            response.addHeader("token", token);
-            response.addHeader("userId",manId);
 
+            String result = CryptAES256.encryptAES256(token,manId);
 
-            return dto.getManId();
+            return result;
 
         }
         else

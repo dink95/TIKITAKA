@@ -1379,7 +1379,8 @@ textarea:focus{
 
 .gridContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, auto));
+  /*grid-template-columns: repeat(auto-fill, minmax(200px, auto));*/
+  grid-template-columns: repeat(5,1fr);
   row-gap: 10px;
   column-gap: 10px;
 }
@@ -1707,7 +1708,7 @@ figure > img {
 
 .mobile_nav {
   width: 100%;
-  position: fixed;
+  position: sticky;
   bottom: 0;
   border-top: 1px solid #dddddd5e;
   z-index: 2000;
@@ -1744,10 +1745,6 @@ figure > img {
 .cate_a:hover{
   color: #000!important;
 }
-
-
-
-
 
 
 /*모바일 검색창*/
@@ -2019,8 +2016,23 @@ figure > img {
   .aic2 >span{
     font-size: 14px;
   }
+  .gridContainer {
+    display: grid;
+    /*grid-template-columns: repeat(auto-fill, minmax(200px, auto));*/
+    grid-template-columns: repeat(4,1fr);
+    row-gap: 10px;
+    column-gap: 10px;
+  }
 }
 @media screen and (max-width: 991px){
+
+  .gridContainer {
+    display: grid;
+    /*grid-template-columns: repeat(auto-fill, minmax(200px, auto));*/
+    grid-template-columns: repeat(3,1fr);
+    row-gap: 10px;
+    column-gap: 10px;
+  }
   .site-navbar .site-top-icons ul, .site-navbar .site-top-icons ul li {
     font-size: 12px;
   }
@@ -2060,9 +2072,8 @@ figure > img {
   }
 }
 /* 모바일 수평 스크롤 금지 */
-html, body {
-  max-width: 100%;
-  overflow-x: hidden;
+.container {
+  /*overflow-x: hidden;*/
 }
 @media screen and (max-width: 575px) {
   .pageName{
@@ -2176,7 +2187,7 @@ html, body {
   .gridContainer {
     display: grid;
     /*grid-template-columns: repeat(auto-fill, minmax(150px, auto));*/
-    grid-template-columns: repeat(auto-fill, minmax(165px, auto));
+    grid-template-columns: repeat(2,1fr);
     row-gap: 10px;
     column-gap: 10px;
   }
@@ -2227,7 +2238,7 @@ html, body {
   }
   .gridContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, auto));
+    grid-template-columns: repeat(1,1fr);
     row-gap: 10px;
     column-gap: 10px;
   }

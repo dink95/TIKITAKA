@@ -43,6 +43,7 @@ public class ProductController {
         System.out.println(productDTO);
         try {
             result = productService.createProduct(productDTO,idCookie.getValue(),tokenCookie.getValue());
+            int catNo = productDTO.getCatNo();
             List<MultipartFile> fileList = multi.getFiles("file");
 //           String path = "c:/tmp/"+Integer.toString(result)+"/";
             String path = "/Users/gimmugyeong/tmp/" +Integer.toString(result)+"/";
@@ -64,6 +65,7 @@ public class ProductController {
             if (result > 0) {
                 view.addObject("resultCode", 200);
                 view.addObject("catNo", productDTO.getCatNo());
+                view.addObject("prodPrc",productDTO.getProdPrc());
             }else {
                 view.addObject("resultCode", 400);
             }
@@ -144,7 +146,6 @@ public class ProductController {
 
         try {
             list= productService.productList();
-            System.out.println("@list"+ list);
             resultMap.put("dataList", list);
 
         } catch (Exception e) {
@@ -162,7 +163,6 @@ public class ProductController {
 
         try {
             list= productService.productQuerytList(prodNm, catNo);
-            System.out.println("@QueryList"+ list);
             resultMap.put("dataQueryList", list);
 
         } catch (Exception e) {
@@ -374,6 +374,7 @@ public class ProductController {
     @RequestMapping(value = "/product/detail.do") /*상품 상세 정보*/
     @ResponseBody
     public Map<String,Object> productDetail(@RequestParam(value = "prodNo") Integer prodNo) {
+
         Map<String ,Object> resultMap = new HashMap<>();
         try {
             ProductDTO productDTO = productService.productDetail(prodNo);

@@ -111,7 +111,7 @@ public class ProductService {
     //사용자 화면에서 보는 판매중
     public List productQuerySelIdList(String selId,String token) throws Exception {
         return webClient.get()
-                .uri("/prod/result/selId/{selId}",selId)
+                .uri("/prd/result/selId/{selId}",selId)
                 .header(HttpHeaders.AUTHORIZATION,token)
                 .header(HttpHeaders.AUTHORIZATION,selId)
                 .retrieve()
@@ -122,7 +122,7 @@ public class ProductService {
     //사용자 화면에서 보는 경매중
     public List productQuerySelIdListAuc(String selId,String token) throws Exception {
         return webClient.get()
-                .uri("/prod/result/selId/auc/{selId}",selId)
+                .uri("/prd/result/selId/auc/{selId}",selId)
                 .header(HttpHeaders.AUTHORIZATION,token)
                 .header(HttpHeaders.AUTHORIZATION,selId)
                 .retrieve()
@@ -133,7 +133,7 @@ public class ProductService {
     //사용자화면에서 보는 판매완료
     public List productQuerySelIdListFinish(String selId,String token) throws Exception {
         return webClient.get()
-                .uri("/prod/result/selId/finish/{selId}",selId)
+                .uri("/prd/result/selId/finish/{selId}",selId)
                 .header(HttpHeaders.AUTHORIZATION,token)
                 .header(HttpHeaders.AUTHORIZATION,selId)
                 .retrieve()

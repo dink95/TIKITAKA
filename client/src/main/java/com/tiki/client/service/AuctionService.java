@@ -64,7 +64,7 @@ public class AuctionService {
                 .block();
     }
 
-    public List<String> selectAllBiddingProduct(String mbrId){
+    public List selectAllBiddingProduct(String mbrId){
         return webClient.get()
                 .uri("/auction/bid/{id}",mbrId)
                 .retrieve()

@@ -37,7 +37,7 @@ public class MemberService {
                 .block();
     }
 
-    public MemberDTO Detail(String id, String token){
+    public MemberDTO Detail(String id, String token) throws Exception{
         return webClient.get()
                 .uri("/mbr/Auth/{id}",id)
                 .header(HttpHeaders.AUTHORIZATION,token)
