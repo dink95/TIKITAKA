@@ -451,6 +451,24 @@
         });
     }
 
+    /*bid update*/
+    function updateBid(mbrId, endBid) {
+        var param = {
+            bidBid: endBid, //입찰가
+            bidBidder: mbrId,  //입찰자
+            bidProdNo: searchParam('prodNo')//상품번호
+        }
+        $.ajax({
+            url: '/bid/update',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+    }
+
     /*옥션 select*/
     function selectAuction() {
         var param = {
@@ -777,6 +795,7 @@
                     mbrId: mbrId
                 }));
                 updateAuction(mbrId, parseInt(message));
+                updateBid(mbrId,parseInt(message));
                 messageInput.val('');
             }
         });

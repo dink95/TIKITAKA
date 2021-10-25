@@ -151,4 +151,25 @@ public class AuctionController {
         return resultMap;
     }
 
+    @RequestMapping("/bid/update")  /*입찰 update*/
+    public ModelAndView updateBid(BidDTO bidDTO) {
+        ModelAndView view = new ModelAndView();
+
+        int result = 0;
+        try {
+            result = auctionService.updateBiddingProduct(bidDTO);
+            System.out.println(bidDTO);
+            if (result > 0) {
+                view.addObject("resultCode", 200);
+            }else {
+                view.addObject("resultCode", 400);
+            }
+        } catch (Exception e) {
+            System.out.println("!@#!@#!2");
+            view.addObject("resultCode", 500);
+        }
+        view.setViewName("product/create_result");
+        return view;
+    }
+
 }
