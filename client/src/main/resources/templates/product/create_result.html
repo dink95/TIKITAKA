@@ -72,20 +72,6 @@
                     console.log(textStatus);
                 });
 
-                /*Bid insert*/
-                var param = {
-                    bidProdNo:prodNo, //상품번호
-                }
-                $.ajax({
-                    url: '/bid/create',
-                    data: param,
-                    type: 'post',
-                    dataType: 'json'
-                }).done(function (data) {
-                }).fail(function (data, textStatus, errorThrown) {
-                    console.log(textStatus);
-                });
-
             }
                 popup('알림메세지', '상품이 등록되었습니다.', '/');
 

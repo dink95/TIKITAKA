@@ -185,8 +185,8 @@
                                value="판매자와 거래하기">
                     </div>
                     <div class="auction_finish" style="display: none;">
-                    <span class="margin-left-right-10 text-black">낙찰자 아이디: </span>
-                    <span id="bidId" class=" margin-left-right-10 text-black"></span>
+                        <span class="margin-left-right-10 text-black">낙찰자 아이디: </span>
+                        <span id="bidId" class=" margin-left-right-10 text-black"></span>
                     </div>
                 </div>
 
@@ -451,15 +451,16 @@
         });
     }
 
-    /*bid update*/
-    function updateBid(mbrId, endBid) {
+
+    /*Bid insert*/
+    function insertBid(mbrId, endBid) {
         var param = {
-            bidBid: endBid, //입찰가
-            bidBidder: mbrId,  //입찰자
-            bidProdNo: searchParam('prodNo')//상품번호
+            bidProdNo: searchParam('prodNo'), //상품번호
+            bidBidder: mbrId,
+            bidBid: endBid
         }
         $.ajax({
-            url: '/bid/update',
+            url: '/bid/create',
             data: param,
             type: 'post',
             dataType: 'json'
@@ -467,6 +468,7 @@
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
         });
+
     }
 
     /*옥션 select*/
@@ -482,7 +484,7 @@
         }).done(function (data) {
 
             var year = data.auctionDetail.aucEndTime.substring(0, 4);
-            var month = data.auctionDetail.aucEndTime.substring(5, 7)-1;
+            var month = data.auctionDetail.aucEndTime.substring(5, 7) - 1;
             var day = data.auctionDetail.aucEndTime.substring(8, 10);
             var hour = data.auctionDetail.aucEndTime.substring(11, 13);
             var minute = data.auctionDetail.aucEndTime.substring(14, 16);
@@ -658,7 +660,7 @@
             if (distDt < 0) {
                 clearInterval(timer);
                 document.getElementById(id).textContent = '경매가 종료되었습니다!';
-                $('.auction_finish').css('display','block')
+                $('.auction_finish').css('display', 'block')
                 $('.auction_button').css('display', 'none');
                 //경매 종료시 판매자 버튼 활성화
                 var param = {
@@ -795,7 +797,7 @@
                     mbrId: mbrId
                 }));
                 updateAuction(mbrId, parseInt(message));
-                updateBid(mbrId,parseInt(message));
+                insertBid(mbrId, parseInt(message));
                 messageInput.val('');
             }
         });
