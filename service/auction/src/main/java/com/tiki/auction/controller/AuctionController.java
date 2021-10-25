@@ -34,14 +34,14 @@ public class AuctionController {
 
 
     @PostMapping("/auction/bid")
-    public int insertBiddingProduct(BidDTO bidDTO){
+    public int insertBiddingProduct(@RequestBody BidDTO bidDTO){
         System.out.println(bidDTO);
         return service.insertBiddingProduct(bidDTO);
     }
 
 
     @PatchMapping("/auction/bid")
-    public int updateBiddingProduct(BidDTO bidDTO){
+    public int updateBiddingProduct(@RequestBody BidDTO bidDTO){
         return service.updateBiddingProduct(bidDTO);
     }
 
