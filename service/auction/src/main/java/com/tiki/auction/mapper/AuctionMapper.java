@@ -21,5 +21,6 @@ public interface AuctionMapper {
 
     public List<BidDTO> selectAllBiddingProduct(String mbrId);
 
+    public BidDTO selectBidding(BidDTO bidDTO);
 
 }

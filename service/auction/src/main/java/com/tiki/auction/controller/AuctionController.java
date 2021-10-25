@@ -15,17 +15,9 @@ public class AuctionController {
     @Autowired
     private AuctionService service;
 
-
-    //insert와 update동시에 호출 시, 발생하는 오류를 해결하기 위해 select를 통한 사전 확인 후 결정
     @PostMapping("/auction")
     public int insertAuction(@RequestBody AuctionDTO auctionDTO){
-
-        if(service.selectAuction(auctionDTO.getProdNo())==null){
-            return service.insertAuction(auctionDTO);
-        }else{
-            return service.updateBid(auctionDTO);
-        }
-
+        return service.insertAuction(auctionDTO);
     }
 
     @PatchMapping("/auction")
@@ -43,8 +35,11 @@ public class AuctionController {
 
     @PostMapping("/auction/bid")
     public int insertBiddingProduct(@RequestBody BidDTO bidDTO){
-        System.out.println(bidDTO);
-        return service.insertBiddingProduct(bidDTO);
+        if(service.selectBidding(bidDTO)!=null){
+            return service.updateBiddingProduct(bidDTO);
+        }else {
+            return service.insertBiddingProduct(bidDTO);
+        }
     }
 
 
