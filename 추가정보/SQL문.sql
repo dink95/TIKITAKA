@@ -97,3 +97,12 @@ foreign key(SEND_ID) references MBR(MBR_ID) on update cascade on delete CASCADE,
 foreign key(RECIPIENT_ID) references MBR(MBR_ID) on update cascade on delete CASCADE
 );
 
+CREATE TABLE bid(
+BID_PROD_NO INT UNIQUE,
+BID_BIDDER varchar(20),
+BID_BID INT,
+foreign key(BID_PROD_NO) references prod(PROD_NO) on update cascade on delete CASCADE,
+foreign key(BID_BIDDER) references mbr(MBR_ID) on update cascade on delete CASCADE
+);
+
+
