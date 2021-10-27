@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta meta http-equiv="content-type" content="text/html;" charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
     <title>채팅</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
     <link rel="preconnect" href="/https://fonts.gstatic.com">
     <link rel="stylesheet" href="/fonts/icomoon/style.css">
     <link rel="stylesheet" href="/css/style.css">
@@ -13,7 +14,9 @@
     <link rel="stylesheet" href="/css/jquery-ui.css">
 </head>
 <body>
-<div class="site-wrap">
+
+
+    <input type="hidden" id="login_id" th:value="${#locale}">
     <div class="popupLayout">
         <div class="popup">
             <div class="popupTitleNav">
@@ -27,11 +30,7 @@
             </div>
         </div>
     </div>
-    <header>
-        <!--replace 헤더-->
-        <div th:replace="common::header(myinfo)">
-        </div>
-    </header>
+
     <div class="chattingRoomTitle">
         <div class="titleProdContainer font-weight-normal font-20">
             <img class="titleImg" src="" alt="">
@@ -59,7 +58,7 @@
             <div class="textareaContainer" onkeydown="resize(this);" onkeyup="resize(this);">
                     <textarea class="chatInput autosize" onkeydown="resize(this); validation();"
                               onkeyup="resize(this); validation();" name="chatText" id="chatText"
-                              rows="3" cols="10" wrap="hard" placeholder="메세지를 입력하세요."></textarea></div>
+                              rows="3" cols="10" wrap="hard" placeholder="메세지를 입력하세요." ></textarea></div>
 
             <span type="button" id="submitSpan" class="submitSpan"><img type="button" class="submitIcon"
                                                                         id="submitIcon"
@@ -73,25 +72,13 @@
     <div class="loading" style="display: none">
         <img id="loading-image" src="/images/ajax-loader.gif" alt="전송중..."/>
     </div>
-</div>
+
 
 </body>
 <style>
-    .popup{
-        width: 300px;
-        height: 150px;
-    }
-    body {
-        margin: 0;
-        padding: 0;
-    }
 
-    header {
-        display: none;
-    }
-
-    body::-webkit-scrollbar {
-        display: none; /* Chrome, Safari, Opera*/
+    .col-md-6 {
+        max-width: unset;
     }
 
     input::-webkit-scrollbar {
@@ -201,7 +188,6 @@
         /*position: absolute;*/
         width: 100%;
         overflow: scroll;
-        height: 500px;
         padding-inline-start: 0;
         list-style-type: none;
         margin-block-start: 0;
@@ -218,17 +204,16 @@
     }
 
     .chatForm {
-        align-items: flex-end;
-        height: auto;
+        align-items: center;
+
     }
 
     .textareaContainer {
+        margin: 5px 0 5px 7px;
         word-break: break-all;
         background: #ecebf5;
-        width: 90%;
+        width: 100%;
         height: 35px;
-        margin-top: 15px;
-        margin-bottom: 20px;
         border-radius: 20px;
         font-size: 17px;
         font-weight: normal;
@@ -258,23 +243,23 @@
     .submitIcon {
         visibility: hidden;
         margin-left: -43px;
-        margin-bottom: 14px;
+        margin-bottom: -7px;
     }
 
     .content {
         border: 1px solid #000;
-        margin: 0 5px;
-        padding: 3px 10px;
-        font-size: 13px;
+        margin: 3px 10px;
+        padding: 5px 10px;
+        font-size: 15px;
         word-break: break-all;
     }
 
     .myContent {
-        border-radius: 15px 0px 15px 15px;
+        border-radius: 30px 0px 30px 30px;
     }
 
     .oponentContent {
-        border-radius: 0px 15px 15px 15px;
+        border-radius: 0px 30px 30px 30px;
     }
 
     .chatMessage {
@@ -319,13 +304,14 @@
 <script>
     /********************** 실행 함수 ********************/
 
-    // $('.chatContent').scrollTop($('.chatContent')[0].scrollHeight);
-    // if ($('.chatInput').val() == '') {
-    //     inputHeightReset();
-    // }
 
 
+    $('.chatContent').scrollTop($('.chatContent')[0].scrollHeight);
+    if ($('.chatInput').val() == '') {
+        inputHeightReset();
+    }
     $(document).ready(function () {
+        $('.chatContent').css("height",window.innerHeight-115);
         $('.loading').css('display', 'block');
     });
 
@@ -374,7 +360,7 @@
     function autoRefresh_div() {
         var currentLocation = window.location;
         $("header").load(currentLocation + "header");
-        if ($('#login_id').text() != searchParam('sendId')) {
+        if ($('#login_id').val() != searchParam('sendId')) {
             window.close();
         }
     }
@@ -523,7 +509,7 @@
                 $('.titleProdFinishBtn').attr('disabled',true);
                 $('.titleProdFinishBtn' ).removeClass( 'btn' );
             }
-            else if(data.dataDetail.selId != $('#login_id').text()){
+            else if(data.dataDetail.selId != $('#login_id').val()){
                 $('.titleProdFinishBtn').text('판매중');
                 $('.titleProdFinishBtn').attr('disabled',true);
                 $('.titleProdFinishBtn' ).removeClass( 'btn' );
@@ -540,7 +526,7 @@
         param = {
             prodNo: searchParam('prodNo'),
             roomNo: searchParam('roomNo'),
-            loginId: $('#login_id').text()
+            loginId: $('#login_id').val()
         }
 
         $.ajax({
@@ -559,7 +545,7 @@
         param = {
             prodNo: searchParam('prodNo'),
             roomNo: searchParam('roomNo'),
-            loginId: $('#login_id').text()
+            loginId: $('#login_id').val()
         }
         $.ajax({
             url: '/chat/readCount',
@@ -578,7 +564,7 @@
         param = {
             prodNo: searchParam('prodNo'),
             roomNo: searchParam('roomNo'),
-            loginId: $('#login_id').text()
+            loginId: $('#login_id').val()
         }
         $.ajax({
             url: '/chat/sendCount',
@@ -626,7 +612,7 @@
     function goProdFinish() {
             param = {
                 prodNo: searchParam('prodNo'),
-                selId: $('#login_id').text(),
+                selId: $('#login_id').val(),
             }
             $.ajax({
                 url: '/product/prodfinish',
@@ -636,7 +622,7 @@
             }).done(function (data) {
                 if(data.resultCode == 200) {
                     //점수 업데이트
-                    updatePoint($('#login_id').text());
+                    updatePoint($('#login_id').val());
                     popup('알림메세지', '거래가 완료되었습니다.', 'reload');
                 }else{
                     alert("실패하였습니다. 관리자에게 문의하세요.");
@@ -693,7 +679,7 @@
 
     function drawOpponentId() {
         // //채팅 상단 상대방 이름 그리기
-        var loginId = $('#login_id').text();
+        var loginId = $('#login_id').val();
         var sendId = searchParam('sendId');
         var recipientId = searchParam('recipientId');
         var opponentId;
@@ -704,6 +690,7 @@
             opponentId = recipientId;
         }
         titleUserId.text(opponentId);
+
         //title id 클릭
         titleUserId.attr('onclick', 'goChatToId("' + opponentId + '")');
 
@@ -724,7 +711,7 @@
                 // 매번 컨텐츠가 달라야하니 초기화
                 contents = '';
                 //시간 분류하기
-                var loginId = $('#login_id').text();// 채팅방 접속 아이디
+                var loginId = $('#login_id').val();// 채팅방 접속 아이디
                 var year = obj.sendtime.substring(0, 4);
                 var month = obj.sendtime.substring(5, 7);
                 var day = obj.sendtime.substring(8, 10);

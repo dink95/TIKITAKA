@@ -12,6 +12,7 @@ import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,16 +122,15 @@ public class ChattingController {
 
     @RequestMapping("/chat/list/id")  /*채팅방 목록 보기 */
     @ResponseBody
-    public Map<String, Object> chatListById(@RequestParam(value = "sendId") String sendId,
-                                            HttpServletRequest request) {
+    public Map<String, Object> chatListById(HttpServletRequest request) {
         Cookie idCookie =WebUtils.getCookie(request, "mbrId");
         Cookie tokenCookie =WebUtils.getCookie(request, "token");
         Map<String, Object> resultMap = new HashMap<>();
-        List<Object> list = null;
         try {
-            list = chatService.chatListById(sendId,idCookie.getValue(),tokenCookie.getValue());
+            List<Object> list = new ArrayList<>();
+            list = chatService.chatListById(idCookie.getValue(),tokenCookie.getValue());
             resultMap.put("chatList", list);
-        } catch (Exception e) {
+        }catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -152,7 +152,7 @@ public class ChattingController {
             readCount = chatService.selectReadCount(prodNo,roomNo,loginId,idCookie.getValue(),tokenCookie.getValue());
             resultMap.put("readCount",readCount);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         return resultMap;
     }

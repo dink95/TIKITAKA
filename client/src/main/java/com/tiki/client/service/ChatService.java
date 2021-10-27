@@ -54,9 +54,9 @@ public class ChatService {
     }
 
     //채팅 목록 -> 특정 아이디로 조회
-    public List chatListById(String sendId,String mbrId, String token) throws Exception {
+    public List chatListById(String mbrId, String token) throws Exception  {
         return webClient.get()
-                .uri("/chat/existChat/{sendId}",sendId)
+                .uri("/chat/existChat/{sendId}",mbrId)
                 .header(HttpHeaders.AUTHORIZATION,token)
                 .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .retrieve()

@@ -20,18 +20,32 @@
 </head>
 
 <body>
+<div class="site-wrap">
+  <header class="site-navbar" role="banner">
+    <!--replace 헤더-->
+    <div class="site-navbar-top" th:replace="common::header(product_view)">
+    </div>
+    <!------------->
+    <!--replace-login-------------------------------->
 
+    <nav class="site-navigation text-right text-md-center" role="navigation"
+         th:replace="common::menu(product_view)">
+    </nav>
+    <!----------------------------------------------------------->
+  </header>
 
 <div>
-  <div class="profile">
-    프로필
-  </div>
-  <div class="userName">
-    userName
-  </div>
+
+
   <div class="site-section"><!--margin class-->
 
-    <div class="container" style="display: flex;">
+    <div class="container">
+      <div class="userNameDiv">
+        <span class="userName"></span>
+        <span style="font-weight: bold;color: #000;">님</span>
+      </div>
+
+      <div style="display: flex;">
         <div class="myinfoSubNav">
           <div class="myinfoSubGrade">
             <label for="p_grade" class="p_grade text-black">거래등급
@@ -53,6 +67,7 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
   <div class="container">
     <div class="prodContainer">
@@ -71,9 +86,10 @@
     <div class="gridContainer" style="">
 
     </div>
-
+  </div>
   </div>
 </div>
+
 <a id="arrow_up" class="scroll_up" onclick="scroll_up()"> </a>
 
 <script src="../js/jquery-3.3.1.min.js"></script>
@@ -96,20 +112,16 @@
     padding: 1em 0 1em 0;
   }
   .userName{
-    padding-top: 15px;
-    padding-bottom: 15px;
-    padding-left: 20px;
+
     font-weight: bold;
     color: #5e0080;
   }
-  .profile{
-    color: #000;
-    border-bottom: 1px solid #ddd;
-    font-weight: normal;
-    display: flex;
-    justify-content: center;
-    background: #ecebf5;
+  .userNameDiv{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 20px;
   }
+
 
   .myinfoContainer {
     display: flex;
@@ -506,6 +518,7 @@
   }
 
   $(document).ready(function () {
+    mobileSiteTop('프로필');
     getIdQueryList();
     getMbrInfo();
   });

@@ -82,7 +82,7 @@ public class MemberController {
      * @param id
      * @return
      */
-    @GetMapping("/mbr/Auth/{id}")
+    @GetMapping("/mbr/unAuth/{id}")
     public MemberDTO selectMemberById(@PathVariable("id") String id){
         return memberService.selectMemberDetail(id);
     }

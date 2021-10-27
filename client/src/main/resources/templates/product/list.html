@@ -123,6 +123,7 @@
             </div>
         </div>
     </div>
+    <a id="arrow_up" class="scroll_up" onclick="scroll_up()"></a>
 </div>
 
 <!-- 모바일 메뉴-->
@@ -360,7 +361,7 @@
 
     }
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 835px) {
 
         .detailCategoryTextNav > span , .underLine{
             width: 60px;
@@ -377,6 +378,7 @@
         .mainCategoryTextNav{
             display: none;
         }
+        
         .site-section {
             padding: 0em 0 5em 0;
         }
@@ -968,7 +970,7 @@
             contents = '';
             contents += '<img class="categoryIcon2" src="/icons/' + iconArr[iconNumber] + '" alt=""/>';
             contents += '<span>' + data.categoryDTO.catNm + '</span>';
-            mobileSiteTop(data.categoryDTO.catNm);
+            mobileSiteTop();
             container.append(contents);
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
@@ -1009,7 +1011,7 @@
             var count = 0;
             $.each(data.allcatList, function (index, obj) {
                 if (obj.catNo > parseInt(props / 10) * 10 && obj.catNo < parseInt(props / 10) * 10 + 10) {
-                        if (WinW <= 768) {
+                        if (WinW <= 835) {
                             width += 60;
                         }else{
                             width +=80;
@@ -1050,7 +1052,7 @@
 
             });
             //처음 페이지 접속시 세부 카테고리 active
-            if (WinW <= 768) {
+            if (WinW <= 835) {
                 getCategory(props, (props % 10) * 60);
             }else{
                 getCategory(props, (props % 10) * 80);

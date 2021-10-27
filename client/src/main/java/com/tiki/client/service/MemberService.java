@@ -37,11 +37,9 @@ public class MemberService {
                 .block();
     }
 
-    public MemberDTO Detail(String id, String token) throws Exception{
+    public MemberDTO Detail(String id) throws Exception{
         return webClient.get()
-                .uri("/mbr/Auth/{id}",id)
-                .header(HttpHeaders.AUTHORIZATION,token)
-                .header(HttpHeaders.AUTHORIZATION,id)
+                .uri("/mbr/unAuth/{id}",id)
                 .retrieve()
                 .bodyToMono(MemberDTO.class) //반환정보
                 .block();
@@ -151,11 +149,11 @@ public class MemberService {
                 .block();
     }
 
-    public int updateMemberGrade(MemberDTO memberDTO, String token){
+    public int updateMemberGrade(MemberDTO memberDTO,String mbrId, String token){
         return webClient.patch()
                 .uri("/mbr/Auth/grade")
                 .header(HttpHeaders.AUTHORIZATION,token)
-                .header(HttpHeaders.AUTHORIZATION,memberDTO.getMbrId())
+                .header(HttpHeaders.AUTHORIZATION,mbrId)
                 .body(Mono.just(memberDTO), MemberDTO.class)
                 .retrieve()
                 .bodyToMono(Integer.class) //반환정보

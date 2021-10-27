@@ -60,6 +60,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new ProcessInterceptor())
+                .addPathPatterns("/member/chatting/room")
                 .addPathPatterns("/auction/create")
                 .addPathPatterns("/auction/detail")
                 .addPathPatterns("/product/create")

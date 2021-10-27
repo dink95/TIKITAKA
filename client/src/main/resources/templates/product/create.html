@@ -581,7 +581,8 @@
             dataType: 'json'
         }).done(function (data) {
             if (!data.memberDetail.mbrRole) {
-                popup('알림메세지', '상품을 등록하시려면 이메일인증을 완료해주세요!', 'back');
+                var WinW = $(window).width();
+                popup('알림메세지', '상품을 등록하시려면 이메일인증을 완료해주세요!', 'back',WinW);
             }
         })
     }
