@@ -620,7 +620,11 @@ function goCatDetail(catNo) {
 }
 
 // 팝업창
-function popup(title, content, href) {
+function popup(title, content, href, WinW) {
+    if(WinW<=768){
+        $('.popup').css("width",'340px');
+        $('.popup').css("height","200px");
+    }
     $('.popupLayout').css('display', 'flex');
     $('#popupTitle').text(title);
     $('#popupContent').text(content);
@@ -641,8 +645,8 @@ function popup(title, content, href) {
     });
 }
 
-function goChatRoom(props) {
-    window.open('/member/chatting/room?sendId=' + props + '', '채팅방', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=100,left=100')
+function goChatRoom() {
+    window.open('/member/chatting/room', '채팅방', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700top=100,left=100')
 }
 
 function goChatRoomMobile(props) {
@@ -657,7 +661,8 @@ function goChatToProd(prodNo) {
 
 //채팅에서 아이디 클릭
 function goChatToId(userId) {
-    window.open('/member/userinfo?userId=' + userId + '', 'TIKITAKA', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=420,height=700,top=100,left=100')
+    location.href = '/member/userinfo?userId=' + userId + '';
+    // window.open('/member/userinfo?userId=' + userId + '', 'TIKITAKA', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=420,height=700,top=100,left=100')
 }
 
 //로그인 한 사람이 안읽은 메세지 개수 조회
@@ -691,18 +696,22 @@ function locationBack() {
 }
 
 function mobileSiteTop(props) {
-    console.log('siteTopMobile',props);
-
     var width = $(window).width();
     if (width <= 575) {
         if (props == 'home') {
             $('.mobile_search_hide_text').find('.arrowLeftIcon').css('display', 'none');
             $('.mobile_search_hide_text').find('.logo_img').css('display', 'block');
+            $('.mobile_category_icon_ul').css("display",'flex');
         } else {
             $('.mobile_search_hide_text').find('.arrowLeftIcon').css('display', 'block');
             $('.mobile_search_hide_text').find('.logo_img').css('display', 'none');
             $('.mobile_search_hide_text').find('.pageName').children('span').text(props);
+         $('.mobile_search_hide_text').css("margin-left","unset");
+            $('.mobile_search_hide_text').css("margin-right","unset");
+            $('.mobile_category_icon_ul').css("display",'none');
+
         }
+
     }
 }
 
@@ -783,6 +792,7 @@ $('.mobile_search_close_btn').click(function () {
 function goAuction(){
     location.href="/auction/list";
 }
+
 
 /**********************************************************************************************/
 

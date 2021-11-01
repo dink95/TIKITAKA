@@ -3,12 +3,9 @@
 
 <head>
     <title>TIKITAKA &ndash; 내 정보 </title>
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
     <link rel="stylesheet" href="../fonts/icomoon/style.css">
-
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/magnific-popup.css">
     <link rel="stylesheet" href="../css/jquery-ui.css">
@@ -17,6 +14,9 @@
     <link rel="stylesheet" href="../css/aos.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/icon.css">
+
+    <meta charset="utf-8">
+
 </head>
 
 <body>
@@ -60,7 +60,7 @@
                     <div>
                         <span id="p_addr"></span>
                     </div>
-                    <div>
+                    <div class="myInfoBtn">
                         <button id="infoLogoutBtn">
                             <a href="/logout">로그아웃</a>
                         </button>
@@ -106,7 +106,7 @@
     <div class="container">
         <div class="prodContainer">
             <div class="prod myProd" onclick="finishCheck('myProd')">
-                판매중
+                판매상품
             </div>
             <div class="prod finishProd" onclick="finishCheck('finishProd')">
                 판매완료
@@ -115,10 +115,10 @@
                 구매상품
             </div>
             <div class="prod auctionProd" onclick="finishCheck('auctionProd')">
-                경매중
+                경매상품
             </div>
             <div class="prod bidProd" onclick="finishCheck('bidProd')">
-                입찰중
+                입찰상픔
             </div>
         </div>
         <!--      판매중, 판매완료, 구매상품, 경매중, 입찰중 상품 조회-->
@@ -205,7 +205,7 @@
         outline: none;
     }
 
-    .myinfoMainNav > div:nth-child(3) > button:nth-child(2) {
+    .myinfoMainNav > div:nth-child(3) > button:nth-child(3) {
         color: red;
     }
 
@@ -321,6 +321,11 @@
         }
     }
 
+    @media screen and (max-width: 835px){
+        .myInfoBtn > button{
+            background: #eceaea;
+        }
+    }
     /*화면사이즈 768px*/
     @media screen and (max-width: 768px){
         .myinfoMainNav > div:nth-child(2) {
@@ -472,9 +477,12 @@
     }
 
     function getMbrInfo() {
+        param={
+            userId:$('#p_id').text()
+        }
         $.ajax({
             url: '/member/detail',
-            data: null,
+            data: param,
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
@@ -622,16 +630,17 @@
                     contents += '<div class="gridItem">';
                     contents += '    <div class="item">';
                     contents += '       <div class="block-4 text-center">';
-                    contents += '          <a href="#" onclick="goDetail(' + data.dataDetail.prodNo + ')">';
+                    contents += '          <a href="#" onclick="goAuction(' + data.dataDetail.prodNo + ')">';
                     contents += '               <figure class="block-4-image" >';
                     contents += '                    <img src="' + imgPath + '"  alt="Image placeholder"  class="img-fluid">';
                     contents += '                </figure>';
                     contents += '                <div class="block-4-text">';
-                    contents += '                    <h3 class="ItemName"><a href="#"  onclick="goDetail(' + data.dataDetail.prodNo + ')">' + textLengthOverCut(data.dataDetail.prodNm, 11, '...') + ' </a></h3>';
+                    contents += '                    <h3 class="ItemName"><a href="#"  onclick="goAuction(' + data.dataDetail.prodNo + ')">' + textLengthOverCut(data.dataDetail.prodNm, 11, '...') + ' </a></h3>';
                     contents += '                    <div class=priceContent>';
                     contents += '                    <p class="text-primary font-weight-bold">' + data.dataDetail.prodPrc + '원</p>';
-                    contents += '                    <span class="font-weight-normal">' + wday + '</span>';
-                    contents += '                    </div>';
+                    contents += '                    <p class="text-primary font-weight-normal">입찰가:' + obj.bidBid + '원</p>';
+                    contents += '                 </div>';
+                    contents += '                      <div class="priceContent" style="display:flex; justify-content: flex-end;"><span class="font-weight-normal">' + wday + '</span></div>';
                     contents += '                </div>';
                     contents += '            </a>';
                     contents += '        </div>';
@@ -655,6 +664,11 @@
     //상세페이지
     function goDetail(prodNo) {
         location.href = '/product/detail?prodNo=' + prodNo;
+    }
+
+    //상세페이지
+    function goAuction(prodNo) {
+        location.href = '/auction/detail?prodNo=' + prodNo;
     }
 
     function goUpdateInfo() {
@@ -707,7 +721,8 @@
             console.log(textStatus);
         });
     }
-
+    $('#loading').css('display','block');
+    $(window).on('load', function(){ $('#loading').css('display','none')});
 </script>
 
 </body>

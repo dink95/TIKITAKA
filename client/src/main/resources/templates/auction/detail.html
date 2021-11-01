@@ -167,7 +167,7 @@
                                class="width-80p margin-left-right-10 text-black" step="1000" pattern="[0-9]*"
                                inputmode="numeric" min="0">
                         <input class="send btn btn-primary width-80p margin-left-right-10" id="tradeProd"
-                               value="입찰하기">
+                               value="입찰하기" inputmode="none">
                     </div>
 
                     <div class="d-flex-j-between content auction_button_finish_sender"
@@ -175,18 +175,18 @@
                         <span class="width-80p margin-left-right-10 text-black">상품이 낙찰되었습니다!</span>
                         <input class="goChat btn btn-primary width-80p margin-left-right-10"
                                onclick="goChatToSenderId()"
-                               value="낙찰자와 거래하기">
+                               value="낙찰자와 거래하기" inputmode="none">
                     </div>
 
                     <div class="d-flex-j-between content auction_button_finish_buyer"
                          style="display: none; align-items: center; cursor: pointer;">
                         <span class="width-80p margin-left-right-10 text-black">상품이 낙찰되었습니다!</span>
                         <input class="goChat btn btn-primary width-80p margin-left-right-10" onclick="goChatToBidId()"
-                               value="판매자와 거래하기">
+                               value="판매자와 거래하기" inputmode="none">
                     </div>
                     <div class="auction_finish" style="display: none;">
-                    <span class="margin-left-right-10 text-black">낙찰자 아이디: </span>
-                    <span id="bidId" class=" margin-left-right-10 text-black"></span>
+                        <span class="margin-left-right-10 text-black">낙찰자 아이디: </span>
+                        <span id="bidId" class=" margin-left-right-10 text-black"></span>
                     </div>
                 </div>
 
@@ -391,6 +391,9 @@
             #sample01 {
                 color: red;
             }
+            #selId{
+                cursor: pointer;
+            }
 
         </style>
     </div>
@@ -417,6 +420,7 @@
     $(document).ready(function () {
         getProductDetail();
         selectAuction();
+
     });
 
     function doBxslider(props) {
@@ -451,6 +455,26 @@
         });
     }
 
+
+    /*Bid insert*/
+    function insertBid(mbrId, endBid) {
+        var param = {
+            bidProdNo: searchParam('prodNo'), //상품번호
+            bidBidder: mbrId,
+            bidBid: endBid
+        }
+        $.ajax({
+            url: '/bid/create',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+        }).fail(function (data, textStatus, errorThrown) {
+            console.log(textStatus);
+        });
+
+    }
+
     /*옥션 select*/
     function selectAuction() {
         var param = {
@@ -464,7 +488,7 @@
         }).done(function (data) {
 
             var year = data.auctionDetail.aucEndTime.substring(0, 4);
-            var month = data.auctionDetail.aucEndTime.substring(5, 7)-1;
+            var month = data.auctionDetail.aucEndTime.substring(5, 7) - 1;
             var day = data.auctionDetail.aucEndTime.substring(8, 10);
             var hour = data.auctionDetail.aucEndTime.substring(11, 13);
             var minute = data.auctionDetail.aucEndTime.substring(14, 16);
@@ -545,6 +569,7 @@
             $('#startPrice').text(data.dataDetail.prodPrc);
             $('#priceInput').val(parseInt($('#currentPrice').text()) + 1000);
             $('#selId').text(data.dataDetail.selId);
+            $('#selId').attr('onclick', 'goChatToId("' + data.dataDetail.selId + '")');
             $('#detailView').text(data.dataDetail.prodView);
             if (data.dataDetail.selId == $('#p_id').val()) {
                 buttonCheck(1);
@@ -640,7 +665,7 @@
             if (distDt < 0) {
                 clearInterval(timer);
                 document.getElementById(id).textContent = '경매가 종료되었습니다!';
-                $('.auction_finish').css('display','block')
+                $('.auction_finish').css('display', 'block')
                 $('.auction_button').css('display', 'none');
                 //경매 종료시 판매자 버튼 활성화
                 var param = {
@@ -777,6 +802,7 @@
                     mbrId: mbrId
                 }));
                 updateAuction(mbrId, parseInt(message));
+                insertBid(mbrId, parseInt(message));
                 messageInput.val('');
             }
         });

@@ -50,5 +50,14 @@
             bid_bidder=#{bidBidder}
     </update>
 
+    <select id="selectBidding" parameterType="BidDTO" resultType="BidDTO">
+        select *
+        from
+             bid
+        WHERE
+            bid_prod_no = #{bidProdNo}
+          and
+            bid_bidder=#{bidBidder}
+    </select>
 
 </mapper>

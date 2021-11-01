@@ -109,33 +109,27 @@ public class ProductService {
     }
 
     //사용자 화면에서 보는 판매중
-    public List productQuerySelIdList(String selId,String token) throws Exception {
+    public List productQuerySelIdList(String selId) throws Exception {
         return webClient.get()
                 .uri("/prd/result/selId/{selId}",selId)
-                .header(HttpHeaders.AUTHORIZATION,token)
-                .header(HttpHeaders.AUTHORIZATION,selId)
                 .retrieve()
                 .bodyToMono(List.class) //반환정보
                 .block();
     }
 
     //사용자 화면에서 보는 경매중
-    public List productQuerySelIdListAuc(String selId,String token) throws Exception {
+    public List productQuerySelIdListAuc(String selId) throws Exception {
         return webClient.get()
                 .uri("/prd/result/selId/auc/{selId}",selId)
-                .header(HttpHeaders.AUTHORIZATION,token)
-                .header(HttpHeaders.AUTHORIZATION,selId)
                 .retrieve()
                 .bodyToMono(List.class) //반환정보
                 .block();
     }
 
     //사용자화면에서 보는 판매완료
-    public List productQuerySelIdListFinish(String selId,String token) throws Exception {
+    public List productQuerySelIdListFinish(String selId) throws Exception {
         return webClient.get()
                 .uri("/prd/result/selId/finish/{selId}",selId)
-                .header(HttpHeaders.AUTHORIZATION,token)
-                .header(HttpHeaders.AUTHORIZATION,selId)
                 .retrieve()
                 .bodyToMono(List.class) //반환정보
                 .block();

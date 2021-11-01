@@ -164,7 +164,6 @@
 
 
     function drawPrdList(data) {
-        console.log("@@product data", data);
 
         if (typeof data.dataQueryList !== 'undefined' && data.dataQueryList.length > 0) {
             var container = $('.gridContainer');
@@ -212,6 +211,7 @@
     }
 
     $(document).ready(function () {
+        mobileSiteTop('경매장터');
         getProductList();
     });
 

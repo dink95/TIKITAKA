@@ -21,5 +21,7 @@ public interface AuctionService {
 
     public List<BidDTO> selectAllBiddingProduct(String mbrId);
 
+    public BidDTO selectBidding(BidDTO bidDTO);
+
 
 }

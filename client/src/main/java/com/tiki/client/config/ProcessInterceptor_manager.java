@@ -34,7 +34,6 @@ public class ProcessInterceptor_manager implements HandlerInterceptor {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println(e.getMessage());
             return false;
         }
         return result;

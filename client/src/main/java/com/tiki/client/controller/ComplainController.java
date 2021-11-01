@@ -48,7 +48,6 @@ import java.util.Map;
 
         ModelAndView view = new ModelAndView();
         int result = 0;
-        System.out.println(complainDTO.getCompNm());
         try {
             result = complainService.insertComplain(complainDTO,idCookie.getValue(),tokenCookie.getValue());
 
@@ -132,7 +131,6 @@ import java.util.Map;
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("detail error");
         }
         return resultMap;
     }

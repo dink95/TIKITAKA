@@ -69,8 +69,8 @@ public class MemberController {
             String mbrId= userId;
             String jwt = CryptAES256.decryptAES256(token,mbrId);
             Cookie cookie = new Cookie("token",jwt);
-            cookie.setHttpOnly(true);
-            cookie.setSecure(true);
+//            cookie.setHttpOnly(true);
+//            cookie.setSecure(true);
             Cookie id = new Cookie("mbrId",mbrId);
             cookie.setPath("/");
             id.setPath("/");
@@ -102,13 +102,11 @@ public class MemberController {
     }
     @RequestMapping("/member/detail") /*멤버 정보 조회*/
     @ResponseBody
-    public Map<String, Object> memberDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public Map<String, Object> memberDetail(@RequestParam(value = "userId") String userId) throws Exception {
 
-        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
-        Cookie tokenCookie =WebUtils.getCookie(request, "token");
 
         Map<String, Object> resultMap = new HashMap<>();
-        MemberDTO memberDTO = memberService.Detail(idCookie.getValue(),tokenCookie.getValue());
+        MemberDTO memberDTO = memberService.Detail(userId);
 
         try {
             resultMap.put("memberDetail", memberDTO);
@@ -572,7 +570,7 @@ public class MemberController {
 
         try {
 
-            result = memberService.updateMemberGrade(memberDTO,tokenCookie.getValue());
+            result = memberService.updateMemberGrade(memberDTO,idCookie.getValue(), tokenCookie.getValue());
 
             if (result > 0) {
                 resultMap.put("resultCode", 200);

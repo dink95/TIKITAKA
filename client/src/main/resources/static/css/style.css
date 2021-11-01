@@ -233,7 +233,7 @@ a:hover {
   margin-bottom: 0px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 835px) {
   .site-navbar .site-navbar-top {
     /*padding-top: 2%;*/
     /*padding-bottom: 2%;*/
@@ -697,7 +697,7 @@ a:hover {
   color: #000;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 835px) {
   .site-blocks-cover h1 {
     font-size: 50px;
   }
@@ -1477,7 +1477,24 @@ figure > img {
 }
 
 /*팝업창*/
-
+.popup{
+  margin-top:18vh;
+  width: 490px;
+  height: 250px;
+  position: fixed;
+  border: 1px solid #f1ecf1;
+  background: #fff;
+}
+@media screen and (max-width: 575px) {
+  .popup {
+    margin-top: 18vh;
+    width: 340px;
+    height: 150px;
+    position: fixed;
+    border: 1px solid #f1ecf1;
+    background: #fff;
+  }
+}
 .popupLayout{
   align-items: flex-start;
   justify-content: center;
@@ -1493,15 +1510,9 @@ figure > img {
   z-index: 100;
   display: none;
 }
-.popup{
-  margin-top:18vh;
-  width: 490px;
-  height: 250px;
-  position: fixed;
-  border: 1px solid #f1ecf1;
-  background: #fff;
 
-}
+
+
 .popupTitleNav{
   display: flex;
   justify-content: flex-start;
@@ -1669,7 +1680,10 @@ figure > img {
   border: 1px solid #e02828;
   border-radius: 100px;
 }
-
+ header {
+  max-width: 100%;
+  overflow-x: hidden;
+}
 /********************************반응형********************************/
 
 .site-wrap{
@@ -2008,7 +2022,9 @@ figure > img {
   justify-content: flex-start;
   padding: 10% 0;
 }
-
+.mobile_category_icon_ul{
+  display: none;
+}
 @media screen and (max-width: 1200px){
   .aic2 > p{
     font-size: 14px;
@@ -2053,7 +2069,7 @@ figure > img {
   }
   .col-3.col-md-3.order-2.order-md-3.text-right{
     max-width: unset;
-    min-width: 75%;
+
   }
   .site-navbar .site-navigation .site-menu > li {
     margin: 0 1%;
@@ -2061,9 +2077,6 @@ figure > img {
 
 }
 @media screen and (min-width: 575px) {
-  .mobile_category_icon_ul{
-    display: none;
-  }
   .pageName{
     display: none;
   }
@@ -2078,6 +2091,10 @@ figure > img {
 @media screen and (max-width: 575px) {
   .pageName{
     display: flex;
+    justify-content: center;
+  }
+  .pageName > span{
+    font-weight: bold;
   }
   #infoLogoutBtn{
     display: unset;
@@ -2210,7 +2227,7 @@ figure > img {
     border: 1px solid #fff;
   }
   .form-control{
-    height: 50px;
+    height: 40px;
   }
 
 }

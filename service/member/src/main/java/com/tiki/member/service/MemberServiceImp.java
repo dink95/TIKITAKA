@@ -86,7 +86,6 @@ public class MemberServiceImp implements MemberService{
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        System.out.println(username);
         log.debug("{}",username);
          MemberDTO memberDTO = mapper.selectMemberDetail(username);
          if(memberDTO==null)

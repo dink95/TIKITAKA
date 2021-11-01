@@ -40,14 +40,12 @@ public class ProductController {
         Cookie tokenCookie =WebUtils.getCookie(request, "token");
         ModelAndView view = new ModelAndView();
         int result = 0;
-        System.out.println(productDTO);
         try {
             result = productService.createProduct(productDTO,idCookie.getValue(),tokenCookie.getValue());
             int catNo = productDTO.getCatNo();
             List<MultipartFile> fileList = multi.getFiles("file");
 //           String path = "c:/tmp/"+Integer.toString(result)+"/";
             String path = "/Users/gimmugyeong/tmp/" +Integer.toString(result)+"/";
-            System.out.println(path);
             File dir = new File(path);
             if (!dir.isDirectory()) {
                 dir.mkdir();
@@ -92,7 +90,6 @@ public class ProductController {
         Cookie tokenCookie =WebUtils.getCookie(request, "token");
         ModelAndView view = new ModelAndView();
         int result = 0;
-        System.out.println(productDTO);
         try {
             result = productService.updateProduct(productDTO, idCookie.getValue(), tokenCookie.getValue());
 
@@ -119,7 +116,7 @@ public class ProductController {
 
         try {
             result = productService.deleteProduct(prodNo,idCookie.getValue(),tokenCookie.getValue());
-            System.out.println(result);
+
             if (result > 0) {
                 resultMap.put("resultCode", 200);
             }else {
@@ -210,7 +207,6 @@ public class ProductController {
     public Map<String,Object> ProdNmQueryList(@RequestParam(value = "prodNm") String prodNm) {
         Map<String,Object> resultMap = new HashMap<>();
         List<Object> list = null;
-        System.out.println(prodNm);
         try {
             list= productService.productQueryProdNmList(prodNm);
             resultMap.put("dataQueryList", list);
@@ -226,7 +222,6 @@ public class ProductController {
     public Map<String,Object> ProdNmQueryListHighPrice(@RequestParam(value = "prodNm") String prodNm) {
         Map<String,Object> resultMap = new HashMap<>();
         List<Object> list = null;
-        System.out.println(prodNm);
         try {
             list= productService.productQueryProdNmListHighPrice(prodNm);
             resultMap.put("dataQueryList", list);
@@ -242,7 +237,6 @@ public class ProductController {
     public Map<String,Object> ProdNmQueryListLowPrice(@RequestParam(value = "prodNm") String prodNm) {
         Map<String,Object> resultMap = new HashMap<>();
         List<Object> list = null;
-        System.out.println(prodNm);
         try {
             list= productService.productQueryProdNmListLowPrice(prodNm);
             resultMap.put("dataQueryList", list);
@@ -259,7 +253,6 @@ public class ProductController {
     public Map<String,Object> CatQuerytList(@RequestParam(value = "catNo") Integer catNo) {
         Map<String,Object> resultMap = new HashMap<>();
         List<Object> list = null;
-        System.out.println(catNo);
         try {
             list= productService.productQueryCatNoList(catNo);
             resultMap.put("dataQueryList", list);
@@ -275,7 +268,6 @@ public class ProductController {
     public Map<String,Object> CatQuerytListHighPrice(@RequestParam(value = "catNo") Integer catNo) {
         Map<String,Object> resultMap = new HashMap<>();
         List<Object> list = null;
-        System.out.println(catNo);
         try {
             list= productService.productQueryCatNoListHighPrice(catNo);
             resultMap.put("dataQueryList", list);
@@ -291,7 +283,6 @@ public class ProductController {
     public Map<String,Object> CatQuerytListlowPrice(@RequestParam(value = "catNo") Integer catNo) {
         Map<String,Object> resultMap = new HashMap<>();
         List<Object> list = null;
-        System.out.println(catNo);
         try {
             list= productService.productQueryCatNoListLowPrice(catNo);
             resultMap.put("dataQueryList", list);
@@ -304,14 +295,12 @@ public class ProductController {
 
     @RequestMapping("/product/list.selId")  /*상품 아이디 검색 리스트 */
     @ResponseBody
-    public Map<String,Object> IdQuerytList(HttpServletRequest request) {
-        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
-        Cookie tokenCookie =WebUtils.getCookie(request, "token");
+    public Map<String,Object> IdQuerytList(@RequestParam(value = "selId") String selId) {
 
         Map<String,Object> resultMap = new HashMap<>();
         List<Object> list = null;
         try {
-            list= productService.productQuerySelIdList(idCookie.getValue(),tokenCookie.getValue());
+            list= productService.productQuerySelIdList(selId);
 
             resultMap.put("dataQueryList", list);
 
@@ -323,14 +312,12 @@ public class ProductController {
 
     @RequestMapping("/product/auc/list.selId")  /*경매상품 아이디 검색 리스트 */
     @ResponseBody
-    public Map<String,Object> IdQuerytListAuc(HttpServletRequest request) {
-        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
-        Cookie tokenCookie =WebUtils.getCookie(request, "token");
+    public Map<String,Object> IdQuerytListAuc(@RequestParam(value = "selId") String selId) {
 
         Map<String,Object> resultMap = new HashMap<>();
         List<Object> list = null;
         try {
-            list= productService.productQuerySelIdListAuc(idCookie.getValue(),tokenCookie.getValue());
+            list= productService.productQuerySelIdListAuc(selId);
 
             resultMap.put("dataQueryList", list);
 
@@ -342,13 +329,11 @@ public class ProductController {
 
     @RequestMapping("/product/finish/list.selId")  /*상품 아이디 검색 리스트(판매완료) */
     @ResponseBody
-    public Map<String,Object> IdQuerytListFinish(HttpServletRequest request) {
-        Cookie idCookie =WebUtils.getCookie(request, "mbrId");
-        Cookie tokenCookie =WebUtils.getCookie(request, "token");
+    public Map<String,Object> IdQuerytListFinish(@RequestParam(value = "selId") String selId) {
         Map<String,Object> resultMap = new HashMap<>();
         List<Object> list = null;
         try {
-            list= productService.productQuerySelIdListFinish(idCookie.getValue(),tokenCookie.getValue());
+            list= productService.productQuerySelIdListFinish(selId);
             resultMap.put("dataQueryList", list);
 
         } catch (Exception e) {
@@ -376,7 +361,6 @@ public class ProductController {
             resultMap.put("dataDetail", productDTO);
         }catch (Exception e) {
             e.printStackTrace();
-            System.out.println("detail error");
         }
         return resultMap;
     }

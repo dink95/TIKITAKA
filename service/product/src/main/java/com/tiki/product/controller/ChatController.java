@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -101,7 +102,7 @@ public class ChatController {
     @GetMapping(value = "/chat/existChat/{sendId}")
     public List selectExistChatList(@PathVariable("sendId") String sendId) {
 
-        List<ChatDTO> chatList;
+        List<ChatDTO> chatList = new ArrayList<>();
 
         chatList = chatService.selectExistChatList(sendId);
 

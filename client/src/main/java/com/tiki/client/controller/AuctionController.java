@@ -63,7 +63,7 @@ public class AuctionController {
         int result = 0;
         try {
             result = auctionService.insertAuctionProduct(auctionDTO);
-            System.out.println(result);
+
             if (result > 0) {
                 resultMap.put("resultCode", 200);
             }else {
@@ -109,7 +109,6 @@ public class AuctionController {
             resultMap.put("auctionDetail", auctionDTO);
         }catch (Exception e) {
             e.printStackTrace();
-            System.out.println("detail error");
         }
         return resultMap;
     }
@@ -149,6 +148,25 @@ public class AuctionController {
         }
 
         return resultMap;
+    }
+
+    @RequestMapping("/bid/update")  /*입찰 update*/
+    public ModelAndView updateBid(BidDTO bidDTO) {
+        ModelAndView view = new ModelAndView();
+
+        int result = 0;
+        try {
+            result = auctionService.updateBiddingProduct(bidDTO);
+            if (result > 0) {
+                view.addObject("resultCode", 200);
+            }else {
+                view.addObject("resultCode", 400);
+            }
+        } catch (Exception e) {
+            view.addObject("resultCode", 500);
+        }
+        view.setViewName("product/create_result");
+        return view;
     }
 
 }

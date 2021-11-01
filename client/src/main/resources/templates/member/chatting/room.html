@@ -14,10 +14,18 @@
 <body>
 
 <div class="site-wrap">
-    <header>
+
+    <header class="site-navbar" role="banner">
         <!--replace 헤더-->
-        <div th:replace="common::header(myinfo)">
+        <div class="site-navbar-top" th:replace="common::header(myinfo)">
         </div>
+        <!------------->
+        <!--replace-login-------------------------------->
+
+        <nav class="site-navigation text-right text-md-center" role="navigation"
+             th:replace="common::menu(myinfo)">
+        </nav>
+        <!----------------------------------------------------------->
     </header>
     <div class="chattingRoomContainer">
         <div class="chattingRoomTitle padding-top-bottom-5">
@@ -32,10 +40,6 @@
         <img id="loading-image" src="/images/ajax-loader.gif" alt="전송중..." />
     </div>
 
-<!--    <form name="popForm">-->
-<!--        <input type="hidden" name="cmd" value="openPop" />-->
-<!--        <input type="hidden" name="testval" />-->
-<!--    </form>-->
 </div>
 
 <style>
@@ -43,20 +47,19 @@
         margin: 0;
         padding: 0;
     }
-    header{
-        display: none;
-    }
-    .chattingRoomContainer {
-        width: 400px;
-        height: 700px;
-    }
+
+        .chattingRoomContainer {
+            width: 100%;
+        }
+
+
     .chattingRoomTitle{
         display: flex;
-        justify-content: flex-start;
+        justify-content: center;
         border-bottom: 1px solid #ecebf5;
         position: sticky;
         top: 0;
-        background: #fff;
+        background: #ecebf5;
     }
     .chattingRoomTitle > span{
         font-weight: normal;
@@ -102,8 +105,8 @@
         font-size: 11px;
         border: 1px solid #dc0303;
         border-radius: 50px;
-        width: 15px;
-        height: 15px;
+        width: 20px;
+        height: 20px;
         line-height: 15px;
         text-align: center;
         background: #dc0303;
@@ -134,11 +137,12 @@
         overflow: hidden;
     }
     .titleProdFinishBtn{
-        font-size: 12px;
+        font-size: 2.3vw;
         border-radius: 2px;
         border-style: none;
         display: none;
     }
+
 </style>
 <script src="/js/jquery-3.3.1.min.js"></script>
 <script src="/js/jquery-ui.js"></script>
@@ -151,29 +155,35 @@
 <script src="/js/main.js"></script>
 <script>
     /********************** 실행 함수 ********************/
-
-
-    $(document).ready(function () {
-
-        mobileSiteTop('채팅');
-    });
-
-    document.addEventListener("DOMContentLoaded", getChatRoomLength);
-    setInterval(getChatRoomLength, 100);
-
     function searchParam(key) {
         return new URLSearchParams(location.search).get(key);
     };
+    $(document).ready(function () {
 
-    //로그아웃하면 창 종료
-    function autoRefresh_div()
-    {
-        var currentLocation = window.location;
-        $("header").load(currentLocation +"header");
-        if($('#login_id').text() != searchParam('sendId')){
-            window.close();
+        mobileSiteTop('채팅');
+        if(!searchParam('h')){
+            $('.site-navbar').css('display','none');
+        }else{
+            $('.chattingRoomTitle').css('display','none');
         }
-    }
+    });
+
+    document.addEventListener("DOMContentLoaded", getChatRoomLength);
+    setInterval(getChatRoomLength, 200);
+
+    // function searchParam(key) {
+    //     return new URLSearchParams(location.search).get(key);
+    // };
+
+    // //로그아웃하면 창 종료
+    // function autoRefresh_div()
+    // {
+    //     var currentLocation = window.location;
+    //     $("header").load(currentLocation +"header");
+    //     if($('#login_id').text() != searchParam('sendId')){
+    //         window.close();
+    //     }
+    // }
 
     /********************** 데이터 입력 조회 업데이트 ********************/
 
@@ -181,12 +191,12 @@
     var chatRoomLength = 0;
     var allChatCount = 0;
     function getChatRoomLength(){
-        param = {
-            sendId: searchParam('sendId')
-        }
+        // param = {
+        //     sendId: $('#login_id').text()
+        // }
         $.ajax({
             url: '/chat/list/id',
-            data: param,
+            data: null,
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
@@ -218,16 +228,15 @@
 
     // 사용자 채팅방 정보 목록
     function getProdNoRoomNo(){
-        param = {
-            sendId: searchParam('sendId')
-        }
+        // param = {
+        //     sendId: $('#login_id').text()
+        // }
         $.ajax({
             url: '/chat/list/id',
-            data: param,
+            data: null,
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            console.log("@@chatListById",data.chatList);
             drawChatRoomList(data);
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
@@ -269,7 +278,6 @@
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            console.log("@@memberDetail",data.memberDetail)
             drawAddr(data)
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
@@ -326,7 +334,7 @@
                 contents += '<li class="chatRoom" onclick="goChat('+obj.prodNo+','+obj.roomNo+');">';
                 contents += '<div class="chatRoomContent">';
                 contents += '<div>';
-                if(obj.sendId == searchParam('sendId')){
+                if(obj.sendId == $('#login_id').text()){
                     contents += '    <span class="chatRecipientId">' +obj.recipientId + '</span>';
                     contents += '    <span class="chatAddr addrName'+obj.recipientId+'"></span>';
                     mbrId=obj.recipientId;
@@ -368,6 +376,7 @@
 
     //채팅 목록 마지막 메세지 그리기
     function drawLastMessage(data) {
+        console.log("data",data);
         $.each(data.chatList, function (index, obj) {
             var year = obj.sendtime.substring(0, 4);
             var month = obj.sendtime.substring(5, 7);
@@ -378,6 +387,7 @@
             var second = obj.sendtime.substring(17, 19);
             var sendtime = year+month+day+hour+minute+second;
             console.log("objMassageSendTime",sendtime);
+            console.log("objcontent",obj.content)
             $('.chatRoomMessage'+obj.prodNo+'-'+obj.roomNo).text(textLengthOverCut(obj.content, 14 , '...'));
         })
         $('#chatRoomLength').val(data.chatList.length);
@@ -435,38 +445,28 @@
         newName = value + n;
     }
 
-    //팝업창 조절 제한
-    function popResizer() {
-        window.resizeTo(400,700);
-    };
-    popResizer();
-    $(window).resize(popResizer);
+        //팝업창 조절 제한
+        function popResizer() {
+            window.resizeTo(400,700);
+        };
+        popResizer();
+        $(window).resize(popResizer);
 
-
-    // function goChat(prodNo,roomNo){
-    //         var sendId = searchParam('sendId');
-    //         var top = Math.random()*100 + 100;
-    //         var left = Math.random()*100 + 600;
-    //     var myForm = document.popForm;
-    //     var url ='/member/chatting/chat?prodNo='+prodNo+'&sendId='+sendId+'&roomNo='+roomNo+'';
-    //     window.open("" ,"popForm",
-    //         "toolbar=no, width=1000, height=467, directories=no, status=no,    scrollorbars=no, resizable=no");
-    //     myForm.action =url;
-    //     myForm.method="post";
-    //     myForm.target="popForm";
-    //     myForm.testVal = 'test';
-    //     myForm.submit();
-    // }
     function goChat(prodNo,roomNo)
     {
-        var sendId = searchParam('sendId');
-        var top = Math.random()*100 + 100;
-        var left = Math.random()*100 + 600;
-        newWindow("MyWindow");
-        window.open('/member/chatting/chat?prodNo='+prodNo+'&sendId='+sendId+'&roomNo='+roomNo+'', newName,
-            'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top='+top+',left='+left+'');
+        var sendId = $('#login_id').text();
+        if(searchParam('h')){
+            location.href='/member/chatting/chat?prodNo='+prodNo+'&sendId='+sendId+'&roomNo='+roomNo+'';
+        }else {
+            var top = Math.random() * 100 + 100;
+            var left = Math.random() * 100 + 600;
+            newWindow("MyWindow");
+            window.open('/member/chatting/chat?prodNo=' + prodNo + '&sendId=' + sendId + '&roomNo=' + roomNo + '', newName,
+                'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=' + top + ',left=' + left + '');
+        }
     }
-
+    $('#loading').css('display','block');
+    $(window).on('load', function(){ $('#loading').css('display','none')});
 </script>
 </body>
 </html>

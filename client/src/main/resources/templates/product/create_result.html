@@ -36,7 +36,6 @@
 <input type="hidden" id="catNo" th:value="${catNo}">
 <input type="hidden" id="prodPrc" th:value="${prodPrc}">
 <input type="hidden" id="prodNo" th:value="${prodNo}">
-
 </body>
 <script src="../js/jquery-3.3.1.min.js"></script>
 <script src="../js/jquery-ui.js"></script>
@@ -64,20 +63,6 @@
                 }
                 $.ajax({
                     url: '/auction/create.do',
-                    data: param,
-                    type: 'post',
-                    dataType: 'json'
-                }).done(function (data) {
-                }).fail(function (data, textStatus, errorThrown) {
-                    console.log(textStatus);
-                });
-
-                /*Bid insert*/
-                var param = {
-                    bidProdNo:prodNo, //상품번호
-                }
-                $.ajax({
-                    url: '/bid/create',
                     data: param,
                     type: 'post',
                     dataType: 'json'

@@ -20,18 +20,32 @@
 </head>
 
 <body>
+<div class="site-wrap">
+  <header class="site-navbar" role="banner">
+    <!--replace 헤더-->
+    <div class="site-navbar-top" th:replace="common::header(product_view)">
+    </div>
+    <!------------->
+    <!--replace-login-------------------------------->
 
+    <nav class="site-navigation text-right text-md-center" role="navigation"
+         th:replace="common::menu(product_view)">
+    </nav>
+    <!----------------------------------------------------------->
+  </header>
 
 <div>
-  <div class="profile">
-    프로필
-  </div>
-  <div class="userName">
-    userName
-  </div>
+
+
   <div class="site-section"><!--margin class-->
 
-    <div class="container" style="display: flex;">
+    <div class="container">
+      <div class="userNameDiv">
+        <span class="userName"></span>
+        <span style="font-weight: bold;color: #000;">님</span>
+      </div>
+
+      <div style="display: flex;">
         <div class="myinfoSubNav">
           <div class="myinfoSubGrade">
             <label for="p_grade" class="p_grade text-black">거래등급
@@ -53,20 +67,29 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
   <div class="container">
     <div class="prodContainer">
-      <div class="prod myProd" onclick="finishCheck(0)">
+      <div class="prod myProd" onclick="finishCheck('myProd')">
         판매상품
       </div>
+      <div class="prod finishProd" onclick="finishCheck('finishProd')">
+        판매완료
+      </div>
+      <div class="prod auctionProd" onclick="finishCheck('auctionProd')">
+        경매상품
+      </div>
     </div>
-    <input id="finishCheck" type="hidden" value="0">
+    <!--      판매중, 판매완료, 구매상품, 경매중, 입찰중 상품 조회-->
+    <input id="finishCheck" type="hidden" value="myProd">
     <div class="gridContainer" style="">
 
     </div>
-
+  </div>
   </div>
 </div>
+
 <a id="arrow_up" class="scroll_up" onclick="scroll_up()"> </a>
 
 <script src="../js/jquery-3.3.1.min.js"></script>
@@ -80,26 +103,25 @@
 
 <script src="../js/main.js"></script>
 <style>
-
+  .finishProd,.auctionProd{
+    color: #a09e9e;
+    font-weight: normal;
+  }
   .site-section {
     background: #f8f9fa;
     padding: 1em 0 1em 0;
   }
   .userName{
-    padding-top: 15px;
-    padding-bottom: 15px;
-    padding-left: 20px;
+
     font-weight: bold;
     color: #5e0080;
   }
-  .profile{
-    color: #000;
-    border-bottom: 1px solid #ddd;
-    font-weight: normal;
-    display: flex;
-    justify-content: center;
-    background: #ecebf5;
+  .userNameDiv{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 20px;
   }
+
 
   .myinfoContainer {
     display: flex;
@@ -281,10 +303,10 @@
   }
 
   function getIdQueryList() {
-
-    if($('#finishCheck').val() == 0) {
+    //판매중 상품 조회
+    if($('#finishCheck').val() == 'myProd') {
       param = {
-        selId: searchParam('userId')
+        selId: searchParam('userId'),
       }
       $.ajax({
         url: '/product/list.selId',
@@ -297,9 +319,11 @@
       }).fail(function (data, textStatus, errorThrown) {
         console.log(textStatus);
       });
-    }else{
+    }
+    //판매완로 상품 조회
+    else if($('#finishCheck').val() == 'finishProd'){
       param = {
-        selId: searchParam('userId'),
+        selId: searchParam('userId')
       }
       $.ajax({
         url: '/product/finish/list.selId',
@@ -312,8 +336,80 @@
       }).fail(function (data, textStatus, errorThrown) {
         console.log(textStatus);
       });
-
     }
+    //경매중 상품 조회
+    else if($('#finishCheck').val() == 'auctionProd'){
+      param = {
+        selId: searchParam('userId')
+      }
+      $.ajax({
+        url: '/product/auc/list.selId',
+        data: param,
+        type: 'post',
+        dataType: 'json'
+      }).done(function (data) {
+        drawPrdList(data);
+
+      }).fail(function (data, textStatus, errorThrown) {
+        console.log(textStatus);
+      });
+    }
+
+  }
+
+  <!--      판매중, 판매완료,경매중,상품 조회-->
+  function finishCheck(props) {
+    $('#finishCheck').val(props);
+    getIdQueryList();
+    $('.'+props).css('border-bottom', '1px solid black');
+    $('.'+props).css('color', 'black');
+    $('.'+props).css('font-weight','normal');
+    $('.prod').not('.'+props).css('border-bottom', 'none');
+    $('.prod').not('.'+props).css('color','#a09e9e');
+  }
+
+  function drawPrdList(data) {
+
+    if (typeof data.dataQueryList !== 'undefined' && data.dataQueryList.length > 0) {
+      var container = $('.gridContainer');
+      container.empty();
+
+      $.each(data.dataQueryList, function (index, obj) {
+        $('#objCatNo').val(obj.catNo); //카테고리 상품 디테일 -> 카테고리 번호 저장
+        //매번 컨텐츠가 달라야하니 초기화
+        var contents = '';
+        var wday = timeForToday(obj.wday);
+        //이미지경로를 미리 만들어놓는다.
+        var imgPath = '/istatic/images/' + obj.prodNo + '/1.jpg';
+
+        //제품 html
+        contents += '<div class="gridItem">';
+        contents += '    <div class="item">';
+        contents += '       <div class="block-4 text-center">';
+        contents += '          <a href="#" onclick="goDetail(' + obj.prodNo + ')">';
+        contents += '               <figure class="block-4-image" >';
+        contents += '                    <img src="' + imgPath + '"  alt="Image placeholder"  class="img-fluid">';
+        contents += '                </figure>';
+        contents += '                <div class="block-4-text">';
+        contents += '                    <h3 class="ItemName"><a href="#"  onclick="goDetail(' + obj.prodNo + ')">' + textLengthOverCut(obj.prodNm, 11, '...') + ' </a></h3>';
+        contents += '                    <div class=priceContent>';
+        contents += '                    <p class="text-primary font-weight-bold">' + obj.prodPrc + '원</p>';
+        contents += '                    <span class="font-weight-normal">' + wday + '</span>';
+        contents += '                    </div>';
+        contents += '                </div>';
+        contents += '            </a>';
+        contents += '        </div>';
+        contents += '    </div>';
+        contents += '</div>';
+
+        //그리드에 삽입
+        container.append(contents);
+      })
+
+    } else {
+      $('.gridContainer').empty();
+    }
+
   }
 
   function getMbrInfo() {
@@ -354,8 +450,6 @@
   }
 
   function drawPrdList(data) {
-
-    console.log("@@product data", data);
 
     if (typeof data.dataQueryList !== 'undefined' && data.dataQueryList.length > 0) {
       var container = $('.gridContainer');
@@ -424,6 +518,7 @@
   }
 
   $(document).ready(function () {
+    mobileSiteTop('프로필');
     getIdQueryList();
     getMbrInfo();
   });
