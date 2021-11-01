@@ -191,6 +191,12 @@
                 </div>
 
 
+                    <div class="col-12 col-md-12 order-2 order-md-2  text-left">
+                        <div class="p_content" style=" min-height: 200px;">
+                            <span id="prodContent" class="font-weight-normal"></span>
+                        </div>
+                    </div>
+
                 <!--            <div class="site-section block-3 site-blocks-2 bg-light">-->
                 <!--                <div class="container">-->
                 <!--                    <div class="row justify-content-center">-->
@@ -497,7 +503,6 @@
             var dateObj = new Date(year, month, day, hour, minute, second);
             dateObj.setDate(dateObj.getDate());
             countDownTimer('sample01', dateObj);
-
             $('#currentPrice').text(data.auctionDetail.endBid);
         }).fail(function (data, textStatus, errorThrown) {
             console.log(textStatus);
@@ -540,6 +545,7 @@
             drawPrdList(data);
             console.log("data.dataDetail", data.dataDetail);
             $('#startPrice').text(data.dataDetail.prodPrc);
+            mobileSiteTop(data.dataDetail.prodNm);
             if (data.dataDetail.prodFinish) {
                 $('#prodFinish').css('display', 'none');
                 $('#updateProd').attr('class', 'btn_finish ');
