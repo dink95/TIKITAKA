@@ -133,7 +133,7 @@
                             <span id="wday" class="text-black" text="" style="line-height: 56px;"></span>
                         </div>
                     </div>
-                    <div class="row align-items-start" >
+                    <div class="row align-items-start">
                         <div class="aic2 col-6 col-md-6 order-1 order-md-1  text-left">
                             <p>판매자아이디:&nbsp&nbsp<span id="selId"></span></p>
                             <p>거래방법:&nbsp&nbsp<span id="detailWay"></span></p>
@@ -177,7 +177,7 @@
     <div th:replace="common::mobile(detail)"></div>
 
     <style>
-        #selId{
+        #selId {
             cursor: pointer;
         }
 
@@ -186,46 +186,55 @@
                 height: 400px;
                 min-height: 400px;
             }
+
             .bx-wrapper img {
                 min-height: 400px;
 
             }
         }
+
         @media screen and (max-width: 575px) {
             .bx-viewport {
                 height: 500px;
                 min-height: 500px;
             }
+
             .bx-wrapper img {
                 min-height: 500px;
 
             }
         }
+
         @media screen and (max-width: 768px) {
             .bx-viewport {
-                height: 500px;!
-                min-height: 500px;
+                height: 500px;
+                ! min-height: 500px;
             }
+
             .bx-wrapper img {
                 min-height: 500px;
 
             }
         }
+
         @media screen and (max-width: 991px) {
             .bx-viewport {
                 height: 400px;
                 min-height: 400px;
             }
+
             .bx-wrapper img {
                 min-height: 400px;
 
             }
         }
+
         @media screen and (min-width: 991px) {
             .bx-viewport {
                 height: 500px;
                 min-height: 500px;
             }
+
             .bx-wrapper img {
                 min-height: 500px;
 
@@ -239,10 +248,12 @@
 
             .bx-viewport {
                 width: 100%;
-                display: block;!important:;
+                display: block;
+            !important:;
                 /*height: 400px;!important;*/
                 /*min-height: 400px;*/
             }
+
             .bx-wrapper img {
                 width: 100%;
                 display: block;
@@ -250,16 +261,20 @@
                 /*min-height: 400px;!important;*/
                 border-radius: 1px;
             }
+
             #detailName {
                 margin-bottom: 0px;
             }
+
             .ButtonNav > .btn {
                 font-size: 15px;
             }
-            .bxsliderImgDiv{
+
+            .bxsliderImgDiv {
                 width: 3.2%;
             }
         }
+
         /*@media screen and (max-width : 835px){*/
         /*    .bx-viewport{*/
         /*        min-width: 300px;*/
@@ -285,23 +300,30 @@
             !important;
                 border-radius: 1px;
             }
+
             #detailName {
                 margin-bottom: 50px;
             }
+
             .ButtonNav > .btn {
                 font-size: 16px;
             }
         }
+
         .bx-wrapper {
             margin-bottom: 0;
         }
+
         #detailMap > span {
             color: #a88d2c;
         }
+
         .bx-wrapper .bx-pager, .bx-wrapper .bx-controls-auto {
-            bottom: 5vh;!important;
+            bottom: 5vh;
+        !important;
 
         }
+
         .bx-wrapper {
             -moz-box-shadow: none;
             -webkit-box-shadow: none;
@@ -449,7 +471,7 @@
     });
 
     function doBxslider(props) {
-        $('.bxslider'+props).bxSlider({ // 클래스명 주의!
+        $('.bxslider' + props).bxSlider({ // 클래스명 주의!
             auto: false, // 자동으로 애니메이션 시작
             speed: 500,  // 애니메이션 속도
             pause: 5000,  // 애니메이션 유지 시간 (1000은 1초)
@@ -503,8 +525,8 @@
                 $('#updateProd').attr('class', 'btn_finish ');
                 $('#updateProd').val('판매완료');
                 $('#updateProd').attr('onclick', '').unbind('click');
-                if($('#login_id').text() != $('#selId').text()){
-                    $('#tradeProd').css('display','none');
+                if ($('#login_id').text() != $('#selId').text()) {
+                    $('#tradeProd').css('display', 'none');
                 }
             }
             getMemberDetail();
@@ -539,7 +561,7 @@
             dataType: 'json'
         }).done(function (data) {
             if (data.resultCode == 200) {
-                popup('알림메세지', '상품이 삭제되었습니다.','/member/myinfo');
+                popup('알림메세지', '상품이 삭제되었습니다.', '/member/myinfo');
             } else {
                 popup('알림메세지', '삭제에 실패하였습니다. 관리자에게 문의하세요.');
             }
@@ -586,14 +608,14 @@
 
 
             var imgDetailPath = '';
-            $('.bxslider'+data.dataDetail.imgCount).css('display','block');
+            $('.bxslider' + data.dataDetail.imgCount).css('display', 'block');
             doBxslider(data.dataDetail.imgCount);
             for (var i = 1; i < data.dataDetail.imgCount + 1; i++) {
                 imgDetailPath = '/istatic/images/' + data.dataDetail.prodNo + '/' + i + '.jpg';
                 $('.img-fluid' + i).attr("src", imgDetailPath);
                 $('.img-fluid' + i).css("display", '')
 
-                $('.bxsliderImg'+i).attr("src",imgDetailPath);
+                $('.bxsliderImg' + i).attr("src", imgDetailPath);
             }
         }
     }
@@ -630,7 +652,7 @@
 
 
     function goDetailPhoto(i) {
-        var imgPath = $('.bxsliderImg'+i).attr("src");
+        var imgPath = $('.bxsliderImg' + i).attr("src");
         $('#img_modal').css('display', 'flex');
         $('#img_modal').children('img').attr("src", imgPath);
     }
@@ -693,11 +715,17 @@
     function goChat() {   //로그인 여부 확인
         if ($('#p_id').val()) {
             var prodNo = searchParam('prodNo');
-            var top = Math.random() * 100 + 100;
-            var left = Math.random() * 100 + 600;
-            newWindow("MyWindow");
-            window.open('/member/chatting/chat?prodNo=' + prodNo + '&sendId=' + $('#p_id').val() + '&recipientId=' + $('#selId').text(), newName,
-                'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=' + top + ',left=' + left + '');
+            var WinW = $(window).width();
+            if (WinW <= 575) {
+                location.href = '/member/chatting/chat?prodNo=' + prodNo + '&sendId=' + $('#p_id').val() + '&recipientId=' + $('#selId').text();
+            } else {
+
+                var top = Math.random() * 100 + 100;
+                var left = Math.random() * 100 + 600;
+                newWindow("MyWindow");
+                window.open('/member/chatting/chat?prodNo=' + prodNo + '&sendId=' + $('#p_id').val() + '&recipientId=' + $('#selId').text(), newName,
+                    'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700,top=' + top + ',left=' + left + '');
+            }
         } else {
             location.href = '/login';
         }
@@ -739,16 +767,16 @@
                 // 지도의 중심을 결과값으로 받은 위치로 이동
                 map.setCenter(coords);
 
-                $('#map').click(function(){
+                $('#map').click(function () {
 
-                    var addrString =  'https://map.kakao.com/link/to/'+sellerAddr +',' + result[0].y +','+result[0].x;
+                    var addrString = 'https://map.kakao.com/link/to/' + sellerAddr + ',' + result[0].y + ',' + result[0].x;
 
                     var sendId = searchParam('sendId');
-                    var top = Math.random()*100 + 100;
-                    var left = Math.random()*100 + 150;
+                    var top = Math.random() * 100 + 100;
+                    var left = Math.random() * 100 + 150;
                     newWindow("MyWindow");
                     window.open(addrString, newName,
-                        'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=1300,height=800,top='+top+',left='+left+'');
+                        'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=1300,height=800,top=' + top + ',left=' + left + '');
 
                 })
 
@@ -756,7 +784,6 @@
         });
 
     }
-
 
 
 </script>
