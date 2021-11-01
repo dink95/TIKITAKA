@@ -646,7 +646,7 @@ function popup(title, content, href, WinW) {
 }
 
 function goChatRoom() {
-    window.open('/member/chatting/room', '채팅방', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,top=100,left=100')
+    window.open('/member/chatting/room', '채팅방', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable=no,directories=no,width=400,height=700top=100,left=100')
 }
 
 function goChatRoomMobile(props) {

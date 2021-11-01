@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta meta http-equiv="content-type" content="text/html;" charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width"/>
     <title>채팅</title>
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
+    <!--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
     <link rel="preconnect" href="/https://fonts.gstatic.com">
     <link rel="stylesheet" href="/fonts/icomoon/style.css">
     <link rel="stylesheet" href="/css/style.css">
@@ -16,67 +16,70 @@
 <body>
 
 
-    <input type="hidden" id="login_id" th:value="${#locale}">
-    <div class="popupLayout">
-        <div class="popup">
-            <div class="popupTitleNav">
-                <span id="popupTitle"></span>
-            </div>
-            <div class="popupContentNav">
-                <span id="popupContent"></span>
-            </div>
-            <div class="popupConfirm">
-                <button id="confirmBtn">확인</button>
+<input type="hidden" id="login_id" th:value="${#locale}">
+<div class="popupLayout">
+    <div class="popup">
+        <div class="popupTitleNav">
+            <span id="popupTitle"></span>
+        </div>
+        <div class="popupContentNav">
+            <span id="popupContent"></span>
+        </div>
+        <div class="popupConfirm">
+            <button id="confirmBtn">확인</button>
+        </div>
+    </div>
+</div>
+
+<div class="chattingRoomTitle">
+    <div class="titleProdContainer font-weight-normal font-20">
+        <img class="titleImg" src="" alt="">
+        <div class="titleInfo">
+            <span class="titleProdName"></span>
+            <div>
+                <span class="titlePrice "></span>
+                <span>원</span>
+                <span class="titleProdFinish"></span>
             </div>
         </div>
     </div>
-
-    <div class="chattingRoomTitle">
-        <div class="titleProdContainer font-weight-normal font-20">
-            <img class="titleImg" src="" alt="">
-            <div class="titleInfo">
-                <span class="titleProdName"></span>
-                <div>
-                    <span class="titlePrice "></span>
-                    <span>원</span>
-                    <span class="titleProdFinish"></span>
-                </div>
-            </div>
-        </div>
-        <div class="titleUserIdDiv d-flex-j-center">
-            <button type="button" class="btn btn-light titleProdFinishBtn"  onclick="goProdFinBtn()">판매완료하기</button>
-            <span class="titleUserId "></span>
-        </div>
+    <div class="titleUserIdDiv d-flex-j-center">
+        <button type="button" class="btn btn-light titleProdFinishBtn" onclick="goProdFinBtn()">판매완료하기</button>
+        <span class="titleUserId "></span>
     </div>
-    <ul class="chatContent" id="chatContent">
+</div>
+<ul class="chatContent" id="chatContent">
 
-    </ul>
+</ul>
 
-    <div class="chatInputContainer">
-        <form onsubmit="return false"
-              class="chatForm col-12 col-md-6 order-3 order-md-2  text-center d-flex-j-center">
-            <div class="textareaContainer" onkeydown="resize(this);" onkeyup="resize(this);">
+<div class="chatInputContainer">
+    <form onsubmit="return false"
+            class="chatForm col-12 col-md-6 order-3 order-md-2  text-center d-flex-j-center">
+        <div class="textareaContainer" onkeydown="resize(this);" onkeyup="resize(this);">
                     <textarea class="chatInput autosize" onkeydown="resize(this); validation();"
                               onkeyup="resize(this); validation();" name="chatText" id="chatText"
-                              rows="3" cols="10" wrap="hard" placeholder="메세지를 입력하세요." ></textarea></div>
+                              rows="3" cols="10" wrap="hard" placeholder="메세지를 입력하세요."></textarea></div>
 
-            <span type="button" id="submitSpan" class="submitSpan"><img type="button" class="submitIcon"
-                                                                        id="submitIcon"
-                                                                        src="/icons/submitIcon.svg" alt=""
-                                                                        onclick="CreateChat();"/></span>
-            <input type="hidden" id="currentTime">
-        </form>
-    </div>
+        <span type="button" id="submitSpan" class="submitSpan"><img type="button" class="submitIcon"
+                                                                    id="submitIcon"
+                                                                    src="/icons/submitIcon.svg" alt=""
+                                                                    onclick="CreateChat();"/></span>
+        <input type="hidden" id="currentTime">
+    </form>
+</div>
 
-    <!--    로딩창-->
-    <div class="loading" style="display: none">
-        <img id="loading-image" src="/images/ajax-loader.gif" alt="전송중..."/>
-    </div>
+<!--    로딩창-->
+<div class="loading" style="display: none">
+    <img id="loading-image" src="/images/ajax-loader.gif" alt="전송중..."/>
+</div>
 
 
 </body>
 <style>
-
+    body{
+        max-height: 100%;
+        overflow-y: hidden;
+    }
     .col-md-6 {
         max-width: unset;
     }
@@ -168,17 +171,18 @@
 
     .titleProdFinishBtn {
         font-size: 13px;
-        padding:5px 7px;
+        padding: 5px 7px;
         margin: 0;
         border: 1px solid #eae9e9;
     }
-    .titleProdFinishBtn:active{
+
+    .titleProdFinishBtn:active {
         background: #fff;
     }
 
     .chatInputContainer {
-        position: fixed;
-        bottom: 0;
+        /*position: fixed;*/
+        /*bottom: 0;*/
         width: 100%;
         background: #fff;
 
@@ -205,6 +209,8 @@
 
     .chatForm {
         align-items: center;
+        padding-left: 0;
+        padding-right: 0;
 
     }
 
@@ -304,14 +310,38 @@
 <script>
     /********************** 실행 함수 ********************/
 
-
+    // setInterval(function () {
+    //     $('.chatContent').css("height", visualViewport.height - 115);
+    // }, 100)
 
     $('.chatContent').scrollTop($('.chatContent')[0].scrollHeight);
     if ($('.chatInput').val() == '') {
         inputHeightReset();
     }
+
     $(document).ready(function () {
-        $('.chatContent').css("height",window.innerHeight-115);
+
+        $('.chatContent').css("height", visualViewport.height - 120);
+        $('.chatInput').focus(function () {
+            var windowHeight = window.innerHeight;
+            setTimeout(function () {
+                $("html, body").scrollTop(0);
+                $('.chatContent').css("height", visualViewport.height - 120);
+                var scrollValue = $('.chatContent').scrollTop();
+                var keyBoardHeight = windowHeight - visualViewport.height;
+                $('.chatContent').scrollTop(scrollValue+keyBoardHeight);
+            }, 50);
+        });
+        $('.chatInput').blur(function () {
+            var windowHeight = window.innerHeight;
+            var scrollValue = $('.chatContent').scrollTop();
+            var keyBoardHeight = windowHeight - visualViewport.height;
+            $('.chatContent').scrollTop(scrollValue-keyBoardHeight);
+            setTimeout(function () {
+                $('.chatContent').css("height", visualViewport.height - 120);
+            }, 50);
+
+        });
         $('.loading').css('display', 'block');
     });
 
@@ -504,15 +534,14 @@
         }).done(function (data) {
             drawTitle(data);
             console.log("data.dataDetail", data.dataDetail);
-            if(data.dataDetail.prodFinish == 1) {
+            if (data.dataDetail.prodFinish == 1) {
                 $('.titleProdFinishBtn').text('거래완료');
-                $('.titleProdFinishBtn').attr('disabled',true);
-                $('.titleProdFinishBtn' ).removeClass( 'btn' );
-            }
-            else if(data.dataDetail.selId != $('#login_id').val()){
+                $('.titleProdFinishBtn').attr('disabled', true);
+                $('.titleProdFinishBtn').removeClass('btn');
+            } else if (data.dataDetail.selId != $('#login_id').val()) {
                 $('.titleProdFinishBtn').text('판매중');
-                $('.titleProdFinishBtn').attr('disabled',true);
-                $('.titleProdFinishBtn' ).removeClass( 'btn' );
+                $('.titleProdFinishBtn').attr('disabled', true);
+                $('.titleProdFinishBtn').removeClass('btn');
             }
 
 
@@ -578,16 +607,16 @@
         });
     }
 
-    function goProdFinBtn(){
+    function goProdFinBtn() {
         if (confirm("해당 이용자와 거래를 완료하였습니끼?") == true) {
             goBuyList();
-        }else{
+        } else {
             return false;  //취소
         }
     }
 
     //구매완료 업데이트
-    function goBuyList(){
+    function goBuyList() {
         param = {
             prodNo: searchParam('prodNo'),
             buyerId: searchParam('recipientId'),
@@ -598,9 +627,9 @@
             type: 'post',
             dataType: 'json'
         }).done(function (data) {
-            if(data.resultCode==200) {
+            if (data.resultCode == 200) {
                 goProdFinish();
-            }else{
+            } else {
                 alert("실패하였습니다. 관리자에게 문의하세요.");
             }
         }).fail(function (textStatus) {
@@ -608,28 +637,29 @@
         });
 
     }
+
     // 거래완료 업데이트
     function goProdFinish() {
-            param = {
-                prodNo: searchParam('prodNo'),
-                selId: $('#login_id').val(),
+        param = {
+            prodNo: searchParam('prodNo'),
+            selId: $('#login_id').val(),
+        }
+        $.ajax({
+            url: '/product/prodfinish',
+            data: param,
+            type: 'post',
+            dataType: 'json'
+        }).done(function (data) {
+            if (data.resultCode == 200) {
+                //점수 업데이트
+                updatePoint($('#login_id').val());
+                popup('알림메세지', '거래가 완료되었습니다.', 'reload');
+            } else {
+                alert("실패하였습니다. 관리자에게 문의하세요.");
             }
-            $.ajax({
-                url: '/product/prodfinish',
-                data: param,
-                type: 'post',
-                dataType: 'json'
-            }).done(function (data) {
-                if(data.resultCode == 200) {
-                    //점수 업데이트
-                    updatePoint($('#login_id').val());
-                    popup('알림메세지', '거래가 완료되었습니다.', 'reload');
-                }else{
-                    alert("실패하였습니다. 관리자에게 문의하세요.");
-                }
-            }).fail(function (textStatus) {
-                console.log(textStatus);
-            });
+        }).fail(function (textStatus) {
+            console.log(textStatus);
+        });
 
     }
 
@@ -802,11 +832,11 @@
         if ($('.textareaContainer').height() > 129) {
             $('.textareaContainer').css('white-space', 'nowrap');
             $('.textareaContainer').css('overflow', 'scroll');
-        } else{
+        } else {
             obj.style.height = "1px";
             obj.style.height = (3 + obj.scrollHeight) + "px";
-            var chatContentHeight = (obj.scrollHeight-30) + "px";
-            $('.chatContent').css('padding-block-end',chatContentHeight);
+            var chatContentHeight = (obj.scrollHeight - 30) + "px";
+            $('.chatContent').css('padding-block-end', chatContentHeight);
         }
     }
 

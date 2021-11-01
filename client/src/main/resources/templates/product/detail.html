@@ -539,8 +539,7 @@
             dataType: 'json'
         }).done(function (data) {
             if (data.resultCode == 200) {
-                popup('알림메세지', '상품이 삭제되었습니다.');
-                location.href = '/member/myinfo'
+                popup('알림메세지', '상품이 삭제되었습니다.','/member/myinfo');
             } else {
                 popup('알림메세지', '삭제에 실패하였습니다. 관리자에게 문의하세요.');
             }

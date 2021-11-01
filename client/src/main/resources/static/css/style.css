@@ -1477,7 +1477,24 @@ figure > img {
 }
 
 /*팝업창*/
-
+.popup{
+  margin-top:18vh;
+  width: 490px;
+  height: 250px;
+  position: fixed;
+  border: 1px solid #f1ecf1;
+  background: #fff;
+}
+@media screen and (max-width: 575px) {
+  .popup {
+    margin-top: 18vh;
+    width: 340px;
+    height: 150px;
+    position: fixed;
+    border: 1px solid #f1ecf1;
+    background: #fff;
+  }
+}
 .popupLayout{
   align-items: flex-start;
   justify-content: center;
@@ -1492,14 +1509,6 @@ figure > img {
   position: fixed;
   z-index: 100;
   display: none;
-}
-.popup{
-  margin-top:18vh;
-  width: 490px;
-  height: 250px;
-  position: fixed;
-  border: 1px solid #f1ecf1;
-  background: #fff;
 }
 
 
