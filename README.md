@@ -15,3 +15,5 @@ Library : jquery, stomp, Mybatis...
 인증인가 구현 -  JWT TOKEN 발급 및 사용
 경매기능 구현 - Socket JS 및 stomp 사용 => 개선필요
 대화 구현 - table에 readCount를 두는 형식으로 설계
+
+구현 자료 영상 - https://youtu.be/NNqLQjOLVHk 
